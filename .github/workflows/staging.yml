@@ -37,7 +37,7 @@ jobs:
         run: flutter analyze
 
       - name: SonarQube
-        uses: s4u/github-action-sonarqube@v1
+        uses: sonarsource/setup-sonarqube@v1
         with:
           host: ${{ secrets.SONAR_HOST }}
           login: ${{ secrets.SONAR_LOGIN }}
