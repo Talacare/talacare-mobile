@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:talacare/presentation/pages/splash_page_dart.dart';
+import 'package:talacare/presentation/pages/splash_page.dart';
 
 void main() {
   group('End-to-End Test for Splash Page', () {

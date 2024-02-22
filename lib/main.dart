@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:talacare/presentation/pages/splash_page_dart.dart';
+import 'package:talacare/presentation/pages/splash_page.dart';
 
 void main() {
   runApp(const MyApp());
