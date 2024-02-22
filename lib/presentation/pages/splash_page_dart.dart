@@ -11,7 +11,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final String TALACARE_LOGO = 'assets/images/talacare-logo.png';
+  final String talacareLogo = 'assets/images/talacare-logo.png';
 
   @override
   void initState() {
@@ -64,7 +64,7 @@ class _SplashPageState extends State<SplashPage> {
                 ),
               ),
               Image.asset(
-                TALACARE_LOGO,
+                talacareLogo,
                 key: const Key('talacare_logo'),
               ),
             ],
