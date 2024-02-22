@@ -17,17 +17,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-
-    Future.delayed(
-      const Duration(seconds: 3),
-          () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const MyHomePage(title: 'Test'),
-          ),
-        );
-      },
-    );
+    navigateToHome();
   }
 
   @override
@@ -39,36 +29,53 @@ class _SplashPageState extends State<SplashPage> {
     super.dispose();
   }
 
+  void navigateToHome() {
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const MyHomePage(title: 'Test'),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildLogo() {
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Container(
+          key: const Key('pink_layer'),
+          width: 200,
+          height: 70,
+          decoration: const BoxDecoration(
+            shape: BoxShape.rectangle,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 50,
+                spreadRadius: 5,
+                color: AppColors.pink,
+              )
+            ],
+          ),
+        ),
+        Image.asset(
+          talacareLogo,
+          key: const Key('talacare_logo'),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.purple,
       body: SafeArea(
         child: Center(
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Container(
-                key: const Key('pink_layer'),
-                width: 200,
-                height: 70,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 50,
-                      spreadRadius: 5,
-                      color: AppColors.pink,
-                    )
-                  ],
-                ),
-              ),
-              Image.asset(
-                talacareLogo,
-                key: const Key('talacare_logo'),
-              ),
-            ],
-          ),
+          child: _buildLogo(),
         ),
       ),
     );
