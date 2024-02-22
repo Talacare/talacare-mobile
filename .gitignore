@@ -45,3 +45,6 @@ app.*.map.json
 # Remember to never publicly share your keystore.
 *.keystore
 *.jks
+
+# Ignore test coverage report
+/coverage/
