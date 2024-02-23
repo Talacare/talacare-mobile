@@ -35,14 +35,3 @@ jobs:
         
       - name: Analyze
         run: flutter analyze
-
-      - name: SonarQube
-        uses: sonarsource/setup-sonarqube@v1
-        with:
-          host: ${{ secrets.SONAR_HOST }}
-          login: ${{ secrets.SONAR_LOGIN }}
-          project-key: ${{ secrets.SONAR_PROJECT_KEY }}
-          project-name: ${{ secrets.SONAR_PROJECT_NAME }}
-          sources: "lib/"
-          exclusions: "test/**,build/**"
-          working-directory: .
