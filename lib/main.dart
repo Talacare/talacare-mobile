@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:talacare/presentation/pages/modal_page.dart';
 import 'package:talacare/presentation/pages/splash_page.dart';
 
 void main() {
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        fontFamily: 'Digitalt',
       ),
       home: const SplashPage(),
     );
@@ -112,6 +114,21 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const Modal();
+                  },
+                  barrierColor: Colors.black.withOpacity(0.5),
+                );
+              },
+              child: const Text('Show Modal'),
             ),
           ],
         ),
