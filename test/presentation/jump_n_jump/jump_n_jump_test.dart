@@ -49,7 +49,6 @@ void main() {
     jumpNJumpGameTester.test(
         'Camera follows dash when not moving down and in top half of screen',
         (game) async {
-      game.dash.velocity.y = 0;
       game.dash.position = Vector2(0, game.world.size.y / 4);
       game.update(0.0);
 

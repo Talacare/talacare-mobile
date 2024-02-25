@@ -18,7 +18,8 @@ void main() {
       await tester.pump(const Duration(seconds: delayDurationSeconds));
 
       final findLogo = find.byKey(const Key('talacare_logo'));
-      expect(findLogo, findsOneWidget, reason: 'TalaCare logo should be visible');
+      expect(findLogo, findsOneWidget,
+          reason: 'TalaCare logo should be visible');
     });
 
     testWidgets('Verify the pink layer is showing', (tester) async {
@@ -26,7 +27,8 @@ void main() {
       await tester.pump(const Duration(seconds: delayDurationSeconds));
 
       final findPinkLayer = find.byKey(const Key('pink_layer'));
-      expect(findPinkLayer, findsOneWidget, reason: 'Pink layer should be visible');
+      expect(findPinkLayer, findsOneWidget,
+          reason: 'Pink layer should be visible');
     });
   });
 }

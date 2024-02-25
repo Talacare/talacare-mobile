@@ -1,0 +1,45 @@
+import 'package:flame/components.dart';
+import 'package:flame_test/flame_test.dart';
+import 'package:flutter/services.dart';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
+import 'package:talacare/presentation/jump_n_jump/sprites/sprites.dart';
+
+final jumpNJumpGameTester = FlameTester(
+  JumpNJump.new,
+);
+
+void main() {
+  group('Player Tests', () {
+    TestWidgetsFlutterBinding.ensureInitialized();
+
+    jumpNJumpGameTester.test('Test Player movement to left', (game) async {
+      game.ready();
+      final keysPressed = {LogicalKeyboardKey.arrowLeft};
+      game.dash.onKeyEvent(null, keysPressed);
+
+      expect(game.dash.current, equals(DashDirection.left));
+    });
+    jumpNJumpGameTester.test('Test Player movement to right', (game) async {
+      game.ready();
+      final keysPressed = {LogicalKeyboardKey.arrowRight};
+      game.dash.onKeyEvent(null, keysPressed);
+
+      expect(game.dash.current, equals(DashDirection.right));
+    });
+
+    jumpNJumpGameTester.test('Test Player Colliding Platform', (game) async {
+      game.ready();
+      game.dash.velocity = Vector2(0, 10);
+
+      final intersectionPoints = {Vector2(10, 10)};
+      bool isCollidingVertically =
+          (intersectionPoints.first.y - intersectionPoints.last.y).abs() < 5;
+      game.dash.onCollision(intersectionPoints, Platform());
+
+      expect(isCollidingVertically, isTrue);
+      expect(game.dash.velocity.y, -game.dash.jumpSpeed);
+    });
+  });
+}
