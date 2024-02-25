@@ -1,0 +1,17 @@
+name: Testing App
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the feat/win-modal branch
+  push:
+    branches: [feat/win-modal]
+  pull_request:
+    branches: [feat/win-modal]
+
+jobs:
+  drive:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: subosito/flutter-action@v1
+    - run: flutter test
