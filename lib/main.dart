@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/presentation/pages/modal_page.dart';
+import 'package:talacare/presentation/pages/win_modal_page.dart';
 import 'package:talacare/presentation/pages/splash_page.dart';
 
 void main() {
@@ -128,7 +129,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   barrierColor: Colors.black.withOpacity(0.5),
                 );
               },
-              child: const Text('Show Modal'),
+              child: const Text('Show Game Over Modal'),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const WinModal();
+                  },
+                  barrierColor: Colors.black.withOpacity(0.5),
+                );
+              },
+              child: const Text('Show Win Modal'),
             ),
           ],
         ),

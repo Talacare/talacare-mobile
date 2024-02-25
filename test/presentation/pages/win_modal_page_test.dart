@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:talacare/presentation/pages/modal_page.dart';
+import 'package:talacare/presentation/pages/win_modal_page.dart';
 
 void main() {
-  group('Modal Widget Tests', () {
+  group('Win Puzzle Modal Widget Tests', () {
     testWidgets('Modal displays correct text', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -14,23 +14,23 @@ void main() {
                   showDialog(
                     context: tester.element(find.byType(ElevatedButton)),
                     builder: (BuildContext context) {
-                      return const Modal();
+                      return const WinModal();
                     },
                   );
                 },
-                child: const Text('Show Game Over Modal'),
+                child: const Text('Show Win Modal'),
               ),
             ),
           ),
         ),
       );
 
-      await tester.tap(find.text('Show Game Over Modal'));
+      await tester.tap(find.text('Show Win Modal'));
       await tester.pumpAndSettle();
 
-      final findLogo = find.byKey(const Key('mainlagi'));
-      expect(findLogo, findsOneWidget,
-          reason: 'Main lagi asset should be visible');
+      final findText = find.text('Lanjut');
+      expect(findText, findsOneWidget,
+          reason: 'Lanjut Button should be visible');
     });
   });
 }
