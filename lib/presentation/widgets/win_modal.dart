@@ -47,6 +47,7 @@ class WinModal extends StatelessWidget {
             ),
             const SizedBox(height: 80),
             InkWell(
+              key: const Key("nextButton"),
               onTap: () {
                 Navigator.of(context).pop();
               },

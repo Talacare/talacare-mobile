@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/presentation/pages/modal_page.dart';
-import 'package:talacare/presentation/pages/win_modal_page.dart';
+import 'package:talacare/presentation/widgets/win_modal.dart';
 import 'package:talacare/presentation/pages/splash_page.dart';
 
 void main() {

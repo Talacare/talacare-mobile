@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:talacare/presentation/pages/win_modal_page.dart';
+import 'package:talacare/presentation/widgets/win_modal.dart';
 
 void main() {
   group('Win Puzzle Modal Widget Tests', () {
@@ -31,6 +31,18 @@ void main() {
       final findText = find.text('Lanjut');
       expect(findText, findsOneWidget,
           reason: 'Lanjut Button should be visible');
+    });
+
+    testWidgets('Verify All Components are showing', (tester) async {
+      await tester.pumpWidget(const MaterialApp(
+        home: WinModal(),
+      ));
+
+      expect(find.text('SUSTER'), findsOneWidget);
+      expect(find.text('Lanjut'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('nextButton')));
+      await tester.pump();
     });
   });
 }
