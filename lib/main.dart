@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:talacare/presentation/pages/modal_page.dart';
+import 'package:talacare/presentation/widgets/modal_page.dart';
 import 'package:talacare/presentation/pages/splash_page.dart';
 
 void main() {
@@ -123,7 +123,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return const Modal();
+                    return Modal(
+                      highestScore: 999,
+                      currentScore: 999,
+                      onMainLagiPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      onMenuPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    );
                   },
                   barrierColor: Colors.black.withOpacity(0.5),
                 );
