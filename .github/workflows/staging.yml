@@ -40,30 +40,30 @@ jobs:
     name: SonarQube Trigger
     runs-on: ubuntu-latest
     steps:
-    - name: Checking out
-      uses: actions/checkout@master
-      with:
-        # Disabling shallow clones is recommended for improving the relevancy of reporting
-        fetch-depth: 0
-    
-    - name: Setup Flutter
+      - name: Checking out
+        uses: actions/checkout@master
+        with:
+          # Disabling shallow clones is recommended for improving the relevancy of reporting
+          fetch-depth: 0
+      
+      - name: Setup Flutter for Testing
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
 
-    - name: Get packages
+      - name: Get Flutter Package
         run: flutter pub get
-  
-    - name: Testing
-      run: flutter test --coverage
+    
+      - name: Testing Flutter Project
+        run: flutter test --coverage
 
-    - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@master
-      with:
-        args: >
-          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-          -Dsonar.sources=.
-          -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} 
-          -Dsonar.host.url=${{ secrets.SONAR_HOST }}
-          -Dsonar.login=${{ secrets.SONAR_LOGIN }}
-          -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.sources=.
+            -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} 
+            -Dsonar.host.url=${{ secrets.SONAR_HOST }}
+            -Dsonar.login=${{ secrets.SONAR_LOGIN }}
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
