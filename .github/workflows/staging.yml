@@ -45,6 +45,15 @@ jobs:
       with:
         # Disabling shallow clones is recommended for improving the relevancy of reporting
         fetch-depth: 0
+    
+    - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+    - name: Get packages
+        run: flutter pub get
+  
     - name: Testing
       run: flutter test --coverage
 
