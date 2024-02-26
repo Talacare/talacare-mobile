@@ -35,3 +35,26 @@ jobs:
         
       - name: Analyze
         run: flutter analyze
+    
+  sonarqube:
+    name: SonarQube Trigger
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checking out
+      uses: actions/checkout@master
+      with:
+        # Disabling shallow clones is recommended for improving the relevancy of reporting
+        fetch-depth: 0
+    - name: Testing
+      run: flutter test --coverage
+
+    - name: SonarQube Scan
+      uses: sonarsource/sonarqube-scan-action@master
+      with:
+        args: >
+          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+          -Dsonar.sources=.
+          -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} 
+          -Dsonar.host.url=${{ secrets.SONAR_HOST }}
+          -Dsonar.login=${{ secrets.SONAR_LOGIN }}
+          -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
