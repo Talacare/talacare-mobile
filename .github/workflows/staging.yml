@@ -67,7 +67,7 @@ jobs:
 
           sonar-scanner -X \
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-            -Dsonar.sources=. \
+            -Dsonar.sources=lib/ \
             -Dsonar.tests=test/ \
             -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} \
             -Dsonar.host.url=${{ secrets.SONAR_HOST }} \
