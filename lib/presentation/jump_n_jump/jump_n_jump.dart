@@ -6,9 +6,15 @@ import './world.dart';
 import 'platform_manager.dart';
 import 'sprites/sprites.dart';
 
+enum GameState { playing, gameOver }
+
 class JumpNJump extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
   JumpNJump({super.children});
+
+  GameState state = GameState.playing;
+  bool get isPlaying => state == GameState.playing;
+  bool get isGameOver => state == GameState.gameOver;
 
   final WorldGame world = WorldGame();
   PlatformManager platformManager = PlatformManager(
@@ -22,23 +28,45 @@ class JumpNJump extends FlameGame
   Future<void> onLoad() async {
     await add(world);
 
-    dash.position = Vector2(
-      (world.size.x - dash.size.x) / 2,
-      ((world.size.y + screenBufferSpace) + dash.size.y),
-    );
-
     await add(dash);
 
-    await add(platformManager);
+    initializeGame();
+    dash.megaJump();
+  }
 
+  void initializeGame() {
+    // remove platform if necessary, because a new one is made each time a new
+    // game is started.
+    if (children.contains(platformManager)) platformManager.removeFromParent();
+
+    // reset dash's velocity
+    dash.velocity = Vector2.zero();
+
+    //reset score
+
+    // Setting the World Bounds for the camera will allow the camera to "move up"
+    // but stay fixed horizontally, allowing Dash to go out of camera on one side,
+    // and re-appear on the other side.
     camera.worldBounds = Rect.fromLTRB(
       0,
-      -world.size.y,
+      -world.size.y, // top of screen is 0, so negative is already off screen
       camera.gameSize.x,
-      world.size.y + screenBufferSpace,
+      world.size.y +
+          screenBufferSpace, // makes sure bottom bound of game is below bottom of screen
+    );
+    camera.followComponent(dash);
+
+    // move dash back to the start
+    dash.position = Vector2(
+      (world.size.x - dash.size.x) / 2,
+      (world.size.y - dash.size.y) / 2,
     );
 
-    dash.megaJump();
+    // reset the the platforms
+    platformManager = PlatformManager(
+      maxVerticalDistanceToNextPlatform: 350,
+    );
+    add(platformManager);
   }
 
   @override
@@ -77,7 +105,12 @@ class JumpNJump extends FlameGame
     return const Color.fromARGB(255, 241, 247, 249);
   }
 
+  void reset() {
+    initializeGame();
+    state = GameState.playing;
+  }
+
   void onLose() {
-    pauseEngine();
+    reset();
   }
 }

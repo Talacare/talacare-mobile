@@ -22,14 +22,12 @@ void main() {
     jumpNJumpGameTester.test('Test start position', (game) async {
       game.add(WorldGame());
 
-      final dash = game.dash;
-
       final expectedPosition = Vector2(
-        (game.world.size.x - dash.size.x) / 2,
-        (game.world.size.y + game.screenBufferSpace) + dash.size.y,
+        (game.world.size.x - game.dash.size.x) / 2,
+        (game.world.size.y + game.screenBufferSpace) + game.dash.size.y,
       );
 
-      expect(dash.position, equals(expectedPosition));
+      expect(game.dash.position, equals(expectedPosition));
     });
 
     jumpNJumpGameTester.test('Camera updates when dash is moving down',

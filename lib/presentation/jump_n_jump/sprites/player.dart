@@ -13,7 +13,7 @@ class Player extends SpriteGroupComponent<DashDirection>
     with HasGameRef<JumpNJump>, KeyboardHandler, CollisionCallbacks {
   Player({super.position})
       : super(
-          size: Vector2.all(100),
+          size: Vector2(70, 120),
           anchor: Anchor.center,
           priority: 1,
         );
@@ -33,6 +33,7 @@ class Player extends SpriteGroupComponent<DashDirection>
     await add(CircleHitbox());
 
     final leftDash = await gameRef.loadSprite('jump_n_jump/left_dash.png');
+
     final rightDash = await gameRef.loadSprite('jump_n_jump/right_dash.png');
 
     sprites = <DashDirection, Sprite>{

@@ -10,7 +10,7 @@ class Platform extends SpriteComponent
   Platform({
     super.position,
   }) : super(
-          size: Vector2.all(50),
+          size: Vector2(100, 50),
           priority: 2,
         );
 
