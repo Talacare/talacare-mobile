@@ -13,6 +13,7 @@ final jumpNJumpGameTester = FlameTester(
 
 void main() {
   group('JumpNJump Tests', () {
+    // ignore: deprecated_member_use
     jumpNJumpGameTester.widgetTest('Game widget can be created',
         (game, tester) async {
       expect(find.byGame<JumpNJump>(), findsOneWidget);

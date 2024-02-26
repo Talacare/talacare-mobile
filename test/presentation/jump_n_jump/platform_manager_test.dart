@@ -15,7 +15,6 @@ void main() {
     });
 
     jumpNJumpGameTester.test('Test Remove and Add Platform', (game) async {
-      game.ready();
       game.dash.position.y = 0;
 
       final platformsBeforeUpdate =

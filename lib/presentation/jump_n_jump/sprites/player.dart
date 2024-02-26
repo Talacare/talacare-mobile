@@ -24,7 +24,7 @@ class Player extends SpriteGroupComponent<DashDirection>
 
   final double moveSpeed = 400;
   final double _gravity = 7;
-  final double jumpSpeed = 600;
+  final double jumpSpeed = 700;
 
   @override
   Future<void> onLoad() async {
@@ -60,6 +60,7 @@ class Player extends SpriteGroupComponent<DashDirection>
   }
 
   @override
+  // ignore: deprecated_member_use
   bool onKeyEvent(RawKeyEvent? event, Set<LogicalKeyboardKey> keysPressed) {
     _hAxisInput = 0;
 

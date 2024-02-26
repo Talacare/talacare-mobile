@@ -15,14 +15,12 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
 
     jumpNJumpGameTester.test('Test Player movement to left', (game) async {
-      game.ready();
       final keysPressed = {LogicalKeyboardKey.arrowLeft};
       game.dash.onKeyEvent(null, keysPressed);
 
       expect(game.dash.current, equals(DashDirection.left));
     });
     jumpNJumpGameTester.test('Test Player movement to right', (game) async {
-      game.ready();
       final keysPressed = {LogicalKeyboardKey.arrowRight};
       game.dash.onKeyEvent(null, keysPressed);
 
@@ -30,7 +28,6 @@ void main() {
     });
 
     jumpNJumpGameTester.test('Test Player Colliding Platform', (game) async {
-      game.ready();
       game.dash.velocity = Vector2(0, 10);
 
       final intersectionPoints = {Vector2(10, 10)};
