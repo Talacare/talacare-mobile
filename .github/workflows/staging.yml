@@ -61,13 +61,3 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST }}
-        with:
-          projectBaseDir: .
-          args: >
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.sources=.
-            -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} 
-            -Dsonar.login=${{ secrets.SONAR_LOGIN }}
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-        
-      - run: ls
