@@ -55,7 +55,9 @@ jobs:
         run: flutter pub get
     
       - name: Testing Flutter Project
-        run: flutter test --coverage
+        run: |
+          flutter test --coverage
+          ls coverage
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
