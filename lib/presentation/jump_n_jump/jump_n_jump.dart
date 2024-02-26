@@ -35,34 +35,23 @@ class JumpNJump extends FlameGame
   }
 
   void initializeGame() {
-    // remove platform if necessary, because a new one is made each time a new
-    // game is started.
     if (children.contains(platformManager)) platformManager.removeFromParent();
 
-    // reset dash's velocity
     dash.velocity = Vector2.zero();
 
-    //reset score
-
-    // Setting the World Bounds for the camera will allow the camera to "move up"
-    // but stay fixed horizontally, allowing Dash to go out of camera on one side,
-    // and re-appear on the other side.
     camera.worldBounds = Rect.fromLTRB(
       0,
-      -world.size.y, // top of screen is 0, so negative is already off screen
+      -world.size.y,
       camera.gameSize.x,
-      world.size.y +
-          screenBufferSpace, // makes sure bottom bound of game is below bottom of screen
+      world.size.y + screenBufferSpace,
     );
     camera.followComponent(dash);
 
-    // move dash back to the start
     dash.position = Vector2(
       (world.size.x - dash.size.x) / 2,
       (world.size.y - dash.size.y) / 2,
     );
 
-    // reset the the platforms
     platformManager = PlatformManager(
       maxVerticalDistanceToNextPlatform: 350,
     );
