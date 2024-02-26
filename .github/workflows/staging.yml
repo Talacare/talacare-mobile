@@ -36,16 +36,13 @@ jobs:
       - name: Analyze
         run: flutter analyze
     
-  sonarqube:
-    name: SonarQube Trigger
+  testing:
+    name: Flutter Testing
     runs-on: ubuntu-latest
     steps:
-      - name: Checking out
-        uses: actions/checkout@master
-        with:
-          # Disabling shallow clones is recommended for improving the relevancy of reporting
-          fetch-depth: 0
-      
+      - name: Checkout the code
+        uses: actions/checkout@v4
+  
       - name: Setup Flutter for Testing
         uses: subosito/flutter-action@v2
         with:
@@ -55,21 +52,18 @@ jobs:
         run: flutter pub get
     
       - name: Testing Flutter Project
-        run: flutter test --coverage
-
-      - name: SonarQube Scan
-        run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip -O /tmp/sonar-scanner.zip
-          unzip /tmp/sonar-scanner.zip -d /tmp
-          mv /tmp/sonar-scanner-* /tmp/sonar-scanner
-          rm /tmp/sonar-scanner.zip
-          export PATH="$PATH:/tmp/sonar-scanner/bin"
-
-          sonar-scanner -X \
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-            -Dsonar.sources=lib/ \
-            -Dsonar.tests=test/ \
-            -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} \
-            -Dsonar.host.url=${{ secrets.SONAR_HOST }} \
-            -Dsonar.login=${{ secrets.SONAR_LOGIN }} \
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+        run: flutter test --coverage --file-reporter json:coverage/test-results.json
+      
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: coverage/**/*.json
+          comment_mode: off
+          check_run: false
+          ignore_runs: true
+        permissions:
+          contents: read
+          issues: read
+          checks: write
+          pull-requests: write
