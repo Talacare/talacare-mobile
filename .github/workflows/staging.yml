@@ -69,3 +69,5 @@ jobs:
             -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} 
             -Dsonar.login=${{ secrets.SONAR_LOGIN }}
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+        
+      - run: ls
