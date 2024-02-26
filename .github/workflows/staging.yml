@@ -59,11 +59,12 @@ jobs:
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST }}
         with:
           args: >
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
             -Dsonar.sources=.
             -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} 
-            -Dsonar.host.url=${{ secrets.SONAR_HOST }}
             -Dsonar.login=${{ secrets.SONAR_LOGIN }}
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
