@@ -62,9 +62,11 @@ jobs:
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST }}
         with:
+          projectBaseDir: lib/
           args: >
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
             -Dsonar.sources=.
+            -Dsonar.tests=test/
             -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} 
             -Dsonar.login=${{ secrets.SONAR_LOGIN }}
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
