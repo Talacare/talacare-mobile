@@ -39,6 +39,11 @@ jobs:
   testing:
     name: Flutter Testing
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
@@ -62,8 +67,3 @@ jobs:
           comment_mode: off
           check_run: false
           ignore_runs: true
-        permissions:
-          contents: read
-          issues: read
-          checks: write
-          pull-requests: write
