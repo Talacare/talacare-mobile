@@ -1,0 +1,83 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/main.dart';
+
+class SplashPage extends StatefulWidget {
+  const SplashPage({Key? key}) : super(key: key);
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  final String talacareLogo = 'assets/images/talacare-logo.png';
+
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    navigateToHome();
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: SystemUiOverlay.values,
+    );
+    super.dispose();
+  }
+
+  void navigateToHome() {
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const MyHomePage(title: 'Test'),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildLogo() {
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Container(
+          key: const Key('pink_layer'),
+          width: 200,
+          height: 70,
+          decoration: const BoxDecoration(
+            shape: BoxShape.rectangle,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 50,
+                spreadRadius: 5,
+                color: AppColors.pink,
+              )
+            ],
+          ),
+        ),
+        Image.asset(
+          talacareLogo,
+          key: const Key('talacare_logo'),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.purple,
+      body: SafeArea(
+        child: Center(
+          child: _buildLogo(),
+        ),
+      ),
+    );
+  }
+}

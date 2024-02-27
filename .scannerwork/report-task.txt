@@ -1,0 +1,6 @@
+projectKey=talacare-mobile
+serverUrl=http://104.198.12.1
+serverVersion=10.4.1.88267
+dashboardUrl=http://104.198.12.1/dashboard?id=talacare-mobile
+ceTaskId=01e71296-fbe4-4de7-acf6-87608e76c010
+ceTaskUrl=http://104.198.12.1/api/ce/task?id=01e71296-fbe4-4de7-acf6-87608e76c010

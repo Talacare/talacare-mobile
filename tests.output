@@ -1,0 +1,34 @@
+{"protocolVersion":"0.1.1","runnerVersion":null,"pid":15100,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"C:/Kuliah/Semester 6/Proyek Perangkat Lunak/Proyek/tala-mob/test/presentation/pages/splash_page_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading C:/Kuliah/Semester 6/Proyek Perangkat Lunak/Proyek/tala-mob/test/presentation/pages/splash_page_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"suite":{"id":2,"platform":"vm","path":"C:/Kuliah/Semester 6/Proyek Perangkat Lunak/Proyek/tala-mob/test/presentation/widgets/button_test.dart"},"type":"suite","time":4}
+{"test":{"id":3,"name":"loading C:/Kuliah/Semester 6/Proyek Perangkat Lunak/Proyek/tala-mob/test/presentation/widgets/button_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":5}
+{"suite":{"id":4,"platform":"vm","path":"C:/Kuliah/Semester 6/Proyek Perangkat Lunak/Proyek/tala-mob/test/presentation/widgets/win_modal_test.dart"},"type":"suite","time":7}
+{"test":{"id":5,"name":"loading C:/Kuliah/Semester 6/Proyek Perangkat Lunak/Proyek/tala-mob/test/presentation/widgets/win_modal_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"count":3,"time":7,"type":"allSuites"}
+
+[{"event":"test.startedProcess","params":{"vmServiceUri":"http://127.0.0.1:57417/Uq0oD1F_QTg=/","observatoryUri":"http://127.0.0.1:57417/Uq0oD1F_QTg=/"}}]
+
+[{"event":"test.startedProcess","params":{"vmServiceUri":"http://127.0.0.1:57422/7efXtuAxv_Q=/","observatoryUri":"http://127.0.0.1:57422/7efXtuAxv_Q=/"}}]
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1463}
+{"group":{"id":6,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":1466}
+{"group":{"id":7,"suiteID":0,"parentID":6,"name":"End-to-End Test for Splash Page","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":6,"column":3,"url":"file:///C:/Kuliah/Semester%206/Proyek%20Perangkat%20Lunak/Proyek/tala-mob/test/presentation/pages/splash_page_test.dart"},"type":"group","time":1467}
+{"test":{"id":8,"name":"End-to-End Test for Splash Page Verify the TalaCare logo is showing","suiteID":0,"groupIDs":[6,7],"metadata":{"skip":false,"skipReason":null},"line":165,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":16,"root_column":5,"root_url":"file:///C:/Kuliah/Semester%206/Proyek%20Perangkat%20Lunak/Proyek/tala-mob/test/presentation/pages/splash_page_test.dart"},"type":"testStart","time":1467}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1590}
+{"group":{"id":9,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":1590}
+{"group":{"id":10,"suiteID":2,"parentID":9,"name":"Button Widget Tests","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":6,"column":3,"url":"file:///C:/Kuliah/Semester%206/Proyek%20Perangkat%20Lunak/Proyek/tala-mob/test/presentation/widgets/button_test.dart"},"type":"group","time":1591}
+{"test":{"id":11,"name":"Button Widget Tests Button is correct and clickable","suiteID":2,"groupIDs":[9,10],"metadata":{"skip":false,"skipReason":null},"line":165,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":8,"root_column":5,"root_url":"file:///C:/Kuliah/Semester%206/Proyek%20Perangkat%20Lunak/Proyek/tala-mob/test/presentation/widgets/button_test.dart"},"type":"testStart","time":1591}
+
+[{"event":"test.startedProcess","params":{"vmServiceUri":"http://127.0.0.1:57428/_8vi1KE7O1Y=/","observatoryUri":"http://127.0.0.1:57428/_8vi1KE7O1Y=/"}}]
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1785}
+{"group":{"id":12,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":1785}
+{"group":{"id":13,"suiteID":4,"parentID":12,"name":"Win Puzzle Modal Widget Tests","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":6,"column":3,"url":"file:///C:/Kuliah/Semester%206/Proyek%20Perangkat%20Lunak/Proyek/tala-mob/test/presentation/widgets/win_modal_test.dart"},"type":"group","time":1785}
+{"test":{"id":14,"name":"Win Puzzle Modal Widget Tests Verify All Components are showing","suiteID":4,"groupIDs":[12,13],"metadata":{"skip":false,"skipReason":null},"line":165,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":8,"root_column":5,"root_url":"file:///C:/Kuliah/Semester%206/Proyek%20Perangkat%20Lunak/Proyek/tala-mob/test/presentation/widgets/win_modal_test.dart"},"type":"testStart","time":1785}
+{"testID":8,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1954}
+{"test":{"id":15,"name":"End-to-End Test for Splash Page Verify the pink layer is showing","suiteID":0,"groupIDs":[6,7],"metadata":{"skip":false,"skipReason":null},"line":165,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":24,"root_column":5,"root_url":"file:///C:/Kuliah/Semester%206/Proyek%20Perangkat%20Lunak/Proyek/tala-mob/test/presentation/pages/splash_page_test.dart"},"type":"testStart","time":1955}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1993}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2057}
+{"testID":14,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2134}
+{"test":{"id":16,"name":"Win Puzzle Modal Widget Tests Button is clickable","suiteID":4,"groupIDs":[12,13],"metadata":{"skip":false,"skipReason":null},"line":165,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":17,"root_column":5,"root_url":"file:///C:/Kuliah/Semester%206/Proyek%20Perangkat%20Lunak/Proyek/tala-mob/test/presentation/widgets/win_modal_test.dart"},"type":"testStart","time":2134}
+{"testID":16,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2210}
+{"success":true,"type":"done","time":2486}
