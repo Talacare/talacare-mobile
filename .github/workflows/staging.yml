@@ -36,18 +36,16 @@ jobs:
       - name: Analyze
         run: flutter analyze
     
-  testing:
-    name: Flutter Testing
+  sonarqube:
+    name: SonarQube Trigger
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: read
-      checks: write
-      pull-requests: write
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
-  
+      - name: Checking out
+        uses: actions/checkout@master
+        with:
+          # Disabling shallow clones is recommended for improving the relevancy of reporting
+          fetch-depth: 0
+      
       - name: Setup Flutter for Testing
         uses: subosito/flutter-action@v2
         with:
@@ -57,19 +55,16 @@ jobs:
         run: flutter pub get
     
       - name: Testing Flutter Project
-        run: flutter test --coverage --file-reporter json:coverage/test-results.json
-      
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
+        run: flutter test --coverage
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
-          files: coverage/**/*.json
-          comment_mode: off
-          check_run: false
-          ignore_runs: true
-      
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: Talacare/talacare-mobile
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.sources=.
+            -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} 
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
