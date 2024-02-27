@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/presentation/widgets/button.dart';
 
 class GameCard extends StatelessWidget {
   final String title;
@@ -23,6 +24,7 @@ class GameCard extends StatelessWidget {
       child: Column(
         children: [
           ClipRRect(
+            key: const Key('game_image'),
             borderRadius: BorderRadius.circular(10),
             child: Image.asset(
               'assets/images/$imgPath',
@@ -31,6 +33,7 @@ class GameCard extends StatelessWidget {
           const Gap(7),
           Text(
             title,
+            key: const Key('game_title'),
             style: const TextStyle(
               height: 1,
               fontFamily: 'Digitalt',
@@ -38,6 +41,14 @@ class GameCard extends StatelessWidget {
               fontSize: 36,
             ),
           ),
+          const Gap(7),
+          const Button(
+            key: Key('play_button'),
+            text: 'Main',
+            color: AppColors.darkGreen,
+            firstShadowColor: AppColors.mediumGreen,
+            secondShadowColor: AppColors.lightGreen,
+          )
         ],
       ),
     );
