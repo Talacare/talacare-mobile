@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/presentation/pages/splash_page.dart';
+import 'package:talacare/presentation/puzzle/circle_timer.dart';
+import 'package:talacare/presentation/puzzle/puzzle_info.dart';
 
 void main() {
   runApp(const MyApp());
@@ -112,6 +114,15 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            ListTile(
+              title: const Text('Puzzle Info'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PuzzleInfo()),
+                );
+              },
             ),
           ],
         ),
