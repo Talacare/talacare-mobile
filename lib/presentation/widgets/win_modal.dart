@@ -47,7 +47,13 @@ class WinModal extends StatelessWidget {
               ),
             ),
             SizedBox(height: 80),
-            Button(text: "Lanjut"),
+            Button(
+              key: Key('nextButton'),
+              text: 'Lanjut',
+              color: Color(0xFF7031FC),
+              firstShadowColor: Color(0x26000000),
+              secondShadowColor: Color(0xFF9A4AFE),
+            )
           ]
         ),
       ),
