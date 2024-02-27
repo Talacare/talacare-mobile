@@ -4,11 +4,15 @@ import 'package:network_image_mock/network_image_mock.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 
 void main() {
-  testWidgets('Verify the greeting text is showing', (tester) async {
-    const homePage = MaterialApp(
+  late Widget homePage;
+
+  setUp(() async {
+    homePage = const MaterialApp(
       home: HomePage(),
     );
+  });
 
+  testWidgets('Verify the greeting text is showing', (tester) async {
     await mockNetworkImagesFor(() => tester.pumpWidget(homePage));
 
     final findGreeting = find.byKey(const Key('greeting'));
@@ -16,10 +20,6 @@ void main() {
   });
 
   testWidgets('Verify the user profile picture is showing', (tester) async {
-    const homePage = MaterialApp(
-      home: HomePage(),
-    );
-
     await mockNetworkImagesFor(() => tester.pumpWidget(homePage));
 
     final findGreeting = find.byKey(const Key('user_picture'));
@@ -27,10 +27,6 @@ void main() {
   });
 
   testWidgets('Verify the Jump N Jump card is showing', (tester) async {
-    const homePage = MaterialApp(
-      home: HomePage(),
-    );
-
     await mockNetworkImagesFor(() => tester.pumpWidget(homePage));
 
     final findGreeting = find.byKey(const Key('jump_n_jump_card'));
@@ -38,10 +34,6 @@ void main() {
   });
 
   testWidgets('Verify the Puzzle card is showing', (tester) async {
-    const homePage = MaterialApp(
-      home: HomePage(),
-    );
-
     await mockNetworkImagesFor(() => tester.pumpWidget(homePage));
 
     final findGreeting = find.byKey(const Key('puzzle_card'));
