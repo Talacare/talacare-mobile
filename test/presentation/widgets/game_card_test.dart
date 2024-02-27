@@ -3,8 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 
 void main() {
-  testWidgets('Verify the game\'s image is showing', (tester) async {
-    const gameCard = MaterialApp(
+  late Widget gameCard;
+
+  setUp(() {
+    gameCard = const MaterialApp(
       home: Scaffold(
         body: GameCard(
           key: Key('game_card'),
@@ -13,7 +15,9 @@ void main() {
         ),
       ),
     );
+  });
 
+  testWidgets('Verify the game\'s image is showing', (tester) async {
     await tester.pumpWidget(gameCard);
 
     final findImage = find.byKey(const Key('game_image'));
@@ -22,16 +26,6 @@ void main() {
   });
 
   testWidgets('Verify the game\'s title is showing', (tester) async {
-    const gameCard = MaterialApp(
-      home: Scaffold(
-        body: GameCard(
-          key: Key('game_card'),
-          title: 'A Game',
-          imgPath: 'puzzle_trailer.png',
-        ),
-      ),
-    );
-
     await tester.pumpWidget(gameCard);
 
     final findImage = find.byKey(const Key('game_title'));
@@ -40,16 +34,6 @@ void main() {
   });
 
   testWidgets('Verify the play button is showing', (tester) async {
-    const gameCard = MaterialApp(
-      home: Scaffold(
-        body: GameCard(
-          key: Key('game_card'),
-          title: 'A Game',
-          imgPath: 'puzzle_trailer.png',
-        ),
-      ),
-    );
-
     await tester.pumpWidget(gameCard);
 
     final findImage = find.byKey(const Key('play_button'));
