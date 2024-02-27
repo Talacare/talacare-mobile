@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
   final String text;
 
-  const Button({
-    Key? key,
-    required this.text
-  }) : super(key: key);
+  // Buat widget button baru dengan Button(text: <Isi Text String>)
+  const Button({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
