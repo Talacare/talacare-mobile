@@ -67,7 +67,7 @@ jobs:
           export PATH="$PATH:/tmp/sonar-scanner/bin"
         
           sonar-scanner -X \
-            -Dsonar.projectKey=${{ SONAR_PROJECT_KEY }} \
-            -Dsonar.projectName=${{ SONAR_PROJECT_NAME }} \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+            -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} \
             -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
