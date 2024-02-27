@@ -16,85 +16,91 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.purple,
-        body: SafeArea(
-          child: Container(
-            padding: const EdgeInsets.all(50),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: List.generate(
-                        starList.length,
-                        (index) {
-                          if (starList[index] == 0) {
-                            return Image.asset(
-                              'assets/images/star_border.png',
-                              width: 30,
-                              height: 30,
-                            );
-                          } else if (starList[index] == 1) {
-                            return Image.asset(
-                              'assets/images/star_border_glow.png',
-                              width: 30,
-                              height: 30,
-                            );
-                          } else {
-                            return Image.asset(
-                              'assets/images/star.png',
-                              width: 30,
-                              height: 30,
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                    Container(
-                        alignment: Alignment.centerRight,
-                        child: const Text(
-                          'TERTINGGI: 75',
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white,
-                              fontFamily: 'Digitalt'),
-                        ))
-                  ],
-                ),
-                Container(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            const CircleTimer(),
-                            Container(
-                                alignment: Alignment.centerRight,
-                                child: const Text(
-                                  'SISA WAKTU',
-                                  style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.white,
-                                      fontFamily: 'Digitalt'),
-                                )),
-                          ],
-                        ),
-                        Image.asset(
-                          'assets/images/perawat.png',
-                          width:
-                              100,
-                          height:
-                              100,
-                        ),
-                      ],
-                    )),
-              ],
-            ),
+      backgroundColor: AppColors.purple,
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(50),
+          child: Column(
+            children: [
+              buildStarRow(),
+              buildRightSide(),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
+  }
+
+  Widget buildStarRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: List.generate(
+            starList.length,
+            (index) => buildStarImage(starList[index]),
+          ),
+        ),
+        const Text(
+          'TERTINGGI: 75',
+          style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.normal,
+              color: Colors.white,
+              fontFamily: 'Digitalt'),
+        )
+      ],
+    );
+  }
+
+  Widget buildStarImage(int starValue) {
+    if (starValue == 0) {
+      return Image.asset(
+        'assets/images/star_border.png',
+        width: 30,
+        height: 30,
+      );
+    } else if (starValue == 1) {
+      return Image.asset(
+        'assets/images/star_border_glow.png',
+        width: 30,
+        height: 30,
+      );
+    } else {
+      return Image.asset(
+        'assets/images/star.png',
+        width: 30,
+        height: 30,
+      );
+    }
+  }
+
+  Widget buildRightSide() {
+    return Container(
+      padding: const EdgeInsets.only(top: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Column(
+            children: [
+              CircleTimer(),
+              Text(
+                'SISA WAKTU',
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white,
+                    fontFamily: 'Digitalt'),
+              ),
+            ],
+          ),
+          Image.asset(
+            puzzleImg,
+            width: 100,
+            height: 100,
+          ),
+        ],
+      ),
+    );
   }
 }

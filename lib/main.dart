@@ -115,15 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            ListTile(
-              title: const Text('Puzzle Info'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const PuzzleInfo()),
-                );
-              },
-            ),
           ],
         ),
       ),

@@ -38,6 +38,6 @@ void main() {
 
     expect(find.byType(Column), findsNWidgets(3));
     expect(find.byType(Row), findsNWidgets(3));
-    expect(find.byType(Container), findsNWidgets(5));
+    expect(find.byType(Container), findsNWidgets(3));
   });
 }

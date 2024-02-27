@@ -14,6 +14,7 @@ void main() {
     CircularProgressIndicator circularProgressIndicator =
         tester.widget(find.byType(CircularProgressIndicator));
     expect(circularProgressIndicator.backgroundColor, AppColors.purple);
+
     expect(circularProgressIndicator.valueColor,
         isInstanceOf<AlwaysStoppedAnimation<Color>>());
   });
@@ -46,7 +47,8 @@ void main() {
     await tester.pump(const Duration(seconds: 59));
     expect(find.text('0'), findsOneWidget);
   });
-  testWidgets('CircleTimer widget continues to display 0 seconds even after more than 60 seconds have passed',
+  testWidgets(
+      'CircleTimer widget continues to display 0 seconds even after more than 60 seconds have passed',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
