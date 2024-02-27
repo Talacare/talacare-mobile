@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/presentation/pages/splash_page.dart';
+import 'package:talacare/presentation/puzzle/circle_timer.dart';
+import 'package:talacare/presentation/puzzle/puzzle_info.dart';
 
 void main() {
   runApp(const MyApp());
