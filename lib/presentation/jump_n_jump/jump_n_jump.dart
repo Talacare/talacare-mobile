@@ -1,20 +1,17 @@
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 
 import './world.dart';
-import 'platform_manager.dart';
+import 'managers/platform_manager.dart';
 import 'sprites/sprites.dart';
-
-enum GameState { playing, gameOver }
 
 class JumpNJump extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
   JumpNJump({super.children});
 
-  GameState state = GameState.playing;
-  bool get isPlaying => state == GameState.playing;
-  bool get isGameOver => state == GameState.gameOver;
+  GameManager gameManager = GameManager();
 
   final WorldGame world = WorldGame();
   PlatformManager platformManager = PlatformManager(
@@ -62,30 +59,34 @@ class JumpNJump extends FlameGame
   void update(double dt) {
     super.update(dt);
 
-    if (dash.isMovingDown) {
-      camera.worldBounds = Rect.fromLTRB(
+    //Tambahan state jika game over
+    if (gameManager.isGameOver) {
+      return;
+    }
+
+    if (gameManager.isPlaying) {
+      final Rect worldBounds = Rect.fromLTRB(
         0,
         camera.position.y - screenBufferSpace,
         camera.gameSize.x,
         camera.position.y + world.size.y,
       );
-    }
 
-    var isInTopHalfOfScreen = dash.position.y <= (world.size.y / 2);
-    if (!dash.isMovingDown && isInTopHalfOfScreen) {
-      camera.followComponent(dash);
+      if (dash.isMovingDown) {
+        camera.worldBounds = worldBounds;
+      }
 
-      camera.worldBounds = Rect.fromLTRB(
-        0,
-        camera.position.y - screenBufferSpace,
-        camera.gameSize.x,
-        camera.position.y + world.size.y,
-      );
-    }
+      var isInTopHalfOfScreen = dash.position.y <= (world.size.y / 2);
+      if (!dash.isMovingDown && isInTopHalfOfScreen) {
+        camera.followComponent(dash);
 
-    if (dash.position.y >
-        camera.position.y + world.size.y + dash.size.y + screenBufferSpace) {
-      onLose();
+        camera.worldBounds = worldBounds;
+      }
+
+      if (dash.position.y >
+          camera.position.y + world.size.y + dash.size.y + screenBufferSpace) {
+        onLose();
+      }
     }
   }
 
@@ -95,10 +96,12 @@ class JumpNJump extends FlameGame
   }
 
   void reset() {
-    initializeGame();
-    state = GameState.playing;
+    gameManager.state = GameState.playing;
+    dash.removeFromParent();
+    overlays.add('gameOverOverlay');
   }
 
+  // //D Commented for implementation change
   void onLose() {
     reset();
   }

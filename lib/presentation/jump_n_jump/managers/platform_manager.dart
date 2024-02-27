@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 
-import 'jump_n_jump.dart';
-import 'sprites/platform.dart';
+import '../jump_n_jump.dart';
+import '../sprites/platform.dart';
 
 class PlatformManager extends Component with HasGameRef<JumpNJump> {
   final Random random = Random();
@@ -73,6 +73,8 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
       final lowestPlat = platforms.removeAt(0);
 
       lowestPlat.removeFromParent();
+
+      gameRef.gameManager.increaseScore();
     }
     super.update(dt);
   }
