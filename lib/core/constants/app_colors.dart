@@ -7,5 +7,8 @@ class AppColors {
   static const Color white = Colors.white;
   static const Color lightPink = Color(0xFFE546FF);
   static const Color darkPurple = Color(0xFF6F53FD);
+  static const Color lightGreen = Color(0xFF8FFC06);
+  static const Color mediumGreen = Color(0xFF67EB00);
+  static const Color darkGreen = Color(0xFF4EC307);
   // Add more colors here ...
 }
