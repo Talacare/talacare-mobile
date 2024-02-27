@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('Modal Widget Tests', () {
+  group('Game Over Modal Widget Tests', () {
     late Widget modal;
     bool mainLagiPressed = false;
     bool menuPressed = false;
@@ -15,7 +15,7 @@ void main() {
 
       modal = MaterialApp(
         home: Scaffold(
-          body: Modal(
+          body: GameOverModal(
             currentScore: currentScore,
             highestScore: highestScore,
             onMainLagiPressed: () => mainLagiPressed = true,
