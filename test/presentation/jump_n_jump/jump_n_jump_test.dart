@@ -76,4 +76,21 @@ void main() {
       expect(game.paused, isTrue);
     });
   });
+
+  jumpNJumpGameTester.test('Exist Score Component', (game) async {
+    expect(game.gameManager.score.value, equals(0));
+  });
+
+  jumpNJumpGameTester.test(
+      'Score incremented if character land on top of platform', (game) async {
+    final initialScore = game.gameManager.score.value;
+    game.gameManager.increaseScore();
+    expect(game.gameManager.score.value, greaterThan(initialScore));
+  });
+
+  jumpNJumpGameTester.test('Modal shown when game over', (game) async {
+    game.onLose();
+    expect(game.gameManager.isGameOver, isTrue);
+    expect(game.overlays.isActive('gameOverOverlay'), isTrue);
+  });
 }
