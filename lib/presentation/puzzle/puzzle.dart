@@ -9,7 +9,7 @@ class PuzzlePage extends StatefulWidget {
 }
 
 class _PuzzlePageState extends State<PuzzlePage> {
-  final String puzzleImg = 'assets/images/suntik3.png';
+  final String puzzleImg = 'assets/images/perawat.png';
 
   @override
   Widget build(BuildContext context) {
@@ -124,17 +124,25 @@ class _PuzzlePieceState extends State<PuzzlePiece> {
     pieceHeight = widget.image.height! / widget.rows;
     pieceWidth = widget.image.width! / widget.cols;
 
-    offsetX = widget.colId - (widget.cols - 1).toDouble() / 2;
-    offsetY = widget.rowId - (widget.rows - 1).toDouble() / 2;
+    offsetX = widget.colId.toDouble() * 2 / (widget.cols - 1) - 1;
+    offsetY = widget.rowId.toDouble() * 2 / (widget.rows - 1) - 1;
 
     return SizedBox(
       height: pieceHeight,
       width: pieceWidth,
-      child: ClipRect(
-        child: FittedBox(
-          fit: BoxFit.none,
-          alignment: Alignment(offsetX, offsetY),
-          child: widget.image,
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: Colors.black,
+          ),
+        ),
+        child: ClipRect(
+          child: FittedBox(
+            fit: BoxFit.none,
+            alignment: Alignment(offsetX, offsetY),
+            child: widget.image,
+          ),
         ),
       ),
     );
