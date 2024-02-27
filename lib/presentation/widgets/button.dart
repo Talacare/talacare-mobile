@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
   final String text;
 
-  Button({
+  const Button({
     Key? key,
     required this.text
   }) : super(key: key);
@@ -15,7 +15,7 @@ class Button extends StatelessWidget {
         onTap: () {
             Navigator.of(context).pop();
         },
-        child: Container(
+        child: SizedBox(
             width: 282,
             height: 48,
             child: Stack(
@@ -23,7 +23,7 @@ class Button extends StatelessWidget {
                     Positioned(
                         left: 0,
                         top: 0,
-                        child: Container(
+                        child: SizedBox(
                             width: 282,
                             height: 48,
                             child: Stack(
@@ -35,16 +35,16 @@ class Button extends StatelessWidget {
                                             width: 282,
                                             height: 48,
                                             decoration: ShapeDecoration(
-                                                color: Color(0xFF7031FC),
+                                                color: const Color(0xFF7031FC),
                                                 shape: RoundedRectangleBorder(
-                                                    side: BorderSide(
+                                                    side: const BorderSide(
                                                         width: 2,
                                                         strokeAlign: BorderSide.strokeAlignOutside,
                                                         color: Colors.white,
                                                     ),
                                                     borderRadius: BorderRadius.circular(33),
                                                 ),
-                                                shadows: [
+                                                shadows: const [
                                                     BoxShadow(
                                                         color: Color(0x26000000),
                                                         blurRadius: 0,
@@ -62,7 +62,7 @@ class Button extends StatelessWidget {
                                             width: 282,
                                             height: 43,
                                             decoration: ShapeDecoration(
-                                                color: Color(0xFF9A4AFE),
+                                                color: const Color(0xFF9A4AFE),
                                                 shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.circular(33),
                                                 ),
@@ -82,7 +82,7 @@ class Button extends StatelessWidget {
                             child: Text(
                                 text,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
                                 fontFamily: 'Digitalt',

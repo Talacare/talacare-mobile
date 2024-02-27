@@ -6,7 +6,7 @@ class WinModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Dialog(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -28,25 +28,25 @@ class WinModal extends StatelessWidget {
                   shadows: [
                     Shadow( // bottomLeft
                       offset: Offset(-1.5, -1.5),
-                      color: const Color(0xFFB20D78)
+                      color: Color(0xFFB20D78)
                     ),
                     Shadow( // bottomRight
                       offset: Offset(3.5, -1.5),
-                      color: const Color(0xFFB20D78)
+                      color: Color(0xFFB20D78)
                     ),
                     Shadow( // topRight
                       offset: Offset(1.5, 1.5),
-                      color: const Color(0xFFB20D78)
+                      color: Color(0xFFB20D78)
                     ),
                     Shadow( // topLeft
                       offset: Offset(-1.5, 1.5),
-                      color: const Color(0xFFB20D78)
+                      color: Color(0xFFB20D78)
                     ),
                   ]
                 ),
               ),
             ),
-            const SizedBox(height: 80),
+            SizedBox(height: 80),
             Button(text: "Lanjut"),
           ]
         ),
