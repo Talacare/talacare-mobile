@@ -1,1 +1,0 @@
- 2dartXThr'lib/presentation/pages/splash_page.dart
