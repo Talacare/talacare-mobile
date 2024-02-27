@@ -15,18 +15,13 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.purple,
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(50),
-          child: Column(
-            children: [
-              buildStarRow(),
-              buildRightSide(),
-            ],
-          ),
-        ),
+    return Container(
+      padding: const EdgeInsets.all(50),
+      child: Column(
+        children: [
+          buildStarRow(),
+          buildRightSide(),
+        ],
       ),
     );
   }
@@ -75,7 +70,7 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
     }
   }
 
-  Widget buildRightSide() {
+  Widget buildDownSide() {
     return Container(
       padding: const EdgeInsets.only(top: 20),
       child: Row(
