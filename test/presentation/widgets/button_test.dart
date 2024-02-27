@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 
 void main() {
@@ -10,7 +11,13 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: Center(
-              child: Button(text: "Test"),
+              child: Button(
+                key: Key('nextButton'),
+                text: 'Main',
+                color: AppColors.darkGreen,
+                firstShadowColor: AppColors.mediumGreen,
+                secondShadowColor: AppColors.lightGreen,
+              ),
             ),
           ),
         ),
