@@ -20,7 +20,7 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
       child: Column(
         children: [
           buildStarRow(),
-          buildRightSide(),
+          buildDownSide(),
         ],
       ),
     );
