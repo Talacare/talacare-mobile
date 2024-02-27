@@ -55,7 +55,7 @@ jobs:
         run: flutter pub get
     
       - name: Testing Flutter Project
-        run: flutter test --coverage
+        run: flutter test --machine --coverage > tests.output
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
@@ -64,7 +64,5 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.sources=.
-            -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} 
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.flutter.tests.reportPath=tests.output
+            -Dsonar.flutter.coverage.reportPath=coverage/lcov.info
