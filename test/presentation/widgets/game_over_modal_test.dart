@@ -30,11 +30,9 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(modal);
 
-      // Verify current score is displayed
       expect(find.text('$currentScore'), findsOneWidget,
           reason: 'Current score should be displayed correctly');
 
-      // Verify high score is displayed
       expect(find.text('$highestScore'), findsOneWidget,
           reason: 'High score should be displayed correctly');
     });
