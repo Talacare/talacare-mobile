@@ -56,13 +56,12 @@ jobs:
     
       - name: Testing Flutter Project
         run: flutter test --machine --coverage > tests.output
+      
+      - name: List all file
+        run: ls
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args: >
-            -Dsonar.flutter.tests.reportPath=tests.output
-            -Dsonar.flutter.coverage.reportPath=coverage/lcov.info
