@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
@@ -71,10 +72,15 @@ class HomePage extends StatelessWidget {
               children: [
                 _buildHeader(),
                 const Gap(40),
-                const GameCard(
-                  title: 'Jump N Jump',
-                  imgPath: 'jump_n_jump_trailer.png',
-                  key: Key('jump_n_jump_card'),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/jump_n_jump');
+                  },
+                  child: const GameCard(
+                    title: 'Jump N Jump',
+                    imgPath: 'jump_n_jump_trailer.png',
+                    key: Key('jump_n_jump_card'),
+                  ),
                 ),
                 const Gap(30),
                 const GameCard(
