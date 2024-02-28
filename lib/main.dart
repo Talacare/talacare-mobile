@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
+import 'package:talacare/presentation/widgets/jump_n_jump_widget.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,11 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      // home: const HomePage(),
+      home: JumpNJumpWidget(),
+      // routes: {
+      //   '/jump_n_jump': (context) => JumpNJumpWidget(),
+      // },
     );
   }
 }
