@@ -5,6 +5,7 @@ import 'package:flame_test/flame_test.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/world.dart';
 
 final jumpNJumpGameTester = FlameTester(
@@ -92,5 +93,31 @@ void main() {
     game.onLose();
     expect(game.gameManager.isGameOver, isTrue);
     expect(game.overlays.isActive('gameOverOverlay'), isTrue);
+  });
+
+  jumpNJumpGameTester.test('Game Over state is correctly triggered',
+      (game) async {
+    game.onLose();
+    expect(game.gameManager.isGameOver, isTrue);
+    expect(game.overlays.isActive('GameOverOverlay'),
+        isTrue);   });
+
+  jumpNJumpGameTester.test('Game restarts correctly', (game) async {
+    game.onLose();
+
+    game.onRestartGame();
+
+    expect(game.gameManager.state, GameState.playing);
+    expect(game.gameManager.score.value, 0);
+    expect(game.overlays.isActive('GameOverOverlay'), isFalse);
+  });
+
+  jumpNJumpGameTester.test('Return to menu removes game over overlay',
+      (game) async {
+    game.onLose();
+
+    game.onBackToMenu();
+
+    expect(game.overlays.isActive('GameOverOverlay'), isFalse);
   });
 }
