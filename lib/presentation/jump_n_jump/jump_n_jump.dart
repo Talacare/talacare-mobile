@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
+import 'package:talacare/presentation/widgets/game_over_modal.dart';
 
 import './world.dart';
 import 'managers/platform_manager.dart';
@@ -21,11 +22,24 @@ class JumpNJump extends FlameGame
 
   int screenBufferSpace = 100;
 
+  Map<String, Widget> overlayWidgets = {};
+
   @override
   Future<void> onLoad() async {
     await add(world);
 
     await add(dash);
+
+    overlayWidgets['GameOverOverlay'] = GameOverModal(
+      currentScore: gameManager.score.value,
+      highestScore: gameManager.score.value,
+      onMainLagiPressed: () {
+        onRestartGame();
+      },
+      onMenuPressed: () {
+        onBackToMenu();
+      },
+    );
 
     initializeGame();
     dash.megaJump();
@@ -59,7 +73,6 @@ class JumpNJump extends FlameGame
   void update(double dt) {
     super.update(dt);
 
-    //Tambahan state jika game over
     if (gameManager.isGameOver) {
       return;
     }
@@ -97,12 +110,20 @@ class JumpNJump extends FlameGame
 
   void reset() {
     gameManager.state = GameState.playing;
-    dash.removeFromParent();
-    overlays.add('gameOverOverlay');
   }
 
-  // //D Commented for implementation change
   void onLose() {
+    overlays.add('GameOverOverlay');
+  }
+
+  void onRestartGame() {
+    overlays.remove('GameOverOverlay');
     reset();
+    initializeGame();
+    dash.megaJump();
+  }
+
+  void onBackToMenu() {
+    overlays.remove('GameOverOverlay');
   }
 }

@@ -102,4 +102,26 @@ class Player extends SpriteGroupComponent<DashDirection>
   void megaJump() {
     velocity.y = -jumpSpeed * 1.5;
   }
+
+  void moveLeft() {
+    _hAxisInput = -1;
+    updateDirection();
+  }
+
+  void moveRight() {
+    _hAxisInput = 1;
+    updateDirection();
+  }
+
+  void stop() {
+    _hAxisInput = 0;
+  }
+
+  void updateDirection() {
+    if (_hAxisInput < 0) {
+      current = DashDirection.left;
+    } else if (_hAxisInput > 0) {
+      current = DashDirection.right;
+    }
+  }
 }
