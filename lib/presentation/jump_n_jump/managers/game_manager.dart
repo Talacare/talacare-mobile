@@ -10,11 +10,10 @@ class GameManager extends Component with HasGameRef<JumpNJump> {
 
   bool get isPlaying => state == GameState.playing;
   bool get isGameOver => state == GameState.gameOver;
-  bool get isIntro => state == GameState.intro;
 
   void reset() {
     score.value = 0;
-    state = GameState.intro;
+    state = GameState.playing;
   }
 
   void increaseScore() {
@@ -22,4 +21,4 @@ class GameManager extends Component with HasGameRef<JumpNJump> {
   }
 }
 
-enum GameState { intro, playing, gameOver }
+enum GameState { playing, gameOver }

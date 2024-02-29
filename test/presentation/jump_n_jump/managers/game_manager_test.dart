@@ -12,14 +12,14 @@ void main() {
       gameManager = GameManager();
     });
 
-    test('reset() should reset score to 0 and state to intro', () {
-      gameManager.state = GameState.playing;
+    test('reset() should reset score to 0 and state to playing', () {
+      gameManager.state = GameState.gameOver;
       gameManager.score.value = 10;
 
       gameManager.reset();
 
       expect(gameManager.score.value, 0);
-      expect(gameManager.state, GameState.intro);
+      expect(gameManager.state, GameState.playing);
     });
 
     test('increaseScore() should increment the score by 1', () {
@@ -38,11 +38,6 @@ void main() {
     test('isGameOver returns true when game state is gameOver', () {
       gameManager.state = GameState.gameOver;
       expect(gameManager.isGameOver, true);
-    });
-
-    test('isIntro returns true when game state is intro', () {
-      gameManager.state = GameState.intro;
-      expect(gameManager.isIntro, true);
     });
   });
 }

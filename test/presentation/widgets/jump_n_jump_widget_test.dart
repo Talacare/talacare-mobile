@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
-import 'package:talacare/presentation/widgets/jump_n_jump_widget.dart';
+import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 
 class MockJumpNJump extends Mock implements JumpNJump {}
 
@@ -21,7 +21,7 @@ void main() {
       when(mockGame.gameManager.score).thenReturn(ValueNotifier<int>(0));
 
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpWidget(),
+        home: JumpNJumpPage(),
       ));
 
       expect(find.text('0'), findsOneWidget);
@@ -31,7 +31,7 @@ void main() {
     testWidgets('Should have left and right control buttons',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpWidget(),
+        home: JumpNJumpPage(),
       ));
 
       expect(find.byType(ElevatedButton), findsNWidgets(2));
@@ -40,7 +40,7 @@ void main() {
     testWidgets('Tapping left control button triggers moveLeft',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpWidget(),
+        home: JumpNJumpPage(),
       ));
 
       final leftButton = find.byType(ElevatedButton).first;
@@ -53,7 +53,7 @@ void main() {
     testWidgets('Tapping right control button triggers moveRight',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpWidget(),
+        home: JumpNJumpPage(),
       ));
 
       final rightButton = find.byType(ElevatedButton).last;

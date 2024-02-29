@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 
-class JumpNJumpWidget extends StatelessWidget {
+class JumpNJumpPage extends StatelessWidget {
   final JumpNJump game;
   GameManager gameManager = GameManager();
 
-  JumpNJumpWidget({Key? key})
+  JumpNJumpPage({Key? key})
       : game = JumpNJump(),
         super(key: key);
 
