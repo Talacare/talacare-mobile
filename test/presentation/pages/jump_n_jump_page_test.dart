@@ -7,21 +7,18 @@ import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 class MockJumpNJump extends Mock implements JumpNJump {}
 
 void main() {
-  group('JumpNJumpWidget Tests', () {
-    late JumpNJump game;
+  group('JumpNJumpPage Tests', () {
     late MockJumpNJump mockGame;
 
     setUp(() {
       mockGame = MockJumpNJump();
-      game = JumpNJump();
+      when(mockGame.gameManager.score).thenReturn(ValueNotifier<int>(0));
     });
 
     testWidgets('Should display score and coin icon correctly',
         (WidgetTester tester) async {
-      when(mockGame.gameManager.score).thenReturn(ValueNotifier<int>(0));
-
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpPage(),
+        home: JumpNJumpPage(game: mockGame),
       ));
 
       expect(find.text('0'), findsOneWidget);
@@ -31,7 +28,7 @@ void main() {
     testWidgets('Should have left and right control buttons',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpPage(),
+        home: JumpNJumpPage(game: mockGame),
       ));
 
       expect(find.byType(ElevatedButton), findsNWidgets(2));
@@ -40,7 +37,7 @@ void main() {
     testWidgets('Tapping left control button triggers moveLeft',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpPage(),
+        home: JumpNJumpPage(game: mockGame),
       ));
 
       final leftButton = find.byType(ElevatedButton).first;
@@ -53,7 +50,7 @@ void main() {
     testWidgets('Tapping right control button triggers moveRight',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpPage(),
+        home: JumpNJumpPage(game: mockGame),
       ));
 
       final rightButton = find.byType(ElevatedButton).last;
