@@ -26,6 +26,9 @@ class Player extends SpriteGroupComponent<DashDirection>
   final double _gravity = 7;
   final double jumpSpeed = 700;
 
+  final int movingLeftInput = -1;
+  final int movingRightInput = 1;
+
   @override
   Future<void> onLoad() async {
     await super.onLoad();
@@ -66,13 +69,11 @@ class Player extends SpriteGroupComponent<DashDirection>
     _hAxisInput = 0;
 
     if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-      current = DashDirection.left;
-      _hAxisInput += -1;
+      moveLeft();
     }
 
     if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-      current = DashDirection.right;
-      _hAxisInput += 1;
+      moveRight();
     }
 
     return true;
@@ -104,24 +105,18 @@ class Player extends SpriteGroupComponent<DashDirection>
   }
 
   void moveLeft() {
-    _hAxisInput = -1;
-    updateDirection();
+    _hAxisInput = 0;
+    current = DashDirection.left;
+    _hAxisInput += movingLeftInput;
   }
 
   void moveRight() {
-    _hAxisInput = 1;
-    updateDirection();
+    _hAxisInput = 0;
+    current = DashDirection.right;
+    _hAxisInput += movingRightInput;
   }
 
   void stop() {
     _hAxisInput = 0;
-  }
-
-  void updateDirection() {
-    if (_hAxisInput < 0) {
-      current = DashDirection.left;
-    } else if (_hAxisInput > 0) {
-      current = DashDirection.right;
-    }
   }
 }

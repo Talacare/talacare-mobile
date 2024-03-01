@@ -18,7 +18,7 @@ void main() {
     testWidgets('Should display score and coin icon correctly',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpPage(game: mockGame),
+        home: JumpNJumpPage(),
       ));
 
       expect(find.text('0'), findsOneWidget);
@@ -28,7 +28,7 @@ void main() {
     testWidgets('Should have left and right control buttons',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpPage(game: mockGame),
+        home: JumpNJumpPage(),
       ));
 
       expect(find.byType(ElevatedButton), findsNWidgets(2));
@@ -37,7 +37,7 @@ void main() {
     testWidgets('Tapping left control button triggers moveLeft',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpPage(game: mockGame),
+        home: JumpNJumpPage(),
       ));
 
       final leftButton = find.byType(ElevatedButton).first;
@@ -50,7 +50,7 @@ void main() {
     testWidgets('Tapping right control button triggers moveRight',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: JumpNJumpPage(game: mockGame),
+        home: JumpNJumpPage(),
       ));
 
       final rightButton = find.byType(ElevatedButton).last;

@@ -2,7 +2,6 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
-import 'package:talacare/presentation/widgets/game_over_modal.dart';
 
 import './world.dart';
 import 'managers/platform_manager.dart';
@@ -10,11 +9,14 @@ import 'sprites/sprites.dart';
 
 class JumpNJump extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
-  JumpNJump({super.children});
+  JumpNJump({this.onBackToMenuCallback, super.children});
+
+  final VoidCallback? onBackToMenuCallback;
 
   GameManager gameManager = GameManager();
 
   final WorldGame world = WorldGame();
+
   PlatformManager platformManager = PlatformManager(
     maxVerticalDistanceToNextPlatform: 350,
   );
@@ -30,43 +32,8 @@ class JumpNJump extends FlameGame
 
     await add(dash);
 
-    overlayWidgets['GameOverOverlay'] = GameOverModal(
-      currentScore: gameManager.score.value,
-      highestScore: gameManager.score.value,
-      onMainLagiPressed: () {
-        onRestartGame();
-      },
-      onMenuPressed: () {
-        onBackToMenu();
-      },
-    );
-
     initializeGame();
-    dash.megaJump();
-  }
-
-  void initializeGame() {
-    if (children.contains(platformManager)) platformManager.removeFromParent();
-
-    dash.velocity = Vector2.zero();
-
-    camera.worldBounds = Rect.fromLTRB(
-      0,
-      -world.size.y,
-      camera.gameSize.x,
-      world.size.y + screenBufferSpace,
-    );
-    camera.followComponent(dash);
-
-    dash.position = Vector2(
-      (world.size.x - dash.size.x) / 2,
-      (world.size.y - dash.size.y) / 2,
-    );
-
-    platformManager = PlatformManager(
-      maxVerticalDistanceToNextPlatform: 350,
-    );
-    add(platformManager);
+    startGame();
   }
 
   @override
@@ -103,27 +70,59 @@ class JumpNJump extends FlameGame
     }
   }
 
+  void initializeGame() {
+    if (children.contains(platformManager)) platformManager.removeFromParent();
+
+    dash.velocity = Vector2.zero();
+    gameManager.score.value = 0;
+
+    camera.worldBounds = Rect.fromLTRB(
+      0,
+      -world.size.y,
+      camera.gameSize.x,
+      world.size.y + screenBufferSpace,
+    );
+    camera.followComponent(dash);
+
+    dash.position = Vector2(
+      (world.size.x - dash.size.x) / 2,
+      (world.size.y - dash.size.y) / 2,
+    );
+
+    platformManager = PlatformManager(
+      maxVerticalDistanceToNextPlatform: 350,
+    );
+
+    add(platformManager);
+  }
+
   @override
   Color backgroundColor() {
     return const Color.fromARGB(255, 241, 247, 249);
   }
 
-  void reset() {
+  void startGame() {
     gameManager.state = GameState.playing;
-  }
-
-  void onLose() {
-    overlays.add('GameOverOverlay');
-  }
-
-  void onRestartGame() {
-    overlays.remove('GameOverOverlay');
-    reset();
-    initializeGame();
     dash.megaJump();
   }
 
+  void reset() {
+    overlays.remove('gameOverOverlay');
+    initializeGame();
+  }
+
+  void onLose() {
+    gameManager.state = GameState.gameOver;
+    overlays.add('gameOverOverlay');
+  }
+
+  void onRestartGame() {
+    reset();
+    startGame();
+  }
+
   void onBackToMenu() {
-    overlays.remove('GameOverOverlay');
+    overlays.remove('gameOverOverlay');
+    onBackToMenuCallback?.call();
   }
 }

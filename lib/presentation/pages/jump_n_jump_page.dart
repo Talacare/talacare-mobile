@@ -1,15 +1,27 @@
-import 'package:flame/game.dart';
+import 'package:flame/game.dart' hide Route;
 import 'package:flutter/material.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
+import 'package:talacare/presentation/widgets/game_over_modal.dart';
 
-class JumpNJumpPage extends StatelessWidget {
-  final JumpNJump game;
-  GameManager gameManager = GameManager();
+class JumpNJumpPage extends StatefulWidget {
+  const JumpNJumpPage({Key? key}) : super(key: key);
 
-  JumpNJumpPage({Key? key})
-      : game = JumpNJump(),
-        super(key: key);
+  @override
+  _JumpNJumpPageState createState() => _JumpNJumpPageState();
+}
+
+class _JumpNJumpPageState extends State<JumpNJumpPage> {
+  late final JumpNJump game;
+
+  @override
+  void initState() {
+    super.initState();
+    game = JumpNJump(onBackToMenuCallback: () {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +59,12 @@ class JumpNJumpPage extends StatelessWidget {
             child: GameWidget<JumpNJump>(
               game: game,
               overlayBuilderMap: {
-                'GameOverOverlay': (BuildContext context, JumpNJump game) {
-                  return game.overlayWidgets['GameOverOverlay'] ?? SizedBox();
-                },
+                'gameOverOverlay': (context, JumpNJump game) => GameOverModal(
+                      currentScore: game.gameManager.score.value,
+                      highestScore: game.gameManager.highScore.value,
+                      onMainLagiPressed: game.onRestartGame,
+                      onMenuPressed: game.onBackToMenu,
+                    ),
               },
               initialActiveOverlays: const [],
             ),
