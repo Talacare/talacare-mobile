@@ -21,7 +21,7 @@ void main() {
   testWidgets('Check skor muncul', (tester) async {
     await tester.pumpWidget(puzzlePage);
 
-    final findSkor = find.text('TERTINGGI');
+    final findSkor = find.text('TERTINGGI: 75');
     expect(findSkor, findsOneWidget, reason: 'Skor harus muncul');
   });
 }
