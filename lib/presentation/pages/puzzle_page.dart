@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:talacare/presentation/puzzle/puzzle_info.dart';
 import 'package:talacare/presentation/widgets/win_modal.dart';
 
@@ -8,12 +9,15 @@ class PuzzlePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Column(
-        children: [
-          PuzzleInfo(),
-          WinModal(),
-        ]
-      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            PuzzleInfo(),
+            Gap(500),
+            WinModal(),
+          ]
+        ),
+      )
     );
   }
 }
