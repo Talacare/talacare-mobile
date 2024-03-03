@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 
 void main() {
@@ -7,7 +8,7 @@ void main() {
     
     testWidgets('Verify the button is showing', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
             body: Center(
               child: Button(
@@ -26,7 +27,7 @@ void main() {
 
     testWidgets('Verify the button\'s color scheme when provided', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
             body: Center(
               child: Button(
@@ -50,7 +51,7 @@ void main() {
 
     testWidgets('Verify the button\'s color scheme when not provided', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
             body: Center(
               child: Button(
@@ -73,7 +74,7 @@ void main() {
 
     testWidgets('Verify the button can be tapped', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
             body: Center(
               child: Button(

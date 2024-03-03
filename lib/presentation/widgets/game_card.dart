@@ -8,10 +8,10 @@ class GameCard extends StatelessWidget {
   final String imgPath;
 
   const GameCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.imgPath,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +42,9 @@ class GameCard extends StatelessWidget {
             ),
           ),
           const Gap(7),
-          const Button(
-            key: Key('play_button'),
+          Button(
+            key: const Key('play_button'),
             text: 'Main',
-            color: AppColors.darkGreen,
-            firstShadowColor: AppColors.mediumGreen,
-            secondShadowColor: AppColors.lightGreen,
           )
         ],
       ),
