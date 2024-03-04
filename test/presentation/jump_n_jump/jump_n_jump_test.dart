@@ -25,7 +25,7 @@ void main() {
 
       final expectedPosition = Vector2(
         (game.world.size.x - game.dash.size.x) / 2,
-        (game.world.size.y + game.screenBufferSpace) + game.dash.size.y,
+        (game.world.size.y - game.dash.size.y) / 2,
       );
 
       expect(game.dash.position, equals(expectedPosition));
@@ -99,8 +99,8 @@ void main() {
       (game) async {
     game.onLose();
     expect(game.gameManager.isGameOver, isTrue);
-    expect(game.overlays.isActive('GameOverOverlay'),
-        isTrue);   });
+    expect(game.overlays.isActive('gameOverOverlay'), isTrue);
+  });
 
   jumpNJumpGameTester.test('Game restarts correctly', (game) async {
     game.onLose();
@@ -109,7 +109,7 @@ void main() {
 
     expect(game.gameManager.state, GameState.playing);
     expect(game.gameManager.score.value, 0);
-    expect(game.overlays.isActive('GameOverOverlay'), isFalse);
+    expect(game.overlays.isActive('gameOverOverlay'), isFalse);
   });
 
   jumpNJumpGameTester.test('Return to menu removes game over overlay',
@@ -118,6 +118,6 @@ void main() {
 
     game.onBackToMenu();
 
-    expect(game.overlays.isActive('GameOverOverlay'), isFalse);
+    expect(game.overlays.isActive('gameOverOverlay'), isFalse);
   });
 }
