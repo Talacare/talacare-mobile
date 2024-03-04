@@ -7,54 +7,51 @@ class WinModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Dialog(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        child: Column(
-          children: [
-            const Spacer(),
-            const SizedBox(
-              width: 203,
-              height: 50,
-              child: Text(
-                'SUSTER',
-                textAlign: TextAlign.center,
-                style: TextStyle(
+        child: Column(children: [
+          Spacer(),
+          SizedBox(
+            width: 203,
+            height: 50,
+            child: Text(
+              'SUSTER',
+              textAlign: TextAlign.center,
+              style: TextStyle(
                   color: Colors.white,
                   fontSize: 50,
                   fontFamily: 'Digitalt',
                   fontWeight: FontWeight.w500,
                   height: 0,
                   shadows: [
-                    Shadow( // bottomLeft
-                      offset: Offset(-1.5, -1.5),
-                      color: Color(0xFFB20D78)
-                    ),
-                    Shadow( // bottomRight
-                      offset: Offset(3.5, -1.5),
-                      color: Color(0xFFB20D78)
-                    ),
-                    Shadow( // topRight
-                      offset: Offset(1.5, 1.5),
-                      color: Color(0xFFB20D78)
-                    ),
-                    Shadow( // topLeft
-                      offset: Offset(-1.5, 1.5),
-                      color: Color(0xFFB20D78)
-                    ),
-                  ]
-                ),
-              ),
+                    Shadow(
+                        // bottomLeft
+                        offset: Offset(-1.5, -1.5),
+                        color: Color(0xFFB20D78)),
+                    Shadow(
+                        // bottomRight
+                        offset: Offset(3.5, -1.5),
+                        color: Color(0xFFB20D78)),
+                    Shadow(
+                        // topRight
+                        offset: Offset(1.5, 1.5),
+                        color: Color(0xFFB20D78)),
+                    Shadow(
+                        // topLeft
+                        offset: Offset(-1.5, 1.5),
+                        color: Color(0xFFB20D78)),
+                  ]),
             ),
-            const SizedBox(height: 80),
-            Button(
-              key: const Key('nextButton'),
-              text: 'Lanjut',
-              colorScheme: ButtonColorScheme.purple,
-            )
-          ]
-        ),
+          ),
+          SizedBox(height: 80),
+          Button(
+            key: Key('nextButton'),
+            text: 'Lanjut',
+            colorScheme: ButtonColorScheme.purple,
+          )
+        ]),
       ),
     );
   }
