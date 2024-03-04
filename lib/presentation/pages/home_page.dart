@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
                   title: 'Jump N Jump',
                   imgPath: 'jump_n_jump_trailer.png',
                   key: const Key('jump_n_jump_card'),
-                  onTap: (){},
+                  onTap: () {},
                 ),
                 const Gap(30),
                 GameCard(

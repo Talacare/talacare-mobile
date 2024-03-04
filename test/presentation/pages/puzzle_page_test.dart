@@ -43,6 +43,6 @@ void main() {
     await tester.pumpWidget(puzzlePage);
 
     final findLanjut = find.byKey(const Key('nextButton'));
-    expect(findLanjut, findsOneWidget, reason: 'Skor harus muncul');
+    expect(findLanjut, findsOneWidget, reason: 'Tombol lanjut muncul');
   });
 }

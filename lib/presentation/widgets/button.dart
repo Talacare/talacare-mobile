@@ -1,40 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/core/utils/button_color_util.dart';
 
 class Button extends StatelessWidget {
   final String text;
   final ButtonColorScheme colorScheme;
   final void Function()? onTap;
-  late Color bodyColor;
-  late Color firstShadowColor;
-  late Color secondShadowColor;
 
-  Button({
+  const Button({
     super.key,
     required this.text,
     this.onTap,
     this.colorScheme = ButtonColorScheme.green,
   });
 
-  void getButtonColorScheme(ButtonColorScheme color){
-    switch(color){
-      case ButtonColorScheme.green: {
-        bodyColor = AppColors.darkGreen;
-        firstShadowColor = AppColors.mediumGreen;
-        secondShadowColor = AppColors.lightGreen;
-      }
-      case ButtonColorScheme.purple: {
-        bodyColor = const Color(0xFF7031FC);
-        firstShadowColor = const Color(0x26000000);
-        secondShadowColor = const Color(0xFF9A4AFE);
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    getButtonColorScheme(colorScheme);
+    final bodyColor = ButtonColorUtil.getBodyColor(colorScheme);
+    final firstShadowColor = ButtonColorUtil.getFirstShadowColor(colorScheme);
+    final secondShadowColor = ButtonColorUtil.getSecondShadowColor(colorScheme);
+
     return InkWell(
       onTap: onTap,
       child: SizedBox(

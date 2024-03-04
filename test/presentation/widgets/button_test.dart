@@ -26,11 +26,11 @@ void main() {
   testWidgets('Verify the button\'s color scheme when provided',
       (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
+      const MaterialApp(
         home: Scaffold(
           body: Center(
             child: Button(
-              key: const Key('button'),
+              key: Key('button'),
               text: 'Main',
               colorScheme: ButtonColorScheme.purple,
             ),
