@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 
-class WinModal extends StatefulWidget {
-  const WinModal({super.key});
+class NextInfo extends StatefulWidget {
+  const NextInfo({super.key});
 
   @override  
-  State<WinModal> createState() => _WinModalState();  
+  State<NextInfo> createState() => _NextInfoState();  
 }
 
-class _WinModalState extends State<WinModal> {
+class _NextInfoState extends State<NextInfo> {
   bool isVisible = true;
 
   @override
