@@ -1,25 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 
 class Button extends StatelessWidget {
   final String text;
-  final Color color;
-  final Color firstShadowColor;
-  final Color secondShadowColor;
+  final ButtonColorScheme colorScheme;
+  final void Function()? onTap;
+  late Color bodyColor;
+  late Color firstShadowColor;
+  late Color secondShadowColor;
 
-  const Button({
-    Key? key,
+  Button({
+    super.key,
     required this.text,
-    required this.color,
-    required this.firstShadowColor,
-    required this.secondShadowColor,
-  }) : super(key: key);
+    this.onTap,
+    this.colorScheme = ButtonColorScheme.green,
+  });
+
+  void getButtonColorScheme(ButtonColorScheme color){
+    switch(color){
+      case ButtonColorScheme.green: {
+        bodyColor = AppColors.darkGreen;
+        firstShadowColor = AppColors.mediumGreen;
+        secondShadowColor = AppColors.lightGreen;
+      }
+      case ButtonColorScheme.purple: {
+        bodyColor = const Color(0xFF7031FC);
+        firstShadowColor = const Color(0x26000000);
+        secondShadowColor = const Color(0xFF9A4AFE);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    getButtonColorScheme(colorScheme);
     return InkWell(
-      onTap: () {
-        Navigator.of(context).pop();
-      },
+      onTap: onTap,
       child: SizedBox(
         width: 282,
         height: 48,
@@ -40,7 +57,7 @@ class Button extends StatelessWidget {
                         width: 282,
                         height: 48,
                         decoration: ShapeDecoration(
-                          color: color,
+                          color: bodyColor,
                           shape: RoundedRectangleBorder(
                             side: const BorderSide(
                               width: 2,

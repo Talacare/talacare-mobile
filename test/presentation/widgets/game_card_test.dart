@@ -6,12 +6,13 @@ void main() {
   late Widget gameCard;
 
   setUp(() {
-    gameCard = const MaterialApp(
+    gameCard = MaterialApp(
       home: Scaffold(
         body: GameCard(
-          key: Key('game_card'),
+          key: const Key('game_card'),
           title: 'A Game',
           imgPath: 'puzzle_trailer.png',
+          onTap: (){},
         ),
       ),
     );

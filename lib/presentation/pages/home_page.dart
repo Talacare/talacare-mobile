@@ -72,21 +72,20 @@ class HomePage extends StatelessWidget {
               children: [
                 _buildHeader(),
                 const Gap(40),
-                GestureDetector(
+                GameCard(
+                  title: 'Jump N Jump',
+                  imgPath: 'jump_n_jump_trailer.png',
+                  key: const Key('jump_n_jump_card'),
                   onTap: () {
                     Navigator.of(context).pushNamed('/jump_n_jump');
                   },
-                  child: const GameCard(
-                    title: 'Jump N Jump',
-                    imgPath: 'jump_n_jump_trailer.png',
-                    key: Key('jump_n_jump_card'),
-                  ),
                 ),
                 const Gap(30),
-                const GameCard(
+                GameCard(
                   title: 'Puzzle',
                   imgPath: 'puzzle_trailer.png',
-                  key: Key('puzzle_card'),
+                  key: const Key('puzzle_card'),
+                  onTap: () {},
                 ),
               ],
             ),
