@@ -36,7 +36,7 @@ class GameCard extends StatelessWidget {
           Text(
             title,
             key: const Key('game_title'),
-            style: const TextStyle(
+            style: TextStyle(
               height: 1,
               fontFamily: 'Digitalt',
               color: AppColors.darkPurple,
