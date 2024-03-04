@@ -6,12 +6,14 @@ import 'package:talacare/presentation/widgets/button.dart';
 class GameCard extends StatelessWidget {
   final String title;
   final String imgPath;
+  final VoidCallback onTap;
 
   const GameCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.imgPath,
-  }) : super(key: key);
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +44,10 @@ class GameCard extends StatelessWidget {
             ),
           ),
           const Gap(7),
-          const Button(
-            key: Key('play_button'),
+          Button(
+            key: const Key('play_button'),
             text: 'Main',
-            color: AppColors.darkGreen,
-            firstShadowColor: AppColors.mediumGreen,
-            secondShadowColor: AppColors.lightGreen,
+            onTap: onTap,
           )
         ],
       ),
