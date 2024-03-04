@@ -5,14 +5,18 @@ Future<void> speakText({
   FlutterTts? flutterTts,
 }) async {
   flutterTts ??= FlutterTts();
+  String language = 'id-ID';
+  double volume = 1.0;
+  double rate = 0.5;
+  double pitch = 1.0;
 
-  if (await flutterTts.isLanguageAvailable('id-ID')) {
-    await flutterTts.setLanguage('id-ID');
+  if (await flutterTts.isLanguageAvailable(language)) {
+    await flutterTts.setLanguage(language);
   }
 
-  await flutterTts.setVolume(1.0);
-  await flutterTts.setSpeechRate(0.5);
-  await flutterTts.setPitch(1.0);
+  await flutterTts.setVolume(volume);
+  await flutterTts.setSpeechRate(rate);
+  await flutterTts.setPitch(pitch);
 
   if (text.isNotEmpty) {
     await flutterTts.speak(text);
