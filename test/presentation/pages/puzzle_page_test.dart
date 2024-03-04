@@ -24,4 +24,25 @@ void main() {
     final findSkor = find.text('TERTINGGI: 75');
     expect(findSkor, findsOneWidget, reason: 'Skor harus muncul');
   });
+
+  testWidgets('Check gambar muncul', (tester) async {
+    await tester.pumpWidget(puzzlePage);
+
+    expect(
+        find.byWidgetPredicate(
+          (Widget widget) =>
+              widget is Image &&
+              widget.image is AssetImage &&
+              (widget.image as AssetImage).assetName ==
+                  'assets/images/perawat.png',
+        ),
+        findsOneWidget);
+  });
+
+  testWidgets('Check tombol lanjut muncul', (tester) async {
+    await tester.pumpWidget(puzzlePage);
+
+    final findLanjut = find.byKey(const Key('nextButton'));
+    expect(findLanjut, findsOneWidget, reason: 'Skor harus muncul');
+  });
 }

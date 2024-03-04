@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 
-class WinModal extends StatelessWidget {
-  const WinModal({Key? key}) : super(key: key);
+class WinModal extends StatefulWidget {
+  const WinModal({super.key});
 
+  @override  
+  State<WinModal> createState() => _WinModalState();  
+}
+
+class _WinModalState extends State<WinModal> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             width: 203,
             height: 50,
             child: Text(
@@ -42,13 +48,14 @@ class WinModal extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 80),
+          const SizedBox(height: 80),
           Button(
-            key: Key('nextButton'),
+            key: const Key('nextButton'),
             text: 'Lanjut',
-            color: Color(0xFF7031FC),
-            firstShadowColor: Color(0x26000000),
-            secondShadowColor: Color(0xFF9A4AFE),
+            colorScheme: ButtonColorScheme.purple,
+            onTap: (){
+              Navigator.pop(context);
+            },
           )
         ]
       ),
