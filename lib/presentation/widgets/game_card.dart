@@ -6,7 +6,7 @@ import 'package:talacare/presentation/widgets/button.dart';
 class GameCard extends StatelessWidget {
   final String title;
   final String imgPath;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
 
   const GameCard({
     super.key,
