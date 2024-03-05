@@ -21,14 +21,14 @@ class _CircleTimerState extends State<CircleTimer>
     _controller = AnimationController(
       vsync: this,
       duration: Duration(seconds: _start),
-    );
-    _controller.reverse(from: 1.0);
-    _controller.addListener(() {
-      if (_controller.value == 0.0) {
-        final timerState = Provider.of<TimerState>(context, listen: false);
-        timerState.value = true;
-      }
-    });
+    )
+      ..reverse(from: 1.0)
+      ..addListener(() {
+        if (_controller.value == 0.0) {
+          final timerState = Provider.of<TimerState>(context, listen: false);
+          timerState.value = true;
+        }
+      });
   }
 
   @override
