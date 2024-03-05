@@ -8,6 +8,7 @@ class JumpNJumpPage extends StatefulWidget {
   const JumpNJumpPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _JumpNJumpPageState createState() => _JumpNJumpPageState();
 }
 
