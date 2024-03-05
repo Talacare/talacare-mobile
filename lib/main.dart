@@ -5,6 +5,7 @@ import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 

@@ -7,12 +7,12 @@ class GameOverModal extends StatelessWidget {
   final VoidCallback onMenuPressed;
 
   const GameOverModal({
-    Key? key,
+    super.key,
     required this.currentScore,
     required this.highestScore,
     required this.onMainLagiPressed,
     required this.onMenuPressed,
-  }) : super(key: key);
+  });
 
   Widget _buildScoreContainer(String title, int score, BuildContext context) {
     return Column(

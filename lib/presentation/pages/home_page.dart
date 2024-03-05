@@ -7,7 +7,7 @@ import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   Widget _buildHeader() {
     return Row(
@@ -91,10 +91,11 @@ class HomePage extends StatelessWidget {
                   title: 'Puzzle',
                   imgPath: 'puzzle_trailer.png',
                   key: const Key('puzzle_card'),
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PuzzlePage()),
+                      MaterialPageRoute(
+                          builder: (context) => const PuzzlePage()),
                     );
                   },
                 ),
