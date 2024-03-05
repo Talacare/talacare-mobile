@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/presentation/pages/splash_page.dart';
-import 'package:talacare/presentation/puzzle/puzzle.dart';
 
 void main() {
   runApp(const MyApp());
