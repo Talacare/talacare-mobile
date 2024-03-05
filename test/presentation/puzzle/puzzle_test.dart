@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/puzzle/puzzle.dart';
 
 void main() {
-  group('Tests for PuzzleWidget', () {
+  group('PuzzleWidget Tests', () {
 
-    testWidgets('PuzzleWidget Creation', (WidgetTester tester) async {
+    testWidgets('PuzzleWidget Test', (WidgetTester tester) async {
+      bool isSolved = false;
+
+      void handleSolve() {
+        isSolved = true;
+      }
+      
       final Widget puzzleWidget = PuzzleWidget(
         image: Image.asset(
           'assets/images/perawat.png',
@@ -15,16 +20,48 @@ void main() {
         ),
         rows: 3,
         cols: 3,
+        onSolved: handleSolve,
       );
 
-      await tester.pumpWidget(MaterialApp(home: puzzleWidget));
+      await tester.pumpWidget(MaterialApp(
+        home: puzzleWidget,
+      ));
 
       expect(find.byType(SizedBox), findsWidgets);
       expect(find.byType(ListView), findsWidgets);
+
+      expect(find.byType(DraggablePuzzlePiece), findsNWidgets(9));
+      expect(isSolved, isFalse);
     });
 
-    testWidgets('PuzzlePiece Creation', (WidgetTester tester) async {
-      final Widget puzzlePiece = PuzzlePiece(
+    testWidgets('DraggablePuzzlePiece Test', (WidgetTester tester) async {
+      final draggablePuzzlePiece = DraggablePuzzlePiece(
+        image: Image.asset(
+          'assets/images/perawat.png',
+          height: 300,
+          width: 300,
+        ),
+        rows: 3,
+        cols: 3,
+        rowId: 0,
+        colId: 0,
+        rowPos: 0,
+        colPos: 0,
+        onSwap: (int rowPos, int colPos, int rowPos2, int colPos2) {},
+      );
+
+      await tester.pumpWidget(MaterialApp(
+        home: draggablePuzzlePiece,
+      ));
+
+      expect(find.byType(Draggable<PuzzlePiecePos>), findsOneWidget);
+      expect(find.byType(DragTarget<PuzzlePiecePos>), findsOneWidget);
+
+      expect(find.byType(PuzzlePiece), findsOneWidget);
+    });
+
+    testWidgets('PuzzlePiece Test', (WidgetTester tester) async {
+      final puzzlePiece = PuzzlePiece(
         image: Image.asset(
           'assets/images/perawat.png',
           height: 300,
@@ -36,42 +73,21 @@ void main() {
         colId: 0,
       );
 
-      await tester.pumpWidget(MaterialApp(home: puzzlePiece));
+      await tester.pumpWidget(MaterialApp(
+        home: puzzlePiece,
+      ));
 
       expect(find.byType(SizedBox), findsWidgets);
       expect(find.byType(Container), findsWidgets);
       expect(find.byType(ClipRect), findsWidgets);
       expect(find.byType(FittedBox), findsWidgets);
     });
-  });
 
-  group('Tests for PuzzleWidget State', () {
-    testWidgets('PuzzleWidget State', (WidgetTester tester) async {
-      final TestApp app = TestApp(
-        child: PuzzleWidget(
-          image: Image.asset(
-            'assets/images/perawat.png',
-            height: 300,
-            width: 300,
-          ),
-          rows: 3,
-          cols: 3,
-        ),
-      );
-      await tester.pumpWidget(app);
-      final state = tester.state(find.byType(PuzzleWidget));
-      expect(state, isNotNull);
+    testWidgets('PuzzlePiecePos Test', (WidgetTester tester) async {
+      const puzzlePiecePos = PuzzlePiecePos(rowPos: 0, colPos: 0);
+
+      expect(puzzlePiecePos.rowPos, 0);
+      expect(puzzlePiecePos.colPos, 0);
     });
   });
-}
-
-class TestApp extends StatelessWidget {
-  final Widget child;
-
-  const TestApp({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: Scaffold(body: child));
-  }
 }
