@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
+import 'package:provider/provider.dart';
+import 'package:talacare/presentation/puzzle/timer_state.dart';
 
 void main() {
   late Widget puzzlePage;
 
   setUp(() async {
-    puzzlePage = const MaterialApp(
-      home: PuzzlePage(),
-    );
+    puzzlePage = ChangeNotifierProvider<TimerState>(
+        create: (context) => TimerState(initialValue: true),
+        child: const MaterialApp(home: PuzzlePage()));
   });
 
   testWidgets('Check if time left is showing', (tester) async {
