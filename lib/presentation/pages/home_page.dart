@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/presentation/puzzle/timer_state.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 
@@ -84,6 +86,8 @@ class HomePage extends StatelessWidget {
                   imgPath: 'puzzle_trailer.png',
                   key: const Key('puzzle_card'),
                   onTap: (){
+                    final timerState = Provider.of<TimerState>(context, listen: false);
+                    timerState.value = false;
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const PuzzlePage()),
