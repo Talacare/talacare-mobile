@@ -1,5 +1,3 @@
-import 'package:flame/game.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/pages/home_page.dart';

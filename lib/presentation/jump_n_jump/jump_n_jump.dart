@@ -24,8 +24,6 @@ class JumpNJump extends FlameGame
 
   int screenBufferSpace = 100;
 
-  Map<String, Widget> overlayWidgets = {};
-
   @override
   Future<void> onLoad() async {
     await add(world);

@@ -1,6 +1,5 @@
 import 'package:flame/components.dart';
 import 'package:flame_test/flame_test.dart';
-import 'package:flutter/services.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
@@ -27,7 +26,7 @@ void main() {
     jumpNJumpGameTester.test('Test Player movement to right', (game) async {
       game.dash.handleControlButtonPress(DashDirection.right, true);
       game.update(0.1);
-      
+
       expect(game.dash.current, equals(DashDirection.right));
       expect(game.dash.velocity.x, greaterThan(0));
 
