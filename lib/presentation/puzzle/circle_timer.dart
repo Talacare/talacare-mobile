@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:provider/provider.dart';
+import 'package:talacare/presentation/puzzle/timer_state.dart';
 
 class CircleTimer extends StatefulWidget {
   const CircleTimer({Key? key}) : super(key: key);
@@ -19,7 +21,14 @@ class _CircleTimerState extends State<CircleTimer>
     _controller = AnimationController(
       vsync: this,
       duration: Duration(seconds: _start),
-    )..reverse(from: 1.0);
+    );
+    _controller.reverse(from: 1.0);
+    _controller.addListener(() {
+      if (_controller.value == 0.0) {
+        final timerState = Provider.of<TimerState>(context, listen: false);
+        timerState.value = true;
+      }
+    });
   }
 
   @override

@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
+import 'package:provider/provider.dart';
+import 'package:talacare/presentation/puzzle/timer_state.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+
+  runApp(
+    ChangeNotifierProvider<TimerState>(
+      create: (context) => TimerState(initialValue: false),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
