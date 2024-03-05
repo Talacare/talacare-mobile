@@ -7,7 +7,7 @@ class GameManager extends Component with HasGameRef<JumpNJump> {
 
   ValueNotifier<int> score = ValueNotifier(0);
   ValueNotifier<int> highScore = ValueNotifier(0);
-  
+
   GameState state = GameState.playing;
 
   bool get isPlaying => state == GameState.playing;

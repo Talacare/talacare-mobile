@@ -15,7 +15,7 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left : 50, right: 50, top: 20, bottom: 30),
+      padding: const EdgeInsets.only(left: 50, right: 50, top: 20, bottom: 30),
       child: Column(
         children: [
           buildStarRow(),

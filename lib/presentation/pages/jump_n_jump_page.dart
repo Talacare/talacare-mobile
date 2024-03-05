@@ -1,12 +1,11 @@
 import 'package:flame/game.dart' hide Route;
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/player.dart';
 import 'package:talacare/presentation/widgets/game_over_modal.dart';
 
 class JumpNJumpPage extends StatefulWidget {
-  const JumpNJumpPage({Key? key}) : super(key: key);
+  const JumpNJumpPage({super.key});
 
   @override
   _JumpNJumpPageState createState() => _JumpNJumpPageState();
@@ -50,15 +49,15 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
                   game.dash.handleControlButtonPress(DashDirection.left, true),
               onPointerUp: (_) =>
                   game.dash.handleControlButtonPress(DashDirection.left, false),
-              child: Image.asset('assets/images/jump_n_jump/left_button.png'),
-              key: const Key('leftControlButton')),
+              key: const Key('leftControlButton'),
+              child: Image.asset('assets/images/jump_n_jump/left_button.png')),
           Listener(
             onPointerDown: (_) =>
                 game.dash.handleControlButtonPress(DashDirection.right, true),
             onPointerUp: (_) =>
                 game.dash.handleControlButtonPress(DashDirection.right, false),
-            child: Image.asset('assets/images/jump_n_jump/right_button.png'),
             key: const Key('rightControlButton'),
+            child: Image.asset('assets/images/jump_n_jump/right_button.png'),
           ),
         ],
       ),

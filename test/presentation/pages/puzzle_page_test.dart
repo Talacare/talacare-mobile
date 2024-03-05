@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 
 void main() {
-
   testWidgets('Check if time left is showing', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: PuzzlePage()));
 

@@ -6,7 +6,7 @@ void main() {
   group('JumpNJumpPage Widget Tests', () {
     testWidgets('Coin icon and score display are correctly shown',
         (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(home: JumpNJumpPage()));
+      await tester.pumpWidget(const MaterialApp(home: JumpNJumpPage()));
 
       expect(find.byKey(const Key('coinIcon')), findsOneWidget);
 
@@ -15,14 +15,14 @@ void main() {
 
     testWidgets('High score display is correctly shown',
         (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(home: JumpNJumpPage()));
+      await tester.pumpWidget(const MaterialApp(home: JumpNJumpPage()));
 
       expect(find.byKey(const Key('highScoreDisplay')), findsOneWidget);
     });
 
     testWidgets('Control buttons are correctly shown',
         (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(home: JumpNJumpPage()));
+      await tester.pumpWidget(const MaterialApp(home: JumpNJumpPage()));
 
       expect(find.byKey(const Key('leftControlButton')), findsOneWidget);
 
@@ -31,7 +31,7 @@ void main() {
 
     testWidgets('Simulating control button presses does not throw errors',
         (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(home: JumpNJumpPage()));
+      await tester.pumpWidget(const MaterialApp(home: JumpNJumpPage()));
 
       final Finder leftButton = find.byKey(const Key('leftControlButton'));
       final TestGesture leftGesture =

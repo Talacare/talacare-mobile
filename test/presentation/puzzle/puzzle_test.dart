@@ -4,14 +4,13 @@ import 'package:talacare/presentation/puzzle/puzzle.dart';
 
 void main() {
   group('PuzzleWidget Tests', () {
-
     testWidgets('PuzzleWidget Test', (WidgetTester tester) async {
       bool isSolved = false;
 
       void handleSolve() {
         isSolved = true;
       }
-      
+
       final Widget puzzleWidget = PuzzleWidget(
         image: Image.asset(
           'assets/images/perawat.png',

@@ -66,42 +66,43 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
     for (var i = 0; i < widget.rows; i++) {
       for (var j = 0; j < widget.cols; j++) {
         int idx = i * widget.cols + j;
-        if (!(shuffledPieces[idx].rowPos == i && shuffledPieces[idx].colPos == j)) {
+        if (!(shuffledPieces[idx].rowPos == i &&
+            shuffledPieces[idx].colPos == j)) {
           isShuffled = true;
         }
       }
     }
-    
+
     return isShuffled;
   }
-  
+
   void _swapPieces(int rowPos, int colPos, int rowPos2, int colPos2) {
     setState(() {
       if (!(rowPos == rowPos2 && colPos == colPos2)) {
         DraggablePuzzlePiece temp = pieces[rowPos][colPos];
         pieces[rowPos][colPos] = DraggablePuzzlePiece(
-            image: widget.image,
-            rows: widget.rows,
-            cols: widget.cols,
-            rowId: pieces[rowPos2][colPos2].rowId,
-            colId: pieces[rowPos2][colPos2].colId,
-            rowPos: rowPos,
-            colPos: colPos,
-            onSwap: _swapPieces,
+          image: widget.image,
+          rows: widget.rows,
+          cols: widget.cols,
+          rowId: pieces[rowPos2][colPos2].rowId,
+          colId: pieces[rowPos2][colPos2].colId,
+          rowPos: rowPos,
+          colPos: colPos,
+          onSwap: _swapPieces,
         );
         pieces[rowPos2][colPos2] = DraggablePuzzlePiece(
-            image: widget.image,
-            rows: widget.rows,
-            cols: widget.cols,
-            rowId: temp.rowId,
-            colId: temp.colId,
-            rowPos: rowPos2,
-            colPos: colPos2,
-            onSwap: _swapPieces,
+          image: widget.image,
+          rows: widget.rows,
+          cols: widget.cols,
+          rowId: temp.rowId,
+          colId: temp.colId,
+          rowPos: rowPos2,
+          colPos: colPos2,
+          onSwap: _swapPieces,
         );
       }
     });
-    
+
     if (_checkSolved()) {
       widget.onSolved();
     }
@@ -117,7 +118,7 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
         }
       }
     }
-    
+
     return isSolved;
   }
 
@@ -131,7 +132,7 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
     return SizedBox(
       height: widget.image.height,
       width: widget.image.width,
-      child:  ListView.builder(
+      child: ListView.builder(
         itemCount: widget.rows,
         scrollDirection: Axis.vertical,
         itemBuilder: (_, row) => SizedBox(
@@ -205,7 +206,8 @@ class _DraggablePuzzlePieceState extends State<DraggablePuzzlePiece> {
         ),
         DragTarget<PuzzlePiecePos>(
           onAcceptWithDetails: (details) {
-            widget.onSwap(widget.rowPos, widget.colPos, details.data.rowPos, details.data.colPos);
+            widget.onSwap(widget.rowPos, widget.colPos, details.data.rowPos,
+                details.data.colPos);
           },
           builder: (context, candidates, rejects) => SizedBox(
             height: pieceHeight,
