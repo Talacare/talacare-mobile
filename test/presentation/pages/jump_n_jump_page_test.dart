@@ -29,15 +29,22 @@ void main() {
       expect(find.byKey(const Key('rightControlButton')), findsOneWidget);
     });
 
-    testWidgets('Tapping control buttons does not throw errors',
+    testWidgets('Simulating control button presses does not throw errors',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(home: JumpNJumpPage()));
 
-      // Tap the left control button
-      await tester.tap(find.byKey(const Key('leftControlButton')));
+      final Finder leftButton = find.byKey(const Key('leftControlButton'));
+      final TestGesture leftGesture =
+          await tester.startGesture(tester.getCenter(leftButton));
+      await tester.pump();
+      await leftGesture.up();
       await tester.pump();
 
-      await tester.tap(find.byKey(const Key('rightControlButton')));
+      final Finder rightButton = find.byKey(const Key('rightControlButton'));
+      final TestGesture rightGesture =
+          await tester.startGesture(tester.getCenter(rightButton));
+      await tester.pump();
+      await rightGesture.up();
       await tester.pump();
     });
   });

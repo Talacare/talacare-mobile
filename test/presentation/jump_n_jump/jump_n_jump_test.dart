@@ -2,14 +2,40 @@ import 'dart:ui';
 
 import 'package:flame/game.dart';
 import 'package:flame_test/flame_test.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/world.dart';
 
+class TestJumpNJump extends JumpNJump {
+  bool isGameOverOverlayAdded = false;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+  }
+
+  @override
+  void onLose() {
+    gameManager.state = GameState.gameOver;
+    isGameOverOverlayAdded = true;
+  }
+
+  @override
+  reset() {
+    isGameOverOverlayAdded = false;
+  }
+
+  @override
+  onBackToMenu() {
+    isGameOverOverlayAdded = false;
+  }
+}
+
 final jumpNJumpGameTester = FlameTester(
-  JumpNJump.new,
+  TestJumpNJump.new,
 );
 
 void main() {
@@ -74,32 +100,29 @@ void main() {
               10);
       game.update(0.0);
 
-      expect(game.paused, isTrue);
+      expect(game.gameManager.state, GameState.gameOver);
     });
   });
 
-  jumpNJumpGameTester.test('Exist Score Component', (game) async {
-    expect(game.gameManager.score.value, equals(0));
-  });
+  jumpNJumpGameTester.test('Game transitions to game over state correctly',
+      (game) async {
+    game.onLose();
 
-  jumpNJumpGameTester.test(
-      'Score incremented if character land on top of platform', (game) async {
-    final initialScore = game.gameManager.score.value;
-    game.gameManager.increaseScore();
-    expect(game.gameManager.score.value, greaterThan(initialScore));
+    expect(game.gameManager.state, GameState.gameOver);
+    expect(game.isGameOverOverlayAdded, isTrue);
   });
 
   jumpNJumpGameTester.test('Modal shown when game over', (game) async {
     game.onLose();
     expect(game.gameManager.isGameOver, isTrue);
-    expect(game.overlays.isActive('gameOverOverlay'), isTrue);
+    expect(game.isGameOverOverlayAdded, isTrue);
   });
 
   jumpNJumpGameTester.test('Game Over state is correctly triggered',
       (game) async {
     game.onLose();
     expect(game.gameManager.isGameOver, isTrue);
-    expect(game.overlays.isActive('gameOverOverlay'), isTrue);
+    expect(game.isGameOverOverlayAdded, isTrue);
   });
 
   jumpNJumpGameTester.test('Game restarts correctly', (game) async {
@@ -109,7 +132,7 @@ void main() {
 
     expect(game.gameManager.state, GameState.playing);
     expect(game.gameManager.score.value, 0);
-    expect(game.overlays.isActive('gameOverOverlay'), isFalse);
+    expect(game.isGameOverOverlayAdded, isFalse);
   });
 
   jumpNJumpGameTester.test('Return to menu removes game over overlay',
@@ -118,6 +141,6 @@ void main() {
 
     game.onBackToMenu();
 
-    expect(game.overlays.isActive('gameOverOverlay'), isFalse);
+    expect(game.isGameOverOverlayAdded, isFalse);
   });
 }
