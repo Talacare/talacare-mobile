@@ -85,12 +85,11 @@ class HomePage extends StatelessWidget {
                   title: 'Puzzle',
                   imgPath: 'puzzle_trailer.png',
                   key: const Key('puzzle_card'),
-                  onTap: (){
-                    final timerState = Provider.of<TimerState>(context, listen: false);
-                    timerState.value = false;
+                  onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PuzzlePage()),
+                      MaterialPageRoute(
+                          builder: (context) => const PuzzlePage()),
                     );
                   },
                 ),
