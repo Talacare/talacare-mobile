@@ -5,12 +5,12 @@ class PuzzleWidget extends StatefulWidget {
   final int rows, cols;
   final VoidCallback onSolved;
   const PuzzleWidget({
-    Key? key,
+    super.key,
     required this.image,
     required this.rows,
     required this.cols,
     required this.onSolved,
-  }) : super(key: key);
+  });
 
   @override
   State<PuzzleWidget> createState() => _PuzzleWidgetState();
@@ -154,7 +154,7 @@ class DraggablePuzzlePiece extends StatefulWidget {
   final int rowPos, colPos;
   final Function(int, int, int, int) onSwap;
   const DraggablePuzzlePiece({
-    Key? key,
+    super.key,
     required this.image,
     required this.rows,
     required this.cols,
@@ -163,7 +163,7 @@ class DraggablePuzzlePiece extends StatefulWidget {
     required this.rowPos,
     required this.colPos,
     required this.onSwap,
-  }) : super(key: key);
+  });
 
   @override
   State<DraggablePuzzlePiece> createState() => _DraggablePuzzlePieceState();
@@ -222,13 +222,13 @@ class PuzzlePiece extends StatefulWidget {
   final int rows, cols;
   final int rowId, colId;
   const PuzzlePiece({
-    Key? key,
+    super.key,
     required this.image,
     required this.rows,
     required this.cols,
     required this.rowId,
     required this.colId,
-  }) : super(key: key);
+  });
 
   @override
   State<PuzzlePiece> createState() => _PuzzlePieceState();
