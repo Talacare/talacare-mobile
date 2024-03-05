@@ -12,7 +12,7 @@ class _CircleTimerState extends State<CircleTimer>
     with TickerProviderStateMixin {
   late AnimationController _controller;
   final int _start = 60;
-  
+
   @override
   void initState() {
     super.initState();

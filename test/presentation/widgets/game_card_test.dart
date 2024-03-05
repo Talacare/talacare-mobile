@@ -12,7 +12,7 @@ void main() {
           key: const Key('game_card'),
           title: 'A Game',
           imgPath: 'puzzle_trailer.png',
-          onTap: (){},
+          onTap: () {},
         ),
       ),
     );

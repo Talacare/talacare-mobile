@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:talacare/presentation/puzzle/puzzle_info.dart';
 
 void main() {
-  testWidgets('PuzzleInfo widget displays correct number of stars and sample answer',
+  testWidgets(
+      'PuzzleInfo widget displays correct number of stars and sample answer',
       (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: PuzzleInfo()));
 

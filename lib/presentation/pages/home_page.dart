@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
+import 'package:talacare/presentation/pages/puzzle_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -90,7 +91,12 @@ class HomePage extends StatelessWidget {
                   title: 'Puzzle',
                   imgPath: 'puzzle_trailer.png',
                   key: const Key('puzzle_card'),
-                  onTap: () {},
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const PuzzlePage()),
+                    );
+                  },
                 ),
               ],
             ),
