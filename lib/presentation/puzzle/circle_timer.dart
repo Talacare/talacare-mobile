@@ -30,6 +30,8 @@ class _CircleTimerState extends State<CircleTimer>
         AnimatedBuilder(
           animation: _controller,
           builder: (context, child) {
+            final remainingTime = (_start * _controller.value).ceil();
+
             return Stack(
               alignment: Alignment.center,
               children: [
@@ -45,7 +47,7 @@ class _CircleTimerState extends State<CircleTimer>
                   ),
                 ),
                 Text(
-                  '${(_start * _controller.value).ceil()}',
+                  '$remainingTime',
                   style: const TextStyle(
                       fontSize: 30,
                       color: Colors.white,
