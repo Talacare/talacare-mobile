@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
 
 class CircleTimer extends StatefulWidget {
-  const CircleTimer({Key? key}) : super(key: key);
+  const CircleTimer({super.key});
 
   @override
   State<CircleTimer> createState() => _CircleTimerState();
