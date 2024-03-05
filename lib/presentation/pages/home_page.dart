@@ -78,7 +78,6 @@ class HomePage extends StatelessWidget {
                   imgPath: 'jump_n_jump_trailer.png',
                   key: const Key('jump_n_jump_card'),
                   onTap: () {
-                    // Navigator.of(context).pushNamed('/jump_n_jump');
                     Navigator.push(
                       context,
                       MaterialPageRoute(
