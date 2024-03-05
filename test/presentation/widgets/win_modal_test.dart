@@ -5,34 +5,34 @@ import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
 
 void main() {
+  late Widget nextInfo;
+
+  setUp(() async {
+    nextInfo = ChangeNotifierProvider<TimerState>(
+        create: (context) => TimerState(initialValue: true),
+        child: const MaterialApp(
+          home: Scaffold(
+            body: NextInfo(),
+          ),
+        ));
+  });
   group('Win Puzzle Modal Widget Tests', () {
     testWidgets('Verify All Components are showing', (tester) async {
-      await tester.pumpWidget(ChangeNotifierProvider<TimerState>(
-          create: (context) => TimerState(initialValue: true),
-          child: const MaterialApp(
-            home: Scaffold(
-              body: NextInfo(),
-            ),
-          )));
+      await tester.pumpWidget(nextInfo);
 
       expect(find.text('SUSTER'), findsOneWidget);
       expect(find.text('Lanjut'), findsOneWidget);
     });
 
     testWidgets('Button is clickable', (tester) async {
-      await tester.pumpWidget(ChangeNotifierProvider<TimerState>(
-          create: (context) => TimerState(initialValue: true),
-          child: const MaterialApp(
-            home: Scaffold(
-              body: NextInfo(),
-            ),
-          )));
+      await tester.pumpWidget(nextInfo);
       await tester.tap(find.byKey(const Key('nextButton')));
       await tester.pump();
     });
   });
 
-  testWidgets('Verify All Components are not showing when timerState is false', (tester) async {
+  testWidgets('Verify All Components are not showing when timerState is false',
+      (tester) async {
     await tester.pumpWidget(ChangeNotifierProvider<TimerState>(
         create: (context) => TimerState(initialValue: false),
         child: const MaterialApp(

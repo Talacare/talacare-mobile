@@ -18,6 +18,7 @@ void main() {
           home: CircleTimer(),
         ));
   });
+  
   testWidgets('CircleTimer widget has correct CircularProgressIndicator color',
       (WidgetTester tester) async {
     await tester.pumpWidget(circleTimer);
