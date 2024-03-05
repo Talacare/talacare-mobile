@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -77,7 +78,12 @@ class HomePage extends StatelessWidget {
                   imgPath: 'jump_n_jump_trailer.png',
                   key: const Key('jump_n_jump_card'),
                   onTap: () {
-                    Navigator.of(context).pushNamed('/jump_n_jump');
+                    // Navigator.of(context).pushNamed('/jump_n_jump');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const JumpNJumpPage()),
+                    );
                   },
                 ),
                 const Gap(30),
