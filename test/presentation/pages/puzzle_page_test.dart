@@ -11,21 +11,21 @@ void main() {
     );
   });
 
-  testWidgets('Check sisa waktu muncul', (tester) async {
+  testWidgets('Check if time left is showing', (tester) async {
     await tester.pumpWidget(puzzlePage);
 
     final findWaktu = find.text('SISA WAKTU');
-    expect(findWaktu, findsOneWidget, reason: 'Sisa waktu harus muncul');
+    expect(findWaktu, findsOneWidget, reason: 'Time left should be visible');
   });
 
-  testWidgets('Check skor muncul', (tester) async {
+  testWidgets('Check if score is showing', (tester) async {
     await tester.pumpWidget(puzzlePage);
 
     final findSkor = find.text('TERTINGGI: 75');
-    expect(findSkor, findsOneWidget, reason: 'Skor harus muncul');
+    expect(findSkor, findsOneWidget, reason: 'Score should be visible');
   });
 
-  testWidgets('Check gambar muncul', (tester) async {
+  testWidgets('Check if images is showing', (tester) async {
     await tester.pumpWidget(puzzlePage);
 
     expect(
@@ -36,13 +36,14 @@ void main() {
               (widget.image as AssetImage).assetName ==
                   'assets/images/perawat.png',
         ),
-        findsOneWidget);
+        findsOneWidget,
+        reason: 'Image should be visible');
   });
 
-  testWidgets('Check tombol lanjut muncul', (tester) async {
+  testWidgets('Check if next button is showing', (tester) async {
     await tester.pumpWidget(puzzlePage);
 
     final findLanjut = find.byKey(const Key('nextButton'));
-    expect(findLanjut, findsOneWidget, reason: 'Tombol lanjut muncul');
+    expect(findLanjut, findsOneWidget, reason: 'Next button should be visible');
   });
 }
