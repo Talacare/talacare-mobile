@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/services.dart';
 
 import '../jump_n_jump.dart';
 import 'platform.dart';
@@ -29,6 +28,9 @@ class Player extends SpriteGroupComponent<DashDirection>
   final int movingLeftInput = -1;
   final int movingRightInput = 1;
 
+  bool _isMovingLeft = false;
+  bool _isMovingRight = false;
+
   @override
   Future<void> onLoad() async {
     await super.onLoad();
@@ -49,6 +51,14 @@ class Player extends SpriteGroupComponent<DashDirection>
 
   @override
   void update(double dt) {
+    if (_isMovingLeft) {
+      _hAxisInput = movingLeftInput;
+    } else if (_isMovingRight) {
+      _hAxisInput = movingRightInput;
+    } else {
+      _hAxisInput = 0;
+    }
+
     velocity.x = _hAxisInput * moveSpeed;
     velocity.y += _gravity;
 
@@ -61,22 +71,6 @@ class Player extends SpriteGroupComponent<DashDirection>
 
     position += velocity * dt;
     super.update(dt);
-  }
-
-  @override
-  // ignore: deprecated_member_use
-  bool onKeyEvent(RawKeyEvent? event, Set<LogicalKeyboardKey> keysPressed) {
-    _hAxisInput = 0;
-
-    if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-      moveLeft();
-    }
-
-    if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-      moveRight();
-    }
-
-    return true;
   }
 
   bool get isMovingDown => velocity.y > 0;
@@ -104,19 +98,17 @@ class Player extends SpriteGroupComponent<DashDirection>
     velocity.y = -jumpSpeed * 1.5;
   }
 
-  void moveLeft() {
-    _hAxisInput = 0;
-    current = DashDirection.left;
-    _hAxisInput += movingLeftInput;
-  }
-
-  void moveRight() {
-    _hAxisInput = 0;
-    current = DashDirection.right;
-    _hAxisInput += movingRightInput;
-  }
-
-  void stop() {
-    _hAxisInput = 0;
+  void handleControlButtonPress(DashDirection direction, bool isPressed) {
+    if (direction == DashDirection.left) {
+      _isMovingLeft = isPressed;
+      if (isPressed) {
+        current = DashDirection.left;
+      }
+    } else if (direction == DashDirection.right) {
+      _isMovingRight = isPressed;
+      if (isPressed) {
+        current = DashDirection.right;
+      }
+    }
   }
 }
