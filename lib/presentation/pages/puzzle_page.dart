@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/presentation/puzzle/puzzle_info.dart';
-import 'package:talacare/presentation/widgets/win_modal.dart';
+import 'package:talacare/presentation/widgets/next_info.dart';
 
 class PuzzlePage extends StatelessWidget {
   const PuzzlePage({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class PuzzlePage extends StatelessWidget {
           children: [
             PuzzleInfo(),
             Gap(500),
-            WinModal(),
+            NextInfo(),
           ]
         ),
       )

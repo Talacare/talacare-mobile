@@ -11,17 +11,39 @@ void main() {
     );
   });
 
-  testWidgets('Check sisa waktu muncul', (tester) async {
+  testWidgets('Check if time left is showing', (tester) async {
     await tester.pumpWidget(puzzlePage);
 
     final findWaktu = find.text('SISA WAKTU');
-    expect(findWaktu, findsOneWidget, reason: 'Sisa waktu harus muncul');
+    expect(findWaktu, findsOneWidget, reason: 'Time left should be visible');
   });
 
-  testWidgets('Check skor muncul', (tester) async {
+  testWidgets('Check if score is showing', (tester) async {
     await tester.pumpWidget(puzzlePage);
 
     final findSkor = find.text('TERTINGGI: 75');
-    expect(findSkor, findsOneWidget, reason: 'Skor harus muncul');
+    expect(findSkor, findsOneWidget, reason: 'Score should be visible');
+  });
+
+  testWidgets('Check if images is showing', (tester) async {
+    await tester.pumpWidget(puzzlePage);
+
+    expect(
+        find.byWidgetPredicate(
+          (Widget widget) =>
+              widget is Image &&
+              widget.image is AssetImage &&
+              (widget.image as AssetImage).assetName ==
+                  'assets/images/perawat.png',
+        ),
+        findsOneWidget,
+        reason: 'Image should be visible');
+  });
+
+  testWidgets('Check if next button is showing', (tester) async {
+    await tester.pumpWidget(puzzlePage);
+
+    final findLanjut = find.byKey(const Key('nextButton'));
+    expect(findLanjut, findsOneWidget, reason: 'Next button should be visible');
   });
 }

@@ -16,27 +16,31 @@ void main() {
     await mockNetworkImagesFor(() => tester.pumpWidget(homePage));
 
     final findGreeting = find.byKey(const Key('greeting'));
-    expect(findGreeting, findsOneWidget, reason: 'The greeting text should be visible');
+    expect(findGreeting, findsOneWidget,
+        reason: 'The greeting text should be visible');
   });
 
   testWidgets('Verify the user profile picture is showing', (tester) async {
     await mockNetworkImagesFor(() => tester.pumpWidget(homePage));
 
     final findGreeting = find.byKey(const Key('user_picture'));
-    expect(findGreeting, findsOneWidget, reason: 'The user profile picture should be visible');
+    expect(findGreeting, findsOneWidget,
+        reason: 'The user profile picture should be visible');
   });
 
   testWidgets('Verify the Jump N Jump card is showing', (tester) async {
     await mockNetworkImagesFor(() => tester.pumpWidget(homePage));
 
     final findGreeting = find.byKey(const Key('jump_n_jump_card'));
-    expect(findGreeting, findsOneWidget, reason: 'The Jump N Jump card should be visible');
+    expect(findGreeting, findsOneWidget,
+        reason: 'The Jump N Jump card should be visible');
   });
 
   testWidgets('Verify the Puzzle card is showing', (tester) async {
     await mockNetworkImagesFor(() => tester.pumpWidget(homePage));
 
     final findGreeting = find.byKey(const Key('puzzle_card'));
-    expect(findGreeting, findsOneWidget, reason: 'The Puzzle card should be visible');
+    expect(findGreeting, findsOneWidget,
+        reason: 'The Puzzle card should be visible');
   });
 }
