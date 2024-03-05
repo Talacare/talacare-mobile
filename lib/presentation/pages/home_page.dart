@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 
@@ -76,7 +77,13 @@ class HomePage extends StatelessWidget {
                   title: 'Jump N Jump',
                   imgPath: 'jump_n_jump_trailer.png',
                   key: const Key('jump_n_jump_card'),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const JumpNJumpPage()),
+                    );
+                  },
                 ),
                 const Gap(30),
                 GameCard(
