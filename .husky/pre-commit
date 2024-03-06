@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run Flutter tests
+flutter test
+
+
+# Run Flutter analyze for static analysis
+flutter analyze
+
+
+# Run Dart format to ensure code formatting
+dart format --set-exit-if-changed .
+
+
+# If any of the commands fail, exit with a non-zero status
+status=$?
+if [ $status -ne 0 ]; then
+  echo "Code checks or tests failed. Please fix the issues before committing."
+  exit $status
+fi
+
+
+# If all checks pass, allow the commit
+exit 0
