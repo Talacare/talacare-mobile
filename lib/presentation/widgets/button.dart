@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/core/utils/button_color_util.dart';
 
 class Button extends StatelessWidget {
   final String text;
-  final Color color;
-  final Color firstShadowColor;
-  final Color secondShadowColor;
+  final ButtonColorScheme colorScheme;
+  final void Function()? onTap;
 
   const Button({
-    Key? key,
+    super.key,
     required this.text,
-    required this.color,
-    required this.firstShadowColor,
-    required this.secondShadowColor,
-  }) : super(key: key);
+    this.onTap,
+    this.colorScheme = ButtonColorScheme.green,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final bodyColor = ButtonColorUtil.getBodyColor(colorScheme);
+    final firstShadowColor = ButtonColorUtil.getFirstShadowColor(colorScheme);
+    final secondShadowColor = ButtonColorUtil.getSecondShadowColor(colorScheme);
+
     return InkWell(
-      onTap: () {
-        Navigator.of(context).pop();
-      },
+      onTap: onTap,
       child: SizedBox(
         width: 282,
         height: 48,
@@ -40,7 +42,7 @@ class Button extends StatelessWidget {
                         width: 282,
                         height: 48,
                         decoration: ShapeDecoration(
-                          color: color,
+                          color: bodyColor,
                           shape: RoundedRectangleBorder(
                             side: const BorderSide(
                               width: 2,

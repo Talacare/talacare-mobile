@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
+import 'package:talacare/presentation/pages/puzzle_page.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   Widget _buildHeader() {
     return Row(
@@ -71,16 +73,30 @@ class HomePage extends StatelessWidget {
               children: [
                 _buildHeader(),
                 const Gap(40),
-                const GameCard(
+                GameCard(
                   title: 'Jump N Jump',
                   imgPath: 'jump_n_jump_trailer.png',
-                  key: Key('jump_n_jump_card'),
+                  key: const Key('jump_n_jump_card'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const JumpNJumpPage()),
+                    );
+                  },
                 ),
                 const Gap(30),
-                const GameCard(
+                GameCard(
                   title: 'Puzzle',
                   imgPath: 'puzzle_trailer.png',
-                  key: Key('puzzle_card'),
+                  key: const Key('puzzle_card'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PuzzlePage()),
+                    );
+                  },
                 ),
               ],
             ),

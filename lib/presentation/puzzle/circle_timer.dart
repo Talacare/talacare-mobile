@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:provider/provider.dart';
+import 'package:talacare/presentation/puzzle/timer_state.dart';
 
 class CircleTimer extends StatefulWidget {
-  const CircleTimer({Key? key}) : super(key: key);
+  const CircleTimer({super.key});
 
   @override
   State<CircleTimer> createState() => _CircleTimerState();
@@ -12,14 +14,21 @@ class _CircleTimerState extends State<CircleTimer>
     with TickerProviderStateMixin {
   late AnimationController _controller;
   final int _start = 60;
-  
+
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
       duration: Duration(seconds: _start),
-    )..reverse(from: 1.0);
+    )
+      ..reverse(from: 1.0)
+      ..addListener(() {
+        if (_controller.value == 0.0) {
+          final timerState = Provider.of<TimerState>(context, listen: false);
+          timerState.value = true;
+        }
+      });
   }
 
   @override
@@ -30,6 +39,8 @@ class _CircleTimerState extends State<CircleTimer>
         AnimatedBuilder(
           animation: _controller,
           builder: (context, child) {
+            final remainingTime = (_start * _controller.value).ceil();
+
             return Stack(
               alignment: Alignment.center,
               children: [
@@ -45,7 +56,7 @@ class _CircleTimerState extends State<CircleTimer>
                   ),
                 ),
                 Text(
-                  '${(_start * _controller.value).ceil()}',
+                  '$remainingTime',
                   style: const TextStyle(
                       fontSize: 30,
                       color: Colors.white,

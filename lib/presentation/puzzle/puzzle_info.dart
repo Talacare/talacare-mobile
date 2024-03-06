@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:talacare/presentation/puzzle/circle_timer.dart';
 
 class PuzzleInfo extends StatefulWidget {
-  const PuzzleInfo({Key? key}) : super(key: key);
+  const PuzzleInfo({super.key});
 
   @override
   State<PuzzleInfo> createState() => _PuzzleInfoState();
@@ -15,7 +15,7 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(50),
+      padding: const EdgeInsets.only(left: 50, right: 50, top: 20, bottom: 30),
       child: Column(
         children: [
           buildStarRow(),
