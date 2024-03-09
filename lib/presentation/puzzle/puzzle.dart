@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:talacare/presentation/puzzle/timer_state.dart';
 
 class PuzzleWidget extends StatefulWidget {
   final Image image;
   final int rows, cols;
-  final VoidCallback onSolved;
   const PuzzleWidget({
     super.key,
     required this.image,
     required this.rows,
     required this.cols,
-    required this.onSolved,
   });
 
   @override
@@ -104,7 +104,8 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
     });
 
     if (_checkSolved()) {
-      widget.onSolved();
+      final timerState = Provider.of<TimerState>(context, listen: false);
+      timerState.value = true;
     }
   }
 
