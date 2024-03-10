@@ -1,5 +1,6 @@
 import 'package:flame/game.dart' hide Route;
 import 'package:flutter/material.dart';
+import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/player.dart';
 import 'package:talacare/presentation/widgets/game_over_modal.dart';
@@ -19,8 +20,10 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
   void initState() {
     super.initState();
     game = JumpNJump(onBackToMenuCallback: () {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
     });
   }
 

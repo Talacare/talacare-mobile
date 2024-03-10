@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
-import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
@@ -62,10 +61,11 @@ class _NextInfoState extends State<NextInfo> {
               text: 'Lanjut',
               colorScheme: ButtonColorScheme.purple,
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const HomePage()),
+                // );
+                Navigator.pop(context);
               },
             )
           ]),

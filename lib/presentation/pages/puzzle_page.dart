@@ -26,6 +26,7 @@ class PuzzlePage extends StatelessWidget {
             children: [
               const PuzzleInfo(),
               PuzzleWidget(
+                key: const Key("Image"),
                 image: Image.asset('assets/images/perawat.png',
                   height: 300,
                   width: 300,
