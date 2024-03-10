@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:talacare/presentation/puzzle/complete_state.dart';
 import 'package:talacare/presentation/puzzle/puzzle.dart';
 import 'package:talacare/presentation/puzzle/puzzle_info.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
@@ -10,8 +11,15 @@ class PuzzlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TimerState>(
-      create: (context) => TimerState(initialValue: false),
+    return MultiProvider (
+      providers: [
+        ChangeNotifierProvider<TimerState>(
+          create: (context) => TimerState(initialValue: false),
+        ),
+        ChangeNotifierProvider<CompleteState>(
+          create: (context) => CompleteState(initialValue: false),
+        ),
+      ],
       child: Scaffold(
         body: SingleChildScrollView(
           child: Column(

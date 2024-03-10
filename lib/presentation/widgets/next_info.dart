@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
@@ -15,10 +16,10 @@ class _NextInfoState extends State<NextInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final timerState = Provider.of<TimerState>(context);
+    final finishState = Provider.of<TimerState>(context);
 
     return Visibility(
-      visible: timerState.value,
+      visible: finishState.value,
       child: Container(
         padding: const EdgeInsets.only(top: 20, bottom: 20),
         child: Center(
@@ -61,7 +62,10 @@ class _NextInfoState extends State<NextInfo> {
               text: 'Lanjut',
               colorScheme: ButtonColorScheme.purple,
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
               },
             )
           ]),

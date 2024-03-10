@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:talacare/presentation/puzzle/complete_state.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
 
 class PuzzleWidget extends StatefulWidget {
@@ -104,8 +105,11 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
     });
 
     if (_checkSolved()) {
-      final timerState = Provider.of<TimerState>(context, listen: false);
-      timerState.value = true;
+      final clearState = Provider.of<TimerState>(context, listen: false);
+      clearState.value = true;
+
+      final finishState = Provider.of<CompleteState>(context, listen: false);
+      finishState.value = true;
     }
   }
 
