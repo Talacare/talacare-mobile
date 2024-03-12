@@ -61,10 +61,6 @@ class _NextInfoState extends State<NextInfo> {
               text: 'Lanjut',
               colorScheme: ButtonColorScheme.purple,
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const HomePage()),
-                // );
                 Navigator.pop(context);
               },
             )

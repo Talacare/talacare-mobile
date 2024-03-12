@@ -12,6 +12,7 @@ void main() {
           key: const Key('game_card'),
           title: 'A Game',
           imgPath: 'puzzle_trailer.png',
+          buttonName: "test_game_card",
           onTap: () {},
         ),
       ),
@@ -37,7 +38,7 @@ void main() {
   testWidgets('Verify the play button is showing', (tester) async {
     await tester.pumpWidget(gameCard);
 
-    final findImage = find.byKey(const Key('play_button'));
+    final findImage = find.byKey(const Key('test_game_card'));
     expect(findImage, findsOneWidget,
         reason: 'The play button should be visible');
   });

@@ -77,6 +77,7 @@ class HomePage extends StatelessWidget {
                   title: 'Jump N Jump',
                   imgPath: 'jump_n_jump_trailer.png',
                   key: const Key('jump_n_jump_card'),
+                  buttonName: "jump_n_jump_button",
                   onTap: () {
                     Navigator.push(
                       context,
@@ -90,6 +91,7 @@ class HomePage extends StatelessWidget {
                   title: 'Puzzle',
                   imgPath: 'puzzle_trailer.png',
                   key: const Key('puzzle_card'),
+                  buttonName: "puzzle_button",
                   onTap: () {
                     Navigator.push(
                       context,
