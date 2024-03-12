@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/puzzle/circle_timer.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
+import 'package:talacare/presentation/puzzle/complete_state.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
 
 class MockTimerState extends Mock implements TimerState {}
@@ -12,11 +13,18 @@ void main() {
   late Widget circleTimer;
 
   setUp(() async {
-    circleTimer = ChangeNotifierProvider<TimerState>(
-        create: (context) => TimerState(initialValue: true),
-        child: const MaterialApp(
-          home: CircleTimer(),
-        ));
+    circleTimer = MultiProvider (
+      providers: [
+        ChangeNotifierProvider<TimerState>(
+          create: (context) => TimerState(initialValue: true),
+        ),
+        ChangeNotifierProvider<CompleteState>(
+          create: (context) => CompleteState(initialValue: false),
+        ),
+      ],
+      child: const MaterialApp(
+        home: CircleTimer(),
+      ));
   });
 
   testWidgets('CircleTimer widget has correct CircularProgressIndicator color',
@@ -63,10 +71,19 @@ void main() {
     final timerState = TimerState(initialValue: false);
 
     await tester.pumpWidget(
-      ChangeNotifierProvider<TimerState>(
-        create: (_) => timerState,
-        child: const MaterialApp(home: CircleTimer()),
-      ),
+      MultiProvider (
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+            create: (_) => timerState,
+          ),
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: false),
+          ),
+        ],
+        child: const MaterialApp(
+          home: CircleTimer(),
+        )
+      )
     );
 
     expect(timerState.value, false);
