@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
+import 'package:talacare/presentation/puzzle/complete_state.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
 
 class CircleTimer extends StatefulWidget {
@@ -14,7 +15,6 @@ class _CircleTimerState extends State<CircleTimer>
     with TickerProviderStateMixin {
   late AnimationController _controller;
   final int _start = 60;
-
   @override
   void initState() {
     super.initState();
@@ -33,6 +33,8 @@ class _CircleTimerState extends State<CircleTimer>
 
   @override
   Widget build(BuildContext context) {
+    final finish = Provider.of<CompleteState>(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -40,6 +42,10 @@ class _CircleTimerState extends State<CircleTimer>
           animation: _controller,
           builder: (context, child) {
             final remainingTime = (_start * _controller.value).ceil();
+
+            if (finish.value) {
+              _controller.stop();
+            }
 
             return Stack(
               alignment: Alignment.center,
