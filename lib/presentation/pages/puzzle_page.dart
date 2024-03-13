@@ -11,23 +11,24 @@ class PuzzlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider (
-      providers: [
-        ChangeNotifierProvider<TimerState>(
-          create: (context) => TimerState(initialValue: false),
-        ),
-        ChangeNotifierProvider<CompleteState>(
-          create: (context) => CompleteState(initialValue: false),
-        ),
-      ],
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+            create: (context) => TimerState(initialValue: false),
+          ),
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: false),
+          ),
+        ],
+        child: Scaffold(
+            body: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(children: [
               const PuzzleInfo(),
               PuzzleWidget(
                 key: const Key("Image"),
-                image: Image.asset('assets/images/perawat.png',
+                image: Image.asset(
+                  'assets/images/perawat.png',
                   height: 300,
                   width: 300,
                 ),
@@ -35,10 +36,8 @@ class PuzzlePage extends StatelessWidget {
                 cols: 3,
               ),
               const NextInfo(),
-            ]
+            ]),
           ),
-        )
-      )
-    );
+        )));
   }
 }
