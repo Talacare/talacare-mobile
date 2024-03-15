@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/presentation/pages/home_page.dart';
+import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
+import 'package:talacare/presentation/widgets/game_over_modal.dart';
 
 class NextInfo extends StatefulWidget {
   const NextInfo({super.key});
@@ -16,7 +19,7 @@ class _NextInfoState extends State<NextInfo> {
   @override
   Widget build(BuildContext context) {
     final finishState = Provider.of<TimerState>(context);
-
+    
     return Visibility(
       visible: finishState.value,
       child: Container(
@@ -61,7 +64,27 @@ class _NextInfoState extends State<NextInfo> {
               text: 'Lanjut',
               colorScheme: ButtonColorScheme.purple,
               onTap: () {
-                Navigator.pop(context);
+                showDialog(context: context, builder: (BuildContext context){
+                return
+                  GameOverModal(
+                    currentScore: 999,
+                    highestScore: 999,
+                    onMainLagiPressed: () {
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PuzzlePage()),
+                      );
+                    },
+                    onMenuPressed: () {
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage()),
+                      );
+                    },
+                  );
+                });
               },
             )
           ]),

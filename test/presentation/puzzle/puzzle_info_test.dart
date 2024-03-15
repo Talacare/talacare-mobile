@@ -19,7 +19,9 @@ void main() {
         ),
       ],
       child: const MaterialApp(
-        home: PuzzleInfo(),
+        home: PuzzleInfo(
+          starList: [1, 0, 0, 0]
+        ),
       ));
   });
 

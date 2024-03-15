@@ -15,7 +15,7 @@ void main() {
         create: (context) => TimerState(initialValue: true),
         child: const MaterialApp(
           home: Scaffold(
-            body: NextInfo(),
+            body: NextInfo(starList: [1, 0, 0, 0]),
           ),
         )
     );

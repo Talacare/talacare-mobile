@@ -5,21 +5,21 @@ import 'package:talacare/presentation/pages/puzzle_page.dart';
 void main() {
   group('Puzzle Page Tests', () {
     testWidgets('Check if time left is showing', (tester) async {
-      await tester.pumpWidget(const MaterialApp(home: PuzzlePage()));
+      await tester.pumpWidget(const MaterialApp(home: PuzzlePage(starList: [1, 0, 0, 0])));
 
       final findWaktu = find.text('SISA WAKTU');
       expect(findWaktu, findsOneWidget, reason: 'Time left should be visible');
     });
 
     testWidgets('Check if score is showing', (tester) async {
-      await tester.pumpWidget(const MaterialApp(home: PuzzlePage()));
+      await tester.pumpWidget(const MaterialApp(home: PuzzlePage(starList: [1, 0, 0, 0])));
 
       final findSkor = find.text('TERTINGGI: 75');
       expect(findSkor, findsOneWidget, reason: 'Score should be visible');
     });
 
     testWidgets('Check if images is showing', (tester) async {
-      await tester.pumpWidget(const MaterialApp(home: PuzzlePage()));
+      await tester.pumpWidget(const MaterialApp(home: PuzzlePage(starList: [1, 0, 0, 0])));
 
       expect(
           find.byKey(const Key("Image")),
@@ -28,7 +28,7 @@ void main() {
     });
 
     testWidgets('Check if next button is showing', (tester) async {
-      await tester.pumpWidget(const MaterialApp(home: PuzzlePage()));
+      await tester.pumpWidget(const MaterialApp(home: PuzzlePage(starList: [1, 0, 0, 0])));
 
       await tester.pump(const Duration(seconds: 60));
 
