@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/puzzle/complete_state.dart';
 import 'package:talacare/presentation/puzzle/puzzle.dart';
 import 'package:talacare/presentation/puzzle/puzzle_info.dart';
@@ -7,7 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
 
 class PuzzlePage extends StatelessWidget {
-  const PuzzlePage({super.key});
+  final StageState stageState;
+  
+  const PuzzlePage({super.key, required this.stageState});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,9 @@ class PuzzlePage extends StatelessWidget {
           child: SafeArea(
             child: Column(
               children: [
-                const PuzzleInfo(),
+                PuzzleInfo(
+                  stageState: stageState
+                ),
                 PuzzleWidget(
                   key: const Key("Image"),
                   image: Image.asset(
@@ -36,7 +41,9 @@ class PuzzlePage extends StatelessWidget {
                   rows: 3,
                   cols: 3,
                 ),
-                const NextInfo(),
+                NextInfo(
+                  stageState: stageState
+                ),
               ]
             ),
           ),

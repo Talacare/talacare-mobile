@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/puzzle/circle_timer.dart';
 
 class PuzzleInfo extends StatefulWidget {
-  const PuzzleInfo({super.key});
+  final StageState stageState;
+  
+  const PuzzleInfo({super.key, required this.stageState});
 
   @override
   State<PuzzleInfo> createState() => _PuzzleInfoState();
@@ -10,7 +13,6 @@ class PuzzleInfo extends StatefulWidget {
 
 class _PuzzleInfoState extends State<PuzzleInfo> {
   final String puzzleImg = 'assets/images/perawat.png';
-  final List<int> starList = [2, 2, 1, 0];
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +33,8 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
       children: [
         Row(
           children: List.generate(
-            starList.length,
-            (index) => buildStarImage(starList[index]),
+            widget.stageState.starList.length,
+            (index) => buildStarImage(widget.stageState.starList[index]),
           ),
         ),
         const Text(

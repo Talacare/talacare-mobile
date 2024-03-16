@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talacare/data/models/stage_state.dart';
+import 'package:talacare/presentation/puzzle/complete_state.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
@@ -11,14 +13,20 @@ void main() {
   late Widget nextInfo;
 
   setUp(() async {
-    nextInfo = ChangeNotifierProvider<TimerState>(
-        create: (context) => TimerState(initialValue: true),
-        child: const MaterialApp(
-          home: Scaffold(
-            body: NextInfo(starList: [1, 0, 0, 0]),
-          ),
+    nextInfo = MultiProvider (
+      providers :[
+        ChangeNotifierProvider<TimerState>(
+          create: (context) => TimerState(initialValue: true)
+        ),
+        ChangeNotifierProvider<CompleteState>(
+          create: (context) => CompleteState(initialValue: false),
         )
-    );
+      ],
+      child: MaterialApp(
+        home: Scaffold(
+          body: NextInfo(stageState: StageState([1,0,0,0], 1)),
+        ),
+      ));
   });
   
   group('Win Puzzle Modal Widget Tests', () {
@@ -35,14 +43,20 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: ChangeNotifierProvider<TimerState>(
-          create: (context) => TimerState(initialValue: true),
-          child: const MaterialApp(
-            home: Scaffold(
-              body: NextInfo(),
+          home: MultiProvider (
+          providers :[
+            ChangeNotifierProvider<TimerState>(
+              create: (context) => TimerState(initialValue: true)
             ),
-          )
-          ),
+            ChangeNotifierProvider<CompleteState>(
+              create: (context) => CompleteState(initialValue: false),
+            )
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: NextInfo(stageState: StageState([1,0,0,0], 1)),
+            ),
+          )),
           navigatorObservers: [mockObserver],
         ),
       );
@@ -55,13 +69,22 @@ void main() {
 
   testWidgets('Verify All Components are not showing when timerState is false',
       (tester) async {
-    await tester.pumpWidget(ChangeNotifierProvider<TimerState>(
-        create: (context) => TimerState(initialValue: false),
-        child: const MaterialApp(
-          home: Scaffold(
-            body: NextInfo(),
+    await tester.pumpWidget(
+      MultiProvider (
+        providers :[
+          ChangeNotifierProvider<TimerState>(
+            create: (context) => TimerState(initialValue: false)
           ),
-        )));
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: false),
+          )
+        ],
+        child: MaterialApp(
+          home: Scaffold(
+            body: NextInfo(stageState: StageState([1,0,0,0], 1)),
+          ),
+        ))
+      );
 
     expect(find.text('SUSTER'), findsNothing);
     expect(find.text('Lanjut'), findsNothing);

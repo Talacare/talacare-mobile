@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/puzzle/complete_state.dart';
 import 'package:talacare/presentation/puzzle/puzzle_info.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
@@ -18,9 +19,9 @@ void main() {
           create: (context) => CompleteState(initialValue: false),
         ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         home: PuzzleInfo(
-          starList: [1, 0, 0, 0]
+          stageState: StageState([1,0,0,0], 1)
         ),
       ));
   });
