@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:talacare/presentation/puzzle/circle_timer.dart';
+import 'package:talacare/presentation/puzzle/info/circle_timer.dart';
 
 class PuzzleInfo extends StatefulWidget {
   const PuzzleInfo({super.key});

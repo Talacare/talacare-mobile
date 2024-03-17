@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:provider/provider.dart';
-import 'package:talacare/presentation/puzzle/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class NextInfo extends StatefulWidget {
   const NextInfo({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:talacare/presentation/puzzle/complete_state.dart';
-import 'package:talacare/presentation/puzzle/timer_state.dart';
-import 'package:talacare/presentation/puzzle/draggable_puzzle_piece.dart';
-import 'package:talacare/presentation/puzzle/puzzle_piece_pos.dart';
+import 'package:talacare/presentation/puzzle/state/complete_state.dart';
+import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+import 'package:talacare/presentation/puzzle/game/draggable_puzzle_piece.dart';
+import 'package:talacare/presentation/puzzle/game/puzzle_piece_pos.dart';
 
 class PuzzleWidget extends StatefulWidget {
   final Image image;
@@ -23,6 +23,8 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
   late double pieceHeight, pieceWidth;
 
   List<List<DraggablePuzzlePiece>> pieces = [];
+
+  bool isGameSolved = false;
 
   void _generatePieces() {
     List<PuzzlePiecePos> shuffledPieces = [];
@@ -112,6 +114,11 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
 
       final finishState = Provider.of<CompleteState>(context, listen: false);
       finishState.value = true;
+
+      setState(() {
+        print("YES");
+        isGameSolved = true;
+      });
     }
   }
 
@@ -136,21 +143,36 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
 
     _generatePieces();
 
-    return SizedBox(
-      height: widget.image.height,
-      width: widget.image.width,
-      child: ListView.builder(
-        itemCount: widget.rows,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (_, row) => SizedBox(
-          height: pieceHeight,
+    return Stack(
+      children: [
+        SizedBox(
+          height: widget.image.height,
+          width: widget.image.width,
           child: ListView.builder(
-            itemCount: widget.cols,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (_, col) => pieces[row][col],
+            itemCount: widget.rows,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (_, row) => SizedBox(
+              height: pieceHeight,
+              child: ListView.builder(
+                itemCount: widget.cols,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (_, col) => pieces[row][col],
+              ),
+            ),
           ),
         ),
-      ),
+        if (isGameSolved)
+          Opacity(
+            opacity: 0,
+            child: SizedBox(
+              height: widget.image.height,
+              width: widget.image.width,
+              child: const ColoredBox(
+                color: Colors.white,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

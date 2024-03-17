@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:talacare/presentation/puzzle/puzzle_piece_pos.dart';
+import 'package:talacare/presentation/puzzle/game/puzzle_piece_pos.dart';
 
 void main() {
   group('PuzzlePiecePos Tests', () {

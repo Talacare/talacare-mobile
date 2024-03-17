@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
 import 'package:provider/provider.dart';
-import 'package:talacare/presentation/puzzle/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 import 'package:mockito/mockito.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}

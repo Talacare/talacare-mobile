@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:talacare/presentation/puzzle/puzzle_piece.dart';
+import 'package:talacare/presentation/puzzle/game/puzzle_piece.dart';
 
 void main() {
   group('PuzzlePiece Tests', () {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
-import 'package:talacare/presentation/puzzle/complete_state.dart';
-import 'package:talacare/presentation/puzzle/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/complete_state.dart';
+import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class CircleTimer extends StatefulWidget {
   const CircleTimer({super.key});

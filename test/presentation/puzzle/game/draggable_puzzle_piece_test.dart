@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:talacare/presentation/puzzle/draggable_puzzle_piece.dart';
-import 'package:talacare/presentation/puzzle/puzzle_piece.dart';
-import 'package:talacare/presentation/puzzle/puzzle_piece_pos.dart';
+import 'package:talacare/presentation/puzzle/game/draggable_puzzle_piece.dart';
+import 'package:talacare/presentation/puzzle/game/puzzle_piece.dart';
+import 'package:talacare/presentation/puzzle/game/puzzle_piece_pos.dart';
 
 void main() {
   group('DraggablePuzzlePiece Tests', () {

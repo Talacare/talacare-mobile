@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:talacare/presentation/puzzle/puzzle_piece.dart';
-import 'package:talacare/presentation/puzzle/puzzle_piece_pos.dart';
+import 'package:talacare/presentation/puzzle/game/puzzle_piece.dart';
+import 'package:talacare/presentation/puzzle/game/puzzle_piece_pos.dart';
 
 class DraggablePuzzlePiece extends StatefulWidget {
   final Image image;
@@ -40,12 +40,15 @@ class _DraggablePuzzlePieceState extends State<DraggablePuzzlePiece> {
             rowPos: widget.rowPos,
             colPos: widget.colPos,
           ),
-          feedback: PuzzlePiece(
-            image: widget.image,
-            rows: widget.rows,
-            cols: widget.cols,
-            rowId: widget.rowId,
-            colId: widget.colId,
+          feedback: Opacity(
+            opacity: 0.6,
+            child: PuzzlePiece(
+              image: widget.image,
+              rows: widget.rows,
+              cols: widget.cols,
+              rowId: widget.rowId,
+              colId: widget.colId,
+            ),
           ),
           childWhenDragging: SizedBox(
             height: pieceHeight,
