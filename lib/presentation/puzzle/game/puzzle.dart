@@ -116,7 +116,6 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
       finishState.value = true;
 
       setState(() {
-        print("YES");
         isGameSolved = true;
       });
     }
