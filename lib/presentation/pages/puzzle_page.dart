@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/data/models/stage_state.dart';
-import 'package:talacare/presentation/puzzle/complete_state.dart';
-import 'package:talacare/presentation/puzzle/puzzle.dart';
-import 'package:talacare/presentation/puzzle/puzzle_info.dart';
+import 'package:talacare/presentation/puzzle/state/complete_state.dart';
+import 'package:talacare/presentation/puzzle/game/puzzle.dart';
+import 'package:talacare/presentation/puzzle/info/puzzle_info.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
 import 'package:provider/provider.dart';
-import 'package:talacare/presentation/puzzle/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class PuzzlePage extends StatelessWidget {
   final StageState stageState;
