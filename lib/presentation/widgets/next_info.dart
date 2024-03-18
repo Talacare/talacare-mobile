@@ -11,8 +11,9 @@ import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class NextInfo extends StatefulWidget {
   final StageState stageState;
+  final String name;
   
-  const NextInfo({super.key, required this.stageState});
+  const NextInfo({super.key, required this.stageState, required this.name});
 
   @override
   State<NextInfo> createState() => _NextInfoState();
@@ -48,13 +49,13 @@ class _NextInfoState extends State<NextInfo> {
         padding: const EdgeInsets.only(top: 20, bottom: 20),
         child: Center(
           child: Column(children: [
-            const SizedBox(
+            SizedBox(
               width: 203,
               height: 50,
               child: Text(
-                'SUSTER',
+                widget.name,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white,
                     fontSize: 50,
                     fontFamily: 'Digitalt',
