@@ -6,6 +6,7 @@ import 'package:talacare/presentation/widgets/next_info.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/timer_state.dart';
 import 'package:mockito/mockito.dart';
+import 'package:network_image_mock/network_image_mock.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
@@ -38,7 +39,7 @@ void main() {
       expect(find.byKey(const Key('nextButton')), findsOneWidget);
     });
 
-    testWidgets('Button is clickable to Previous Page', (tester) async {
+    testWidgets('Button is clickable', (tester) async {
       final mockObserver = MockNavigatorObserver();
 
       await tester.pumpWidget(
@@ -46,10 +47,10 @@ void main() {
           home: MultiProvider (
           providers :[
             ChangeNotifierProvider<TimerState>(
-              create: (context) => TimerState(initialValue: true)
+              create: (context) => TimerState(initialValue: false)
             ),
             ChangeNotifierProvider<CompleteState>(
-              create: (context) => CompleteState(initialValue: false),
+              create: (context) => CompleteState(initialValue: true),
             )
           ],
           child: MaterialApp(
@@ -88,5 +89,107 @@ void main() {
 
     expect(find.text('SUSTER'), findsNothing);
     expect(find.text('Lanjut'), findsNothing);
+  });
+
+  testWidgets('Verify Game Over modal showing when in 4th stage',
+      (tester) async {
+    final mockObserver = MockNavigatorObserver();
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MultiProvider (
+          providers :[
+            ChangeNotifierProvider<TimerState>(
+              create: (context) => TimerState(initialValue: true)
+            ),
+            ChangeNotifierProvider<CompleteState>(
+              create: (context) => CompleteState(initialValue: false),
+            )
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: NextInfo(stageState: StageState([2,2,2,0], 4)),
+            ),
+          )),
+          navigatorObservers: [mockObserver],
+        ),
+      );
+
+      expect(find.byKey(const Key('nextButton')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('nextButton')));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const Key('game-over')), findsOneWidget);
+  });
+
+  testWidgets('Verify Game Over modal is clickable on Main Lagi',
+      (tester) async {
+    final mockObserver = MockNavigatorObserver();
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MultiProvider (
+          providers :[
+            ChangeNotifierProvider<TimerState>(
+              create: (context) => TimerState(initialValue: true)
+            ),
+            ChangeNotifierProvider<CompleteState>(
+              create: (context) => CompleteState(initialValue: false),
+            )
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: NextInfo(stageState: StageState([2,2,2,0], 4)),
+            ),
+          )),
+          navigatorObservers: [mockObserver],
+        ),
+      );
+
+      expect(find.byKey(const Key('nextButton')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('nextButton')));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const Key('game-over')), findsOneWidget);
+      expect(find.text('Main Lagi'), findsOneWidget);
+
+      await tester.tap(find.text('Main Lagi'));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const Key('Image')), findsOneWidget);
+  });
+
+  testWidgets('Verify Game Over modal is clickable on Menu',
+      (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MultiProvider (
+          providers :[
+            ChangeNotifierProvider<TimerState>(
+              create: (context) => TimerState(initialValue: true)
+            ),
+            ChangeNotifierProvider<CompleteState>(
+              create: (context) => CompleteState(initialValue: false),
+            )
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: NextInfo(stageState: StageState([2,2,2,0], 4)),
+            ),
+          )),
+        ),
+      );
+
+      expect(find.byKey(const Key('nextButton')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('nextButton')));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const Key('game-over')), findsOneWidget);
+      expect(find.text('Menu'), findsOneWidget);
+
+      await tester.tap(find.text('Menu'));
+      await mockNetworkImagesFor(() => tester.pumpAndSettle());
+
+      expect(find.byKey(const Key('greeting')), findsOneWidget);
   });
 }

@@ -101,6 +101,7 @@ class _NextInfoState extends State<NextInfo> {
                   showDialog(context: context, builder: (BuildContext context){
                   return
                     GameOverModal(
+                      key: const Key("game-over"),
                       currentScore: 999,
                       highestScore: 999,
                       onMainLagiPressed: () {

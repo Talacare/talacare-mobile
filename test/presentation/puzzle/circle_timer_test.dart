@@ -11,6 +11,7 @@ class MockTimerState extends Mock implements TimerState {}
 
 void main() {
   late Widget circleTimer;
+  late Widget circleCompleted;
 
   setUp(() async {
     circleTimer = MultiProvider (
@@ -20,6 +21,19 @@ void main() {
         ),
         ChangeNotifierProvider<CompleteState>(
           create: (context) => CompleteState(initialValue: false),
+        ),
+      ],
+      child: const MaterialApp(
+        home: CircleTimer(),
+      ));
+
+    circleCompleted = MultiProvider (
+      providers: [
+        ChangeNotifierProvider<TimerState>(
+          create: (context) => TimerState(initialValue: true),
+        ),
+        ChangeNotifierProvider<CompleteState>(
+          create: (context) => CompleteState(initialValue: true),
         ),
       ],
       child: const MaterialApp(
@@ -64,6 +78,15 @@ void main() {
 
     await tester.pump(const Duration(seconds: 70));
     expect(find.text('0'), findsOneWidget);
+  });
+
+  testWidgets(
+      'CircleTimer widget not decrement time if puzzle is solved',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(circleCompleted);
+
+    await tester.pump();
+    expect(find.text('60'), findsOneWidget);
   });
 
   testWidgets('CircleTimer sets timerState to true after 60 seconds',
