@@ -74,8 +74,6 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
       final lowestBloodBag = bloodBags.removeAt(0);
 
       lowestBloodBag.removeFromParent();
-
-      // gameRef.gameManager.increaseScore();
     }
     super.update(dt);
   }
