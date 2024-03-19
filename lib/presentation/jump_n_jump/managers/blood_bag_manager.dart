@@ -42,7 +42,7 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
   }
 
   double generateNextY() {
-    final currentHighestPlatformY = bloodBags.last.center.y;
+    final currentHighestBloodBagY = bloodBags.last.center.y;
     final distanceToNextY = minVerticalDistanceToNextBloodBag.toInt() +
         random
             .nextInt((maxVerticalDistanceToNextBloodBag -
@@ -50,18 +50,18 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
                 .floor())
             .toDouble();
 
-    return currentHighestPlatformY - 2 * distanceToNextY;
+    return currentHighestBloodBagY - 2 * distanceToNextY;
   }
 
   @override
   void update(double dt) {
-    final topOfLowestPlatform = bloodBags.first.position.y;
+    final topOfLowestBloodBag = bloodBags.first.position.y;
 
     final screenBottom = gameRef.dash.position.y +
         (gameRef.size.x / 2) +
         gameRef.screenBufferSpace;
 
-    if (topOfLowestPlatform > screenBottom) {
+    if (topOfLowestBloodBag > screenBottom) {
       var newBloodBagY = generateNextY();
 
       var newBloodBagX = random.nextInt(gameRef.size.x.floor() - 60).toDouble();
