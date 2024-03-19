@@ -42,7 +42,10 @@ dependencies:
   flutter_tts: ^3.8.5
   firebase_core: ^2.24.2
   flutter_dotenv: ^5.1.0
+  firebase_crashlytics: ^3.4.9
+  firebase_analytics: ^10.8.0
   firebase_performance: ^0.9.3+8
+  sentry_flutter: ^7.16.1
 
 dev_dependencies:
   flutter_test:
