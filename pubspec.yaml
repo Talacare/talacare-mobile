@@ -45,6 +45,7 @@ dependencies:
   firebase_crashlytics: ^3.4.9
   firebase_analytics: ^10.8.0
   firebase_performance: ^0.9.3+8
+  firebase_core_platform_interface: ^5.0.0
 
 dev_dependencies:
   flutter_test:
