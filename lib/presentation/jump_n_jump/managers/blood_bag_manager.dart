@@ -20,7 +20,7 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
     var currentY =
         gameRef.size.y - (random.nextInt(gameRef.size.y.floor()) / 3);
 
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 2; i++) {
       if (i != 0) {
         currentY = generateNextY();
       }
@@ -50,7 +50,10 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
                 .floor())
             .toDouble();
 
-    return currentHighestPlatformY - distanceToNextY;
+    print(distanceToNextY);
+    print(currentHighestPlatformY);
+    print(currentHighestPlatformY - distanceToNextY);
+    return currentHighestPlatformY - 2 * distanceToNextY;
   }
 
   @override
@@ -75,7 +78,7 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
 
       lowestBloodBag.removeFromParent();
 
-      gameRef.gameManager.increaseScore();
+      // gameRef.gameManager.increaseScore();
     }
     super.update(dt);
   }
