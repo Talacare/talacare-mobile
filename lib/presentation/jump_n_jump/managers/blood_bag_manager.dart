@@ -50,9 +50,6 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
                 .floor())
             .toDouble();
 
-    print(distanceToNextY);
-    print(currentHighestPlatformY);
-    print(currentHighestPlatformY - distanceToNextY);
     return currentHighestPlatformY - 2 * distanceToNextY;
   }
 

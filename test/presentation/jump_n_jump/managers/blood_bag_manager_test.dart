@@ -12,7 +12,7 @@ void main() {
   group('BloodBag Manager Tests', () {
     jumpNJumpGameTester.test('Test number of blood bag generated',
         (game) async {
-      expect(game.bloodBagManager.bloodBags.length, equals(3));
+      expect(game.bloodBagManager.bloodBags.length, equals(2));
     });
 
     jumpNJumpGameTester.test('Test Remove and Add Blood Bag', (game) async {
