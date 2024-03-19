@@ -28,8 +28,8 @@ class _NextInfoState extends State<NextInfo> {
 
     List<int> currentState = widget.stageState.starList;
 
-    if (!finishState.value) {
-      currentState[widget.stageState.stage-1] = 0;
+    if (finishState.value) {
+      currentState[widget.stageState.stage-1] = 3;
 
       if (widget.stageState.stage < 4) {
         currentState[widget.stageState.stage] = 1;

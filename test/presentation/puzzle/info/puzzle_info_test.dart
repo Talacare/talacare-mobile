@@ -22,7 +22,7 @@ void main() {
       ],
       child: MaterialApp(
         home: PuzzleInfo(
-          stageState: StageState([1,0,0,0], 1)
+          stageState: StageState([1,2,3,0], 4)
         ),
       ));
   });
@@ -64,5 +64,50 @@ void main() {
     expect(find.byType(Column), findsNWidgets(3));
     expect(find.byType(Row), findsNWidgets(3));
     expect(find.byType(Container), findsNWidgets(3));
+  });
+
+  testWidgets('PuzzleInfo widget displays correct star image',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(puzzleInfo);
+
+    expect(
+        find.byWidgetPredicate(
+          (Widget widget) =>
+              widget is Image &&
+              widget.image is AssetImage &&
+              (widget.image as AssetImage).assetName ==
+                  'assets/images/puzzle_star/star_border.png',
+        ),
+        findsOneWidget);
+    
+    expect(
+        find.byWidgetPredicate(
+          (Widget widget) =>
+              widget is Image &&
+              widget.image is AssetImage &&
+              (widget.image as AssetImage).assetName ==
+                  'assets/images/puzzle_star/star_border_glow.png',
+        ),
+        findsOneWidget);
+    
+    expect(
+        find.byWidgetPredicate(
+          (Widget widget) =>
+              widget is Image &&
+              widget.image is AssetImage &&
+              (widget.image as AssetImage).assetName ==
+                  'assets/images/puzzle_star/star_win.png',
+        ),
+        findsOneWidget);
+    
+    expect(
+        find.byWidgetPredicate(
+          (Widget widget) =>
+              widget is Image &&
+              widget.image is AssetImage &&
+              (widget.image as AssetImage).assetName ==
+                  'assets/images/puzzle_star/star_lose.png',
+        ),
+        findsOneWidget);
   });
 }

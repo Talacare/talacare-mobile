@@ -119,7 +119,7 @@ void main() {
             home: Scaffold(
               body: NextInfo(
                 name: "PERAWAT",
-                stageState: StageState([2,2,2,0], 4)
+                stageState: StageState([2,3,2,0], 4)
               ),
             ),
           )),
