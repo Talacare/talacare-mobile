@@ -12,16 +12,14 @@ class NextInfo extends StatefulWidget {
 }
 
 class _NextInfoState extends State<NextInfo> {
-  bool isVisible = true;
-
   @override
   Widget build(BuildContext context) {
-    final timerState = Provider.of<TimerState>(context);
+    final finishState = Provider.of<TimerState>(context);
 
     return Visibility(
-      visible: timerState.value,
+      visible: finishState.value,
       child: Container(
-        padding: const EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.only(top: 20, bottom: 20),
         child: Center(
           child: Column(children: [
             const SizedBox(
@@ -56,7 +54,7 @@ class _NextInfoState extends State<NextInfo> {
                     ]),
               ),
             ),
-            const SizedBox(height: 80),
+            const SizedBox(height: 60),
             Button(
               key: const Key('nextButton'),
               text: 'Lanjut',
