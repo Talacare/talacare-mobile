@@ -12,7 +12,6 @@ class NextInfo extends StatefulWidget {
 }
 
 class _NextInfoState extends State<NextInfo> {
-
   @override
   Widget build(BuildContext context) {
     final finishState = Provider.of<TimerState>(context);

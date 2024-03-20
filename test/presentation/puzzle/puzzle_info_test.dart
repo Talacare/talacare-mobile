@@ -9,18 +9,18 @@ void main() {
   late Widget puzzleInfo;
 
   setUp(() async {
-    puzzleInfo = MultiProvider (
-      providers: [
-        ChangeNotifierProvider<TimerState>(
-          create: (context) => TimerState(initialValue: true),
-        ),
-        ChangeNotifierProvider<CompleteState>(
-          create: (context) => CompleteState(initialValue: false),
-        ),
-      ],
-      child: const MaterialApp(
-        home: PuzzleInfo(),
-      ));
+    puzzleInfo = MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+            create: (context) => TimerState(initialValue: true),
+          ),
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: false),
+          ),
+        ],
+        child: const MaterialApp(
+          home: PuzzleInfo(),
+        ));
   });
 
   testWidgets(

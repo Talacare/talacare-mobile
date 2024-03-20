@@ -17,10 +17,9 @@ void main() {
           home: Scaffold(
             body: NextInfo(),
           ),
-        )
-    );
+        ));
   });
-  
+
   group('Win Puzzle Modal Widget Tests', () {
     testWidgets('Verify All Components are showing', (tester) async {
       await tester.pumpWidget(nextInfo);
@@ -36,13 +35,12 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: ChangeNotifierProvider<TimerState>(
-          create: (context) => TimerState(initialValue: true),
-          child: const MaterialApp(
-            home: Scaffold(
-              body: NextInfo(),
-            ),
-          )
-          ),
+              create: (context) => TimerState(initialValue: true),
+              child: const MaterialApp(
+                home: Scaffold(
+                  body: NextInfo(),
+                ),
+              )),
           navigatorObservers: [mockObserver],
         ),
       );

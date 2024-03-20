@@ -21,9 +21,7 @@ void main() {
     testWidgets('Check if images is showing', (tester) async {
       await tester.pumpWidget(const MaterialApp(home: PuzzlePage()));
 
-      expect(
-          find.byKey(const Key("Image")),
-          findsOneWidget,
+      expect(find.byKey(const Key("Image")), findsOneWidget,
           reason: 'Image should be visible');
     });
 
@@ -33,7 +31,8 @@ void main() {
       await tester.pump(const Duration(seconds: 60));
 
       final findLanjut = find.byKey(const Key('nextButton'));
-      expect(findLanjut, findsOneWidget, reason: 'Next button should be visible');
+      expect(findLanjut, findsOneWidget,
+          reason: 'Next button should be visible');
     });
   });
 }

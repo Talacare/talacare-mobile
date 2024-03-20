@@ -13,18 +13,18 @@ void main() {
   late Widget circleTimer;
 
   setUp(() async {
-    circleTimer = MultiProvider (
-      providers: [
-        ChangeNotifierProvider<TimerState>(
-          create: (context) => TimerState(initialValue: true),
-        ),
-        ChangeNotifierProvider<CompleteState>(
-          create: (context) => CompleteState(initialValue: false),
-        ),
-      ],
-      child: const MaterialApp(
-        home: CircleTimer(),
-      ));
+    circleTimer = MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+            create: (context) => TimerState(initialValue: true),
+          ),
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: false),
+          ),
+        ],
+        child: const MaterialApp(
+          home: CircleTimer(),
+        ));
   });
 
   testWidgets('CircleTimer widget has correct CircularProgressIndicator color',
@@ -70,8 +70,7 @@ void main() {
       (WidgetTester tester) async {
     final timerState = TimerState(initialValue: false);
 
-    await tester.pumpWidget(
-      MultiProvider (
+    await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
             create: (_) => timerState,
@@ -82,9 +81,7 @@ void main() {
         ],
         child: const MaterialApp(
           home: CircleTimer(),
-        )
-      )
-    );
+        )));
 
     expect(timerState.value, false);
 
