@@ -116,11 +116,15 @@ class Player extends SpriteGroupComponent<DashDirection>
 
   Future<void> handleCharacterAsset() async {
     if (character == Character.boy) {
-      leftDash = await gameRef.loadSprite('jump_n_jump/boy_left.png');
-      rightDash = await gameRef.loadSprite('jump_n_jump/boy_right.png');
+      leftDash =
+          await gameRef.loadSprite('jump_n_jump/characters/boy_left.png');
+      rightDash =
+          await gameRef.loadSprite('jump_n_jump/characters/boy_right.png');
     } else if (character == Character.girl) {
-      leftDash = await gameRef.loadSprite('jump_n_jump/girl_left.png');
-      rightDash = await gameRef.loadSprite('jump_n_jump/girl_right.png');
+      leftDash =
+          await gameRef.loadSprite('jump_n_jump/characters/girl_left.png');
+      rightDash =
+          await gameRef.loadSprite('jump_n_jump/characters/girl_right.png');
     }
   }
 }

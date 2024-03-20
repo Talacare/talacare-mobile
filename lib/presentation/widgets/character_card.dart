@@ -34,7 +34,7 @@ class CharacterCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Image.asset('assets/images/jump_n_jump/$imageName'),
+        child: Image.asset('assets/images/jump_n_jump/characters/$imageName'),
       ),
     );
   }
