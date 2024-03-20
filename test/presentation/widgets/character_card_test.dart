@@ -4,19 +4,21 @@ import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/widgets/character_card.dart';
 
 void main() {
-  testWidgets('Verify the selected character card widget',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: CharacterCard(
-            onTap: () {},
-            isSelected: true,
-            imageName: 'boy_head.png',
-          ),
+  Widget getCharacterCard(bool isSelected, String imagePath) {
+    return MaterialApp(
+      home: Scaffold(
+        body: CharacterCard(
+          onTap: () {},
+          isSelected: isSelected,
+          imageName: imagePath,
         ),
       ),
     );
+  }
+
+  testWidgets('Verify the selected character card widget',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(getCharacterCard(true, 'boy_head.png'));
 
     final containerDecoration = tester
         .widget<Container>(find.byType(Container))
@@ -40,17 +42,7 @@ void main() {
 
   testWidgets('Verify the unselected character card widget',
       (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: CharacterCard(
-            onTap: () {},
-            isSelected: false,
-            imageName: 'boy_head.png',
-          ),
-        ),
-      ),
-    );
+    await tester.pumpWidget(getCharacterCard(false, 'boy_head.png'));
 
     final nonSelectedContainerDecoration = tester
         .widget<Container>(find.byType(Container))
@@ -75,17 +67,7 @@ void main() {
 
   testWidgets('Verify the character card widget with invalid image name',
       (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: CharacterCard(
-            onTap: () {},
-            isSelected: true,
-            imageName: 'invalid.png',
-          ),
-        ),
-      ),
-    );
+    await tester.pumpWidget(getCharacterCard(true, 'invalid.png'));
 
     expect(tester.takeException(), isNotNull);
   });

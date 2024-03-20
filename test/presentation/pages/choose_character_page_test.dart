@@ -9,6 +9,12 @@ import 'package:talacare/presentation/widgets/character_card.dart';
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
+  final mockObserver = MockNavigatorObserver();
+  final characterPage = MaterialApp(
+    home: const ChooseCharacterPage(),
+    navigatorObservers: [mockObserver],
+  );
+
   BoxShadow getCharacterCardBoxShadow(
       FinderBase<Element> finder, WidgetTester tester) {
     final inkWell = tester.widget<InkWell>(finder);
@@ -19,11 +25,7 @@ void main() {
   testWidgets(
       '[Positive] Verify that all the character cards, title, and button are visible',
       (WidgetTester tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: ChooseCharacterPage(),
-      ),
-    );
+    await tester.pumpWidget(characterPage);
 
     expect(find.text('Pilih Karaktermu!'), findsOneWidget);
     expect(find.byType(CharacterCard), findsNWidgets(2));
@@ -33,14 +35,7 @@ void main() {
   testWidgets(
       '[Positive] Verify that the game starts after clicking one character options',
       (WidgetTester tester) async {
-    final mockObserver = MockNavigatorObserver();
-
-    await tester.pumpWidget(
-      MaterialApp(
-        home: const ChooseCharacterPage(),
-        navigatorObservers: [mockObserver],
-      ),
-    );
+    await tester.pumpWidget(characterPage);
 
     await tester.tap(find.byType(CharacterCard).first);
     await tester.pumpAndSettle();
@@ -57,11 +52,7 @@ void main() {
   testWidgets(
       '[Negative] Verify that the game starts without selecting any character options',
       (WidgetTester tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: ChooseCharacterPage(),
-      ),
-    );
+    await tester.pumpWidget(characterPage);
 
     await tester.tap(find.text('Mulai'));
     await tester.pump();
@@ -71,14 +62,7 @@ void main() {
   testWidgets(
       '[Edge] Verify clicking on character options multiple times, alternating between selections.',
       (WidgetTester tester) async {
-    final mockObserver = MockNavigatorObserver();
-
-    await tester.pumpWidget(
-      MaterialApp(
-        home: const ChooseCharacterPage(),
-        navigatorObservers: [mockObserver],
-      ),
-    );
+    await tester.pumpWidget(characterPage);
 
     await tester.tap(find.byType(CharacterCard).first);
     await tester.pumpAndSettle();
