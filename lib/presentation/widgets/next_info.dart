@@ -57,7 +57,7 @@ class _NextInfoState extends State<NextInfo> {
 
       if (clearState.value) {
         audioPlayer.play(AssetSource('success.wav'));
-      } else {
+      } else if (finishState.value) {
         audioPlayer.play(AssetSource('game_over.wav'));
       }
 
