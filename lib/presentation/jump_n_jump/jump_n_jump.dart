@@ -1,6 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 
 import './world.dart';
@@ -9,25 +10,24 @@ import 'sprites/sprites.dart';
 
 class JumpNJump extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
-  JumpNJump({this.onBackToMenuCallback, super.children});
-
   final VoidCallback? onBackToMenuCallback;
+  final Character? character;
+
+  JumpNJump({this.character, this.onBackToMenuCallback, super.children});
 
   GameManager gameManager = GameManager();
-
   final WorldGame world = WorldGame();
-
   PlatformManager platformManager = PlatformManager(
     maxVerticalDistanceToNextPlatform: 350,
   );
   Player dash = Player();
-
   int screenBufferSpace = 100;
 
   @override
   Future<void> onLoad() async {
-    await add(world);
+    dash.character = character;
 
+    await add(world);
     await add(dash);
 
     initializeGame();

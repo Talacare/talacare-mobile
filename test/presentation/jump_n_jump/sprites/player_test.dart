@@ -2,12 +2,12 @@ import 'package:flame/components.dart';
 import 'package:flame_test/flame_test.dart';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/sprites.dart';
 
-final jumpNJumpGameTester = FlameTester(
-  JumpNJump.new,
-);
+final jumpNJumpGameTester =
+    FlameTester(() => JumpNJump(character: Character.boy));
 
 void main() {
   group('Player Tests', () {
@@ -43,6 +43,22 @@ void main() {
 
       expect(isCollidingVertically, isTrue);
       expect(game.dash.velocity.y, -game.dash.jumpSpeed);
+    });
+
+    jumpNJumpGameTester.test('Test Player Character (Boy)', (game) async {
+      game.dash.character = Character.boy;
+      game.dash.handleCharacterAsset();
+
+      expect(game.dash.leftDash, isNotNull);
+      expect(game.dash.rightDash, isNotNull);
+    });
+
+    jumpNJumpGameTester.test('Test Player Character (Girl)', (game) async {
+      game.dash.character = Character.girl;
+      game.dash.handleCharacterAsset();
+
+      expect(game.dash.leftDash, isNotNull);
+      expect(game.dash.rightDash, isNotNull);
     });
   });
 }

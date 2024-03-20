@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
-import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
+import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 
@@ -82,7 +82,8 @@ class HomePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const JumpNJumpPage()),
+                        builder: (context) => const ChooseCharacterPage(),
+                      ),
                     );
                   },
                 ),
@@ -96,7 +97,8 @@ class HomePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const PuzzlePage()),
+                        builder: (context) => const PuzzlePage(),
+                      ),
                     );
                   },
                 ),

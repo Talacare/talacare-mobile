@@ -1,12 +1,14 @@
 import 'package:flame/game.dart' hide Route;
 import 'package:flutter/material.dart';
+import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/player.dart';
 import 'package:talacare/presentation/widgets/game_over_modal.dart';
 
 class JumpNJumpPage extends StatefulWidget {
-  const JumpNJumpPage({super.key});
+  final Character? character;
+  const JumpNJumpPage({super.key, this.character});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -19,12 +21,17 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
   @override
   void initState() {
     super.initState();
-    game = JumpNJump(onBackToMenuCallback: () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
-    });
+    game = JumpNJump(
+      character: widget.character!,
+      onBackToMenuCallback: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -49,12 +56,13 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Listener(
-              onPointerDown: (_) =>
-                  game.dash.handleControlButtonPress(DashDirection.left, true),
-              onPointerUp: (_) =>
-                  game.dash.handleControlButtonPress(DashDirection.left, false),
-              key: const Key('leftControlButton'),
-              child: Image.asset('assets/images/jump_n_jump/left_button.png')),
+            onPointerDown: (_) =>
+                game.dash.handleControlButtonPress(DashDirection.left, true),
+            onPointerUp: (_) =>
+                game.dash.handleControlButtonPress(DashDirection.left, false),
+            key: const Key('leftControlButton'),
+            child: Image.asset('assets/images/jump_n_jump/left_button.png'),
+          ),
           Listener(
             onPointerDown: (_) =>
                 game.dash.handleControlButtonPress(DashDirection.right, true),
@@ -90,10 +98,12 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
     return ValueListenableBuilder<int>(
       valueListenable: game.gameManager.highScore,
       builder: (_, highScore, __) {
-        return Text('TERTINGGI: $highScore',
-            style: const TextStyle(
-                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-            key: const Key('highScoreDisplay'));
+        return Text(
+          'TERTINGGI: $highScore',
+          style: const TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+          key: const Key('highScoreDisplay'),
+        );
       },
     );
   }
@@ -105,15 +115,21 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset('assets/images/jump_n_jump/coin.png',
-                width: 24, height: 24, key: const Key('coinIcon')),
+            Image.asset(
+              'assets/images/jump_n_jump/coin.png',
+              width: 24,
+              height: 24,
+              key: const Key('coinIcon'),
+            ),
             const SizedBox(width: 8),
-            Text('$score',
-                style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-                key: const Key('scoreDisplay')),
+            Text(
+              '$score',
+              style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+              key: const Key('scoreDisplay'),
+            ),
           ],
         );
       },

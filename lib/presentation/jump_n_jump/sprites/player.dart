@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:talacare/core/enums/character_enum.dart';
 
 import '../jump_n_jump.dart';
 import 'platform.dart';
@@ -10,15 +11,16 @@ enum DashDirection { left, right }
 
 class Player extends SpriteGroupComponent<DashDirection>
     with HasGameRef<JumpNJump>, KeyboardHandler, CollisionCallbacks {
-  Player({super.position})
+  late Character? character;
+
+  Player({super.position, this.character})
       : super(
-          size: Vector2(70, 120),
+          size: Vector2(80, 130),
           anchor: Anchor.center,
           priority: 1,
         );
 
   Vector2 velocity = Vector2.zero();
-
   int _hAxisInput = 0;
 
   final double moveSpeed = 400;
@@ -31,19 +33,19 @@ class Player extends SpriteGroupComponent<DashDirection>
   bool _isMovingLeft = false;
   bool _isMovingRight = false;
 
+  Sprite? leftDash;
+  Sprite? rightDash;
+
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-
     await add(CircleHitbox());
 
-    final leftDash = await gameRef.loadSprite('jump_n_jump/left_dash.png');
-
-    final rightDash = await gameRef.loadSprite('jump_n_jump/right_dash.png');
+    await handleCharacterAsset();
 
     sprites = <DashDirection, Sprite>{
-      DashDirection.left: leftDash,
-      DashDirection.right: rightDash,
+      DashDirection.left: leftDash!,
+      DashDirection.right: rightDash!,
     };
 
     current = DashDirection.right;
@@ -109,6 +111,16 @@ class Player extends SpriteGroupComponent<DashDirection>
       if (isPressed) {
         current = DashDirection.right;
       }
+    }
+  }
+
+  Future<void> handleCharacterAsset() async {
+    if (character == Character.boy) {
+      leftDash = await gameRef.loadSprite('jump_n_jump/boy_left.png');
+      rightDash = await gameRef.loadSprite('jump_n_jump/boy_right.png');
+    } else if (character == Character.girl) {
+      leftDash = await gameRef.loadSprite('jump_n_jump/girl_left.png');
+      rightDash = await gameRef.loadSprite('jump_n_jump/girl_right.png');
     }
   }
 }
