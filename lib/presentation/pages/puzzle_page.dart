@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
@@ -14,6 +15,7 @@ class PuzzlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<TimerState>(
