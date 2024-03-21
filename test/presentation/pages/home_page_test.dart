@@ -1,5 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
+
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
@@ -11,7 +14,12 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 void main() {
   late Widget homePage;
 
+  TestWidgetsFlutterBinding.ensureInitialized();
+  setupFirebaseCoreMocks();
+
   setUp(() async {
+    await Firebase.initializeApp();
+
     homePage = const MaterialApp(
       home: HomePage(),
     );
@@ -54,10 +62,14 @@ void main() {
       (tester) async {
     final mockObserver = MockNavigatorObserver();
 
-    await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp(
+    await mockNetworkImagesFor(
+      () => tester.pumpWidget(
+        MaterialApp(
           home: const HomePage(),
           navigatorObservers: [mockObserver],
-        )));
+        ),
+      ),
+    );
 
     expect(find.byKey(const Key('jump_n_jump_card')), findsOneWidget,
         reason: "Should have jump n jump card");
@@ -73,10 +85,14 @@ void main() {
       (tester) async {
     final mockObserver = MockNavigatorObserver();
 
-    await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp(
+    await mockNetworkImagesFor(
+      () => tester.pumpWidget(
+        MaterialApp(
           home: const HomePage(),
           navigatorObservers: [mockObserver],
-        )));
+        ),
+      ),
+    );
 
     expect(find.byKey(const Key('puzzle_card')), findsOneWidget,
         reason: "Shoud have puzzle card");
