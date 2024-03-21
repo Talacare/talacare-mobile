@@ -19,11 +19,8 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 @GenerateMocks([AudioPlayer])
 void main() {
   late Widget nextInfo;
-  late AudioPlayer mockPlayer;
 
-  setUp(() async {
-    mockPlayer = MockAudioPlayer();
-    
+  setUp(() async {    
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
     
     nextInfo = MultiProvider (
@@ -40,7 +37,6 @@ void main() {
           body: NextInfo(
             name: "PERAWAT",
             stageState: StageState([1,0,0,0], 1),
-            audioPlayer: mockPlayer
           ),
         ),
       ));
@@ -74,7 +70,6 @@ void main() {
               body: NextInfo(
                 name: "PERAWAT",
                 stageState: StageState([1,0,0,0], 1),
-                audioPlayer: mockPlayer
               ),
             ),
           )),
@@ -103,7 +98,6 @@ void main() {
             body: NextInfo(
               name: "PERAWAT",
               stageState: StageState([1,0,0,0], 1),
-              audioPlayer: mockPlayer
             ),
           ),
         )));
@@ -132,7 +126,6 @@ void main() {
               body: NextInfo(
                 name: "PERAWAT",
                 stageState: StageState([2,3,2,0], 4),
-                audioPlayer: mockPlayer
               ),
             ),
           )),
@@ -167,7 +160,6 @@ void main() {
               body: NextInfo(
                 name: "PERAWAT",
                 stageState: StageState([2,2,2,0], 4),
-                audioPlayer: mockPlayer
               ),
             ),
           )),
@@ -204,7 +196,6 @@ void main() {
                 body: NextInfo(
                   name: "PERAWAT",
                   stageState: StageState([2, 2, 2, 0], 4),
-                  audioPlayer: mockPlayer
                 ),
               ),
             )),
@@ -225,6 +216,8 @@ void main() {
   });
 
   testWidgets('plays bgm.mp3 when PuzzlePage starts', (tester) async {
+    final mockPlayer = MockAudioPlayer();
+
     await tester.pumpWidget(
       MaterialApp(
         home: MultiProvider(
@@ -252,6 +245,8 @@ void main() {
 
   testWidgets('calls flutterTts.speak after audioPlayer completes',
       (tester) async {
+    
+    final mockPlayer = MockAudioPlayer();
 
     final controller = StreamController<void>();
     controller.add(null);
