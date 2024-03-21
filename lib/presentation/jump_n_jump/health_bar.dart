@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:talacare/core/constants/app_colors.dart';
 
 class HealthBar extends StatefulWidget {
   final double currentValue;
@@ -78,9 +79,9 @@ class _HealthBarState extends State<HealthBar>
           child: Container(
             height: 30,
             decoration: BoxDecoration(
-              color: const Color(0xFF4E19A5),
+              color: AppColors.violet,
               borderRadius: const BorderRadius.all(Radius.circular(20)),
-              border: Border.all(color: Colors.white, width: 2),
+              border: Border.all(color: AppColors.white, width: 2),
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
@@ -96,7 +97,7 @@ class _HealthBarState extends State<HealthBar>
                   widthFactor: widthFactor,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFFB8464D),
+                      color: AppColors.dustyRed,
                       borderRadius: isFullWidth
                           ? null
                           : const BorderRadius.horizontal(
