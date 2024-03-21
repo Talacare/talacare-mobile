@@ -19,22 +19,31 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 @GenerateMocks([AudioPlayer])
 void main() {
   late Widget nextInfo;
+  late AudioPlayer mockPlayer;
 
   setUp(() async {
+    mockPlayer = MockAudioPlayer();
+    
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
-    nextInfo = MultiProvider(
-        providers: [
-          ChangeNotifierProvider<TimerState>(
-              create: (context) => TimerState(initialValue: true)),
-          ChangeNotifierProvider<CompleteState>(
-            create: (context) => CompleteState(initialValue: false),
-          )
-        ],
-        child: MaterialApp(
-          home: Scaffold(
-            body: NextInfo(stageState: StageState([1, 0, 0, 0], 1)),
+    
+    nextInfo = MultiProvider (
+      providers :[
+        ChangeNotifierProvider<TimerState>(
+          create: (context) => TimerState(initialValue: true)
+        ),
+        ChangeNotifierProvider<CompleteState>(
+          create: (context) => CompleteState(initialValue: false),
+        )
+      ],
+      child: MaterialApp(
+        home: Scaffold(
+          body: NextInfo(
+            name: "PERAWAT",
+            stageState: StageState([1,0,0,0], 1),
+            audioPlayer: mockPlayer
           ),
-        ));
+        ),
+      ));
   });
 
   group('Win Puzzle Modal Widget Tests', () {
@@ -51,19 +60,24 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: MultiProvider(
-              providers: [
-                ChangeNotifierProvider<TimerState>(
-                    create: (context) => TimerState(initialValue: false)),
-                ChangeNotifierProvider<CompleteState>(
-                  create: (context) => CompleteState(initialValue: true),
-                )
-              ],
-              child: MaterialApp(
-                home: Scaffold(
-                  body: NextInfo(stageState: StageState([1, 0, 0, 0], 1)),
-                ),
-              )),
+          home: MultiProvider (
+          providers :[
+            ChangeNotifierProvider<TimerState>(
+              create: (context) => TimerState(initialValue: false)
+            ),
+            ChangeNotifierProvider<CompleteState>(
+              create: (context) => CompleteState(initialValue: true),
+            )
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: NextInfo(
+                name: "PERAWAT",
+                stageState: StageState([1,0,0,0], 1),
+                audioPlayer: mockPlayer
+              ),
+            ),
+          )),
           navigatorObservers: [mockObserver],
         ),
       );
@@ -86,7 +100,11 @@ void main() {
         ],
         child: MaterialApp(
           home: Scaffold(
-            body: NextInfo(stageState: StageState([1, 0, 0, 0], 1)),
+            body: NextInfo(
+              name: "PERAWAT",
+              stageState: StageState([1,0,0,0], 1),
+              audioPlayer: mockPlayer
+            ),
           ),
         )));
 
@@ -98,54 +116,64 @@ void main() {
       (tester) async {
     final mockObserver = MockNavigatorObserver();
 
-    await tester.pumpWidget(
-      MaterialApp(
-        home: MultiProvider(
-            providers: [
-              ChangeNotifierProvider<TimerState>(
-                  create: (context) => TimerState(initialValue: true)),
-              ChangeNotifierProvider<CompleteState>(
-                create: (context) => CompleteState(initialValue: false),
-              )
-            ],
-            child: MaterialApp(
-              home: Scaffold(
-                body: NextInfo(stageState: StageState([2, 2, 2, 0], 4)),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MultiProvider (
+          providers :[
+            ChangeNotifierProvider<TimerState>(
+              create: (context) => TimerState(initialValue: true)
+            ),
+            ChangeNotifierProvider<CompleteState>(
+              create: (context) => CompleteState(initialValue: false),
+            )
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: NextInfo(
+                name: "PERAWAT",
+                stageState: StageState([2,3,2,0], 4),
+                audioPlayer: mockPlayer
               ),
-            )),
-        navigatorObservers: [mockObserver],
-      ),
-    );
+            ),
+          )),
+          navigatorObservers: [mockObserver],
+        ),
+      );
 
-    expect(find.byKey(const Key('nextButton')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('nextButton')));
-    await tester.pumpAndSettle();
+      expect(find.byKey(const Key('nextButton')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('nextButton')));
+      await tester.pumpAndSettle();
 
-    expect(find.byKey(const Key('game-over')), findsOneWidget);
+      expect(find.byKey(const Key('game-over')), findsOneWidget);
   });
 
   testWidgets('Verify Game Over modal is clickable on Main Lagi',
       (tester) async {
     final mockObserver = MockNavigatorObserver();
 
-    await tester.pumpWidget(
-      MaterialApp(
-        home: MultiProvider(
-            providers: [
-              ChangeNotifierProvider<TimerState>(
-                  create: (context) => TimerState(initialValue: true)),
-              ChangeNotifierProvider<CompleteState>(
-                create: (context) => CompleteState(initialValue: false),
-              )
-            ],
-            child: MaterialApp(
-              home: Scaffold(
-                body: NextInfo(stageState: StageState([2, 2, 2, 0], 4)),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MultiProvider (
+          providers :[
+            ChangeNotifierProvider<TimerState>(
+              create: (context) => TimerState(initialValue: true)
+            ),
+            ChangeNotifierProvider<CompleteState>(
+              create: (context) => CompleteState(initialValue: false),
+            )
+          ],
+          child: MaterialApp(
+            home: Scaffold(
+              body: NextInfo(
+                name: "PERAWAT",
+                stageState: StageState([2,2,2,0], 4),
+                audioPlayer: mockPlayer
               ),
-            )),
-        navigatorObservers: [mockObserver],
-      ),
-    );
+            ),
+          )),
+          navigatorObservers: [mockObserver],
+        ),
+      );
 
     expect(find.byKey(const Key('nextButton')), findsOneWidget);
     await tester.tap(find.byKey(const Key('nextButton')));
@@ -173,7 +201,11 @@ void main() {
             ],
             child: MaterialApp(
               home: Scaffold(
-                body: NextInfo(stageState: StageState([2, 2, 2, 0], 4)),
+                body: NextInfo(
+                  name: "PERAWAT",
+                  stageState: StageState([2, 2, 2, 0], 4),
+                  audioPlayer: mockPlayer
+                ),
               ),
             )),
       ),
@@ -193,8 +225,6 @@ void main() {
   });
 
   testWidgets('plays bgm.mp3 when PuzzlePage starts', (tester) async {
-    final mockPlayer = MockAudioPlayer();
-
     await tester.pumpWidget(
       MaterialApp(
         home: MultiProvider(
@@ -208,6 +238,7 @@ void main() {
             child: MaterialApp(
               home: Scaffold(
                 body: NextInfo(
+                  name: "PERAWAT",
                   stageState: StageState([2, 2, 2, 0], 4),
                   audioPlayer: mockPlayer,
                 ),
@@ -221,7 +252,6 @@ void main() {
 
   testWidgets('calls flutterTts.speak after audioPlayer completes',
       (tester) async {
-    final mockPlayer = MockAudioPlayer();
 
     final controller = StreamController<void>();
     controller.add(null);
@@ -240,6 +270,7 @@ void main() {
             child: MaterialApp(
               home: Scaffold(
                 body: NextInfo(
+                  name: "PERAWAT",
                   stageState: StageState([2, 2, 2, 0], 4),
                   audioPlayer: mockPlayer,
                 ),

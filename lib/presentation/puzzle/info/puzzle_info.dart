@@ -49,22 +49,32 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
     );
   }
 
+  // 0 = future stage
+  // 1 = current stage
+  // 2 = win stage
+  // 3 = lose stage
   Widget buildStarImage(int starValue) {
     if (starValue == 0) {
       return Image.asset(
-        'assets/images/star_border.png',
+        'assets/images/puzzle_star/star_border.png',
         width: 30,
         height: 30,
       );
     } else if (starValue == 1) {
       return Image.asset(
-        'assets/images/star_border_glow.png',
+        'assets/images/puzzle_star/star_border_glow.png',
+        width: 30,
+        height: 30,
+      );
+    } else if (starValue == 2) {
+      return Image.asset(
+        'assets/images/puzzle_star/star_win.png',
         width: 30,
         height: 30,
       );
     } else {
       return Image.asset(
-        'assets/images/star.png',
+        'assets/images/puzzle_star/star_lose.png',
         width: 30,
         height: 30,
       );

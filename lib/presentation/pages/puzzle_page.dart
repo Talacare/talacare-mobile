@@ -44,7 +44,8 @@ class PuzzlePage extends StatelessWidget {
                   cols: 3,
                 ),
                 NextInfo(
-                  stageState: stageState
+                  name: "PERAWAT",
+                  stageState: stageState,
                 ),
               ]
             ),
