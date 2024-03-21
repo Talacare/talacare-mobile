@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/core/utils/text_to_speech.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
@@ -11,15 +13,22 @@ import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class NextInfo extends StatefulWidget {
   final StageState stageState;
+  final AudioPlayer? audioPlayer;
   final String name;
   
-  const NextInfo({super.key, required this.stageState, required this.name});
+  const NextInfo({
+    super.key,
+    required this.stageState,
+    required this.name,
+    this.audioPlayer,
+  });
 
   @override
   State<NextInfo> createState() => _NextInfoState();
 }
 
 class _NextInfoState extends State<NextInfo> {
+  late AudioPlayer audioPlayer = widget.audioPlayer ?? AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +46,26 @@ class _NextInfoState extends State<NextInfo> {
     }
 
     if (clearState.value) {
-      currentState[widget.stageState.stage-1] = 2;
+      currentState[widget.stageState.stage - 1] = 2;
       if (widget.stageState.stage < 4) {
         currentState[widget.stageState.stage] = 1;
       }
+    }
+
+    if (!finishState.value && !clearState.value) {
+      audioPlayer.play(AssetSource('bgm.mp3'));
+    } else {
+      audioPlayer.stop();
+
+      if (clearState.value) {
+        audioPlayer.play(AssetSource('success.wav'));
+      } else if (finishState.value) {
+        audioPlayer.play(AssetSource('game_over.wav'));
+      }
+
+      audioPlayer.onPlayerComplete.listen((_) {
+        speakText(text: widget.name);
+      });
     }
 
     return Visibility(
@@ -87,42 +112,42 @@ class _NextInfoState extends State<NextInfo> {
               text: 'Lanjut',
               colorScheme: ButtonColorScheme.purple,
               onTap: () {
+                audioPlayer.stop();
                 if (widget.stageState.stage < 4) {
                   Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PuzzlePage(
-                      stageState: StageState(
-                        currentState,
-                        widget.stageState.stage + 1),
-                    )),
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PuzzlePage(
+                              stageState: StageState(
+                                  currentState, widget.stageState.stage + 1),
+                            )),
                   );
-                }
-                else {
-                  showDialog(context: context, builder: (BuildContext context){
-                  return
-                    GameOverModal(
-                      key: const Key("game-over"),
-                      currentScore: 999,
-                      highestScore: 999,
-                      onMainLagiPressed: () {
-                        Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PuzzlePage(
-                            stageState: StageState([1,0,0,0], 1),
-                          )),
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return GameOverModal(
+                          key: const Key("game-over"),
+                          currentScore: 999,
+                          highestScore: 999,
+                          onMainLagiPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PuzzlePage(
+                                        stageState: StageState([1, 0, 0, 0], 1),
+                                      )),
+                            );
+                          },
+                          onMenuPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()),
+                            );
+                          },
                         );
-                      },
-                      onMenuPressed: () {
-                        Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage()),
-                        );
-                      },
-                    );
-                  });
+                      });
                 }
               },
             )

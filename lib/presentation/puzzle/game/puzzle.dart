@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/game/draggable_puzzle_piece.dart';
 import 'package:talacare/presentation/puzzle/game/puzzle_piece_pos.dart';
@@ -81,6 +82,8 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
   }
 
   void _swapPieces(int rowPos, int colPos, int rowPos2, int colPos2) {
+    final audioPlayer = AudioPlayer();
+    audioPlayer.play(AssetSource('move_piece.mp3'));
     setState(() {
       if (!(rowPos == rowPos2 && colPos == colPos2)) {
         DraggablePuzzlePiece temp = pieces[rowPos][colPos];
