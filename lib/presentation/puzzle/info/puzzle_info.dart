@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/puzzle/info/circle_timer.dart';
 
 class PuzzleInfo extends StatefulWidget {
-  const PuzzleInfo({super.key});
+  final StageState stageState;
+  
+  const PuzzleInfo({super.key, required this.stageState});
 
   @override
   State<PuzzleInfo> createState() => _PuzzleInfoState();
@@ -10,7 +13,6 @@ class PuzzleInfo extends StatefulWidget {
 
 class _PuzzleInfoState extends State<PuzzleInfo> {
   final String puzzleImg = 'assets/images/perawat.png';
-  final List<int> starList = [2, 2, 1, 0];
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +33,8 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
       children: [
         Row(
           children: List.generate(
-            starList.length,
-            (index) => buildStarImage(starList[index]),
+            widget.stageState.starList.length,
+            (index) => buildStarImage(widget.stageState.starList[index]),
           ),
         ),
         const Text(
@@ -47,22 +49,32 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
     );
   }
 
+  // 0 = future stage
+  // 1 = current stage
+  // 2 = win stage
+  // 3 = lose stage
   Widget buildStarImage(int starValue) {
     if (starValue == 0) {
       return Image.asset(
-        'assets/images/star_border.png',
+        'assets/images/puzzle_star/star_border.png',
         width: 30,
         height: 30,
       );
     } else if (starValue == 1) {
       return Image.asset(
-        'assets/images/star_border_glow.png',
+        'assets/images/puzzle_star/star_border_glow.png',
+        width: 30,
+        height: 30,
+      );
+    } else if (starValue == 2) {
+      return Image.asset(
+        'assets/images/puzzle_star/star_win.png',
         width: 30,
         height: 30,
       );
     } else {
       return Image.asset(
-        'assets/images/star.png',
+        'assets/images/puzzle_star/star_lose.png',
         width: 30,
         height: 30,
       );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
-import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 import 'package:talacare/presentation/puzzle/game/draggable_puzzle_piece.dart';
 import 'package:talacare/presentation/puzzle/game/puzzle_piece_pos.dart';
 
@@ -109,9 +108,6 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
     });
 
     if (_checkSolved()) {
-      final clearState = Provider.of<TimerState>(context, listen: false);
-      clearState.value = true;
-
       final finishState = Provider.of<CompleteState>(context, listen: false);
       finishState.value = true;
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
@@ -82,7 +83,7 @@ class HomePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const JumpNJumpPage()),
+                        builder: (context) => const JumpNJumpPage()),
                     );
                   },
                 ),
@@ -96,7 +97,10 @@ class HomePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const PuzzlePage()),
+                        builder: (context) => PuzzlePage(
+                          stageState: StageState([1,0,0,0], 1)
+                        )
+                      ),
                     );
                   },
                 ),
