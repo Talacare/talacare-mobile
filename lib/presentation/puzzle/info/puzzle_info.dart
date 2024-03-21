@@ -4,7 +4,7 @@ import 'package:talacare/presentation/puzzle/info/circle_timer.dart';
 
 class PuzzleInfo extends StatefulWidget {
   final StageState stageState;
-  
+
   const PuzzleInfo({super.key, required this.stageState});
 
   @override

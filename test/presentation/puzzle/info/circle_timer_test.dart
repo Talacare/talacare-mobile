@@ -14,31 +14,31 @@ void main() {
   late Widget circleCompleted;
 
   setUp(() async {
-    circleTimer = MultiProvider (
-      providers: [
-        ChangeNotifierProvider<TimerState>(
-          create: (context) => TimerState(initialValue: true),
-        ),
-        ChangeNotifierProvider<CompleteState>(
-          create: (context) => CompleteState(initialValue: false),
-        ),
-      ],
-      child: const MaterialApp(
-        home: CircleTimer(),
-      ));
+    circleTimer = MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+            create: (context) => TimerState(initialValue: true),
+          ),
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: false),
+          ),
+        ],
+        child: const MaterialApp(
+          home: CircleTimer(),
+        ));
 
-    circleCompleted = MultiProvider (
-      providers: [
-        ChangeNotifierProvider<TimerState>(
-          create: (context) => TimerState(initialValue: true),
-        ),
-        ChangeNotifierProvider<CompleteState>(
-          create: (context) => CompleteState(initialValue: true),
-        ),
-      ],
-      child: const MaterialApp(
-        home: CircleTimer(),
-      ));
+    circleCompleted = MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+            create: (context) => TimerState(initialValue: true),
+          ),
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: true),
+          ),
+        ],
+        child: const MaterialApp(
+          home: CircleTimer(),
+        ));
   });
 
   testWidgets('CircleTimer widget has correct CircularProgressIndicator color',
@@ -80,8 +80,7 @@ void main() {
     expect(find.text('0'), findsOneWidget);
   });
 
-  testWidgets(
-      'CircleTimer widget not decrement time if puzzle is solved',
+  testWidgets('CircleTimer widget not decrement time if puzzle is solved',
       (WidgetTester tester) async {
     await tester.pumpWidget(circleCompleted);
 
@@ -93,8 +92,7 @@ void main() {
       (WidgetTester tester) async {
     final timerState = TimerState(initialValue: false);
 
-    await tester.pumpWidget(
-      MultiProvider (
+    await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
             create: (_) => timerState,
@@ -105,9 +103,7 @@ void main() {
         ],
         child: const MaterialApp(
           home: CircleTimer(),
-        )
-      )
-    );
+        )));
 
     expect(timerState.value, false);
 

@@ -10,48 +10,42 @@ import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class PuzzlePage extends StatelessWidget {
   final StageState stageState;
-  
+
   const PuzzlePage({super.key, required this.stageState});
 
   @override
   Widget build(BuildContext context) {
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<TimerState>(
-          create: (context) => TimerState(initialValue: false),
-        ),
-        ChangeNotifierProvider<CompleteState>(
-          create: (context) => CompleteState(initialValue: false),
-        ),
-      ],
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Column(
-              children: [
-                PuzzleInfo(
-                  stageState: stageState
-                ),
-                PuzzleWidget(
-                  key: const Key("Image"),
-                  image: Image.asset(
-                    'assets/images/perawat.png',
-                    height: 300,
-                    width: 300,
-                  ),
-                  rows: 3,
-                  cols: 3,
-                ),
-                NextInfo(
-                  name: "PERAWAT",
-                  stageState: stageState,
-                ),
-              ]
-            ),
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+            create: (context) => TimerState(initialValue: false),
           ),
-        )
-      )
-    );
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: false),
+          ),
+        ],
+        child: Scaffold(
+            body: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(children: [
+              PuzzleInfo(stageState: stageState),
+              PuzzleWidget(
+                key: const Key("Image"),
+                image: Image.asset(
+                  'assets/images/perawat.png',
+                  height: 300,
+                  width: 300,
+                ),
+                rows: 3,
+                cols: 3,
+              ),
+              NextInfo(
+                name: "PERAWAT",
+                stageState: stageState,
+              ),
+            ]),
+          ),
+        )));
   }
 }

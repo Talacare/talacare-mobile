@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1064963628215",
+    "project_id": "talacare",
+    "storage_bucket": "talacare.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064963628215:android:9b8f95e3943e72f1698132",
+        "android_client_info": {
+          "package_name": "com.example.talacare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8eAgdprQtNutaHkepEMKzOl7MWuq7Zr8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

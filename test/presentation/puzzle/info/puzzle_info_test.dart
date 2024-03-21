@@ -11,20 +11,18 @@ void main() {
   late Widget puzzleInfo;
 
   setUp(() async {
-    puzzleInfo = MultiProvider (
-      providers: [
-        ChangeNotifierProvider<TimerState>(
-          create: (context) => TimerState(initialValue: true),
-        ),
-        ChangeNotifierProvider<CompleteState>(
-          create: (context) => CompleteState(initialValue: false),
-        ),
-      ],
-      child: MaterialApp(
-        home: PuzzleInfo(
-          stageState: StageState([1,2,3,0], 4)
-        ),
-      ));
+    puzzleInfo = MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+            create: (context) => TimerState(initialValue: true),
+          ),
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: false),
+          ),
+        ],
+        child: MaterialApp(
+          home: PuzzleInfo(stageState: StageState([1, 2, 3, 0], 4)),
+        ));
   });
 
   testWidgets(
@@ -79,7 +77,7 @@ void main() {
                   'assets/images/puzzle_star/star_border.png',
         ),
         findsOneWidget);
-    
+
     expect(
         find.byWidgetPredicate(
           (Widget widget) =>
@@ -89,7 +87,7 @@ void main() {
                   'assets/images/puzzle_star/star_border_glow.png',
         ),
         findsOneWidget);
-    
+
     expect(
         find.byWidgetPredicate(
           (Widget widget) =>
@@ -99,7 +97,7 @@ void main() {
                   'assets/images/puzzle_star/star_win.png',
         ),
         findsOneWidget);
-    
+
     expect(
         find.byWidgetPredicate(
           (Widget widget) =>

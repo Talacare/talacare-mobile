@@ -15,7 +15,7 @@ class NextInfo extends StatefulWidget {
   final StageState stageState;
   final AudioPlayer? audioPlayer;
   final String name;
-  
+
   const NextInfo({
     super.key,
     required this.stageState,
@@ -38,7 +38,7 @@ class _NextInfoState extends State<NextInfo> {
     List<int> currentState = widget.stageState.starList;
 
     if (finishState.value) {
-      currentState[widget.stageState.stage-1] = 3;
+      currentState[widget.stageState.stage - 1] = 3;
 
       if (widget.stageState.stage < 4) {
         currentState[widget.stageState.stage] = 1;
