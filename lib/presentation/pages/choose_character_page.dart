@@ -26,7 +26,6 @@ class _ChooseCharacterState extends State<ChooseCharacterPage> {
                 const Text(
                   'Pilih Karaktermu!',
                   style: TextStyle(
-                    // height: height,
                     fontFamily: 'Digitalt',
                     color: Colors.white,
                     fontSize: 40,

@@ -23,7 +23,7 @@ class GameCard extends StatelessWidget {
       padding: const EdgeInsets.all(25),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: AppColors.white,
+        color: Colors.white,
       ),
       child: Column(
         children: [

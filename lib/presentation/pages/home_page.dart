@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
       children: [
         Text(
           'Welcome To',
-          style: _getTextStyle(1, AppColors.white, 22),
+          style: _getTextStyle(1, Colors.white, 22),
         ),
         Stack(
           alignment: AlignmentDirectional.topCenter,
@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
             ),
             Text(
               'TALACARE',
-              style: _getTextStyle(1, AppColors.white, 38),
+              style: _getTextStyle(1, Colors.white, 38),
             ),
           ],
         )
