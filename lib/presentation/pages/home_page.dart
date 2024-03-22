@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/data/models/stage_state.dart';
+import 'package:talacare/core/utils/analytics_engine_util.dart';
 import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
@@ -77,6 +79,7 @@ class HomePage extends StatelessWidget {
                   title: 'Jump N Jump',
                   imgPath: 'jump_n_jump_trailer.png',
                   key: const Key('jump_n_jump_card'),
+                  buttonName: "jump_n_jump_button",
                   onTap: () {
                     Navigator.push(
                       context,
@@ -90,11 +93,14 @@ class HomePage extends StatelessWidget {
                   title: 'Puzzle',
                   imgPath: 'puzzle_trailer.png',
                   key: const Key('puzzle_card'),
-                  onTap: () {
+                  buttonName: "puzzle_button",
+                  onTap: () async {
+                    AnalyticsEngineUtil.userPlaysPuzzle();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const PuzzlePage()),
+                          builder: (context) => PuzzlePage(
+                              stageState: StageState([1, 0, 0, 0], 1))),
                     );
                   },
                 ),

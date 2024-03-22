@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'blood_bag.dart';
 
 import '../jump_n_jump.dart';
 import 'platform.dart';
@@ -24,6 +25,7 @@ class Player extends SpriteGroupComponent<DashDirection>
   final double moveSpeed = 400;
   final double _gravity = 7;
   final double jumpSpeed = 700;
+  double health = 0;
 
   final int movingLeftInput = -1;
   final int movingRightInput = 1;
@@ -84,6 +86,16 @@ class Player extends SpriteGroupComponent<DashDirection>
 
       if (isMovingDown && isCollidingVertically) {
         jump();
+      }
+    }
+
+    if (other is BloodBag) {
+      bool isCollidingVertically =
+          (intersectionPoints.first.y - intersectionPoints.last.y).abs() < 5;
+
+      if (isCollidingVertically) {
+        other.removeFromParent();
+        health += 7;
       }
     }
 

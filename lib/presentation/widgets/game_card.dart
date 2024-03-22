@@ -7,12 +7,14 @@ class GameCard extends StatelessWidget {
   final String title;
   final String imgPath;
   final VoidCallback onTap;
+  final String buttonName;
 
   const GameCard({
     super.key,
     required this.title,
     required this.imgPath,
     required this.onTap,
+    required this.buttonName,
   });
 
   @override
@@ -45,7 +47,7 @@ class GameCard extends StatelessWidget {
           ),
           const Gap(7),
           Button(
-            key: const Key('play_button'),
+            key: Key(buttonName),
             text: 'Main',
             onTap: onTap,
           )
