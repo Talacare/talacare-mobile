@@ -53,7 +53,7 @@ void main() {
       bool isCollidingVertically =
           (intersectionPoints.first.y - intersectionPoints.last.y).abs() < 5;
       game.dash.onCollision(intersectionPoints, BloodBag());
-      expect(game.dash.health, initialHealth + 20);
+      expect(game.dash.health, initialHealth + 7);
       expect(isCollidingVertically, isTrue);
     });
   });

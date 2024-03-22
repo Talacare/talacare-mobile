@@ -95,7 +95,7 @@ class Player extends SpriteGroupComponent<DashDirection>
 
       if (isCollidingVertically) {
         other.removeFromParent();
-        health += 20;
+        health += 7;
       }
     }
 
