@@ -16,7 +16,7 @@ class Player extends SpriteGroupComponent<DashDirection>
 
   Player({super.position, this.character})
       : super(
-          size: Vector2(80, 130),
+          size: Vector2(80, 160),
           anchor: Anchor.center,
           priority: 1,
         );
