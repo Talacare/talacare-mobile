@@ -70,8 +70,10 @@ class _HealthBarState extends State<HealthBar>
       children: <Widget>[
         SizedBox(
           height: 60,
-          width: 60,
           child: Image.asset('assets/images/jump_n_jump/blood_bag.png'),
+        ),
+        const SizedBox(
+          width: 10,
         ),
         Expanded(
           child: Container(
