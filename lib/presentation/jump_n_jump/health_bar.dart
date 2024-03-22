@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 
 class HealthBar extends StatefulWidget {
-  final double currentValue;
+  final ValueNotifier<double> currentValue;
   final double maxValue;
 
   const HealthBar({
     super.key,
-    this.currentValue = 0,
+    required this.currentValue,
     this.maxValue = 100,
   });
 
@@ -29,38 +29,36 @@ class _HealthBarState extends State<HealthBar>
     );
 
     _animation = Tween<double>(
-      begin: widget.currentValue,
-      end: widget.currentValue,
+      begin: widget.currentValue.value,
+      end: widget.currentValue.value,
     ).animate(_controller)
       ..addListener(() {
         setState(() {});
       });
 
+    widget.currentValue.addListener(_onValueChanged);
     _controller.forward();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    widget.currentValue.removeListener(_onValueChanged);
     super.dispose();
   }
 
-  @override
-  void didUpdateWidget(HealthBar oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.currentValue != oldWidget.currentValue) {
-      _animation = Tween<double>(
-        begin: _animation.value,
-        end: widget.currentValue,
-      ).animate(_controller)
-        ..addListener(() {
-          setState(() {});
-        });
+  void _onValueChanged() {
+    _animation = Tween<double>(
+      begin: _animation.value,
+      end: widget.currentValue.value,
+    ).animate(_controller)
+      ..addListener(() {
+        setState(() {});
+      });
 
-      _controller
-        ..reset()
-        ..forward();
-    }
+    _controller
+      ..reset()
+      ..forward();
   }
 
   @override

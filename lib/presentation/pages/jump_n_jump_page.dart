@@ -1,5 +1,6 @@
 import 'package:flame/game.dart' hide Route;
 import 'package:flutter/material.dart';
+import 'package:talacare/presentation/jump_n_jump/health_bar.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/player.dart';
@@ -75,11 +76,21 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
       right: 0,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _createScoreWidget(),
-            _createHighScoreWidget(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _createScoreWidget(),
+                _createHighScoreWidget(),
+              ],
+            ),
+            const SizedBox(height: 10),
+            HealthBar(
+              currentValue: game.dash.health,
+              maxValue: 100,
+            )
           ],
         ),
       ),
