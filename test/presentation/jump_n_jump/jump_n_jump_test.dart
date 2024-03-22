@@ -143,4 +143,14 @@ void main() {
 
     expect(game.isGameOverOverlayAdded, isFalse);
   });
+
+  jumpNJumpGameTester.test('Health decrement and automatic game over trigger',
+      (game) async {
+    game.dash.health.value = 5;
+    await game.ready();
+    await Future.delayed(const Duration(seconds: 5));
+    game.update(5.0);
+    expect(game.gameManager.isGameOver, isTrue);
+    expect(game.isGameOverOverlayAdded, isTrue);
+  });
 }
