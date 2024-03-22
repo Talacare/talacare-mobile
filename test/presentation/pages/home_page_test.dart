@@ -4,9 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 
 import 'package:network_image_mock/network_image_mock.dart';
+import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:mockito/mockito.dart';
-import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
@@ -58,7 +58,7 @@ void main() {
   });
 
   testWidgets(
-      'Verify the Jump n Jump GameCard is working and navigate to Jump n Jump Page',
+      'Verify the Jump n Jump GameCard is working and navigate to Choose Character Page',
       (tester) async {
     final mockObserver = MockNavigatorObserver();
 
@@ -72,12 +72,12 @@ void main() {
     );
 
     expect(find.byKey(const Key('jump_n_jump_card')), findsOneWidget,
-        reason: "Shoud have jump n jump card");
+        reason: "Should have jump n jump card");
 
     await tester.tap(find.byKey(const Key('jump_n_jump_button')));
     await tester.pumpAndSettle();
 
-    expect(find.byType(JumpNJumpPage), findsOneWidget);
+    expect(find.byType(ChooseCharacterPage), findsOneWidget);
   });
 
   testWidgets(

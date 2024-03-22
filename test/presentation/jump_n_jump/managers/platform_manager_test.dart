@@ -1,10 +1,10 @@
 import 'package:flame_test/flame_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 
-final jumpNJumpGameTester = FlameTester(
-  JumpNJump.new,
-);
+final jumpNJumpGameTester =
+    FlameTester(() => JumpNJump(character: Character.boy));
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

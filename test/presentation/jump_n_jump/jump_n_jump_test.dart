@@ -5,12 +5,15 @@ import 'package:flame_test/flame_test.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/world.dart';
 
 class TestJumpNJump extends JumpNJump {
   bool isGameOverOverlayAdded = false;
+
+  TestJumpNJump({super.children, super.character = Character.boy});
 
   @override
   Future<void> onLoad() async {
