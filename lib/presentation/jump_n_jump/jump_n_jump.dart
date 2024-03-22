@@ -94,7 +94,7 @@ class JumpNJump extends FlameGame
     );
 
     bloodBagManager = BloodBagManager(
-      maxVerticalDistanceToNextBloodBag: 350,
+      maxVerticalDistanceToNextBloodBag: 500,
     );
 
     add(bloodBagManager);
