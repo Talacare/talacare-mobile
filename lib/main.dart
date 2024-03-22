@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: 'Digitalt',
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
           background: AppColors.purple,
