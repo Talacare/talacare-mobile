@@ -10,6 +10,8 @@ on:
 jobs:
   setup:
     name: Setup .env
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v1
       - name: Create .env file
         run: |
