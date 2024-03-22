@@ -4,40 +4,42 @@ import 'package:talacare/presentation/jump_n_jump/health_bar.dart';
 
 void main() {
   group('HealthBar Widget Tests', () {
-    late Widget healthBar;
-    double currentValue = 50;
+    late ValueNotifier<double> currentValueNotifier;
     double maxValue = 100;
 
     setUp(() {
-      healthBar = MaterialApp(
-        home: Scaffold(
-          body: HealthBar(
-            currentValue: currentValue,
-            maxValue: maxValue,
-          ),
-        ),
-      );
+      currentValueNotifier = ValueNotifier<double>(50);
     });
 
     testWidgets('HealthBar displays with correct initial values',
         (WidgetTester tester) async {
-      await tester.pumpWidget(healthBar);
-      expect(find.byType(HealthBar), findsOneWidget);
-    });
-
-    testWidgets('HealthBar updates when values change',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(healthBar);
-
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
           body: HealthBar(
-            currentValue: 75,
+            currentValue: currentValueNotifier,
             maxValue: maxValue,
           ),
         ),
       ));
+
       await tester.pumpAndSettle();
+      expect(find.byType(HealthBar), findsOneWidget);
+    });
+
+    testWidgets('HealthBar updates when currentValue changes',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: HealthBar(
+            currentValue: currentValueNotifier,
+            maxValue: maxValue,
+          ),
+        ),
+      ));
+
+      currentValueNotifier.value = 75;
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
     });
   });
 }
