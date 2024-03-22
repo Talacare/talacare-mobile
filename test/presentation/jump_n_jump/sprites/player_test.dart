@@ -44,5 +44,17 @@ void main() {
       expect(isCollidingVertically, isTrue);
       expect(game.dash.velocity.y, -game.dash.jumpSpeed);
     });
+
+    jumpNJumpGameTester.test(
+        'Test Player Collecting Blood Bag and Health increased', (game) async {
+      game.dash.velocity = Vector2(0, 10);
+      final initialHealth = game.dash.health;
+      final intersectionPoints = {Vector2(10, 10)};
+      bool isCollidingVertically =
+          (intersectionPoints.first.y - intersectionPoints.last.y).abs() < 5;
+      game.dash.onCollision(intersectionPoints, BloodBag());
+      expect(game.dash.health, initialHealth + 7);
+      expect(isCollidingVertically, isTrue);
+    });
   });
 }
