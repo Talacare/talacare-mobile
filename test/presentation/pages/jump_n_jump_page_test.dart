@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talacare/presentation/jump_n_jump/health_bar.dart';
 import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 
 void main() {
@@ -46,6 +47,13 @@ void main() {
       await tester.pump();
       await rightGesture.up();
       await tester.pump();
+    });
+
+    testWidgets('HealthBar display is correctly shown',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: JumpNJumpPage()));
+      await tester.pumpAndSettle();
+      expect(find.byType(HealthBar), findsOneWidget);
     });
   });
 }
