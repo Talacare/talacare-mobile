@@ -63,7 +63,7 @@ void main() {
     jumpNJumpGameTester
         .test('Player X position is reset when moving out of right bounds',
             (game) async {
-      final player = Player();
+      final player = Player(character: Character.girl);
       player.size = Vector2(70, 120);
       await game.ensureAdd(player);
       player.position.x = game.size.x + player.size.x + 11;

@@ -79,7 +79,7 @@ class _HealthBarState extends State<HealthBar>
             decoration: BoxDecoration(
               color: AppColors.violet,
               borderRadius: const BorderRadius.all(Radius.circular(20)),
-              border: Border.all(color: AppColors.white, width: 2),
+              border: Border.all(color: Colors.white, width: 2),
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,

@@ -62,7 +62,10 @@ void main() {
 
     testWidgets('HealthBar display is correctly shown',
         (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(home: JumpNJumpPage()));
+      await tester.pumpWidget(const MaterialApp(
+          home: JumpNJumpPage(
+        character: Character.girl,
+      )));
       await tester.pumpAndSettle();
       expect(find.byType(HealthBar), findsOneWidget);
     });
