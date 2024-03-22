@@ -46,20 +46,19 @@ jobs:
     name: SonarQube Trigger
     runs-on: ubuntu-latest
     steps:
+      - name: Checking out
+        uses: actions/checkout@master
+        with:
+          # Disabling shallow clones is recommended for improving the relevancy of reporting
+          fetch-depth: 0
+    
       - name: Create .env file
-        uses: actions/checkout@v1
         run: |
           echo "ANDROID_API_KEY='${{ secrets.ANDROID_API_KEY }}'" > .env
           echo "ANDROID_APP_ID='${{ secrets.ANDROID_APP_ID }}'" >> .env
           echo "ANDROID_MESSAGING_SENDER_ID='${{ secrets.ANDROID_MESSAGING_SENDER_ID }}'" >> .env
           echo "ANDROID_PROJECT_ID='${{ secrets.ANDROID_PROJECT_ID }}'" >> .env
           echo "ANDROID_STORAGE_BUCKET='${{ secrets.ANDROID_STORAGE_BUCKET }}'" >> .env
-
-      - name: Checking out
-        uses: actions/checkout@master
-        with:
-          # Disabling shallow clones is recommended for improving the relevancy of reporting
-          fetch-depth: 0
       
       - name: Setup Flutter for Testing
         uses: subosito/flutter-action@v2
