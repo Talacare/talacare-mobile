@@ -21,7 +21,7 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(stageState: StageState([1, 2, 3, 0], 4)),
+          home: PuzzleInfo(stageState: StageState([1, 2, 3, 0], 4, 0)),
         ));
   });
 
