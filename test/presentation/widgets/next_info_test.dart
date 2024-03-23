@@ -35,7 +35,7 @@ void main() {
           home: Scaffold(
             body: NextInfo(
               name: "PERAWAT",
-              stageState: StageState([1, 0, 0, 0], 1),
+              stageState: StageState([1, 0, 0, 0], 1, 0),
             ),
           ),
         ));
@@ -67,7 +67,7 @@ void main() {
                 home: Scaffold(
                   body: NextInfo(
                     name: "PERAWAT",
-                    stageState: StageState([1, 0, 0, 0], 1),
+                    stageState: StageState([1, 0, 0, 0], 1, 0),
                   ),
                 ),
               )),
@@ -95,7 +95,7 @@ void main() {
           home: Scaffold(
             body: NextInfo(
               name: "PERAWAT",
-              stageState: StageState([1, 0, 0, 0], 1),
+              stageState: StageState([1, 0, 0, 0], 1, 0),
             ),
           ),
         )));
@@ -122,7 +122,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 3, 2, 0], 4),
+                  stageState: StageState([2, 3, 2, 0], 4, 0),
                 ),
               ),
             )),
@@ -155,7 +155,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4),
+                  stageState: StageState([2, 2, 2, 0], 4, 0),
                 ),
               ),
             )),
@@ -191,7 +191,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4),
+                  stageState: StageState([2, 2, 2, 0], 4, 0),
                 ),
               ),
             )),
@@ -228,7 +228,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4),
+                  stageState: StageState([2, 2, 2, 0], 4, 0),
                   audioPlayer: mockPlayer,
                 ),
               ),
@@ -261,7 +261,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4),
+                  stageState: StageState([2, 2, 2, 0], 4, 0),
                   audioPlayer: mockPlayer,
                 ),
               ),
