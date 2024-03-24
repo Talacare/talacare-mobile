@@ -18,12 +18,13 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 @GenerateMocks([AudioPlayer])
 void main() {
-  late Widget nextInfo;
-
   setUp(() async {
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
+  });
 
-    nextInfo = MultiProvider(
+  group('Win Puzzle Modal Widget Tests', () {
+    testWidgets('Verify All Components are showing', (tester) async {
+      await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
               create: (context) => TimerState(initialValue: true)),
@@ -38,12 +39,8 @@ void main() {
               stageState: StageState([1, 0, 0, 0], 1, 0),
             ),
           ),
-        ));
-  });
-
-  group('Win Puzzle Modal Widget Tests', () {
-    testWidgets('Verify All Components are showing', (tester) async {
-      await tester.pumpWidget(nextInfo);
+        )),
+      );
 
       expect(find.text('PERAWAT'), findsOneWidget);
       expect(find.text('Lanjut'), findsOneWidget);
