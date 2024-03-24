@@ -5,35 +5,43 @@ import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interf
 import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 
+import 'package:talacare/core/enums/character_enum.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/managers.dart';
 import './world.dart';
-import 'managers/platform_manager.dart';
 import 'sprites/sprites.dart';
 
 class JumpNJump extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
-  JumpNJump({this.onBackToMenuCallback, super.children, this.audioManager});
-
   final VoidCallback? onBackToMenuCallback;
+  final Character? character;
+  IAudioManager? audioManager;
+
+  JumpNJump(
+      {this.character,
+      this.onBackToMenuCallback,
+      this.audioManager,
+      super.children});
 
   GameManager gameManager = GameManager();
-
   final WorldGame world = WorldGame();
-
   PlatformManager platformManager = PlatformManager(
     maxVerticalDistanceToNextPlatform: 350,
   );
+
+  BloodBagManager bloodBagManager = BloodBagManager(
+    maxVerticalDistanceToNextBloodBag: 500,
+  );
   late Player dash;
-
   int screenBufferSpace = 100;
-
-  IAudioManager? audioManager;
 
   @override
   Future<void> onLoad() async {
     audioManager ??= AudioManager();
-    await add(world);
 
     dash = Player(audioManager: audioManager!);
+    dash.character = character;
+
+    await add(world);
     await add(dash);
 
     initializeGame();
@@ -76,7 +84,8 @@ class JumpNJump extends FlameGame
 
   void initializeGame() {
     if (children.contains(platformManager)) platformManager.removeFromParent();
-
+    if (children.contains(bloodBagManager)) bloodBagManager.removeFromParent();
+    dash.health = 0;
     dash.velocity = Vector2.zero();
     gameManager.score.value = 0;
 
@@ -97,6 +106,11 @@ class JumpNJump extends FlameGame
       maxVerticalDistanceToNextPlatform: 350,
     );
 
+    bloodBagManager = BloodBagManager(
+      maxVerticalDistanceToNextBloodBag: 500,
+    );
+
+    add(bloodBagManager);
     add(platformManager);
   }
 

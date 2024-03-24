@@ -9,6 +9,7 @@ import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/sprites.dart';
 
 import 'player_test.mocks.dart';
+import 'package:talacare/core/enums/character_enum.dart';
 
 @GenerateMocks([], customMocks: [
   MockSpec<IAudioManager>(as: #MockAudioManagerForPlayerTest),
@@ -16,8 +17,8 @@ import 'player_test.mocks.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final mockAudioManager = MockAudioManagerForPlayerTest();
-  final jumpNJumpGameTester =
-      FlameTester(() => JumpNJump(audioManager: mockAudioManager));
+  final jumpNJumpGameTester = FlameTester(() =>
+      JumpNJump(character: Character.boy, audioManager: mockAudioManager));
 
   setUp(() {
     reset(mockAudioManager);
@@ -63,6 +64,33 @@ void main() {
       verify(mockAudioManager.playSoundEffect(
               'jump_n_jump/jump_on_platform.wav', 1))
           .called(1);
+    });
+    jumpNJumpGameTester.test('Test Player Character (Boy)', (game) async {
+      game.dash.character = Character.boy;
+      game.dash.handleCharacterAsset();
+
+      expect(game.dash.leftDash, isNotNull);
+      expect(game.dash.rightDash, isNotNull);
+    });
+
+    jumpNJumpGameTester.test('Test Player Character (Girl)', (game) async {
+      game.dash.character = Character.girl;
+      game.dash.handleCharacterAsset();
+
+      expect(game.dash.leftDash, isNotNull);
+      expect(game.dash.rightDash, isNotNull);
+    });
+
+    jumpNJumpGameTester.test(
+        'Test Player Collecting Blood Bag and Health increased', (game) async {
+      game.dash.velocity = Vector2(0, 10);
+      final initialHealth = game.dash.health;
+      final intersectionPoints = {Vector2(10, 10)};
+      bool isCollidingVertically =
+          (intersectionPoints.first.y - intersectionPoints.last.y).abs() < 5;
+      game.dash.onCollision(intersectionPoints, BloodBag());
+      expect(game.dash.health, initialHealth + 7);
+      expect(isCollidingVertically, isTrue);
     });
   });
 }

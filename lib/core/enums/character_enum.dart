@@ -1,0 +1,1 @@
+enum Character { boy, girl }
