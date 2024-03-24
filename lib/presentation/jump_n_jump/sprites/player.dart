@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 
 import '../jump_n_jump.dart';
 import 'platform.dart';
@@ -10,8 +11,11 @@ enum DashDirection { left, right }
 
 class Player extends SpriteGroupComponent<DashDirection>
     with HasGameRef<JumpNJump>, KeyboardHandler, CollisionCallbacks {
-  Player({super.position})
-      : super(
+  late IAudioManager _audioManager;
+
+  Player({super.position, required IAudioManager audioManager})
+      : _audioManager = audioManager,
+        super(
           size: Vector2(70, 120),
           anchor: Anchor.center,
           priority: 1,
@@ -91,6 +95,7 @@ class Player extends SpriteGroupComponent<DashDirection>
   }
 
   void jump() {
+    _audioManager.playSoundEffect('jump_n_jump/jump_on_platform.wav', 1);
     velocity.y = -jumpSpeed;
   }
 

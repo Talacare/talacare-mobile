@@ -2,17 +2,28 @@ import 'package:flame/components.dart';
 import 'package:flame_test/flame_test.dart';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/sprites.dart';
 
-final jumpNJumpGameTester = FlameTester(
-  JumpNJump.new,
-);
+import 'player_test.mocks.dart';
 
+@GenerateMocks([], customMocks: [
+  MockSpec<IAudioManager>(as: #MockAudioManagerForPlayerTest),
+])
 void main() {
-  group('Player Tests', () {
-    TestWidgetsFlutterBinding.ensureInitialized();
+  TestWidgetsFlutterBinding.ensureInitialized();
+  final mockAudioManager = MockAudioManagerForPlayerTest();
+  final jumpNJumpGameTester =
+      FlameTester(() => JumpNJump(audioManager: mockAudioManager));
 
+  setUp(() {
+    reset(mockAudioManager);
+  });
+
+  group('Player Tests', () {
     jumpNJumpGameTester.test('Test Player movement to left', (game) async {
       game.dash.handleControlButtonPress(DashDirection.left, true);
       game.update(0.1);
@@ -43,6 +54,15 @@ void main() {
 
       expect(isCollidingVertically, isTrue);
       expect(game.dash.velocity.y, -game.dash.jumpSpeed);
+    });
+
+    jumpNJumpGameTester.test('Test Player Jump Plays Sound Effect',
+        (game) async {
+      game.dash.jump();
+
+      verify(mockAudioManager.playSoundEffect(
+              'jump_n_jump/jump_on_platform.wav', 1))
+          .called(1);
     });
   });
 }

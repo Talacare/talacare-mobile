@@ -1,6 +1,8 @@
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 
 import './world.dart';
@@ -9,7 +11,7 @@ import 'sprites/sprites.dart';
 
 class JumpNJump extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
-  JumpNJump({this.onBackToMenuCallback, super.children});
+  JumpNJump({this.onBackToMenuCallback, super.children, this.audioManager});
 
   final VoidCallback? onBackToMenuCallback;
 
@@ -20,14 +22,18 @@ class JumpNJump extends FlameGame
   PlatformManager platformManager = PlatformManager(
     maxVerticalDistanceToNextPlatform: 350,
   );
-  Player dash = Player();
+  late Player dash;
 
   int screenBufferSpace = 100;
 
+  IAudioManager? audioManager;
+
   @override
   Future<void> onLoad() async {
+    audioManager ??= AudioManager();
     await add(world);
 
+    dash = Player(audioManager: audioManager!);
     await add(dash);
 
     initializeGame();
@@ -100,6 +106,7 @@ class JumpNJump extends FlameGame
   }
 
   void startGame() {
+    audioManager!.playBackgroundMusic('jump_n_jump/jump_n_jump_bgm.mp3', 1);
     gameManager.state = GameState.playing;
     dash.megaJump();
   }
@@ -110,6 +117,8 @@ class JumpNJump extends FlameGame
   }
 
   void onLose() {
+    audioManager!.playSoundEffect('jump_n_jump/game_over.wav', 1);
+    audioManager!.stopBackgroundMusic();
     gameManager.state = GameState.gameOver;
     overlays.add('gameOverOverlay');
   }
