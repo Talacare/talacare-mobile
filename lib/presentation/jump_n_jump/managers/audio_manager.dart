@@ -8,12 +8,21 @@ class AudioManager implements IAudioManager {
       : this.flameAudioWrapper = flameAudioWrapper ?? FlameAudioWrapper();
 
   @override
-  void playBackgroundMusic(String fileName) {
-    flameAudioWrapper.playBgm(fileName);
+  void playBackgroundMusic(String fileName, double volume) {
+    if (fileName.isNotEmpty && volume >= 0) {
+      flameAudioWrapper.playBgm(fileName, volume);
+    }
   }
 
   @override
   void stopBackgroundMusic() {
     flameAudioWrapper.stopBgm();
+  }
+
+  @override
+  void playSoundEffect(String fileName, double volume) {
+    if (fileName.isNotEmpty && volume >= 0) {
+      flameAudioWrapper.playSfx(fileName, volume);
+    }
   }
 }
