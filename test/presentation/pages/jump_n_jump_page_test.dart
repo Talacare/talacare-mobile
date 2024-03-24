@@ -4,6 +4,25 @@ import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 
 void main() {
   group('JumpNJumpPage Widget Tests', () {
+    testWidgets('Simulating control button presses does not throw errors',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: JumpNJumpPage()));
+
+      final Finder leftButton = find.byKey(const Key('leftControlButton'));
+      final TestGesture leftGesture =
+          await tester.startGesture(tester.getCenter(leftButton));
+      await tester.pump();
+      await leftGesture.up();
+      await tester.pump();
+
+      final Finder rightButton = find.byKey(const Key('rightControlButton'));
+      final TestGesture rightGesture =
+          await tester.startGesture(tester.getCenter(rightButton));
+      await tester.pump();
+      await rightGesture.up();
+      await tester.pump();
+    });
+
     testWidgets('Coin icon and score display are correctly shown',
         (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: JumpNJumpPage()));
@@ -27,25 +46,6 @@ void main() {
       expect(find.byKey(const Key('leftControlButton')), findsOneWidget);
 
       expect(find.byKey(const Key('rightControlButton')), findsOneWidget);
-    });
-
-    testWidgets('Simulating control button presses does not throw errors',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(home: JumpNJumpPage()));
-
-      final Finder leftButton = find.byKey(const Key('leftControlButton'));
-      final TestGesture leftGesture =
-          await tester.startGesture(tester.getCenter(leftButton));
-      await tester.pump();
-      await leftGesture.up();
-      await tester.pump();
-
-      final Finder rightButton = find.byKey(const Key('rightControlButton'));
-      final TestGesture rightGesture =
-          await tester.startGesture(tester.getCenter(rightButton));
-      await tester.pump();
-      await rightGesture.up();
-      await tester.pump();
     });
   });
 }
