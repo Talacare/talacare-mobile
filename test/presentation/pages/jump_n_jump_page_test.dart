@@ -5,6 +5,38 @@ import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 
 void main() {
   group('JumpNJumpPage Widget Tests', () {
+    testWidgets('Coin icon and score display are correctly shown',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(
+          home: JumpNJumpPage(
+        character: Character.girl,
+      )));
+
+      expect(find.byKey(const Key('coinIcon')), findsOneWidget);
+      expect(find.byKey(const Key('scoreDisplay')), findsOneWidget);
+    });
+
+    testWidgets('High score display is correctly shown',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(
+          home: JumpNJumpPage(
+        character: Character.girl,
+      )));
+
+      expect(find.byKey(const Key('highScoreDisplay')), findsOneWidget);
+    });
+
+    testWidgets('Control buttons are correctly shown',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(
+          home: JumpNJumpPage(
+        character: Character.girl,
+      )));
+
+      expect(find.byKey(const Key('leftControlButton')), findsOneWidget);
+      expect(find.byKey(const Key('rightControlButton')), findsOneWidget);
+    });
+
     testWidgets('Simulating control button presses does not throw errors',
         (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(

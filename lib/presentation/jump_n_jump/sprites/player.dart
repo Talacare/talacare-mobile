@@ -21,10 +21,8 @@ class Player extends SpriteGroupComponent<DashDirection>
         super(
           size: Vector2(70, 120),
           anchor: Anchor.center,
-                    priority: 1,
+          priority: 1,
         );
-
-
 
   Vector2 velocity = Vector2.zero();
   int _hAxisInput = 0;

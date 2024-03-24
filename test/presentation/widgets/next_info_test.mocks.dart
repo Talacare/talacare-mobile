@@ -192,26 +192,6 @@ class MockAudioPlayer extends _i1.Mock implements _i2.AudioPlayer {
       ) as _i4.Future<void>);
 
   @override
-  _i4.Future<void> resume() => (super.noSuchMethod(
-        Invocation.method(
-          #resume,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-
-  @override
-  _i4.Future<void> release() => (super.noSuchMethod(
-        Invocation.method(
-          #release,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-
-  @override
   _i4.Future<void> seek(Duration? position) => (super.noSuchMethod(
         Invocation.method(
           #seek,
