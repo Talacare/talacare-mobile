@@ -14,10 +14,12 @@ import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 class NextInfo extends StatefulWidget {
   final StageState stageState;
   final AudioPlayer? audioPlayer;
+  final String name;
 
   const NextInfo({
     super.key,
     required this.stageState,
+    required this.name,
     this.audioPlayer,
   });
 
@@ -35,8 +37,8 @@ class _NextInfoState extends State<NextInfo> {
 
     List<int> currentState = widget.stageState.starList;
 
-    if (!finishState.value) {
-      currentState[widget.stageState.stage - 1] = 0;
+    if (finishState.value) {
+      currentState[widget.stageState.stage - 1] = 3;
 
       if (widget.stageState.stage < 4) {
         currentState[widget.stageState.stage] = 1;
@@ -62,7 +64,7 @@ class _NextInfoState extends State<NextInfo> {
       }
 
       audioPlayer.onPlayerComplete.listen((_) {
-        speakText(text: 'PERAWAT');
+        speakText(text: widget.name);
       });
     }
 
@@ -72,13 +74,13 @@ class _NextInfoState extends State<NextInfo> {
         padding: const EdgeInsets.only(top: 20, bottom: 20),
         child: Center(
           child: Column(children: [
-            const SizedBox(
+            SizedBox(
               width: 203,
               height: 50,
               child: Text(
-                'PERAWAT',
+                widget.name,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white,
                     fontSize: 50,
                     fontFamily: 'Digitalt',

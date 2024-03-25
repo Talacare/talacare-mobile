@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/data/models/stage_state.dart';
-import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
+import 'package:talacare/core/utils/analytics_engine_util.dart';
+import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 
@@ -44,7 +45,7 @@ class HomePage extends StatelessWidget {
       children: [
         Text(
           'Welcome To',
-          style: _getTextStyle(1, AppColors.white, 22),
+          style: _getTextStyle(1, Colors.white, 22),
         ),
         Stack(
           alignment: AlignmentDirectional.topCenter,
@@ -55,7 +56,7 @@ class HomePage extends StatelessWidget {
             ),
             Text(
               'TALACARE',
-              style: _getTextStyle(1, AppColors.white, 38),
+              style: _getTextStyle(1, Colors.white, 38),
             ),
           ],
         )
@@ -83,7 +84,8 @@ class HomePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const JumpNJumpPage()),
+                        builder: (context) => const ChooseCharacterPage(),
+                      ),
                     );
                   },
                 ),
@@ -93,14 +95,13 @@ class HomePage extends StatelessWidget {
                   imgPath: 'puzzle_trailer.png',
                   key: const Key('puzzle_card'),
                   buttonName: "puzzle_button",
-                  onTap: () {
+                  onTap: () async {
+                    AnalyticsEngineUtil.userPlaysPuzzle();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PuzzlePage(
-                          stageState: StageState([1,0,0,0], 1)
-                        )
-                      ),
+                          builder: (context) => PuzzlePage(
+                              stageState: StageState([1, 0, 0, 0], 1))),
                     );
                   },
                 ),

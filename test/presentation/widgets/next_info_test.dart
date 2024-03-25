@@ -22,6 +22,7 @@ void main() {
 
   setUp(() async {
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
+
     nextInfo = MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
@@ -32,7 +33,10 @@ void main() {
         ],
         child: MaterialApp(
           home: Scaffold(
-            body: NextInfo(stageState: StageState([1, 0, 0, 0], 1)),
+            body: NextInfo(
+              name: "PERAWAT",
+              stageState: StageState([1, 0, 0, 0], 1),
+            ),
           ),
         ));
   });
@@ -61,7 +65,10 @@ void main() {
               ],
               child: MaterialApp(
                 home: Scaffold(
-                  body: NextInfo(stageState: StageState([1, 0, 0, 0], 1)),
+                  body: NextInfo(
+                    name: "PERAWAT",
+                    stageState: StageState([1, 0, 0, 0], 1),
+                  ),
                 ),
               )),
           navigatorObservers: [mockObserver],
@@ -86,7 +93,10 @@ void main() {
         ],
         child: MaterialApp(
           home: Scaffold(
-            body: NextInfo(stageState: StageState([1, 0, 0, 0], 1)),
+            body: NextInfo(
+              name: "PERAWAT",
+              stageState: StageState([1, 0, 0, 0], 1),
+            ),
           ),
         )));
 
@@ -110,7 +120,10 @@ void main() {
             ],
             child: MaterialApp(
               home: Scaffold(
-                body: NextInfo(stageState: StageState([2, 2, 2, 0], 4)),
+                body: NextInfo(
+                  name: "PERAWAT",
+                  stageState: StageState([2, 3, 2, 0], 4),
+                ),
               ),
             )),
         navigatorObservers: [mockObserver],
@@ -140,7 +153,10 @@ void main() {
             ],
             child: MaterialApp(
               home: Scaffold(
-                body: NextInfo(stageState: StageState([2, 2, 2, 0], 4)),
+                body: NextInfo(
+                  name: "PERAWAT",
+                  stageState: StageState([2, 2, 2, 0], 4),
+                ),
               ),
             )),
         navigatorObservers: [mockObserver],
@@ -173,7 +189,10 @@ void main() {
             ],
             child: MaterialApp(
               home: Scaffold(
-                body: NextInfo(stageState: StageState([2, 2, 2, 0], 4)),
+                body: NextInfo(
+                  name: "PERAWAT",
+                  stageState: StageState([2, 2, 2, 0], 4),
+                ),
               ),
             )),
       ),
@@ -208,6 +227,7 @@ void main() {
             child: MaterialApp(
               home: Scaffold(
                 body: NextInfo(
+                  name: "PERAWAT",
                   stageState: StageState([2, 2, 2, 0], 4),
                   audioPlayer: mockPlayer,
                 ),
@@ -240,6 +260,7 @@ void main() {
             child: MaterialApp(
               home: Scaffold(
                 body: NextInfo(
+                  name: "PERAWAT",
                   stageState: StageState([2, 2, 2, 0], 4),
                   audioPlayer: mockPlayer,
                 ),

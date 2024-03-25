@@ -1,33 +1,34 @@
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
-import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
-
+import 'package:talacare/core/enums/character_enum.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/managers.dart';
 import './world.dart';
-import 'managers/platform_manager.dart';
 import 'sprites/sprites.dart';
 
 class JumpNJump extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
-  JumpNJump({this.onBackToMenuCallback, super.children});
-
   final VoidCallback? onBackToMenuCallback;
+  final Character? character;
+
+  JumpNJump({this.character, this.onBackToMenuCallback, super.children});
 
   GameManager gameManager = GameManager();
-
   final WorldGame world = WorldGame();
-
   PlatformManager platformManager = PlatformManager(
     maxVerticalDistanceToNextPlatform: 350,
   );
+  BloodBagManager bloodBagManager = BloodBagManager(
+    maxVerticalDistanceToNextBloodBag: 500,
+  );
   Player dash = Player();
-
   int screenBufferSpace = 100;
 
   @override
   Future<void> onLoad() async {
-    await add(world);
+    dash.character = character;
 
+    await add(world);
     await add(dash);
 
     initializeGame();
@@ -70,7 +71,8 @@ class JumpNJump extends FlameGame
 
   void initializeGame() {
     if (children.contains(platformManager)) platformManager.removeFromParent();
-
+    if (children.contains(bloodBagManager)) bloodBagManager.removeFromParent();
+    dash.health = 0;
     dash.velocity = Vector2.zero();
     gameManager.score.value = 0;
 
@@ -91,6 +93,11 @@ class JumpNJump extends FlameGame
       maxVerticalDistanceToNextPlatform: 350,
     );
 
+    bloodBagManager = BloodBagManager(
+      maxVerticalDistanceToNextBloodBag: 500,
+    );
+
+    add(bloodBagManager);
     add(platformManager);
   }
 
