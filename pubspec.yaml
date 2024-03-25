@@ -41,7 +41,6 @@ dependencies:
   mockito: ^5.4.4
   flutter_tts: ^3.8.5
   audioplayers: ^5.2.1
-  audioplayers: ^5.2.1
   firebase_core: ^2.24.2
   flutter_dotenv: ^5.1.0
   firebase_crashlytics: ^3.4.9
