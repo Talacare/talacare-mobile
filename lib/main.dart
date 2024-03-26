@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'TalaCare',
       theme: ThemeData(
+        fontFamily: 'Digitalt',
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
           background: AppColors.purple,
