@@ -2,10 +2,8 @@ name: Staging
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the develop branch
+  # Triggers the workflow on push events but only for the develop branch
   push:
-    branches: [staging]
-  pull_request:
     branches: [staging]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -18,6 +16,14 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          echo "ANDROID_API_KEY='${{ secrets.ANDROID_API_KEY }}'" > .env
+          echo "ANDROID_APP_ID='${{ secrets.ANDROID_APP_ID }}'" >> .env
+          echo "ANDROID_MESSAGING_SENDER_ID='${{ secrets.ANDROID_MESSAGING_SENDER_ID }}'" >> .env
+          echo "ANDROID_PROJECT_ID='${{ secrets.ANDROID_PROJECT_ID }}'" >> .env
+          echo "ANDROID_STORAGE_BUCKET='${{ secrets.ANDROID_STORAGE_BUCKET }}'" >> .env
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -35,3 +41,49 @@ jobs:
         
       - name: Analyze
         run: flutter analyze
+    
+  sonarqube:
+    name: SonarQube Trigger
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out
+        uses: actions/checkout@master
+        with:
+          # Disabling shallow clones is recommended for improving the relevancy of reporting
+          fetch-depth: 0
+    
+      - name: Create .env file
+        run: |
+          echo "ANDROID_API_KEY='${{ secrets.ANDROID_API_KEY }}'" > .env
+          echo "ANDROID_APP_ID='${{ secrets.ANDROID_APP_ID }}'" >> .env
+          echo "ANDROID_MESSAGING_SENDER_ID='${{ secrets.ANDROID_MESSAGING_SENDER_ID }}'" >> .env
+          echo "ANDROID_PROJECT_ID='${{ secrets.ANDROID_PROJECT_ID }}'" >> .env
+          echo "ANDROID_STORAGE_BUCKET='${{ secrets.ANDROID_STORAGE_BUCKET }}'" >> .env
+      
+      - name: Setup Flutter for Testing
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Get Flutter Package
+        run: flutter pub get
+    
+      - name: Testing Flutter Project
+        run: flutter test --coverage --file-reporter json:build/reports/unit-test-results.json
+      
+      - name: List all file
+        run: ls
+
+      - name: SonarQube Scan
+        run: |
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip -O /tmp/sonar-scanner.zip
+          unzip /tmp/sonar-scanner.zip -d /tmp
+          mv /tmp/sonar-scanner-* /tmp/sonar-scanner
+          rm /tmp/sonar-scanner.zip
+          export PATH="$PATH:/tmp/sonar-scanner/bin"
+        
+          sonar-scanner -X \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+            -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}

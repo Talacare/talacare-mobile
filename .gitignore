@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+.scannerwork/
 
 # IntelliJ related
 *.iml
@@ -46,5 +47,8 @@ app.*.map.json
 *.keystore
 *.jks
 
-# Ignore test coverage report
+# Ignore test report
 /coverage/
+tests.output
+
+.env
