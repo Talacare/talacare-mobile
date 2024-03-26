@@ -9,5 +9,7 @@ class AppColors {
   static Color mediumGreen = const Color(0xFF67EB00);
   static Color darkGreen = const Color(0xFF4EC307);
   static Color yellow = const Color(0xFFFFF635);
+  static Color violet = const Color(0xFF4E19A5);
+  static Color dustyRed = const Color(0xFFB8464D);
   // Add more colors here ...
 }
