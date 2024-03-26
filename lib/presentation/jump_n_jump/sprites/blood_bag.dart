@@ -10,7 +10,7 @@ class BloodBag extends SpriteComponent
   BloodBag({
     super.position,
   }) : super(
-          size: Vector2(90, 100),
+          size: Vector2(45, 80),
           priority: 2,
         );
 
