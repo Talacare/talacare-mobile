@@ -12,8 +12,6 @@ class PuzzleInfo extends StatefulWidget {
 }
 
 class _PuzzleInfoState extends State<PuzzleInfo> {
-  final String puzzleImg = 'assets/images/perawat.png';
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -82,6 +80,8 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
   }
 
   Widget buildDownSide() {
+    String puzzleImg = widget.stageState.images[widget.stageState.stage - 1].image;
+
     return Container(
       padding: const EdgeInsets.only(top: 20),
       child: Row(
