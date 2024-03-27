@@ -11,7 +11,10 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
   GoogleSignIn googleSignIn;
   FirebaseAuth firebaseAuthInstance;
 
-  AuthRemoteDatasourceImpl({required this.googleSignIn, required this.firebaseAuthInstance,});
+  AuthRemoteDatasourceImpl({
+    required this.googleSignIn,
+    required this.firebaseAuthInstance,
+  });
 
   @override
   Future<UserModel> signInGoogle() async {
@@ -27,14 +30,14 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
       }
 
       final GoogleSignInAuthentication authentication =
-      await account.authentication;
+          await account.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: authentication.accessToken,
         idToken: authentication.idToken,
       );
 
       final UserCredential userCredential =
-      await firebaseAuthInstance.signInWithCredential(credential);
+          await firebaseAuthInstance.signInWithCredential(credential);
 
       final User user = userCredential.user!;
       final UserModel userModel = UserModel(

@@ -9,7 +9,7 @@ import 'package:talacare/domain/usecases/auth_usecase.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart' as ap;
 import 'package:talacare/injection.dart' as di;
 
-void main(){
+void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setupFirebaseCoreMocks();
 

@@ -20,10 +20,13 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => AuthUseCase(getIt()));
 
   // Repository
-  getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt()));
+  getIt
+      .registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt()));
 
   // Data source
-  getIt.registerLazySingleton<AuthRemoteDatasource>(() => AuthRemoteDatasourceImpl(googleSignIn: getIt(), firebaseAuthInstance: getIt()));
+  getIt.registerLazySingleton<AuthRemoteDatasource>(() =>
+      AuthRemoteDatasourceImpl(
+          googleSignIn: getIt(), firebaseAuthInstance: getIt()));
 
   // External
   final googleSignIn = GoogleSignIn();
