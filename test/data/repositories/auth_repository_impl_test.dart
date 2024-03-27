@@ -6,10 +6,17 @@ import 'package:talacare/data/models/user_model.dart';
 import 'package:talacare/data/repositories/auth_repository_impl.dart';
 import 'auth_repository_impl_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<AuthRemoteDatasource>(onMissingStub: OnMissingStub.returnDefault)])
+@GenerateNiceMocks([
+  MockSpec<AuthRemoteDatasource>(onMissingStub: OnMissingStub.returnDefault)
+])
 void main() {
   late AuthRepositoryImpl repository;
   late MockAuthRemoteDatasource mockRemoteDatasource;
+  const userModel = UserModel(
+    email: 'test@example.com',
+    name: 'Test User',
+    photoURL: 'https://example.com/photo.jpg',
+  );
 
   setUp(() {
     mockRemoteDatasource = MockAuthRemoteDatasource();
@@ -17,11 +24,6 @@ void main() {
   });
 
   test('should call signInGoogle of auth remote datasource', () async {
-    const userModel = UserModel(
-      email: 'test@example.com',
-      name: 'Test User',
-      photoURL: 'https://example.com/photo.jpg',
-    );
     when(mockRemoteDatasource.signInGoogle())
         .thenAnswer((_) async => userModel);
 
