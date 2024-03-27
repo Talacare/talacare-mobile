@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/core/utils/button_color_util.dart';
 
@@ -6,12 +7,14 @@ class Button extends StatelessWidget {
   final String text;
   final ButtonColorScheme colorScheme;
   final void Function()? onTap;
+  final IconData? icon;
 
   const Button({
     super.key,
     required this.text,
     this.onTap,
     this.colorScheme = ButtonColorScheme.green,
+    this.icon,
   });
 
   @override
@@ -86,17 +89,33 @@ class Button extends StatelessWidget {
               child: SizedBox(
                 width: 269,
                 height: 24,
-                child: Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontFamily: 'Digitalt',
-                    fontWeight: FontWeight.w500,
-                    height: 0,
-                    letterSpacing: 0.96,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    icon != null
+                        ? Row(children: [
+                            Icon(
+                              icon,
+                              color: Colors.white,
+                            ),
+                            const Gap(5),
+                          ])
+                        : Container(),
+                    Flexible(
+                      child: Text(
+                        text,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontFamily: 'Digitalt',
+                          fontWeight: FontWeight.w500,
+                          height: 0,
+                          letterSpacing: 0.96,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
