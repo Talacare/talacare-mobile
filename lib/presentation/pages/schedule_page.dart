@@ -96,14 +96,14 @@ class SchedulePage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(height: 10),
+                  const Gap(10),
                   Button(
                     text: 'Tambah Jadwal',
                     colorScheme: ButtonColorScheme.purple,
                     icon: Icons.add,
                     onTap: () {},
                   ),
-                  const SizedBox(height: 20),
+                  const Gap(20),
                   Button(
                     text: 'Menu',
                     colorScheme: ButtonColorScheme.purple,
