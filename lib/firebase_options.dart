@@ -12,7 +12,7 @@ class DefaultFirebaseOptions {
         'DefaultFirebaseOptions have not been configured for web - '
         'you can reconfigure this by running the FlutterFire CLI again.',
       );
-      // return web;
+      // return android;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -51,12 +51,4 @@ class DefaultFirebaseOptions {
     projectId: dotenv.env['ANDROID_PROJECT_ID']!,
     storageBucket: dotenv.env['ANDROID_STORAGE_BUCKET']!,
   );
-
-  // static FirebaseOptions web = FirebaseOptions(
-  //   apiKey: dotenv.env['ANDROID_API_KEY']!,
-  //   appId: dotenv.env['ANDROID_APP_ID']!,
-  //   messagingSenderId: dotenv.env['ANDROID_MESSAGING_SENDER_ID']!,
-  //   projectId: dotenv.env['ANDROID_PROJECT_ID']!,
-  //   storageBucket: dotenv.env['ANDROID_STORAGE_BUCKET']!,
-  // );
 }
