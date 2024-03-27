@@ -10,18 +10,17 @@ import 'auth_usecase_test.mocks.dart';
 void main() {
   late AuthUseCase useCase;
   late MockAuthRepository mockAuthRepository;
+  const userEntity = UserEntity(
+      email: 'test@example.com',
+      name: 'Test User',
+      photoURL: 'https://example.com/photo.jpg');
 
   setUp(() {
     mockAuthRepository = MockAuthRepository();
     useCase = AuthUseCase(mockAuthRepository);
   });
 
-  test('should get user entity from auth repository',
-      () async {
-    const userEntity = UserEntity(
-        email: 'test@example.com',
-        name: 'Test User',
-        photoURL: 'https://example.com/photo.jpg');
+  test('should get user entity from auth repository', () async {
     when(mockAuthRepository.signInGoogle()).thenAnswer((_) async => userEntity);
 
     final result = await useCase.signInGoogle();
