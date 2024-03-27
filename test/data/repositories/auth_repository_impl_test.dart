@@ -1,6 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:talacare/data/datasources/auth_remote_datasource.dart';
+import 'package:talacare/data/models/user_model.dart';
+import 'package:talacare/data/repositories/auth_repository_impl.dart';
+import 'auth_repository_impl_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<AuthRemoteDatasource>(onMissingStub: OnMissingStub.returnDefault)])
 void main() {

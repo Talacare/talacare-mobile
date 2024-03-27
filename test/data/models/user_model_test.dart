@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talacare/data/models/user_model.dart';
+import 'package:talacare/domain/entities/user_entity.dart';
 
 void main() {
   test(

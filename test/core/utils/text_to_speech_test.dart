@@ -1,9 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/core/utils/text_to_speech.dart';
 import 'text_to_speech_test.mocks.dart';
 
+@GenerateMocks([FlutterTts])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 

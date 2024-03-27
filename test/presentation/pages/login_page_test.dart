@@ -4,6 +4,10 @@ import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
+import 'package:talacare/domain/usecases/auth_usecase.dart';
+import 'package:talacare/presentation/pages/login_page.dart';
+import 'package:talacare/presentation/providers/auth_provider.dart';
+import 'login_page_test.mocks.dart';
 
 @GenerateNiceMocks([
   MockSpec<AuthProvider>(onMissingStub: OnMissingStub.returnDefault),

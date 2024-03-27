@@ -2,6 +2,8 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/mockito.dart';
+import 'package:talacare/data/datasources/auth_remote_datasource.dart';
+import 'package:talacare/data/models/user_model.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
 
 class MockGoogleSignInV2 extends Mock implements MockGoogleSignIn {
