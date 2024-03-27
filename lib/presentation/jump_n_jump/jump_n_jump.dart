@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
@@ -31,18 +33,24 @@ class JumpNJump extends FlameGame
   BloodBagManager bloodBagManager = BloodBagManager(
     maxVerticalDistanceToNextBloodBag: 500,
   );
-  late Player dash;
+  Player dash = Player();
   int screenBufferSpace = 100;
 
   @override
   Future<void> onLoad() async {
     audioManager ??= AudioManager();
 
-    dash = Player(audioManager: audioManager!);
     dash.character = character;
-
+    dash.audioManager = audioManager;
+    
     await add(world);
     await add(dash);
+
+    dash.health.addListener(() {
+      if (dash.health.value <= 0) {
+        onLose();
+      }
+    });
 
     initializeGame();
     startGame();
@@ -77,6 +85,7 @@ class JumpNJump extends FlameGame
 
       if (dash.position.y >
           camera.position.y + world.size.y + dash.size.y + screenBufferSpace) {
+        dash.health.value = 0;
         onLose();
       }
     }
@@ -85,7 +94,7 @@ class JumpNJump extends FlameGame
   void initializeGame() {
     if (children.contains(platformManager)) platformManager.removeFromParent();
     if (children.contains(bloodBagManager)) bloodBagManager.removeFromParent();
-    dash.health = 0;
+    dash.health.value = 100;
     dash.velocity = Vector2.zero();
     gameManager.score.value = 0;
 
@@ -123,6 +132,13 @@ class JumpNJump extends FlameGame
     audioManager!.playBackgroundMusic('jump_n_jump/jump_n_jump_bgm.mp3', 1);
     gameManager.state = GameState.playing;
     dash.megaJump();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (gameManager.isGameOver) {
+        timer.cancel();
+      } else {
+        dash.decreaseHealth(1);
+      }
+    });
   }
 
   void reset() {

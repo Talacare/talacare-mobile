@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
@@ -158,5 +157,15 @@ void main() {
     game.onBackToMenu();
 
     expect(game.isGameOverOverlayAdded, isFalse);
+  });
+
+  jumpNJumpGameTester.test('Health decrement and automatic game over trigger',
+      (game) async {
+    game.dash.health.value = 5;
+    await game.ready();
+    await Future.delayed(const Duration(seconds: 5));
+    game.update(5.0);
+    expect(game.gameManager.isGameOver, isTrue);
+    expect(game.isGameOverOverlayAdded, isTrue);
   });
 }
