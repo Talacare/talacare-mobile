@@ -11,6 +11,11 @@ import 'auth_provider_test.mocks.dart';
 void main() {
   late AuthProvider authProvider;
   late MockAuthUseCase mockAuthUseCase;
+  const userEntity = UserEntity(
+    email: 'test@example.com',
+    name: 'Test User',
+    photoURL: 'https://example.com/photo.jpg',
+  );
 
   setUp(() {
     mockAuthUseCase = MockAuthUseCase();
@@ -18,11 +23,6 @@ void main() {
   });
 
   test('should set user model when signInGoogle is successful', () async {
-    const userEntity = UserEntity(
-      email: 'test@example.com',
-      name: 'Test User',
-      photoURL: 'https://example.com/photo.jpg',
-    );
     when(mockAuthUseCase.signInGoogle()).thenAnswer((_) async => userEntity);
 
     await authProvider.signInWithGoogle();
@@ -31,12 +31,7 @@ void main() {
   });
 
   test('should set isLoading to true when signInGoogle is called', () async {
-    when(mockAuthUseCase.signInGoogle())
-        .thenAnswer((_) async => const UserEntity(
-              email: 'test@example.com',
-              name: 'Test User',
-              photoURL: 'https://example.com/photo.jpg',
-            ));
+    when(mockAuthUseCase.signInGoogle()).thenAnswer((_) async => userEntity);
 
     authProvider.signInWithGoogle();
 
@@ -44,12 +39,7 @@ void main() {
   });
 
   test('should set isLoading to false when signInGoogle succeeds', () async {
-    when(mockAuthUseCase.signInGoogle())
-        .thenAnswer((_) async => const UserEntity(
-              email: 'test@example.com',
-              name: 'Test User',
-              photoURL: 'https://example.com/photo.jpg',
-            ));
+    when(mockAuthUseCase.signInGoogle()).thenAnswer((_) async => userEntity);
 
     await authProvider.signInWithGoogle();
 
