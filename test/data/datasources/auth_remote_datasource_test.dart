@@ -6,14 +6,14 @@ import 'package:talacare/data/datasources/auth_remote_datasource.dart';
 import 'package:talacare/data/models/user_model.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
 
-class MockGoogleSignInV2 extends Mock implements MockGoogleSignIn {
+class MockGoogleSignInReturnsNull extends Mock implements MockGoogleSignIn {
   @override
   Future<GoogleSignInAccount?> signIn() {
     return Future.value(null);
   }
 }
 
-class MockGoogleSignInV3 extends Mock implements MockGoogleSignIn {
+class MockGoogleSignInThrowsException extends Mock implements MockGoogleSignIn {
   @override
   Future<GoogleSignInAccount?> signIn() {
     throw Exception();
@@ -21,22 +21,18 @@ class MockGoogleSignInV3 extends Mock implements MockGoogleSignIn {
 }
 
 void main() {
-  late AuthRemoteDatasourceImpl dataSource;
-  late MockGoogleSignIn mockGoogleSignIn;
   late MockFirebaseAuth mockFirebaseAuth;
 
   setUp(() {
     TestWidgetsFlutterBinding.ensureInitialized();
-
-    mockGoogleSignIn = MockGoogleSignIn();
     mockFirebaseAuth = MockFirebaseAuth();
-    dataSource = AuthRemoteDatasourceImpl(
-      googleSignIn: mockGoogleSignIn,
-      firebaseAuthInstance: mockFirebaseAuth,
-    );
   });
 
   test('should return UserModel on successful sign-in', () async {
+    final dataSource = AuthRemoteDatasourceImpl(
+      googleSignIn: MockGoogleSignIn(),
+      firebaseAuthInstance: mockFirebaseAuth,
+    );
     final result = await dataSource.signInGoogle();
 
     expect(result, isA<UserModel>());
@@ -44,14 +40,14 @@ void main() {
 
   test('should throw exception when the account is null', () async {
     final dataSource = AuthRemoteDatasourceImpl(
-        googleSignIn: MockGoogleSignInV2(),
+        googleSignIn: MockGoogleSignInReturnsNull(),
         firebaseAuthInstance: mockFirebaseAuth);
     expect(() async => await dataSource.signInGoogle(), throwsException);
   });
 
   test('should throw unexpected exception', () async {
     final dataSource = AuthRemoteDatasourceImpl(
-        googleSignIn: MockGoogleSignInV3(),
+        googleSignIn: MockGoogleSignInThrowsException(),
         firebaseAuthInstance: mockFirebaseAuth);
     expect(() async => await dataSource.signInGoogle(), throwsException);
   });
