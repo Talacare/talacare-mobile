@@ -29,15 +29,17 @@ void main() {
     getIt.unregister<AuthProvider>();
   });
 
-  testWidgets('Verify the login preview image is showing', (tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: ChangeNotifierProvider<AuthProvider>(
-          create: (_) => mockAuthProvider,
-          child: const LoginPage(),
-        ),
+  Widget buildLoginPage(AuthProvider authProvider) {
+    return MaterialApp(
+      home: ChangeNotifierProvider<AuthProvider>(
+        create: (_) => authProvider,
+        child: const LoginPage(),
       ),
     );
+  }
+
+  testWidgets('Verify the login preview image is showing', (tester) async {
+    await tester.pumpWidget(buildLoginPage(mockAuthProvider));
 
     final loginPreviewImageFinder = find.byKey(const Key('login_preview'));
     expect(loginPreviewImageFinder, findsOneWidget,
@@ -45,14 +47,7 @@ void main() {
   });
 
   testWidgets('Verify the login button is showing', (tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: ChangeNotifierProvider<AuthProvider>(
-          create: (_) => mockAuthProvider,
-          child: const LoginPage(),
-        ),
-      ),
-    );
+    await tester.pumpWidget(buildLoginPage(mockAuthProvider));
 
     final loginButtonFinder = find.byKey(const Key('login_button'));
     expect(loginButtonFinder, findsOneWidget,
@@ -61,14 +56,7 @@ void main() {
 
   testWidgets('Verify the snack bar is not shown when no error',
       (tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: ChangeNotifierProvider<AuthProvider>(
-          create: (_) => mockAuthProvider,
-          child: const LoginPage(),
-        ),
-      ),
-    );
+    await tester.pumpWidget(buildLoginPage(mockAuthProvider));
 
     await tester.pump();
 
@@ -79,14 +67,7 @@ void main() {
 
   testWidgets('Verify the snack bar is shown on error', (tester) async {
     when(mockAuthProvider.isError).thenReturn(true);
-    await tester.pumpWidget(
-      MaterialApp(
-        home: ChangeNotifierProvider<AuthProvider>(
-          create: (_) => mockAuthProvider,
-          child: const LoginPage(),
-        ),
-      ),
-    );
+    await tester.pumpWidget(buildLoginPage(mockAuthProvider));
 
     await tester.pump();
 
@@ -96,14 +77,7 @@ void main() {
   });
 
   testWidgets('Verify tapping on the login button', (tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: ChangeNotifierProvider<AuthProvider>(
-          create: (_) => getIt<AuthProvider>(),
-          child: const LoginPage(),
-        ),
-      ),
-    );
+    await tester.pumpWidget(buildLoginPage(getIt<AuthProvider>()));
 
     final loginButtonFinder = find.byKey(const Key('login_button'));
     await tester.tap(loginButtonFinder);
