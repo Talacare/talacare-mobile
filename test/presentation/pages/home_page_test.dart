@@ -8,6 +8,7 @@ import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
+import 'package:talacare/presentation/widgets/profile_modal.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
@@ -102,5 +103,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(PuzzlePage), findsOneWidget);
+  });
+
+  testWidgets('Verify tapping on user picture shows profile modal',
+      (tester) async {
+    await mockNetworkImagesFor(() => tester.pumpWidget(homePage));
+    final userPictureFinder = find.byKey(const Key('user_picture'));
+    await tester.tap(userPictureFinder);
+    await tester.pumpAndSettle();
+    expect(find.byType(ProfileModal), findsOneWidget);
   });
 }
