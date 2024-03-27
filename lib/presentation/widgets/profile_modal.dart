@@ -1,54 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/presentation/widgets/logout_confirmation_modal.dart';
 import 'package:talacare/presentation/widgets/modal_button.dart';
 
-class GameOverModal extends StatelessWidget {
-  final int currentScore;
-  final int highestScore;
-  final VoidCallback onMainLagiPressed;
-  final VoidCallback onMenuPressed;
-
-  const GameOverModal({
+class ProfileModal extends StatelessWidget {
+  const ProfileModal({
     super.key,
-    required this.currentScore,
-    required this.highestScore,
-    required this.onMainLagiPressed,
-    required this.onMenuPressed,
   });
-
-  Widget _buildScoreContainer(String title, int score, BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: AppColors.mediumBlue,
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 5),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 5.0),
-          decoration: ShapeDecoration(
-            color: AppColors.lightBlue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-            ),
-          ),
-          child: Text(
-            '$score',
-            style: TextStyle(
-              color: AppColors.mildBlue,
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +20,11 @@ class GameOverModal extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
-                  color: AppColors.lavender,
+                  color: Color(0xFFD3D8FF),
                   blurRadius: 10,
-                  offset: const Offset(0, 5),
+                  offset: Offset(0, 5),
                 ),
               ],
             ),
@@ -83,7 +41,7 @@ class GameOverModal extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    "Yuk Main Lagi!",
+                    "Profil Anda",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
@@ -91,24 +49,49 @@ class GameOverModal extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 20),
+                const CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/perawat.png'),
+                  radius: 80,
+                ),
                 const SizedBox(height: 10),
-                _buildScoreContainer('Skor Terkini', currentScore, context),
-                _buildScoreContainer('Skor Tertinggi', highestScore, context),
-                const SizedBox(height: 15),
+                Text(
+                  "John Doe",
+                  style: TextStyle(
+                    color: AppColors.mildBlue,
+                    fontSize: 25,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  "johndoe@gmail.com",
+                  style: TextStyle(
+                    color: AppColors.mediumBlue,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(height: 20),
                 ModalButton(
-                  text: 'Main Lagi',
+                  text: 'Logout',
                   color: AppColors.coralPink,
                   borderColor: AppColors.softPink,
                   textColor: Colors.white,
-                  onTap: onMainLagiPressed,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          const LogoutConfirmationModal(),
+                    );
+                  },
                 ),
                 const SizedBox(height: 5),
                 ModalButton(
-                  text: 'Menu',
+                  text: 'Kembali',
                   color: Colors.white,
                   borderColor: AppColors.coralPink,
                   textColor: AppColors.coralPink,
-                  onTap: onMenuPressed,
+                  onTap: () => Navigator.of(context).pop(),
                 ),
               ],
             ),

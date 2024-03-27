@@ -6,22 +6,38 @@ import 'package:talacare/core/utils/analytics_engine_util.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
+import 'package:talacare/presentation/widgets/profile_modal.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildGreetingText(),
-        ClipOval(
-          key: const Key('user_picture'),
-          child: SizedBox(
-            width: 55,
-            height: 55,
-            child: Image.network(
-              'https://image.lexica.art/full_jpg/7515495b-982d-44d2-9931-5a8bbbf27532',
+        InkWell(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const ProfileModal(
+                  key: Key("profile"),
+                );
+              },
+            );
+          },
+          child: ClipOval(
+            key: const Key('user_picture'),
+            child: SizedBox(
+              width: 55,
+              height: 55,
+              child: Image.network(
+                'https://image.lexica.art/full_jpg/7515495b-982d-44d2-9931-5a8bbbf27532',
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset('assets/images/perawat.png');
+                },
+              ),
             ),
           ),
         )
@@ -73,7 +89,7 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                _buildHeader(),
+                _buildHeader(context),
                 const Gap(40),
                 GameCard(
                   title: 'Jump N Jump',
