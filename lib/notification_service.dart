@@ -1,12 +1,18 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
 
-// test saja
 class NotificationService {
   final FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
+  Future<void> _configureLocalTimeZone() async {
+    tz.initializeTimeZones();
+  }
+
   Future<void> initNotification() async {
+    await _configureLocalTimeZone();
+
     AndroidInitializationSettings initializationSettingsAndroid =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -23,6 +29,21 @@ class NotificationService {
             importance: Importance.max)
     );
   }
+
+// Just ignore this comment will be removed in next commit
+//   Future<void> checkPendingNotificationRequests() async {
+//   final List<PendingNotificationRequest> pendingNotificationRequests =
+//       await notificationsPlugin.pendingNotificationRequests();
+  
+//   print('${pendingNotificationRequests.length} pending notification ');
+
+//   for (PendingNotificationRequest pendingNotificationRequest in pendingNotificationRequests) {
+//     print(pendingNotificationRequest.id.toString() +
+//         " " +
+//         (pendingNotificationRequest.payload ?? ""));
+//   }
+//   print('NOW ' + tz.TZDateTime.now(tz.local).toString());
+// }
 
   Future showNotification(
       {int id = 0, String? title, String? body, String? payLoad}) async {
