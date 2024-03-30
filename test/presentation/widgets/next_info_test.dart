@@ -1,16 +1,17 @@
 import 'dart:async';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
+import 'package:network_image_mock/network_image_mock.dart';
+import 'package:provider/provider.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
-import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
-import 'package:mockito/mockito.dart';
-import 'package:network_image_mock/network_image_mock.dart';
 
 import 'next_info_test.mocks.dart';
 
@@ -18,7 +19,12 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 @GenerateMocks([AudioPlayer])
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  setupFirebaseCoreMocks();
+
+
   setUp(() async {
+    await Firebase.initializeApp();
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
   });
 
