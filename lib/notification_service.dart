@@ -30,21 +30,6 @@ class NotificationService {
     );
   }
 
-// Just ignore this comment will be removed in next commit
-//   Future<void> checkPendingNotificationRequests() async {
-//   final List<PendingNotificationRequest> pendingNotificationRequests =
-//       await notificationsPlugin.pendingNotificationRequests();
-  
-//   print('${pendingNotificationRequests.length} pending notification ');
-
-//   for (PendingNotificationRequest pendingNotificationRequest in pendingNotificationRequests) {
-//     print(pendingNotificationRequest.id.toString() +
-//         " " +
-//         (pendingNotificationRequest.payload ?? ""));
-//   }
-//   print('NOW ' + tz.TZDateTime.now(tz.local).toString());
-// }
-
   Future showNotification(
       {int id = 0, String? title, String? body, String? payLoad}) async {
     return notificationsPlugin.show(

@@ -12,7 +12,6 @@ class DefaultFirebaseOptions {
         'DefaultFirebaseOptions have not been configured for web - '
         'you can reconfigure this by running the FlutterFire CLI again.',
       );
-      // return android;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:

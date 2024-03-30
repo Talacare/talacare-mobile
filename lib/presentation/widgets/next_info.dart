@@ -1,15 +1,16 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/core/utils/analytics_engine_util.dart';
 import 'package:talacare/core/utils/text_to_speech.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
-import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/button.dart';
-import 'package:provider/provider.dart';
 import 'package:talacare/presentation/widgets/game_over_modal.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 
 class NextInfo extends StatefulWidget {
   final StageState stageState;
@@ -132,6 +133,7 @@ class _NextInfoState extends State<NextInfo> {
                           currentScore: widget.stageState.score,
                           highestScore: 999,
                           onMainLagiPressed: () {
+                            AnalyticsEngineUtil.userPlaysPuzzleAgain();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -141,6 +143,7 @@ class _NextInfoState extends State<NextInfo> {
                             );
                           },
                           onMenuPressed: () {
+                            AnalyticsEngineUtil.userStopPlaysPuzzle();
                             Navigator.push(
                               context,
                               MaterialPageRoute(

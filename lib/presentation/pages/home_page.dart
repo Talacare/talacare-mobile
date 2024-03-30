@@ -81,6 +81,7 @@ class HomePage extends StatelessWidget {
                   key: const Key('jump_n_jump_card'),
                   buttonName: "jump_n_jump_button",
                   onTap: () {
+                    AnalyticsEngineUtil.userPlaysJumpNJump();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
