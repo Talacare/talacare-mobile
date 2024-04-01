@@ -9,7 +9,7 @@ void main() {
     testWidgets('DraggablePuzzlePiece Test', (WidgetTester tester) async {
       final draggablePuzzlePiece = DraggablePuzzlePiece(
         image: Image.asset(
-          'assets/images/perawat.png',
+          'assets/images/puzzle_images/perawat.png',
           height: 300,
           width: 300,
         ),

@@ -17,7 +17,6 @@ class PuzzleInfo extends StatefulWidget {
 }
 
 class _PuzzleInfoState extends State<PuzzleInfo> {
-
   @override
   Widget build(BuildContext context) {
     final finishState = Provider.of<TimerState>(context);
@@ -102,6 +101,8 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
   }
 
   Widget buildDownSide() {
+    String puzzleImg = widget.stageState.images[widget.stageState.stage - 1].image;
+
     return Container(
       padding: const EdgeInsets.only(top: 20),
       child: Row(

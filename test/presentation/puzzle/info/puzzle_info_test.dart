@@ -21,10 +21,7 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            imagePath: 'assets/images/perawat.png',
-            stageState: StageState([1, 2, 3, 0], 4, 0)
-          ),
+          home: PuzzleInfo(stageState: StageState([1, 2, 3, 0], 4, 0)),
         ));
   });
 

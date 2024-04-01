@@ -104,7 +104,7 @@ class HomePage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PuzzlePage(
-                              stageState: StageState([1, 0, 0, 0], 1, 0))),
+                              stageState: StageState([1, 0, 0, 0], 1, 0, []))),
                     );
                   },
                 ),
