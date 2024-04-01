@@ -14,14 +14,17 @@ void main() {
     puzzleInfo = MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
-            create: (context) => TimerState(initialValue: true),
+            create: (context) => TimerState(initialValue: false),
           ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(stageState: StageState([1, 2, 3, 0], 4)),
+          home: PuzzleInfo(
+            imagePath: 'assets/images/perawat.png',
+            stageState: StageState([1, 2, 3, 0], 4, 0)
+          ),
         ));
   });
 
@@ -105,6 +108,68 @@ void main() {
               widget.image is AssetImage &&
               (widget.image as AssetImage).assetName ==
                   'assets/images/puzzle_star/star_lose.png',
+        ),
+        findsOneWidget);
+  });
+
+  testWidgets('PuzzleInfo widget change image star to lose image',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+            create: (context) => TimerState(initialValue: true),
+          ),
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: false),
+          ),
+        ],
+        child: MaterialApp(
+          home: PuzzleInfo(
+            imagePath: 'assets/images/perawat.png',
+            stageState: StageState([0, 0, 0, 0], 4, 0)
+          ),
+        ))
+    );
+
+    expect(
+        find.byWidgetPredicate(
+          (Widget widget) =>
+              widget is Image &&
+              widget.image is AssetImage &&
+              (widget.image as AssetImage).assetName ==
+                  'assets/images/puzzle_star/star_lose.png',
+        ),
+        findsOneWidget);
+  });
+
+  testWidgets('PuzzleInfo widget change image star to win image',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+            create: (context) => TimerState(initialValue: false),
+          ),
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: true),
+          ),
+        ],
+        child: MaterialApp(
+          home: PuzzleInfo(
+            imagePath: 'assets/images/perawat.png',
+            stageState: StageState([0, 0, 0, 0], 4, 0)
+          ),
+        ))
+    );
+
+    expect(
+        find.byWidgetPredicate(
+          (Widget widget) =>
+              widget is Image &&
+              widget.image is AssetImage &&
+              (widget.image as AssetImage).assetName ==
+                  'assets/images/puzzle_star/star_win.png',
         ),
         findsOneWidget);
   });

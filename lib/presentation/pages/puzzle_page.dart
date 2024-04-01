@@ -29,7 +29,10 @@ class PuzzlePage extends StatelessWidget {
             body: SingleChildScrollView(
           child: SafeArea(
             child: Column(children: [
-              PuzzleInfo(stageState: stageState),
+              PuzzleInfo(
+                imagePath: 'assets/images/perawat.png',
+                stageState: stageState
+              ),
               PuzzleWidget(
                 key: const Key("Image"),
                 image: Image.asset(

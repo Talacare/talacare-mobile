@@ -47,6 +47,7 @@ class _NextInfoState extends State<NextInfo> {
 
     if (clearState.value) {
       currentState[widget.stageState.stage - 1] = 2;
+      widget.stageState.score += 25;
       if (widget.stageState.stage < 4) {
         currentState[widget.stageState.stage] = 1;
       }
@@ -119,7 +120,7 @@ class _NextInfoState extends State<NextInfo> {
                     MaterialPageRoute(
                         builder: (context) => PuzzlePage(
                               stageState: StageState(
-                                  currentState, widget.stageState.stage + 1),
+                                  currentState, widget.stageState.stage + 1, widget.stageState.score),
                             )),
                   );
                 } else {
@@ -128,14 +129,14 @@ class _NextInfoState extends State<NextInfo> {
                       builder: (BuildContext context) {
                         return GameOverModal(
                           key: const Key("game-over"),
-                          currentScore: 999,
+                          currentScore: widget.stageState.score,
                           highestScore: 999,
                           onMainLagiPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => PuzzlePage(
-                                        stageState: StageState([1, 0, 0, 0], 1),
+                                        stageState: StageState([1, 0, 0, 0], 1, 0),
                                       )),
                             );
                           },

@@ -18,12 +18,13 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 @GenerateMocks([AudioPlayer])
 void main() {
-  late Widget nextInfo;
-
   setUp(() async {
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
+  });
 
-    nextInfo = MultiProvider(
+  group('Win Puzzle Modal Widget Tests', () {
+    testWidgets('Verify All Components are showing', (tester) async {
+      await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
               create: (context) => TimerState(initialValue: true)),
@@ -35,15 +36,11 @@ void main() {
           home: Scaffold(
             body: NextInfo(
               name: "PERAWAT",
-              stageState: StageState([1, 0, 0, 0], 1),
+              stageState: StageState([1, 0, 0, 0], 1, 0),
             ),
           ),
-        ));
-  });
-
-  group('Win Puzzle Modal Widget Tests', () {
-    testWidgets('Verify All Components are showing', (tester) async {
-      await tester.pumpWidget(nextInfo);
+        )),
+      );
 
       expect(find.text('PERAWAT'), findsOneWidget);
       expect(find.text('Lanjut'), findsOneWidget);
@@ -67,7 +64,7 @@ void main() {
                 home: Scaffold(
                   body: NextInfo(
                     name: "PERAWAT",
-                    stageState: StageState([1, 0, 0, 0], 1),
+                    stageState: StageState([1, 0, 0, 0], 1, 0),
                   ),
                 ),
               )),
@@ -95,7 +92,7 @@ void main() {
           home: Scaffold(
             body: NextInfo(
               name: "PERAWAT",
-              stageState: StageState([1, 0, 0, 0], 1),
+              stageState: StageState([1, 0, 0, 0], 1, 0),
             ),
           ),
         )));
@@ -122,7 +119,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 3, 2, 0], 4),
+                  stageState: StageState([2, 3, 2, 0], 4, 0),
                 ),
               ),
             )),
@@ -155,7 +152,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4),
+                  stageState: StageState([2, 2, 2, 0], 4, 0),
                 ),
               ),
             )),
@@ -191,7 +188,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4),
+                  stageState: StageState([2, 2, 2, 0], 4, 0),
                 ),
               ),
             )),
@@ -211,6 +208,38 @@ void main() {
     expect(find.byKey(const Key('greeting')), findsOneWidget);
   });
 
+  testWidgets('Verify Score is showing', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MultiProvider(
+            providers: [
+              ChangeNotifierProvider<TimerState>(
+                  create: (context) => TimerState(initialValue: true)),
+              ChangeNotifierProvider<CompleteState>(
+                create: (context) => CompleteState(initialValue: false),
+              )
+            ],
+            child: MaterialApp(
+              home: Scaffold(
+                body: NextInfo(
+                  name: "PERAWAT",
+                  stageState: StageState([2, 2, 2, 0], 4, 50),
+                ),
+              ),
+            )),
+      ),
+    );
+
+    expect(find.byKey(const Key('nextButton')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('nextButton')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('game-over')), findsOneWidget);
+    expect(find.text('Menu'), findsOneWidget);
+
+    expect(find.text('50'), findsOneWidget);
+  });
+
   testWidgets('plays bgm.mp3 when PuzzlePage starts', (tester) async {
     final mockPlayer = MockAudioPlayer();
 
@@ -228,7 +257,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4),
+                  stageState: StageState([2, 2, 2, 0], 4, 0),
                   audioPlayer: mockPlayer,
                 ),
               ),
@@ -261,7 +290,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4),
+                  stageState: StageState([2, 2, 2, 0], 4, 0),
                   audioPlayer: mockPlayer,
                 ),
               ),
