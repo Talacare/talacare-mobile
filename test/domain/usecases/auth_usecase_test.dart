@@ -20,11 +20,27 @@ void main() {
     useCase = AuthUseCase(mockAuthRepository);
   });
 
-  test('should get user entity from auth repository', () async {
+  test('should get user entity from auth repository (remote data source)', () async {
     when(mockAuthRepository.signInGoogle()).thenAnswer((_) async => userEntity);
 
     final result = await useCase.signInGoogle();
 
     expect(result, equals(userEntity));
+  });
+
+  test('should get user entity from auth repository (local data source)', () async {
+    when(mockAuthRepository.getLocalStoredUser()).thenAnswer((_) async => userEntity);
+
+    final result = await useCase.getLocalStoredUser();
+
+    expect(result, equals(userEntity));
+  });
+
+  test('should get null from auth repository (local data source)', () async {
+    when(mockAuthRepository.getLocalStoredUser()).thenAnswer((_) async => Future.value(null));
+
+    final result = await useCase.getLocalStoredUser();
+
+    expect(result, isNull);
   });
 }
