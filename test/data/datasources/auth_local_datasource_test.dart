@@ -11,41 +11,27 @@ import 'auth_local_datasource_test.mocks.dart';
 ])
 void main() {
   late MockFlutterSecureStorage storage;
+  late AuthLocalDatasourceImpl dataSource;
 
-  setUp(() async {
-    TestWidgetsFlutterBinding.ensureInitialized();
+  setUp(() {
     storage = MockFlutterSecureStorage();
+    dataSource = AuthLocalDatasourceImpl(storage: storage);
   });
 
   test('should return null if the data is not stored', () async {
-    final dataSource = AuthLocalDatasourceImpl(
-      storage: storage,
-    );
-
     final result = await dataSource.readData('a_key');
-
     expect(result, isNull);
   });
 
   test('should return the value if the data is stored', () async {
-    final dataSource = AuthLocalDatasourceImpl(
-      storage: storage,
-    );
     when(storage.read(key: 'a_key')).thenAnswer((_) => Future.value('Data'));
     final result = await dataSource.readData('a_key');
-
     expect(result, isNotNull);
     expect(result, equals('Data'));
   });
 
-
   test('should store the value', () async {
-    final dataSource = AuthLocalDatasourceImpl(
-      storage: storage,
-    );
-
     await dataSource.storeData('a_key', 'Data');
-
     verify(storage.write(key: 'a_key', value: 'Data')).called(1);
   });
 }
