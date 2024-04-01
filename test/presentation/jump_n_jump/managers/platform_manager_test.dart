@@ -1,7 +1,6 @@
 import 'package:flame_test/flame_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
@@ -14,8 +13,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final mockAudioManager = MockAudioManagerForPlatformTest();
 
-  final jumpNJumpGameTester =
-      FlameTester(() => JumpNJump(character: Character.boy, audioManager: mockAudioManager));
+  final jumpNJumpGameTester = FlameTester(() =>
+      JumpNJump(character: Character.boy, audioManager: mockAudioManager));
 
   group('Platform Tests', () {
     jumpNJumpGameTester.test('Test number of platform generated', (game) async {
