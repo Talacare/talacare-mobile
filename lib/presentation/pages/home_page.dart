@@ -21,30 +21,34 @@ class HomePage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildGreetingText(),
-        InkWell(
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return const ProfileModal(
-                  key: Key("profile"),
-                );
-              },
+        _buildProfilePicture(context),
+      ],
+    );
+  }
+
+  Widget _buildProfilePicture(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const ProfileModal(
+              key: Key("profile"),
             );
           },
-          child: ClipOval(
-            key: const Key('user_picture'),
-            child: SizedBox(
-              width: 55,
-              height: 55,
-              child: Image.network(
-                getIt<AuthProvider>().user?.photoURL ??
-                    'https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg',
-              ),
-            ),
+        );
+      },
+      child: ClipOval(
+        key: const Key('user_picture'),
+        child: SizedBox(
+          width: 55,
+          height: 55,
+          child: Image.network(
+            getIt<AuthProvider>().user?.photoURL ??
+                'https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg',
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 
