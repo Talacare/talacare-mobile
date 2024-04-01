@@ -1,19 +1,14 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/data/datasources/auth_local_datasource.dart';
-
 import 'package:talacare/data/datasources/auth_remote_datasource.dart';
 import 'package:talacare/data/models/user_model.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
-
 import 'auth_remote_datasource_test.mocks.dart';
 
 class MockGoogleSignInReturnsNull extends Mock implements MockGoogleSignIn {
@@ -74,9 +69,7 @@ void main() {
       dio: mockDio,
       localDatasource: mockLocalDatasource,
     );
-
     final result = await dataSource.signInGoogle();
-
     expect(result, isA<UserModel>());
   });
 
