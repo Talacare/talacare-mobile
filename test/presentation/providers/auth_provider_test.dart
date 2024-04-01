@@ -61,4 +61,36 @@ void main() {
 
     expect(authProvider.isLoading, false);
   });
+
+  test('should get user entity from local data storage', () async {
+    when(mockAuthUseCase.getLocalStoredUser()).thenAnswer((_) async => userEntity);
+
+    await authProvider.getLocalStoredUser();
+
+    expect(authProvider.user, equals(userEntity));
+    verify(mockAuthUseCase.getLocalStoredUser()).called(1);
+    verifyNoMoreInteractions(mockAuthUseCase);
+  });
+
+  test('should get null from local data storage', () async {
+    when(mockAuthUseCase.getLocalStoredUser()).thenAnswer((_) async => Future.value(null));
+
+    await authProvider.getLocalStoredUser();
+
+    expect(authProvider.user, isNull);
+    verify(mockAuthUseCase.getLocalStoredUser()).called(1);
+    verifyNoMoreInteractions(mockAuthUseCase);
+  });
+
+  test('should set user to null', () async {
+    authProvider.setUser(null);
+
+    expect(authProvider.user, isNull);
+  });
+
+  test('should set user to user entity', () async {
+    authProvider.setUser(userEntity);
+
+    expect(authProvider.user, equals(userEntity));
+  });
 }
