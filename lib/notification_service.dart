@@ -19,8 +19,7 @@ class NotificationService {
     var initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid);
     await notificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse:
-            (NotificationResponse notificationResponse) async {});
+        onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {});
   }
 
   notificationDetails() {
@@ -30,29 +29,48 @@ class NotificationService {
     );
   }
 
-  Future showNotification(
+  Future<void> showNotification(
       {int id = 0, String? title, String? body, String? payLoad}) async {
     return notificationsPlugin.show(
         id, title, body, await notificationDetails());
   }
 
-  Future scheduleNotification(
-      {int id = 0,
-      String? title,
-      String? body,
-      String? payLoad,
-      required DateTime scheduledNotificationDateTime}) async {
-    return notificationsPlugin.zonedSchedule(
-        id,
-        title,
-        body,
-        tz.TZDateTime.from(
-          scheduledNotificationDateTime,
-          tz.local,
-        ),
-        await notificationDetails(),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime);
+  DateTime _nextInstanceOfTime({required DateTime dateTime}) {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, dateTime.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute);
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+
+    return DateTime(
+      scheduledDate.year, scheduledDate.month, scheduledDate.day, scheduledDate.hour, scheduledDate.minute
+    );
+  }
+
+  Future<void> scheduleNotification(
+    {int id = 0,
+    String? title,
+    String? body,
+    String? payLoad,
+    required DateTime scheduledNotificationDateTime}
+  ) async {
+    await notificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(
+        _nextInstanceOfTime(dateTime: scheduledNotificationDateTime),
+        tz.local,
+      ),
+      const NotificationDetails(
+        android: AndroidNotificationDetails('daily notification channel id',
+          'daily notification channel name',
+          channelDescription: 'daily notification description'),
+      ),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time);
   }
 }
