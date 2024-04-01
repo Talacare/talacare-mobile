@@ -67,7 +67,7 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
       var newBloodBagX = random.nextInt(gameRef.size.x.floor() - 60).toDouble();
       var newBloodBag = BloodBag(position: Vector2(newBloodBagX, newBloodBagY));
 
-      while (bloodBags.first == newBloodBag) {
+      while (bloodBags.first.position == newBloodBag.position) {
         var newBloodBagY = generateNextY();
         var newBloodBagX =
             random.nextInt(gameRef.size.x.floor() - 60).toDouble();

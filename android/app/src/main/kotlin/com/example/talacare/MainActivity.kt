@@ -1,4 +1,4 @@
-package com.talacare.a2
+package id.ac.ui.talacare.a2
 
 import io.flutter.embedding.android.FlutterActivity
 

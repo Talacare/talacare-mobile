@@ -66,7 +66,7 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
 
       var newPlatX = random.nextInt(gameRef.size.x.floor() - 60).toDouble();
       var newPlat = Platform(position: Vector2(newPlatX, newPlatY));
-      while (platforms.first == newPlat) {
+      while (platforms.first.position  == newPlat.position) {
         newPlat = Platform(position: Vector2(newPlatX, newPlatY));
       }
 
