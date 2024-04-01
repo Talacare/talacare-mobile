@@ -8,9 +8,8 @@ import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class PuzzleInfo extends StatefulWidget {
   final StageState stageState;
-  final String imagePath;
 
-  const PuzzleInfo({super.key, required this.stageState, required this.imagePath});
+  const PuzzleInfo({super.key, required this.stageState});
 
   @override
   State<PuzzleInfo> createState() => _PuzzleInfoState();
@@ -122,7 +121,7 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
             ],
           ),
           Image.asset(
-            widget.imagePath,
+            puzzleImg,
             width: 100,
             height: 100,
           ),
