@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:talacare/data/models/stage_state.dart';
+import 'package:talacare/data/models/image_pair.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/game/puzzle.dart';
 import 'package:talacare/presentation/puzzle/info/puzzle_info.dart';
@@ -25,27 +28,48 @@ class PuzzlePage extends StatelessWidget {
             create: (context) => CompleteState(initialValue: false),
           ),
         ],
-        child: Scaffold(
-            body: SingleChildScrollView(
-          child: SafeArea(
-            child: Column(children: [
-              PuzzleInfo(stageState: stageState),
-              PuzzleWidget(
-                key: const Key("Image"),
-                image: Image.asset(
-                  'assets/images/perawat.png',
-                  height: 300,
-                  width: 300,
+        child: FutureBuilder<List<ImagePair>>(
+          future: stageState.generateImages(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              ImagePair imagePair = stageState.images[stageState.stage - 1];
+              String image = imagePair.image;
+              String name = imagePair.name;
+
+              return Scaffold(
+                body: SingleChildScrollView(
+                  child: SafeArea(
+                    child: Column(
+                      children: [
+                        PuzzleInfo(
+                          stageState: stageState,
+                        ),
+                        PuzzleWidget(
+                          key: const Key("Image"),
+                          image: Image.asset(
+                            image,
+                            height: 300,
+                            width: 300,
+                          ),
+                          rows: 3,
+                          cols: 3,
+                        ),
+                        NextInfo(
+                          name: name,
+                          stageState: stageState,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                rows: 3,
-                cols: 3,
-              ),
-              NextInfo(
-                name: "PERAWAT",
-                stageState: stageState,
-              ),
-            ]),
-          ),
-        )));
+              );
+            }
+            else
+            {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
+      );
   }
 }

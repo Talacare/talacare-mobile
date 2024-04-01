@@ -2,39 +2,58 @@ import 'package:flutter/material.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/puzzle/info/circle_timer.dart';
 
+import 'package:provider/provider.dart';
+import 'package:talacare/presentation/puzzle/state/complete_state.dart';
+import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+
 class PuzzleInfo extends StatefulWidget {
   final StageState stageState;
+  final String imagePath;
 
-  const PuzzleInfo({super.key, required this.stageState});
+  const PuzzleInfo({super.key, required this.stageState, required this.imagePath});
 
   @override
   State<PuzzleInfo> createState() => _PuzzleInfoState();
 }
 
 class _PuzzleInfoState extends State<PuzzleInfo> {
-  final String puzzleImg = 'assets/images/perawat.png';
-
   @override
   Widget build(BuildContext context) {
+    final finishState = Provider.of<TimerState>(context);
+    final clearState = Provider.of<CompleteState>(context);
+    List<int> currentStar = widget.stageState.starList;
+
+    if (finishState.value) {
+      setState(() {
+        currentStar[widget.stageState.stage - 1] = 3;
+      });
+    }
+
+    if (clearState.value) {
+      setState(() {
+        currentStar[widget.stageState.stage - 1] = 2;
+      });
+    }
+
     return Container(
       padding: const EdgeInsets.only(left: 50, right: 50, top: 20, bottom: 30),
       child: Column(
         children: [
-          buildStarRow(),
+          buildStarRow(currentStar),
           buildDownSide(),
         ],
       ),
     );
   }
 
-  Widget buildStarRow() {
+  Widget buildStarRow(List<int> starList) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: List.generate(
-            widget.stageState.starList.length,
-            (index) => buildStarImage(widget.stageState.starList[index]),
+            starList.length,
+            (index) => buildStarImage(starList[index]),
           ),
         ),
         const Text(
@@ -82,6 +101,8 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
   }
 
   Widget buildDownSide() {
+    String puzzleImg = widget.stageState.images[widget.stageState.stage - 1].image;
+
     return Container(
       padding: const EdgeInsets.only(top: 20),
       child: Row(
@@ -101,7 +122,7 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
             ],
           ),
           Image.asset(
-            puzzleImg,
+            widget.imagePath,
             width: 100,
             height: 100,
           ),
