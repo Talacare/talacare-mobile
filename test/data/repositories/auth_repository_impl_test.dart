@@ -40,7 +40,9 @@ void main() {
     verify(mockRemoteDatasource.signInGoogle()).called(1);
   });
 
-  test('should call getLocalStoredUser of auth local datasource and return user model', () async {
+  test(
+      'should call getLocalStoredUser of auth local datasource and return user model',
+      () async {
     when(mockLocalDatasource.readData('user'))
         .thenAnswer((_) async => json.encode(userModel));
 
@@ -50,7 +52,9 @@ void main() {
     verify(mockLocalDatasource.readData('user')).called(1);
   });
 
-  test('should call getLocalStoredUser of auth local datasource and return null', () async {
+  test(
+      'should call getLocalStoredUser of auth local datasource and return null',
+      () async {
     when(mockLocalDatasource.readData('user'))
         .thenAnswer((_) async => Future.value(null));
 

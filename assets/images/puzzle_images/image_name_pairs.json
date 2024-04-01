@@ -1,0 +1,90 @@
+[
+    {
+        "image": "assets/images/puzzle_images/jantung.png",
+        "name": "JANTUNG"
+    },
+    {
+        "image": "assets/images/puzzle_images/kantongdarah.png",
+        "name": "KANTONG DARAH"
+    },
+    {
+        "image": "assets/images/puzzle_images/kantongdarah2.png",
+        "name": "KANTONG DARAH"
+    },
+    {
+        "image": "assets/images/puzzle_images/kantongdarah3.jpg",
+        "name": "KANTONG DARAH"
+    },
+    {
+        "image": "assets/images/puzzle_images/masker.png",
+        "name": "MASKER"
+    },
+    {
+        "image": "assets/images/puzzle_images/obat.png",
+        "name": "OBAT"
+    },
+    {
+        "image": "assets/images/puzzle_images/perawat.png",
+        "name": "PERAWAT"
+    },
+    {
+        "image": "assets/images/puzzle_images/perawat2.png",
+        "name": "PERAWAT"
+    },
+    {
+        "image": "assets/images/puzzle_images/ranjang.jpg",
+        "name": "RANJANG"
+    },
+    {
+        "image": "assets/images/puzzle_images/seldarahmerah.png",
+        "name": "SEL DARAH MERAH"
+    },
+    {
+        "image": "assets/images/puzzle_images/seldarahmerah2.png",
+        "name": "SEL DARAH MERAH"
+    },
+    {
+        "image": "assets/images/puzzle_images/seldarahmerah3.png",
+        "name": "SEL DARAH MERAH"
+    },
+    {
+        "image": "assets/images/puzzle_images/stetoskop.png",
+        "name": "STETOSKOP"
+    },
+    {
+        "image": "assets/images/puzzle_images/suntik.png",
+        "name": "SUNTIK"
+    },
+    {
+        "image": "assets/images/puzzle_images/suntik2.png",
+        "name": "SUNTIK"
+    },
+    {
+        "image": "assets/images/puzzle_images/suntik3.png",
+        "name": "SUNTIK"
+    },
+    {
+        "image": "assets/images/puzzle_images/suntik4.png",
+        "name": "SUNTIK"
+    },
+    {
+        "image": "assets/images/puzzle_images/suntik5.png",
+        "name": "SUNTIK"
+    },
+    {
+        "image": "assets/images/puzzle_images/transfusidarah.png",
+        "name": "TRANSFUSI DARAH"
+    },
+    {
+        "image": "assets/images/puzzle_images/transfusidarah2.png",
+        "name": "TRANSFUSI DARAH"
+    },
+    {
+        "image": "assets/images/puzzle_images/transfusidarah3.png",
+        "name": "TRANSFUSI DARAH"
+    },
+    {
+        "image": "assets/images/puzzle_images/transfusidarah4.png",
+        "name": "TRANSFUSI DARAH"
+    }
+]

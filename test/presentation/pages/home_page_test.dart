@@ -10,6 +10,7 @@ import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'login_page_test.mocks.dart';
+import 'package:talacare/presentation/pages/schedule_page.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
@@ -111,5 +112,27 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(PuzzlePage), findsOneWidget);
+  });
+
+  testWidgets('Verify the schedule button navigates to Schedule Page',
+      (tester) async {
+    final mockObserver = MockNavigatorObserver();
+
+    await mockNetworkImagesFor(
+      () => tester.pumpWidget(
+        MaterialApp(
+          home: const HomePage(),
+          navigatorObservers: [mockObserver],
+        ),
+      ),
+    );
+
+    expect(find.byKey(const Key('schedule_button')), findsOneWidget);
+
+    await tester.ensureVisible(find.byKey(const Key('schedule_button')));
+    await tester.tap(find.byKey(const Key('schedule_button')));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SchedulePage), findsOneWidget);
   });
 }

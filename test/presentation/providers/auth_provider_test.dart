@@ -63,7 +63,8 @@ void main() {
   });
 
   test('should get user entity from local data storage', () async {
-    when(mockAuthUseCase.getLocalStoredUser()).thenAnswer((_) async => userEntity);
+    when(mockAuthUseCase.getLocalStoredUser())
+        .thenAnswer((_) async => userEntity);
 
     await authProvider.getLocalStoredUser();
 
@@ -73,7 +74,8 @@ void main() {
   });
 
   test('should get null from local data storage', () async {
-    when(mockAuthUseCase.getLocalStoredUser()).thenAnswer((_) async => Future.value(null));
+    when(mockAuthUseCase.getLocalStoredUser())
+        .thenAnswer((_) async => Future.value(null));
 
     await authProvider.getLocalStoredUser();
 

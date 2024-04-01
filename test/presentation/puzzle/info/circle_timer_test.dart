@@ -44,8 +44,10 @@ void main() {
   testWidgets('CircleTimer widget has correct CircularProgressIndicator color',
       (WidgetTester tester) async {
     await tester.pumpWidget(circleTimer);
+
     CircularProgressIndicator circularProgressIndicator =
         tester.widget(find.byType(CircularProgressIndicator));
+
     expect(circularProgressIndicator.backgroundColor, AppColors.purple);
     expect(circularProgressIndicator.valueColor,
         isInstanceOf<AlwaysStoppedAnimation<Color>>());
@@ -56,6 +58,7 @@ void main() {
     await tester.pumpWidget(circleTimer);
 
     expect(find.text('60'), findsOneWidget);
+
     await tester.pumpWidget(circleTimer);
     expect(find.text('60'), findsOneWidget);
   });

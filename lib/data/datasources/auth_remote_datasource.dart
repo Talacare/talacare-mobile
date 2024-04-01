@@ -48,12 +48,14 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
   }
 
   Future<User> _authenticateWithFirebase(GoogleSignInAccount account) async {
-    final GoogleSignInAuthentication authentication = await account.authentication;
+    final GoogleSignInAuthentication authentication =
+        await account.authentication;
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: authentication.accessToken,
       idToken: authentication.idToken,
     );
-    final UserCredential userCredential = await firebaseAuthInstance.signInWithCredential(credential);
+    final UserCredential userCredential =
+        await firebaseAuthInstance.signInWithCredential(credential);
     return userCredential.user!;
   }
 
@@ -61,13 +63,15 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
     return UserModel(
       email: user.email ?? '-',
       name: user.displayName ?? '-',
-      photoURL: user.photoURL ?? 'https://i.pinimg.com/564x/87/14/55/8714556a52021ba3a55c8e7a3547d28c.jpg',
+      photoURL: user.photoURL ??
+          'https://i.pinimg.com/564x/87/14/55/8714556a52021ba3a55c8e7a3547d28c.jpg',
     );
   }
 
   Future<void> _storeToStorage(User user, UserModel userModel) async {
     final token = await user.getIdToken();
-    final response = await dio.get(authAPI, options: Options(headers: {'Authorization': token}));
+    final response = await dio.get(authAPI,
+        options: Options(headers: {'Authorization': token}));
     await localDatasource.storeData('access_token', response.data["token"]);
     await localDatasource.storeData('user', json.encode(userModel));
   }

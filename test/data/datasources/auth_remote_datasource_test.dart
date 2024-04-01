@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -25,6 +25,14 @@ class MockGoogleSignInThrowsException extends Mock implements MockGoogleSignIn {
   }
 }
 
+class MockGoogleSignInReturnsUserModel extends Mock
+    implements MockGoogleSignIn {
+  @override
+  Future<GoogleSignInAccount?> signIn() {
+    throw Exception();
+  }
+}
+
 class MockDio extends Mock implements Dio {
   @override
   Future<Response<T>> get<T>(String path,
@@ -40,8 +48,30 @@ class MockDio extends Mock implements Dio {
       "token": "token"
     };
 
-    final response = Response(requestOptions: RequestOptions(), statusCode: 200, data: data);
+    final response =
+        Response(requestOptions: RequestOptions(), statusCode: 200, data: data);
     return Future.value(response as Response<T>);
+  }
+}
+
+class MockFirebaseAuth extends Mock implements FirebaseAuth {
+  @override
+  Future<UserCredential> signInWithCredential(AuthCredential credential) async {
+    return Future.value(MockUserCredential());
+  }
+}
+
+class MockUserCredential extends Mock implements UserCredential {
+  final _user = MockUser();
+
+  @override
+  User? get user => _user;
+}
+
+class MockUser extends Mock implements User {
+  @override
+  Future<String?> getIdToken([bool forceRefresh = false]) {
+    return Future.value('token');
   }
 }
 

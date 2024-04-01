@@ -22,7 +22,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setUser(UserEntity? user){
+  void setUser(UserEntity? user) {
     _user = user;
     notifyListeners();
   }
@@ -36,6 +36,7 @@ class AuthProvider extends ChangeNotifier {
 
       setLoading(false);
     } catch (e) {
+      debugPrint(e.toString());
       setLoading(false);
 
       _isError = true;
