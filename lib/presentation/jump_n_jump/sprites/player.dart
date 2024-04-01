@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:flutter/material.dart';
 import 'blood_bag.dart';
@@ -13,11 +14,12 @@ enum DashDirection { left, right }
 
 class Player extends SpriteGroupComponent<DashDirection>
     with HasGameRef<JumpNJump>, KeyboardHandler, CollisionCallbacks {
+  late IAudioManager? audioManager;
   late Character? character;
 
-  Player({super.position, this.character})
+  Player({super.position, this.character, this.audioManager})
       : super(
-          size: Vector2(80, 160),
+          size: Vector2(70, 120),
           anchor: Anchor.center,
           priority: 1,
         );
@@ -42,6 +44,7 @@ class Player extends SpriteGroupComponent<DashDirection>
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+
     await add(CircleHitbox());
 
     await handleCharacterAsset();
@@ -106,6 +109,7 @@ class Player extends SpriteGroupComponent<DashDirection>
   }
 
   void jump() {
+    audioManager!.playSoundEffect('jump_n_jump/jump_on_platform.wav', 1);
     velocity.y = -jumpSpeed;
   }
 
