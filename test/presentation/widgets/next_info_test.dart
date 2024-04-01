@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
+import 'package:talacare/data/models/image_pair.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
@@ -18,7 +19,16 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 @GenerateMocks([AudioPlayer])
 void main() {
+  late List<ImagePair> image;
+  
   setUp(() async {
+    image = [
+      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG"),
+      ImagePair("assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH"),
+      ImagePair("assets/images/puzzle_images/masker.png", "MASKER"),
+      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT"),
+    ];
+
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
   });
 
@@ -36,7 +46,7 @@ void main() {
           home: Scaffold(
             body: NextInfo(
               name: "PERAWAT",
-              stageState: StageState([1, 0, 0, 0], 1, 0),
+              stageState: StageState([1, 0, 0, 0], 1, 0, image),
             ),
           ),
         )),
@@ -64,7 +74,7 @@ void main() {
                 home: Scaffold(
                   body: NextInfo(
                     name: "PERAWAT",
-                    stageState: StageState([1, 0, 0, 0], 1, 0),
+                    stageState: StageState([1, 0, 0, 0], 1, 0, image),
                   ),
                 ),
               )),
@@ -92,7 +102,7 @@ void main() {
           home: Scaffold(
             body: NextInfo(
               name: "PERAWAT",
-              stageState: StageState([1, 0, 0, 0], 1, 0),
+              stageState: StageState([1, 0, 0, 0], 1, 0, image),
             ),
           ),
         )));
@@ -119,7 +129,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 3, 2, 0], 4, 0),
+                  stageState: StageState([2, 3, 2, 0], 4, 0, image),
                 ),
               ),
             )),
@@ -152,7 +162,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4, 0),
+                  stageState: StageState([2, 2, 2, 0], 4, 0, image),
                 ),
               ),
             )),
@@ -188,7 +198,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4, 0),
+                  stageState: StageState([2, 2, 2, 0], 4, 0, image),
                 ),
               ),
             )),
@@ -223,7 +233,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4, 50),
+                  stageState: StageState([2, 2, 2, 0], 4, 50, image),
                 ),
               ),
             )),
@@ -257,7 +267,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4, 0),
+                  stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   audioPlayer: mockPlayer,
                 ),
               ),
@@ -290,7 +300,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4, 0),
+                  stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   audioPlayer: mockPlayer,
                 ),
               ),
