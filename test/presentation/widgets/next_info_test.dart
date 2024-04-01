@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
 import 'package:talacare/data/models/image_pair.dart';
 import 'package:talacare/data/models/stage_state.dart';
+import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +15,7 @@ import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
+import '../pages/login_page_test.mocks.dart';
 import 'next_info_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
@@ -20,36 +23,44 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 @GenerateMocks([AudioPlayer])
 void main() {
   late List<ImagePair> image;
-  
+  final getIt = GetIt.instance;
+
   setUp(() async {
     image = [
       ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG"),
-      ImagePair("assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH"),
+      ImagePair(
+          "assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH"),
       ImagePair("assets/images/puzzle_images/masker.png", "MASKER"),
       ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT"),
     ];
 
+    getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
+  });
+
+  tearDown(() {
+    getIt.unregister<AuthProvider>();
   });
 
   group('Win Puzzle Modal Widget Tests', () {
     testWidgets('Verify All Components are showing', (tester) async {
-      await tester.pumpWidget(MultiProvider(
-        providers: [
-          ChangeNotifierProvider<TimerState>(
-              create: (context) => TimerState(initialValue: true)),
-          ChangeNotifierProvider<CompleteState>(
-            create: (context) => CompleteState(initialValue: false),
-          )
-        ],
-        child: MaterialApp(
-          home: Scaffold(
-            body: NextInfo(
-              name: "PERAWAT",
-              stageState: StageState([1, 0, 0, 0], 1, 0, image),
-            ),
-          ),
-        )),
+      await tester.pumpWidget(
+        MultiProvider(
+            providers: [
+              ChangeNotifierProvider<TimerState>(
+                  create: (context) => TimerState(initialValue: true)),
+              ChangeNotifierProvider<CompleteState>(
+                create: (context) => CompleteState(initialValue: false),
+              )
+            ],
+            child: MaterialApp(
+              home: Scaffold(
+                body: NextInfo(
+                  name: "PERAWAT",
+                  stageState: StageState([1, 0, 0, 0], 1, 0, image),
+                ),
+              ),
+            )),
       );
 
       expect(find.text('PERAWAT'), findsOneWidget);

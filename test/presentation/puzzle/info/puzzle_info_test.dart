@@ -15,7 +15,8 @@ void main() {
   setUp(() async {
     image = [
       ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG"),
-      ImagePair("assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH"),
+      ImagePair(
+          "assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH"),
       ImagePair("assets/images/puzzle_images/masker.png", "MASKER"),
       ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT"),
     ];
@@ -122,8 +123,7 @@ void main() {
 
   testWidgets('PuzzleInfo widget change image star to lose image',
       (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MultiProvider(
+    await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
             create: (context) => TimerState(initialValue: true),
@@ -133,11 +133,8 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            stageState: StageState([0, 0, 0, 0], 4, 0, image)
-          ),
-        ))
-    );
+          home: PuzzleInfo(stageState: StageState([0, 0, 0, 0], 4, 0, image)),
+        )));
 
     expect(
         find.byWidgetPredicate(
@@ -152,8 +149,7 @@ void main() {
 
   testWidgets('PuzzleInfo widget change image star to win image',
       (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MultiProvider(
+    await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
             create: (context) => TimerState(initialValue: false),
@@ -163,11 +159,8 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            stageState: StageState([0, 0, 0, 0], 4, 0, image)
-          ),
-        ))
-    );
+          home: PuzzleInfo(stageState: StageState([0, 0, 0, 0], 4, 0, image)),
+        )));
 
     expect(
         find.byWidgetPredicate(

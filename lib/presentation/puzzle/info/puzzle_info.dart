@@ -100,7 +100,8 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
   }
 
   Widget buildDownSide() {
-    String puzzleImg = widget.stageState.images[widget.stageState.stage - 1].image;
+    String puzzleImg =
+        widget.stageState.images[widget.stageState.stage - 1].image;
 
     return Container(
       padding: const EdgeInsets.only(top: 20),

@@ -3,31 +3,29 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i18;
-import 'dart:ui' as _i7;
+import 'dart:async' as _i17;
+import 'dart:ui' as _i6;
 
-import 'package:flame/cache.dart' as _i9;
-import 'package:flame/collisions.dart' as _i13;
-import 'package:flame/components.dart' as _i14;
-import 'package:flame/game.dart' as _i6;
-import 'package:flame/input.dart' as _i20;
-import 'package:flame/src/components/component.dart' as _i19;
-import 'package:flame/src/components/component_set.dart' as _i8;
-import 'package:flame/src/components/position_type.dart' as _i17;
-import 'package:flame/src/game/game_render_box.dart' as _i11;
-import 'package:flame/src/game/overlay_manager.dart' as _i10;
-import 'package:flutter/material.dart' as _i12;
-import 'package:flutter/rendering.dart' as _i21;
-import 'package:flutter/services.dart' as _i22;
+import 'package:flame/cache.dart' as _i8;
+import 'package:flame/collisions.dart' as _i12;
+import 'package:flame/components.dart' as _i13;
+import 'package:flame/game.dart' as _i5;
+import 'package:flame/input.dart' as _i19;
+import 'package:flame/src/components/component.dart' as _i18;
+import 'package:flame/src/components/component_set.dart' as _i7;
+import 'package:flame/src/components/position_type.dart' as _i16;
+import 'package:flame/src/game/game_render_box.dart' as _i10;
+import 'package:flame/src/game/overlay_manager.dart' as _i9;
+import 'package:flutter/material.dart' as _i11;
+import 'package:flutter/rendering.dart' as _i20;
+import 'package:flutter/services.dart' as _i21;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart'
-    as _i16;
-import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart' as _i15;
-import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart'
-    as _i2;
+    as _i15;
+import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart' as _i14;
 import 'package:talacare/presentation/jump_n_jump/managers/managers.dart'
-    as _i4;
-import 'package:talacare/presentation/jump_n_jump/sprites/sprites.dart' as _i5;
+    as _i2;
+import 'package:talacare/presentation/jump_n_jump/sprites/sprites.dart' as _i4;
 import 'package:talacare/presentation/jump_n_jump/world.dart' as _i3;
 
 // ignore_for_file: type=lint
@@ -64,7 +62,7 @@ class _FakeWorldGame_1 extends _i1.SmartFake implements _i3.WorldGame {
 }
 
 class _FakePlatformManager_2 extends _i1.SmartFake
-    implements _i4.PlatformManager {
+    implements _i2.PlatformManager {
   _FakePlatformManager_2(
     Object parent,
     Invocation parentInvocation,
@@ -75,7 +73,7 @@ class _FakePlatformManager_2 extends _i1.SmartFake
 }
 
 class _FakeBloodBagManager_3 extends _i1.SmartFake
-    implements _i4.BloodBagManager {
+    implements _i2.BloodBagManager {
   _FakeBloodBagManager_3(
     Object parent,
     Invocation parentInvocation,
@@ -85,7 +83,7 @@ class _FakeBloodBagManager_3 extends _i1.SmartFake
         );
 }
 
-class _FakePlayer_4 extends _i1.SmartFake implements _i5.Player {
+class _FakePlayer_4 extends _i1.SmartFake implements _i4.Player {
   _FakePlayer_4(
     Object parent,
     Invocation parentInvocation,
@@ -95,7 +93,7 @@ class _FakePlayer_4 extends _i1.SmartFake implements _i5.Player {
         );
 }
 
-class _FakeCamera_5 extends _i1.SmartFake implements _i6.Camera {
+class _FakeCamera_5 extends _i1.SmartFake implements _i5.Camera {
   _FakeCamera_5(
     Object parent,
     Invocation parentInvocation,
@@ -105,7 +103,7 @@ class _FakeCamera_5 extends _i1.SmartFake implements _i6.Camera {
         );
 }
 
-class _FakeVector2_6 extends _i1.SmartFake implements _i6.Vector2 {
+class _FakeVector2_6 extends _i1.SmartFake implements _i5.Vector2 {
   _FakeVector2_6(
     Object parent,
     Invocation parentInvocation,
@@ -115,7 +113,7 @@ class _FakeVector2_6 extends _i1.SmartFake implements _i6.Vector2 {
         );
 }
 
-class _FakeProjector_7 extends _i1.SmartFake implements _i6.Projector {
+class _FakeProjector_7 extends _i1.SmartFake implements _i5.Projector {
   _FakeProjector_7(
     Object parent,
     Invocation parentInvocation,
@@ -125,7 +123,7 @@ class _FakeProjector_7 extends _i1.SmartFake implements _i6.Projector {
         );
 }
 
-class _FakeColor_8 extends _i1.SmartFake implements _i7.Color {
+class _FakeColor_8 extends _i1.SmartFake implements _i6.Color {
   _FakeColor_8(
     Object parent,
     Invocation parentInvocation,
@@ -135,7 +133,7 @@ class _FakeColor_8 extends _i1.SmartFake implements _i7.Color {
         );
 }
 
-class _FakeComponentSet_9 extends _i1.SmartFake implements _i8.ComponentSet {
+class _FakeComponentSet_9 extends _i1.SmartFake implements _i7.ComponentSet {
   _FakeComponentSet_9(
     Object parent,
     Invocation parentInvocation,
@@ -145,7 +143,7 @@ class _FakeComponentSet_9 extends _i1.SmartFake implements _i8.ComponentSet {
         );
 }
 
-class _FakePaint_10 extends _i1.SmartFake implements _i7.Paint {
+class _FakePaint_10 extends _i1.SmartFake implements _i6.Paint {
   _FakePaint_10(
     Object parent,
     Invocation parentInvocation,
@@ -155,7 +153,7 @@ class _FakePaint_10 extends _i1.SmartFake implements _i7.Paint {
         );
 }
 
-class _FakeTextPaint_11 extends _i1.SmartFake implements _i6.TextPaint {
+class _FakeTextPaint_11 extends _i1.SmartFake implements _i5.TextPaint {
   _FakeTextPaint_11(
     Object parent,
     Invocation parentInvocation,
@@ -165,7 +163,7 @@ class _FakeTextPaint_11 extends _i1.SmartFake implements _i6.TextPaint {
         );
 }
 
-class _FakeImages_12 extends _i1.SmartFake implements _i9.Images {
+class _FakeImages_12 extends _i1.SmartFake implements _i8.Images {
   _FakeImages_12(
     Object parent,
     Invocation parentInvocation,
@@ -175,7 +173,7 @@ class _FakeImages_12 extends _i1.SmartFake implements _i9.Images {
         );
 }
 
-class _FakeAssetsCache_13 extends _i1.SmartFake implements _i9.AssetsCache {
+class _FakeAssetsCache_13 extends _i1.SmartFake implements _i8.AssetsCache {
   _FakeAssetsCache_13(
     Object parent,
     Invocation parentInvocation,
@@ -186,8 +184,7 @@ class _FakeAssetsCache_13 extends _i1.SmartFake implements _i9.AssetsCache {
 }
 
 class _FakeOverlayManager_14 extends _i1.SmartFake
-    // ignore: invalid_use_of_internal_member
-    implements _i10.OverlayManager {
+    implements _i9.OverlayManager {
   _FakeOverlayManager_14(
     Object parent,
     Invocation parentInvocation,
@@ -198,7 +195,7 @@ class _FakeOverlayManager_14 extends _i1.SmartFake
 }
 
 class _FakeGameRenderBox_15 extends _i1.SmartFake
-    implements _i11.GameRenderBox {
+    implements _i10.GameRenderBox {
   _FakeGameRenderBox_15(
     Object parent,
     Invocation parentInvocation,
@@ -209,11 +206,11 @@ class _FakeGameRenderBox_15 extends _i1.SmartFake
 
   @override
   String toString(
-          {_i12.DiagnosticLevel? minLevel = _i12.DiagnosticLevel.info}) =>
+          {_i11.DiagnosticLevel? minLevel = _i11.DiagnosticLevel.info}) =>
       super.toString();
 }
 
-class _FakeMouseCursor_16 extends _i1.SmartFake implements _i12.MouseCursor {
+class _FakeMouseCursor_16 extends _i1.SmartFake implements _i11.MouseCursor {
   _FakeMouseCursor_16(
     Object parent,
     Invocation parentInvocation,
@@ -224,12 +221,12 @@ class _FakeMouseCursor_16 extends _i1.SmartFake implements _i12.MouseCursor {
 
   @override
   String toString(
-          {_i12.DiagnosticLevel? minLevel = _i12.DiagnosticLevel.info}) =>
+          {_i11.DiagnosticLevel? minLevel = _i11.DiagnosticLevel.info}) =>
       super.toString();
 }
 
-class _FakeCollisionDetection_17<T extends _i13.Hitbox<T>> extends _i1.SmartFake
-    implements _i13.CollisionDetection<T> {
+class _FakeCollisionDetection_17<T extends _i12.Hitbox<T>> extends _i1.SmartFake
+    implements _i12.CollisionDetection<T> {
   _FakeCollisionDetection_17(
     Object parent,
     Invocation parentInvocation,
@@ -239,7 +236,7 @@ class _FakeCollisionDetection_17<T extends _i13.Hitbox<T>> extends _i1.SmartFake
         );
 }
 
-class _FakeSprite_18 extends _i1.SmartFake implements _i14.Sprite {
+class _FakeSprite_18 extends _i1.SmartFake implements _i13.Sprite {
   _FakeSprite_18(
     Object parent,
     Invocation parentInvocation,
@@ -250,7 +247,7 @@ class _FakeSprite_18 extends _i1.SmartFake implements _i14.Sprite {
 }
 
 class _FakeSpriteAnimation_19 extends _i1.SmartFake
-    implements _i14.SpriteAnimation {
+    implements _i13.SpriteAnimation {
   _FakeSpriteAnimation_19(
     Object parent,
     Invocation parentInvocation,
@@ -263,13 +260,13 @@ class _FakeSpriteAnimation_19 extends _i1.SmartFake
 /// A class which mocks [JumpNJump].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
+class MockJumpNJump extends _i1.Mock implements _i14.JumpNJump {
   MockJumpNJump() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  set audioManager(_i16.IAudioManager? _audioManager) => super.noSuchMethod(
+  set audioManager(_i15.IAudioManager? _audioManager) => super.noSuchMethod(
         Invocation.setter(
           #audioManager,
           _audioManager,
@@ -305,16 +302,16 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       ) as _i3.WorldGame);
 
   @override
-  _i4.PlatformManager get platformManager => (super.noSuchMethod(
+  _i2.PlatformManager get platformManager => (super.noSuchMethod(
         Invocation.getter(#platformManager),
         returnValue: _FakePlatformManager_2(
           this,
           Invocation.getter(#platformManager),
         ),
-      ) as _i4.PlatformManager);
+      ) as _i2.PlatformManager);
 
   @override
-  set platformManager(_i4.PlatformManager? _platformManager) =>
+  set platformManager(_i2.PlatformManager? _platformManager) =>
       super.noSuchMethod(
         Invocation.setter(
           #platformManager,
@@ -324,16 +321,16 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i4.BloodBagManager get bloodBagManager => (super.noSuchMethod(
+  _i2.BloodBagManager get bloodBagManager => (super.noSuchMethod(
         Invocation.getter(#bloodBagManager),
         returnValue: _FakeBloodBagManager_3(
           this,
           Invocation.getter(#bloodBagManager),
         ),
-      ) as _i4.BloodBagManager);
+      ) as _i2.BloodBagManager);
 
   @override
-  set bloodBagManager(_i4.BloodBagManager? _bloodBagManager) =>
+  set bloodBagManager(_i2.BloodBagManager? _bloodBagManager) =>
       super.noSuchMethod(
         Invocation.setter(
           #bloodBagManager,
@@ -343,16 +340,16 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i5.Player get dash => (super.noSuchMethod(
+  _i4.Player get dash => (super.noSuchMethod(
         Invocation.getter(#dash),
         returnValue: _FakePlayer_4(
           this,
           Invocation.getter(#dash),
         ),
-      ) as _i5.Player);
+      ) as _i4.Player);
 
   @override
-  set dash(_i5.Player? _dash) => super.noSuchMethod(
+  set dash(_i4.Player? _dash) => super.noSuchMethod(
         Invocation.setter(
           #dash,
           _dash,
@@ -376,40 +373,40 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i6.Camera get camera => (super.noSuchMethod(
+  _i5.Camera get camera => (super.noSuchMethod(
         Invocation.getter(#camera),
         returnValue: _FakeCamera_5(
           this,
           Invocation.getter(#camera),
         ),
-      ) as _i6.Camera);
+      ) as _i5.Camera);
 
   @override
-  _i6.Vector2 get size => (super.noSuchMethod(
+  _i5.Vector2 get size => (super.noSuchMethod(
         Invocation.getter(#size),
         returnValue: _FakeVector2_6(
           this,
           Invocation.getter(#size),
         ),
-      ) as _i6.Vector2);
+      ) as _i5.Vector2);
 
   @override
-  _i6.Projector get viewportProjector => (super.noSuchMethod(
+  _i5.Projector get viewportProjector => (super.noSuchMethod(
         Invocation.getter(#viewportProjector),
         returnValue: _FakeProjector_7(
           this,
           Invocation.getter(#viewportProjector),
         ),
-      ) as _i6.Projector);
+      ) as _i5.Projector);
 
   @override
-  _i6.Projector get projector => (super.noSuchMethod(
+  _i5.Projector get projector => (super.noSuchMethod(
         Invocation.getter(#projector),
         returnValue: _FakeProjector_7(
           this,
           Invocation.getter(#projector),
         ),
-      ) as _i6.Projector);
+      ) as _i5.Projector);
 
   @override
   bool get debugMode => (super.noSuchMethod(
@@ -427,16 +424,16 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i7.Color get debugColor => (super.noSuchMethod(
+  _i6.Color get debugColor => (super.noSuchMethod(
         Invocation.getter(#debugColor),
         returnValue: _FakeColor_8(
           this,
           Invocation.getter(#debugColor),
         ),
-      ) as _i7.Color);
+      ) as _i6.Color);
 
   @override
-  set debugColor(_i7.Color? _debugColor) => super.noSuchMethod(
+  set debugColor(_i6.Color? _debugColor) => super.noSuchMethod(
         Invocation.setter(
           #debugColor,
           _debugColor,
@@ -445,13 +442,13 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i17.PositionType get positionType => (super.noSuchMethod(
+  _i16.PositionType get positionType => (super.noSuchMethod(
         Invocation.getter(#positionType),
-        returnValue: _i17.PositionType.game,
-      ) as _i17.PositionType);
+        returnValue: _i16.PositionType.game,
+      ) as _i16.PositionType);
 
   @override
-  set positionType(_i17.PositionType? _positionType) => super.noSuchMethod(
+  set positionType(_i16.PositionType? _positionType) => super.noSuchMethod(
         Invocation.setter(
           #positionType,
           _positionType,
@@ -484,19 +481,19 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       ) as bool);
 
   @override
-  _i18.Future<void> get loaded => (super.noSuchMethod(
+  _i17.Future<void> get loaded => (super.noSuchMethod(
         Invocation.getter(#loaded),
-        returnValue: _i18.Future<void>.value(),
-      ) as _i18.Future<void>);
+        returnValue: _i17.Future<void>.value(),
+      ) as _i17.Future<void>);
 
   @override
-  _i18.Future<void> get mounted => (super.noSuchMethod(
+  _i17.Future<void> get mounted => (super.noSuchMethod(
         Invocation.getter(#mounted),
-        returnValue: _i18.Future<void>.value(),
-      ) as _i18.Future<void>);
+        returnValue: _i17.Future<void>.value(),
+      ) as _i17.Future<void>);
 
   @override
-  set parent(_i19.Component? newParent) => super.noSuchMethod(
+  set parent(_i18.Component? newParent) => super.noSuchMethod(
         Invocation.setter(
           #parent,
           newParent,
@@ -505,13 +502,13 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i8.ComponentSet get children => (super.noSuchMethod(
+  _i7.ComponentSet get children => (super.noSuchMethod(
         Invocation.getter(#children),
         returnValue: _FakeComponentSet_9(
           this,
           Invocation.getter(#children),
         ),
-      ) as _i8.ComponentSet);
+      ) as _i7.ComponentSet);
 
   @override
   bool get hasChildren => (super.noSuchMethod(
@@ -545,34 +542,34 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       ) as bool);
 
   @override
-  _i7.Paint get debugPaint => (super.noSuchMethod(
+  _i6.Paint get debugPaint => (super.noSuchMethod(
         Invocation.getter(#debugPaint),
         returnValue: _FakePaint_10(
           this,
           Invocation.getter(#debugPaint),
         ),
-      ) as _i7.Paint);
+      ) as _i6.Paint);
 
   @override
-  _i6.TextPaint get debugTextPaint => (super.noSuchMethod(
+  _i5.TextPaint get debugTextPaint => (super.noSuchMethod(
         Invocation.getter(#debugTextPaint),
         returnValue: _FakeTextPaint_11(
           this,
           Invocation.getter(#debugTextPaint),
         ),
-      ) as _i6.TextPaint);
+      ) as _i5.TextPaint);
 
   @override
-  _i9.Images get images => (super.noSuchMethod(
+  _i8.Images get images => (super.noSuchMethod(
         Invocation.getter(#images),
         returnValue: _FakeImages_12(
           this,
           Invocation.getter(#images),
         ),
-      ) as _i9.Images);
+      ) as _i8.Images);
 
   @override
-  set images(_i9.Images? _images) => super.noSuchMethod(
+  set images(_i8.Images? _images) => super.noSuchMethod(
         Invocation.setter(
           #images,
           _images,
@@ -581,16 +578,16 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i9.AssetsCache get assets => (super.noSuchMethod(
+  _i8.AssetsCache get assets => (super.noSuchMethod(
         Invocation.getter(#assets),
         returnValue: _FakeAssetsCache_13(
           this,
           Invocation.getter(#assets),
         ),
-      ) as _i9.AssetsCache);
+      ) as _i8.AssetsCache);
 
   @override
-  set assets(_i9.AssetsCache? _assets) => super.noSuchMethod(
+  set assets(_i8.AssetsCache? _assets) => super.noSuchMethod(
         Invocation.setter(
           #assets,
           _assets,
@@ -599,7 +596,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  set projector(_i6.Projector? _projector) => super.noSuchMethod(
+  set projector(_i5.Projector? _projector) => super.noSuchMethod(
         Invocation.setter(
           #projector,
           _projector,
@@ -608,7 +605,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  set viewportProjector(_i6.Projector? _viewportProjector) =>
+  set viewportProjector(_i5.Projector? _viewportProjector) =>
       super.noSuchMethod(
         Invocation.setter(
           #viewportProjector,
@@ -618,7 +615,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  set pauseEngineFn(_i7.VoidCallback? _pauseEngineFn) => super.noSuchMethod(
+  set pauseEngineFn(_i6.VoidCallback? _pauseEngineFn) => super.noSuchMethod(
         Invocation.setter(
           #pauseEngineFn,
           _pauseEngineFn,
@@ -627,7 +624,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  set resumeEngineFn(_i7.VoidCallback? _resumeEngineFn) => super.noSuchMethod(
+  set resumeEngineFn(_i6.VoidCallback? _resumeEngineFn) => super.noSuchMethod(
         Invocation.setter(
           #resumeEngineFn,
           _resumeEngineFn,
@@ -636,30 +633,28 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  // ignore: invalid_use_of_internal_member
-  _i10.OverlayManager get overlays => (super.noSuchMethod(
+  _i9.OverlayManager get overlays => (super.noSuchMethod(
         Invocation.getter(#overlays),
         returnValue: _FakeOverlayManager_14(
           this,
           Invocation.getter(#overlays),
         ),
-      // ignore: invalid_use_of_internal_member
-      ) as _i10.OverlayManager);
+      ) as _i9.OverlayManager);
 
   @override
-  List<_i7.VoidCallback> get gameStateListeners => (super.noSuchMethod(
+  List<_i6.VoidCallback> get gameStateListeners => (super.noSuchMethod(
         Invocation.getter(#gameStateListeners),
-        returnValue: <_i7.VoidCallback>[],
-      ) as List<_i7.VoidCallback>);
+        returnValue: <_i6.VoidCallback>[],
+      ) as List<_i6.VoidCallback>);
 
   @override
-  _i11.GameRenderBox get renderBox => (super.noSuchMethod(
+  _i10.GameRenderBox get renderBox => (super.noSuchMethod(
         Invocation.getter(#renderBox),
         returnValue: _FakeGameRenderBox_15(
           this,
           Invocation.getter(#renderBox),
         ),
-      ) as _i11.GameRenderBox);
+      ) as _i10.GameRenderBox);
 
   @override
   bool get isAttached => (super.noSuchMethod(
@@ -668,13 +663,13 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       ) as bool);
 
   @override
-  _i6.Vector2 get canvasSize => (super.noSuchMethod(
+  _i5.Vector2 get canvasSize => (super.noSuchMethod(
         Invocation.getter(#canvasSize),
         returnValue: _FakeVector2_6(
           this,
           Invocation.getter(#canvasSize),
         ),
-      ) as _i6.Vector2);
+      ) as _i5.Vector2);
 
   @override
   bool get hasLayout => (super.noSuchMethod(
@@ -698,16 +693,16 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i12.MouseCursor get mouseCursor => (super.noSuchMethod(
+  _i11.MouseCursor get mouseCursor => (super.noSuchMethod(
         Invocation.getter(#mouseCursor),
         returnValue: _FakeMouseCursor_16(
           this,
           Invocation.getter(#mouseCursor),
         ),
-      ) as _i12.MouseCursor);
+      ) as _i11.MouseCursor);
 
   @override
-  set mouseCursor(_i12.MouseCursor? value) => super.noSuchMethod(
+  set mouseCursor(_i11.MouseCursor? value) => super.noSuchMethod(
         Invocation.setter(
           #mouseCursor,
           value,
@@ -716,17 +711,17 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i13.CollisionDetection<_i13.ShapeHitbox> get collisionDetection =>
+  _i12.CollisionDetection<_i12.ShapeHitbox> get collisionDetection =>
       (super.noSuchMethod(
         Invocation.getter(#collisionDetection),
-        returnValue: _FakeCollisionDetection_17<_i13.ShapeHitbox>(
+        returnValue: _FakeCollisionDetection_17<_i12.ShapeHitbox>(
           this,
           Invocation.getter(#collisionDetection),
         ),
-      ) as _i13.CollisionDetection<_i13.ShapeHitbox>);
+      ) as _i12.CollisionDetection<_i12.ShapeHitbox>);
 
   @override
-  set collisionDetection(_i13.CollisionDetection<_i13.ShapeHitbox>? cd) =>
+  set collisionDetection(_i12.CollisionDetection<_i12.ShapeHitbox>? cd) =>
       super.noSuchMethod(
         Invocation.setter(
           #collisionDetection,
@@ -736,14 +731,14 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i18.Future<void> onLoad() => (super.noSuchMethod(
+  _i17.Future<void> onLoad() => (super.noSuchMethod(
         Invocation.method(
           #onLoad,
           [],
         ),
-        returnValue: _i18.Future<void>.value(),
-        returnValueForMissingStub: _i18.Future<void>.value(),
-      ) as _i18.Future<void>);
+        returnValue: _i17.Future<void>.value(),
+        returnValueForMissingStub: _i17.Future<void>.value(),
+      ) as _i17.Future<void>);
 
   @override
   void update(double? dt) => super.noSuchMethod(
@@ -764,7 +759,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i7.Color backgroundColor() => (super.noSuchMethod(
+  _i6.Color backgroundColor() => (super.noSuchMethod(
         Invocation.method(
           #backgroundColor,
           [],
@@ -776,7 +771,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
             [],
           ),
         ),
-      ) as _i7.Color);
+      ) as _i6.Color);
 
   @override
   void startGame() => super.noSuchMethod(
@@ -824,7 +819,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  void render(_i7.Canvas? canvas) => super.noSuchMethod(
+  void render(_i6.Canvas? canvas) => super.noSuchMethod(
         Invocation.method(
           #render,
           [canvas],
@@ -833,7 +828,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  void renderTree(_i7.Canvas? canvas) => super.noSuchMethod(
+  void renderTree(_i6.Canvas? canvas) => super.noSuchMethod(
         Invocation.method(
           #renderTree,
           [canvas],
@@ -851,7 +846,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  void onGameResize(_i6.Vector2? canvasSize) => super.noSuchMethod(
+  void onGameResize(_i5.Vector2? canvasSize) => super.noSuchMethod(
         Invocation.method(
           #onGameResize,
           [canvasSize],
@@ -860,17 +855,17 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i18.Future<void> ready() => (super.noSuchMethod(
+  _i17.Future<void> ready() => (super.noSuchMethod(
         Invocation.method(
           #ready,
           [],
         ),
-        returnValue: _i18.Future<void>.value(),
-        returnValueForMissingStub: _i18.Future<void>.value(),
-      ) as _i18.Future<void>);
+        returnValue: _i17.Future<void>.value(),
+        returnValueForMissingStub: _i17.Future<void>.value(),
+      ) as _i17.Future<void>);
 
   @override
-  bool containsLocalPoint(_i6.Vector2? p) => (super.noSuchMethod(
+  bool containsLocalPoint(_i5.Vector2? p) => (super.noSuchMethod(
         Invocation.method(
           #containsLocalPoint,
           [p],
@@ -888,7 +883,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       ) as double);
 
   @override
-  _i8.ComponentSet createComponentSet() => (super.noSuchMethod(
+  _i7.ComponentSet createComponentSet() => (super.noSuchMethod(
         Invocation.method(
           #createComponentSet,
           [],
@@ -900,21 +895,21 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
             [],
           ),
         ),
-      ) as _i8.ComponentSet);
+      ) as _i7.ComponentSet);
 
   @override
-  Iterable<_i19.Component> ancestors({bool? includeSelf = false}) =>
+  Iterable<_i18.Component> ancestors({bool? includeSelf = false}) =>
       (super.noSuchMethod(
         Invocation.method(
           #ancestors,
           [],
           {#includeSelf: includeSelf},
         ),
-        returnValue: <_i19.Component>[],
-      ) as Iterable<_i19.Component>);
+        returnValue: <_i18.Component>[],
+      ) as Iterable<_i18.Component>);
 
   @override
-  Iterable<_i19.Component> descendants({
+  Iterable<_i18.Component> descendants({
     bool? includeSelf = false,
     bool? reversed = false,
   }) =>
@@ -927,11 +922,11 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
             #reversed: reversed,
           },
         ),
-        returnValue: <_i19.Component>[],
-      ) as Iterable<_i19.Component>);
+        returnValue: <_i18.Component>[],
+      ) as Iterable<_i18.Component>);
 
   @override
-  bool propagateToChildren<T extends _i19.Component>(
+  bool propagateToChildren<T extends _i18.Component>(
     bool Function(T)? handler, {
     bool? includeSelf = false,
   }) =>
@@ -945,7 +940,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       ) as bool);
 
   @override
-  bool contains(_i19.Component? c) => (super.noSuchMethod(
+  bool contains(_i18.Component? c) => (super.noSuchMethod(
         Invocation.method(
           #contains,
           [c],
@@ -972,36 +967,36 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i18.Future<void>? add(_i19.Component? component) => (super.noSuchMethod(
+  _i17.Future<void>? add(_i18.Component? component) => (super.noSuchMethod(
         Invocation.method(
           #add,
           [component],
         ),
-        returnValueForMissingStub: _i18.Future<void>.value(),
-      ) as _i18.Future<void>?);
+        returnValueForMissingStub: _i17.Future<void>.value(),
+      ) as _i17.Future<void>?);
 
   @override
-  _i18.Future<void> addAll(Iterable<_i19.Component>? components) =>
+  _i17.Future<void> addAll(Iterable<_i18.Component>? components) =>
       (super.noSuchMethod(
         Invocation.method(
           #addAll,
           [components],
         ),
-        returnValue: _i18.Future<void>.value(),
-        returnValueForMissingStub: _i18.Future<void>.value(),
-      ) as _i18.Future<void>);
+        returnValue: _i17.Future<void>.value(),
+        returnValueForMissingStub: _i17.Future<void>.value(),
+      ) as _i17.Future<void>);
 
   @override
-  _i18.Future<void>? addToParent(_i19.Component? parent) => (super.noSuchMethod(
+  _i17.Future<void>? addToParent(_i18.Component? parent) => (super.noSuchMethod(
         Invocation.method(
           #addToParent,
           [parent],
         ),
-        returnValueForMissingStub: _i18.Future<void>.value(),
-      ) as _i18.Future<void>?);
+        returnValueForMissingStub: _i17.Future<void>.value(),
+      ) as _i17.Future<void>?);
 
   @override
-  void remove(_i19.Component? component) => super.noSuchMethod(
+  void remove(_i18.Component? component) => super.noSuchMethod(
         Invocation.method(
           #remove,
           [component],
@@ -1010,7 +1005,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  void removeAll(Iterable<_i19.Component>? components) => super.noSuchMethod(
+  void removeAll(Iterable<_i18.Component>? components) => super.noSuchMethod(
         Invocation.method(
           #removeAll,
           [components],
@@ -1028,7 +1023,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  void changeParent(_i19.Component? newParent) => super.noSuchMethod(
+  void changeParent(_i18.Component? newParent) => super.noSuchMethod(
         Invocation.method(
           #changeParent,
           [newParent],
@@ -1037,7 +1032,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  bool containsPoint(_i6.Vector2? point) => (super.noSuchMethod(
+  bool containsPoint(_i5.Vector2? point) => (super.noSuchMethod(
         Invocation.method(
           #containsPoint,
           [point],
@@ -1046,9 +1041,9 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       ) as bool);
 
   @override
-  Iterable<_i19.Component> componentsAtPoint(
-    _i6.Vector2? point, [
-    List<_i6.Vector2>? nestedPoints,
+  Iterable<_i18.Component> componentsAtPoint(
+    _i5.Vector2? point, [
+    List<_i5.Vector2>? nestedPoints,
   ]) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1058,8 +1053,8 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
             nestedPoints,
           ],
         ),
-        returnValue: <_i19.Component>[],
-      ) as Iterable<_i19.Component>);
+        returnValue: <_i18.Component>[],
+      ) as Iterable<_i18.Component>);
 
   @override
   void changePriorityWithoutResorting(int? priority) => super.noSuchMethod(
@@ -1089,7 +1084,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  void handleResize(_i6.Vector2? size) => super.noSuchMethod(
+  void handleResize(_i5.Vector2? size) => super.noSuchMethod(
         Invocation.method(
           #handleResize,
           [size],
@@ -1107,7 +1102,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  void renderDebugMode(_i7.Canvas? canvas) => super.noSuchMethod(
+  void renderDebugMode(_i6.Canvas? canvas) => super.noSuchMethod(
         Invocation.method(
           #renderDebugMode,
           [canvas],
@@ -1116,7 +1111,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i6.Vector2 eventPosition(_i20.PositionInfo<dynamic>? info) =>
+  _i5.Vector2 eventPosition(_i19.PositionInfo<dynamic>? info) =>
       (super.noSuchMethod(
         Invocation.method(
           #eventPosition,
@@ -1129,16 +1124,16 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
             [info],
           ),
         ),
-      ) as _i6.Vector2);
+      ) as _i5.Vector2);
 
   @override
-  _i18.Future<void>? toBeLoaded() => (super.noSuchMethod(
+  _i17.Future<void>? toBeLoaded() => (super.noSuchMethod(
         Invocation.method(
           #toBeLoaded,
           [],
         ),
-        returnValueForMissingStub: _i18.Future<void>.value(),
-      ) as _i18.Future<void>?);
+        returnValueForMissingStub: _i17.Future<void>.value(),
+      ) as _i17.Future<void>?);
 
   @override
   void assertHasLayout() => super.noSuchMethod(
@@ -1150,7 +1145,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  void lifecycleStateChange(_i7.AppLifecycleState? state) => super.noSuchMethod(
+  void lifecycleStateChange(_i6.AppLifecycleState? state) => super.noSuchMethod(
         Invocation.method(
           #lifecycleStateChange,
           [state],
@@ -1160,8 +1155,8 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
 
   @override
   void attach(
-    _i21.PipelineOwner? owner,
-    _i11.GameRenderBox? gameRenderBox,
+    _i20.PipelineOwner? owner,
+    _i10.GameRenderBox? gameRenderBox,
   ) =>
       super.noSuchMethod(
         Invocation.method(
@@ -1202,7 +1197,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i6.Vector2 convertGlobalToLocalCoordinate(_i6.Vector2? point) =>
+  _i5.Vector2 convertGlobalToLocalCoordinate(_i5.Vector2? point) =>
       (super.noSuchMethod(
         Invocation.method(
           #convertGlobalToLocalCoordinate,
@@ -1215,10 +1210,10 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
             [point],
           ),
         ),
-      ) as _i6.Vector2);
+      ) as _i5.Vector2);
 
   @override
-  _i6.Vector2 convertLocalToGlobalCoordinate(_i6.Vector2? point) =>
+  _i5.Vector2 convertLocalToGlobalCoordinate(_i5.Vector2? point) =>
       (super.noSuchMethod(
         Invocation.method(
           #convertLocalToGlobalCoordinate,
@@ -1231,13 +1226,13 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
             [point],
           ),
         ),
-      ) as _i6.Vector2);
+      ) as _i5.Vector2);
 
   @override
-  _i18.Future<_i14.Sprite> loadSprite(
+  _i17.Future<_i13.Sprite> loadSprite(
     String? path, {
-    _i6.Vector2? srcSize,
-    _i6.Vector2? srcPosition,
+    _i5.Vector2? srcSize,
+    _i5.Vector2? srcPosition,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1248,7 +1243,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
             #srcPosition: srcPosition,
           },
         ),
-        returnValue: _i18.Future<_i14.Sprite>.value(_FakeSprite_18(
+        returnValue: _i17.Future<_i13.Sprite>.value(_FakeSprite_18(
           this,
           Invocation.method(
             #loadSprite,
@@ -1259,12 +1254,12 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
             },
           ),
         )),
-      ) as _i18.Future<_i14.Sprite>);
+      ) as _i17.Future<_i13.Sprite>);
 
   @override
-  _i18.Future<_i14.SpriteAnimation> loadSpriteAnimation(
+  _i17.Future<_i13.SpriteAnimation> loadSpriteAnimation(
     String? path,
-    _i14.SpriteAnimationData? data,
+    _i13.SpriteAnimationData? data,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1275,7 +1270,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
           ],
         ),
         returnValue:
-            _i18.Future<_i14.SpriteAnimation>.value(_FakeSpriteAnimation_19(
+            _i17.Future<_i13.SpriteAnimation>.value(_FakeSpriteAnimation_19(
           this,
           Invocation.method(
             #loadSpriteAnimation,
@@ -1285,7 +1280,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
             ],
           ),
         )),
-      ) as _i18.Future<_i14.SpriteAnimation>);
+      ) as _i17.Future<_i13.SpriteAnimation>);
 
   @override
   void pauseEngine() => super.noSuchMethod(
@@ -1306,7 +1301,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  void addGameStateListener(_i7.VoidCallback? callback) => super.noSuchMethod(
+  void addGameStateListener(_i6.VoidCallback? callback) => super.noSuchMethod(
         Invocation.method(
           #addGameStateListener,
           [callback],
@@ -1315,7 +1310,7 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  void removeGameStateListener(_i7.VoidCallback? callback) =>
+  void removeGameStateListener(_i6.VoidCallback? callback) =>
       super.noSuchMethod(
         Invocation.method(
           #removeGameStateListener,
@@ -1334,9 +1329,9 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
       );
 
   @override
-  _i12.KeyEventResult onKeyEvent(
-    _i12.RawKeyEvent? event,
-    Set<_i22.LogicalKeyboardKey>? keysPressed,
+  _i11.KeyEventResult onKeyEvent(
+    _i11.RawKeyEvent? event,
+    Set<_i21.LogicalKeyboardKey>? keysPressed,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1346,6 +1341,6 @@ class MockJumpNJump extends _i1.Mock implements _i15.JumpNJump {
             keysPressed,
           ],
         ),
-        returnValue: _i12.KeyEventResult.handled,
-      ) as _i12.KeyEventResult);
+        returnValue: _i11.KeyEventResult.handled,
+      ) as _i11.KeyEventResult);
 }

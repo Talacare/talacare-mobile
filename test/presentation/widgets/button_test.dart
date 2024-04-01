@@ -69,4 +69,28 @@ void main() {
     expect(buttonWidget.onTap, isNotNull,
         reason: 'The button should be able to be tapped');
   });
+
+  testWidgets('Verify the button loading state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: Button(
+              key: Key('button'),
+              text: 'Main',
+              isLoading: true,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final findButton = find.byKey(const Key('button'));
+    expect(findButton, findsOneWidget, reason: 'The button should be visible');
+
+    final loadingIndicator = find.byType(CircularProgressIndicator);
+    expect(loadingIndicator, findsOneWidget,
+        reason:
+            'The button should be showing circular progress indicator on loading');
+  });
 }

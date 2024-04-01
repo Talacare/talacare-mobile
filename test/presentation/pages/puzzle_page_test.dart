@@ -8,19 +8,20 @@ void main() {
 
   setUp(() async {
     puzzlePage = MaterialApp(
-          home: PuzzlePage(stageState: StageState([1, 0, 0, 0], 1, 0, []),
-        ));
+        home: PuzzlePage(
+      stageState: StageState([1, 0, 0, 0], 1, 0, []),
+    ));
   });
-  
-  group('Puzzle Page Tests', () {
 
+  group('Puzzle Page Tests', () {
     testWidgets('Check if time left is showing', (tester) async {
       await tester.runAsync(() async {
         await tester.pumpWidget(puzzlePage);
         await tester.pumpAndSettle();
 
         final findWaktu = find.text('SISA WAKTU');
-        expect(findWaktu, findsOneWidget, reason: 'Time left should be visible');
+        expect(findWaktu, findsOneWidget,
+            reason: 'Time left should be visible');
       });
     });
 
@@ -42,7 +43,6 @@ void main() {
         expect(find.byKey(const Key("Image")), findsOneWidget,
             reason: 'Image should be visible');
       });
-      
     });
 
     testWidgets('Check if next button is showing', (tester) async {

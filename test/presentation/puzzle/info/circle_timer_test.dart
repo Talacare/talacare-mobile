@@ -58,7 +58,7 @@ void main() {
     await tester.pumpWidget(circleTimer);
 
     expect(find.text('60'), findsOneWidget);
-    
+
     await tester.pumpWidget(circleTimer);
     expect(find.text('60'), findsOneWidget);
   });

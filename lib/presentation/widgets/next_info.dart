@@ -120,7 +120,10 @@ class _NextInfoState extends State<NextInfo> {
                     MaterialPageRoute(
                         builder: (context) => PuzzlePage(
                               stageState: StageState(
-                                  currentState, widget.stageState.stage + 1, widget.stageState.score, widget.stageState.images),
+                                  currentState,
+                                  widget.stageState.stage + 1,
+                                  widget.stageState.score,
+                                  widget.stageState.images),
                             )),
                   );
                 } else {
@@ -136,7 +139,8 @@ class _NextInfoState extends State<NextInfo> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => PuzzlePage(
-                                        stageState: StageState([1, 0, 0, 0], 1, 0, []),
+                                        stageState:
+                                            StageState([1, 0, 0, 0], 1, 0, []),
                                       )),
                             );
                           },
