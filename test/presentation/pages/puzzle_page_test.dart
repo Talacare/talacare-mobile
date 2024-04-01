@@ -8,7 +8,7 @@ void main() {
 
   setUp(() async {
     puzzlePage = MaterialApp(
-      home: PuzzlePage(stageState: StageState([1, 0, 0, 0], 1, 0),
+      home: PuzzlePage(stageState: StageState([1, 0, 0, 0], 1, 0, []),
     ));
   });
 
