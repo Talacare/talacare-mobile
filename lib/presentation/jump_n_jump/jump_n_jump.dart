@@ -5,7 +5,6 @@ import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
-import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/managers.dart';
@@ -42,7 +41,7 @@ class JumpNJump extends FlameGame
 
     dash.character = character;
     dash.audioManager = audioManager;
-    
+
     await add(world);
     await add(dash);
 

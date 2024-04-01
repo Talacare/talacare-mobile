@@ -15,12 +15,10 @@ import 'package:talacare/presentation/jump_n_jump/world.dart';
 import 'jump_n_jump_test.mocks.dart';
 
 class TestJumpNJump extends JumpNJump {
-  IAudioManager? audioManager;
-
   bool isGameOverOverlayAdded = false;
 
   TestJumpNJump(
-      {super.children, super.character = Character.boy, this.audioManager});
+      {super.children, super.character = Character.boy, super.audioManager});
 
   @override
   Future<void> onLoad() async {
