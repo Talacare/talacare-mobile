@@ -83,4 +83,14 @@ class MockAuthUseCase extends _i1.Mock implements _i4.AuthUseCase {
           ),
         )),
       ) as _i5.Future<_i3.UserEntity>);
+
+  @override
+  _i5.Future<_i3.UserEntity?> getLocalStoredUser() => (super.noSuchMethod(
+        Invocation.method(
+          #getLocalStoredUser,
+          [],
+        ),
+        returnValue: _i5.Future<_i3.UserEntity?>.value(),
+        returnValueForMissingStub: _i5.Future<_i3.UserEntity?>.value(),
+      ) as _i5.Future<_i3.UserEntity?>);
 }

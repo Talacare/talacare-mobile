@@ -10,4 +10,8 @@ class AuthUseCase {
   Future<UserEntity> signInGoogle() async {
     return await authRepository.signInGoogle();
   }
+
+  Future<UserEntity?> getLocalStoredUser() async {
+    return await authRepository.getLocalStoredUser();
+  }
 }

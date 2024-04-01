@@ -22,12 +22,17 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setUser(UserEntity? user){
+    _user = user;
+    notifyListeners();
+  }
+
   Future<void> signInWithGoogle() async {
     try {
       setLoading(true);
 
-      _user = await useCase.signInGoogle();
-      notifyListeners();
+      final userEntity = await useCase.signInGoogle();
+      setUser(userEntity);
 
       setLoading(false);
     } catch (e) {
@@ -36,5 +41,10 @@ class AuthProvider extends ChangeNotifier {
       _isError = true;
       notifyListeners();
     }
+  }
+
+  Future<void> getLocalStoredUser() async {
+    final userEntity = await useCase.getLocalStoredUser();
+    setUser(userEntity);
   }
 }

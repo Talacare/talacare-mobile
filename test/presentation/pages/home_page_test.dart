@@ -2,17 +2,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
-
+import 'package:get_it/get_it.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
+import 'package:talacare/presentation/providers/auth_provider.dart';
+import 'login_page_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
   late Widget homePage;
+  final getIt = GetIt.instance;
 
   TestWidgetsFlutterBinding.ensureInitialized();
   setupFirebaseCoreMocks();
@@ -20,9 +23,15 @@ void main() {
   setUp(() async {
     await Firebase.initializeApp();
 
+    getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
+
     homePage = const MaterialApp(
       home: HomePage(),
     );
+  });
+
+  tearDown(() {
+    getIt.unregister<AuthProvider>();
   });
 
   testWidgets('Verify the greeting text is showing', (tester) async {

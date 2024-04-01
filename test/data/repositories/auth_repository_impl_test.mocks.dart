@@ -6,6 +6,7 @@
 import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:talacare/data/datasources/auth_local_datasource.dart' as _i5;
 import 'package:talacare/data/datasources/auth_remote_datasource.dart' as _i3;
 import 'package:talacare/data/models/user_model.dart' as _i2;
 
@@ -59,4 +60,37 @@ class MockAuthRemoteDatasource extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.UserModel>);
+}
+
+/// A class which mocks [AuthLocalDatasource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAuthLocalDatasource extends _i1.Mock
+    implements _i5.AuthLocalDatasource {
+  @override
+  _i4.Future<String?> readData(String? key) => (super.noSuchMethod(
+        Invocation.method(
+          #readData,
+          [key],
+        ),
+        returnValue: _i4.Future<String?>.value(),
+        returnValueForMissingStub: _i4.Future<String?>.value(),
+      ) as _i4.Future<String?>);
+
+  @override
+  _i4.Future<void> storeData(
+    String? key,
+    String? value,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #storeData,
+          [
+            key,
+            value,
+          ],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }

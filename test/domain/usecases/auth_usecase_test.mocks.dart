@@ -54,4 +54,13 @@ class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
           ),
         )),
       ) as _i4.Future<_i2.UserEntity>);
+
+  @override
+  _i4.Future<_i2.UserEntity?> getLocalStoredUser() => (super.noSuchMethod(
+        Invocation.method(
+          #getLocalStoredUser,
+          [],
+        ),
+        returnValue: _i4.Future<_i2.UserEntity?>.value(),
+      ) as _i4.Future<_i2.UserEntity?>);
 }

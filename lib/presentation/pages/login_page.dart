@@ -24,41 +24,43 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                key: const Key('login_preview'),
-                child: SizedBox(
-                  width: 300,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.asset('assets/images/login_preview.png'),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  key: const Key('login_preview'),
+                  child: SizedBox(
+                    width: 300,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset('assets/images/login_preview.png'),
+                    ),
                   ),
                 ),
-              ),
-              const Gap(60),
-              Consumer<AuthProvider>(
-                builder: (context, authProvider, _) {
-                  if (authProvider.isError) {
-                    WidgetsBinding.instance.addPostFrameCallback(
-                      (_) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(buildSnackBar());
-                      },
+                const Gap(60),
+                Consumer<AuthProvider>(
+                  builder: (context, authProvider, _) {
+                    if (authProvider.isError) {
+                      WidgetsBinding.instance.addPostFrameCallback(
+                        (_) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(buildSnackBar());
+                        },
+                      );
+                    }
+                    return Button(
+                      key: const Key('login_button'),
+                      isLoading: authProvider.isLoading,
+                      text: 'Login',
+                      onTap: () async =>
+                          await getIt<AuthProvider>().signInWithGoogle(),
                     );
-                  }
-                  return Button(
-                    key: const Key('login_button'),
-                    isLoading: authProvider.isLoading,
-                    text: 'Login',
-                    onTap: () async =>
-                        await getIt<AuthProvider>().signInWithGoogle(),
-                  );
-                },
-              ),
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

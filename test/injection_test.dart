@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:talacare/data/datasources/auth_remote_datasource.dart';
@@ -26,5 +28,7 @@ void main() {
     expect(di.getIt.isRegistered<AuthRemoteDatasource>(), isTrue);
     expect(di.getIt.isRegistered<GoogleSignIn>(), isTrue);
     expect(di.getIt.isRegistered<FirebaseAuth>(), isTrue);
+    expect(di.getIt.isRegistered<Dio>(), isTrue);
+    expect(di.getIt.isRegistered<FlutterSecureStorage>(), isTrue);
   });
 }

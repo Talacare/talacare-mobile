@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
 import 'package:talacare/data/models/stage_state.dart';
+import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
 import 'package:provider/provider.dart';
@@ -12,15 +14,18 @@ import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
+import '../pages/login_page_test.mocks.dart';
 import 'next_info_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 @GenerateMocks([AudioPlayer])
 void main() {
+  final getIt = GetIt.instance;
   late Widget nextInfo;
 
   setUp(() async {
+    getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
 
     nextInfo = MultiProvider(
@@ -39,6 +44,10 @@ void main() {
             ),
           ),
         ));
+  });
+
+  tearDown(() {
+    getIt.unregister<AuthProvider>();
   });
 
   group('Win Puzzle Modal Widget Tests', () {

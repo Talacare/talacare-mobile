@@ -116,9 +116,28 @@ class MockAuthProvider extends _i1.Mock implements _i6.AuthProvider {
       );
 
   @override
+  void setUser(_i5.UserEntity? user) => super.noSuchMethod(
+        Invocation.method(
+          #setUser,
+          [user],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   _i3.Future<void> signInWithGoogle() => (super.noSuchMethod(
         Invocation.method(
           #signInWithGoogle,
+          [],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> getLocalStoredUser() => (super.noSuchMethod(
+        Invocation.method(
+          #getLocalStoredUser,
           [],
         ),
         returnValue: _i3.Future<void>.value(),
@@ -794,4 +813,14 @@ class MockAuthUseCase extends _i1.Mock implements _i2.AuthUseCase {
           ),
         )),
       ) as _i3.Future<_i5.UserEntity>);
+
+  @override
+  _i3.Future<_i5.UserEntity?> getLocalStoredUser() => (super.noSuchMethod(
+        Invocation.method(
+          #getLocalStoredUser,
+          [],
+        ),
+        returnValue: _i3.Future<_i5.UserEntity?>.value(),
+        returnValueForMissingStub: _i3.Future<_i5.UserEntity?>.value(),
+      ) as _i3.Future<_i5.UserEntity?>);
 }
