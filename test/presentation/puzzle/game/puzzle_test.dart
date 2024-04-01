@@ -8,7 +8,7 @@ void main() {
     testWidgets('PuzzleWidget Test', (WidgetTester tester) async {
       final Widget puzzleWidget = PuzzleWidget(
         image: Image.asset(
-          'assets/images/perawat.png',
+          'assets/images/puzzle_images/perawat.png',
           height: 300,
           width: 300,
         ),
