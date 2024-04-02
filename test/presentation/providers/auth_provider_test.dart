@@ -95,4 +95,31 @@ void main() {
 
     expect(authProvider.user, equals(userEntity));
   });
+
+  test('should clear user and reset states on successful logout', () async {
+    when(mockAuthUseCase.logOut()).thenAnswer((_) async {});
+    await authProvider.logOut();
+    expect(authProvider.user, isNull);
+    expect(authProvider.isLoading, isFalse);
+    expect(authProvider.isError, isFalse);
+    verify(mockAuthUseCase.logOut()).called(1);
+  });
+
+  test('should handle logout when no user is logged in', () async {
+    authProvider.setUser(null);
+    when(mockAuthUseCase.logOut()).thenAnswer((_) async {});
+    await authProvider.logOut();
+    expect(authProvider.user, isNull);
+    expect(authProvider.isLoading, isFalse);
+    expect(authProvider.isError, isFalse);
+    verify(mockAuthUseCase.logOut()).called(1);
+  });
+
+  test('logOut handles error correctly', () async {
+    when(mockAuthUseCase.logOut()).thenThrow(Exception("Logout failed"));
+    await authProvider.logOut();
+    expect(authProvider.isLoading, false);
+    expect(authProvider.isError, true);
+    verify(mockAuthUseCase.logOut()).called(1);
+  });
 }

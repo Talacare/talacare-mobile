@@ -34,4 +34,23 @@ void main() {
     await dataSource.storeData('a_key', 'Data');
     verify(storage.write(key: 'a_key', value: 'Data')).called(1);
   });
+
+  test('should delete the data for a given key and verify the data is removed',
+      () async {
+    when(storage.read(key: 'a_key')).thenAnswer((_) async => 'Data');
+    when(storage.delete(key: 'a_key')).thenAnswer((_) async {
+      when(storage.read(key: 'a_key')).thenAnswer((_) async => null);
+      return;
+    });
+    await dataSource.deleteData('a_key');
+    verify(storage.delete(key: 'a_key')).called(1);
+    final result = await dataSource.readData('a_key');
+    expect(result, isNull);
+  });
+
+  test('attempt to delete non-existing data', () async {
+    when(storage.delete(key: 'non_existing_key')).thenAnswer((_) async {});
+    await dataSource.deleteData('non_existing_key');
+    verify(storage.delete(key: 'non_existing_key')).called(1);
+  });
 }

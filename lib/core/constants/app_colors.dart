@@ -11,5 +11,12 @@ class AppColors {
   static Color yellow = const Color(0xFFFFF635);
   static Color violet = const Color(0xFF4E19A5);
   static Color dustyRed = const Color(0xFFB8464D);
+  static Color coralPink = const Color(0xFFFF8080);
+  static Color mediumBlue = const Color(0xFF60CFFF);
+  static Color lightBlue = const Color(0xFFC2FDFF);
+  static Color mildBlue = const Color(0xFF228AED);
+  static Color lavender = const Color(0xFFD3D8FF);
+  static Color lightPurple = const Color(0xFFDD67ED);
+  static Color softPink = const Color(0xFFFFB8B8);
   // Add more colors here ...
 }

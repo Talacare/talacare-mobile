@@ -10,6 +10,7 @@ import '../models/user_model.dart';
 
 abstract class AuthRemoteDatasource {
   Future<UserModel> signInGoogle();
+  Future<void> logOut();
 }
 
 class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
@@ -74,5 +75,17 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
         options: Options(headers: {'Authorization': token}));
     await localDatasource.storeData('access_token', response.data["token"]);
     await localDatasource.storeData('user', json.encode(userModel));
+  }
+
+  @override
+  Future<void> logOut() async {
+    try {
+      await googleSignIn.signOut();
+      await firebaseAuthInstance.signOut();
+      await localDatasource.deleteData('access_token');
+      await localDatasource.deleteData('user');
+    } catch (e) {
+      throw Exception('Logout failed: $e');
+    }
   }
 }

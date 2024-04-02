@@ -93,4 +93,14 @@ class MockAuthUseCase extends _i1.Mock implements _i4.AuthUseCase {
         returnValue: _i5.Future<_i3.UserEntity?>.value(),
         returnValueForMissingStub: _i5.Future<_i3.UserEntity?>.value(),
       ) as _i5.Future<_i3.UserEntity?>);
+
+  @override
+  _i5.Future<void> logOut() => (super.noSuchMethod(
+        Invocation.method(
+          #logOut,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 }

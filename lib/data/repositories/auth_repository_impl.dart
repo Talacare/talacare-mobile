@@ -24,4 +24,9 @@ class AuthRepositoryImpl extends AuthRepository {
     if (userJson == null) return null;
     return UserModel.fromJson(json.decode(userJson));
   }
+
+  @override
+  Future<void> logOut() async {
+    await authRemoteDatasource.logOut();
+  }
 }

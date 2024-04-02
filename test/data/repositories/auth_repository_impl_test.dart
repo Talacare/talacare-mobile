@@ -63,4 +63,10 @@ void main() {
     expect(result, isNull);
     verify(mockLocalDatasource.readData('user')).called(1);
   });
+
+  test('should call logOut of auth remote datasource', () async {
+    when(mockRemoteDatasource.logOut()).thenAnswer((_) async => Future.value());
+    await repository.logOut();
+    verify(mockRemoteDatasource.logOut()).called(1);
+  });
 }

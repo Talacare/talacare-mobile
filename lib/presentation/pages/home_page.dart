@@ -11,27 +11,44 @@ import 'package:talacare/presentation/pages/schedule_page.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/widgets/button.dart';
+import 'package:talacare/presentation/widgets/profile_modal.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildGreetingText(),
-        ClipOval(
-          key: const Key('user_picture'),
-          child: SizedBox(
-            width: 55,
-            height: 55,
-            child: Image.network(
-              getIt<AuthProvider>().user?.photoURL ??
-                  'https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg',
-            ),
-          ),
-        )
+        _buildProfilePicture(context),
       ],
+    );
+  }
+
+  Widget _buildProfilePicture(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const ProfileModal(
+              key: Key("profile"),
+            );
+          },
+        );
+      },
+      child: ClipOval(
+        key: const Key('user_picture'),
+        child: SizedBox(
+          width: 55,
+          height: 55,
+          child: Image.network(
+            getIt<AuthProvider>().user?.photoURL ??
+                'https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg',
+          ),
+        ),
+      ),
     );
   }
 
@@ -79,7 +96,7 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                _buildHeader(),
+                _buildHeader(context),
                 const Gap(40),
                 GameCard(
                   title: 'Jump N Jump',
