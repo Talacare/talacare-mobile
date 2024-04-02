@@ -47,4 +47,10 @@ void main() {
 
     expect(result, isNull);
   });
+
+  test('should invoke logOut on the auth repository', () async {
+    when(mockAuthRepository.logOut()).thenAnswer((_) async => Future.value());
+    await useCase.logOut();
+    verify(mockAuthRepository.logOut()).called(1);
+  });
 }
