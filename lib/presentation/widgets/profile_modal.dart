@@ -63,7 +63,7 @@ class ProfileModal extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   key: const Key('user_name'),
-                  getIt<AuthProvider>().user?.name ?? "Player",
+                  getIt<AuthProvider>().user?.name ?? "-",
                   style: TextStyle(
                     color: AppColors.mildBlue,
                     fontSize: 25,
@@ -72,7 +72,7 @@ class ProfileModal extends StatelessWidget {
                 const SizedBox(height: 5),
                 Text(
                   key: const Key('user_email'),
-                  getIt<AuthProvider>().user?.email ?? "player@gmail.com",
+                  getIt<AuthProvider>().user?.email ?? "-",
                   style: TextStyle(
                     color: AppColors.mediumBlue,
                     fontSize: 18,
