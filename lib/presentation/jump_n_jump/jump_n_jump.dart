@@ -8,20 +8,33 @@ import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
 
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/managers.dart';
+import 'package:talacare/presentation/pages/home_page.dart';
+import 'package:talacare/presentation/widgets/game_over_modal.dart';
 import './world.dart';
 import 'sprites/sprites.dart';
 
 class JumpNJump extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
-  final VoidCallback? onBackToMenuCallback;
   final Character? character;
   IAudioManager? audioManager;
 
-  JumpNJump(
-      {this.character,
-      this.onBackToMenuCallback,
-      this.audioManager,
-      super.children});
+  JumpNJump({
+    this.character,
+    this.audioManager,
+    super.children,
+  }) {
+    overlays.addEntry(
+      'gameOverOverlay',
+      (context, game) => GameOverModal(
+        currentScore: gameManager.score.value,
+        highestScore: gameManager.highScore.value,
+        onMainLagiPressed: onRestartGame,
+        onMenuPressed: () {
+          onBackToMenu(context);
+        },
+      ),
+    );
+  }
 
   GameManager gameManager = GameManager();
   final WorldGame world = WorldGame();
@@ -128,7 +141,9 @@ class JumpNJump extends FlameGame
   }
 
   void startGame() {
-    audioManager!.playBackgroundMusic('jump_n_jump/jump_n_jump_bgm.mp3', 1);
+    if (audioManager != null) {
+      audioManager!.playBackgroundMusic('jump_n_jump/jump_n_jump_bgm.mp3', 1);
+    }
     gameManager.state = GameState.playing;
     dash.megaJump();
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -146,8 +161,10 @@ class JumpNJump extends FlameGame
   }
 
   void onLose() {
-    audioManager!.playSoundEffect('jump_n_jump/game_over.wav', 1);
-    audioManager!.stopBackgroundMusic();
+    if (audioManager != null) {
+      audioManager!.playSoundEffect('jump_n_jump/game_over.wav', 1);
+      audioManager!.stopBackgroundMusic();
+    }
     gameManager.state = GameState.gameOver;
     overlays.add('gameOverOverlay');
   }
@@ -157,8 +174,10 @@ class JumpNJump extends FlameGame
     startGame();
   }
 
-  void onBackToMenu() {
+  void onBackToMenu(BuildContext context) {
     overlays.remove('gameOverOverlay');
-    onBackToMenuCallback?.call();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const HomePage()),
+    );
   }
 }

@@ -1,8 +1,13 @@
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/health_bar.dart';
 import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
+import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
+
+class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
   group('JumpNJumpPage Widget Tests', () {
@@ -68,6 +73,18 @@ void main() {
       )));
       await tester.pumpAndSettle();
       expect(find.byType(HealthBar), findsOneWidget);
+    });
+
+    testWidgets('createGameWidget should create a GameWidget',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: JumpNJumpPage(character: Character.boy),
+        ),
+      );
+
+      final gameWidget = find.byType(GameWidget<JumpNJump>);
+      expect(gameWidget, findsOneWidget);
     });
   });
 }

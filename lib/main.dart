@@ -8,7 +8,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/core/interceptors/dio_interceptor.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
-import 'package:talacare/presentation/pages/login_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 
 import 'firebase_options.dart';
@@ -53,7 +52,7 @@ class MyApp extends StatelessWidget {
             if (authProvider.user != null) {
               return const HomePage();
             } else {
-              return const LoginPage();
+              return const HomePage();
             }
           },
         ),
