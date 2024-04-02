@@ -60,6 +60,16 @@ class MockAuthRemoteDatasource extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.UserModel>);
+
+  @override
+  _i4.Future<void> logOut() => (super.noSuchMethod(
+        Invocation.method(
+          #logOut,
+          [],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
 
 /// A class which mocks [AuthLocalDatasource].
@@ -89,6 +99,16 @@ class MockAuthLocalDatasource extends _i1.Mock
             key,
             value,
           ],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> deleteData(String? key) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteData,
+          [key],
         ),
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
