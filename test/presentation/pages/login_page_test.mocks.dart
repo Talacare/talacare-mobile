@@ -144,7 +144,6 @@ class MockAuthProvider extends _i1.Mock implements _i6.AuthProvider {
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
 
-  @override
   void maybeDispatchObjectCreation() => super.noSuchMethod(
         Invocation.method(
           #maybeDispatchObjectCreation,
