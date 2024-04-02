@@ -145,13 +145,14 @@ class MockAuthProvider extends _i1.Mock implements _i6.AuthProvider {
       ) as _i3.Future<void>);
 
   @override
-  void maybeDispatchObjectCreation() => super.noSuchMethod(
+  _i3.Future<void> logOut() => (super.noSuchMethod(
         Invocation.method(
-          #maybeDispatchObjectCreation,
+          #logOut,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 
   @override
   void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
@@ -823,4 +824,14 @@ class MockAuthUseCase extends _i1.Mock implements _i2.AuthUseCase {
         returnValue: _i3.Future<_i5.UserEntity?>.value(),
         returnValueForMissingStub: _i3.Future<_i5.UserEntity?>.value(),
       ) as _i3.Future<_i5.UserEntity?>);
+
+  @override
+  _i3.Future<void> logOut() => (super.noSuchMethod(
+        Invocation.method(
+          #logOut,
+          [],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 }
