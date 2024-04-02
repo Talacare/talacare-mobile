@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+.scannerwork/
 
 # IntelliJ related
 *.iml
@@ -45,3 +46,9 @@ app.*.map.json
 # Remember to never publicly share your keystore.
 *.keystore
 *.jks
+
+# Ignore test report
+/coverage/
+tests.output
+
+.env
