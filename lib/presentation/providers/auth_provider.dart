@@ -48,4 +48,21 @@ class AuthProvider extends ChangeNotifier {
     final userEntity = await useCase.getLocalStoredUser();
     setUser(userEntity);
   }
+
+  Future<void> logOut() async {
+    try {
+      setLoading(true);
+
+      await useCase.logOut();
+      setUser(null);
+
+      setLoading(false);
+    } catch (e) {
+      debugPrint(e.toString());
+      setLoading(false);
+
+      _isError = true;
+      notifyListeners();
+    }
+  }
 }

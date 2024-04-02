@@ -14,4 +14,8 @@ class AuthUseCase {
   Future<UserEntity?> getLocalStoredUser() async {
     return await authRepository.getLocalStoredUser();
   }
+
+  Future<void> logOut() async {
+    return await authRepository.logOut();
+  }
 }
