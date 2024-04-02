@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1064963628215:android:9b8f95e3943e72f1698132",
         "android_client_info": {
-          "package_name": "com.example.talacare"
+          "package_name": "id.ac.ui.talacare.a2"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "1064963628215-9n8gvprqdg5eipli9cdvebpd1033n6og.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.talacare",
+            "package_name": "id.ac.ui.talacare.a2",
             "certificate_hash": "2f7a0f0ad74ea0379a12e562f518f7e2ded45cb4"
           }
         },
