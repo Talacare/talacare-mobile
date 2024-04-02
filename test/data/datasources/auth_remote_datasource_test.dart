@@ -11,16 +11,26 @@ import 'package:talacare/data/models/user_model.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
 import 'auth_remote_datasource_test.mocks.dart';
 
-class MockGoogleSignInReturnsNull extends Mock implements MockGoogleSignIn {
+class MockGoogleReturnsNull extends Mock implements MockGoogleSignIn {
   @override
   Future<GoogleSignInAccount?> signIn() {
     return Future.value(null);
   }
+
+  @override
+  Future<GoogleSignInAccount?> signOut() {
+    throw Exception();
+  }
 }
 
-class MockGoogleSignInThrowsException extends Mock implements MockGoogleSignIn {
+class MockGoogleThrowsException extends Mock implements MockGoogleSignIn {
   @override
   Future<GoogleSignInAccount?> signIn() {
+    throw Exception();
+  }
+
+  @override
+  Future<GoogleSignInAccount?> signOut() {
     throw Exception();
   }
 }
@@ -30,6 +40,13 @@ class MockGoogleSignInReturnsUserModel extends Mock
   @override
   Future<GoogleSignInAccount?> signIn() {
     throw Exception();
+  }
+}
+
+class MockGoogleSignOut extends Mock implements MockGoogleSignIn {
+  @override
+  Future<GoogleSignInAccount?> signOut() {
+    return Future.value();
   }
 }
 
@@ -58,6 +75,11 @@ class MockFirebaseAuth extends Mock implements FirebaseAuth {
   @override
   Future<UserCredential> signInWithCredential(AuthCredential credential) async {
     return Future.value(MockUserCredential());
+  }
+
+  @override
+  Future<void> signOut() async {
+    return Future.value();
   }
 }
 
@@ -105,7 +127,7 @@ void main() {
 
   test('should throw exception when the account is null', () async {
     final dataSource = AuthRemoteDatasourceImpl(
-      googleSignIn: MockGoogleSignInReturnsNull(),
+      googleSignIn: MockGoogleReturnsNull(),
       firebaseAuthInstance: mockFirebaseAuth,
       dio: mockDio,
       localDatasource: mockLocalDatasource,
@@ -115,11 +137,45 @@ void main() {
 
   test('should throw unexpected exception', () async {
     final dataSource = AuthRemoteDatasourceImpl(
-      googleSignIn: MockGoogleSignInThrowsException(),
+      googleSignIn: MockGoogleThrowsException(),
       firebaseAuthInstance: mockFirebaseAuth,
       dio: mockDio,
       localDatasource: mockLocalDatasource,
     );
     expect(() async => await dataSource.signInGoogle(), throwsException);
+  });
+
+  test('should log out successfully', () async {
+    final dataSource = AuthRemoteDatasourceImpl(
+      googleSignIn: MockGoogleSignOut(),
+      firebaseAuthInstance: mockFirebaseAuth,
+      dio: mockDio,
+      localDatasource: mockLocalDatasource,
+    );
+
+    await dataSource.logOut();
+
+    verify(mockLocalDatasource.deleteData('access_token')).called(1);
+    verify(mockLocalDatasource.deleteData('user')).called(1);
+  });
+
+  test('should throw exception when logout if the account is null', () async {
+    final dataSource = AuthRemoteDatasourceImpl(
+      googleSignIn: MockGoogleReturnsNull(),
+      firebaseAuthInstance: mockFirebaseAuth,
+      dio: mockDio,
+      localDatasource: mockLocalDatasource,
+    );
+    expect(() async => await dataSource.logOut(), throwsException);
+  });
+
+  test('should throw unexpected exception when logout', () async {
+    final dataSource = AuthRemoteDatasourceImpl(
+      googleSignIn: MockGoogleThrowsException(),
+      firebaseAuthInstance: mockFirebaseAuth,
+      dio: mockDio,
+      localDatasource: mockLocalDatasource,
+    );
+    expect(() async => await dataSource.logOut(), throwsException);
   });
 }
