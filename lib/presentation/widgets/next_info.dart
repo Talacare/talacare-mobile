@@ -161,4 +161,10 @@ class _NextInfoState extends State<NextInfo> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    audioPlayer.stop();
+    super.dispose();
+  }
 }

@@ -45,14 +45,16 @@ class JumpNJump extends FlameGame
     await add(world);
     await add(dash);
 
-    dash.health.addListener(() {
-      if (dash.health.value <= 0) {
-        onLose();
-      }
-    });
+    dash.health.addListener(onHealthChanged);
 
     initializeGame();
     startGame();
+  }
+
+  void onHealthChanged() {
+    if (dash.health.value <= 0) {
+      onLose();
+    }
   }
 
   @override
