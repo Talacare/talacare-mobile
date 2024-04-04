@@ -319,7 +319,36 @@ void main() {
       ),
     );
 
+    await tester.pump();
+
     verify(mockPlayer.stop()).called(1);
     verify(mockPlayer.play(any)).called(1);
+  });
+
+  testWidgets('calls audioPlayer.stop() on dispose', (tester) async {
+    final mockPlayer = MockAudioPlayer();
+
+    await tester.pumpWidget(MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+              create: (context) => TimerState(initialValue: false)),
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => CompleteState(initialValue: false),
+          )
+        ],
+        child: MaterialApp(
+          home: Scaffold(
+              body: NextInfo(
+            name: "PERAWAT",
+            stageState: StageState([1, 0, 0, 0], 1, 0, image),
+            audioPlayer: mockPlayer,
+          )),
+        )));
+
+    await tester.pumpAndSettle();
+    await tester.pumpWidget(Container());
+    await tester.pumpAndSettle();
+
+    verify(mockPlayer.stop()).called(1);
   });
 }
