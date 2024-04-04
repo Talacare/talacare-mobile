@@ -345,8 +345,8 @@ void main() {
           )),
         )));
 
-    await tester.pumpAndSettle();
-    await tester.pumpWidget(Container());
+    final NavigatorState navigator = tester.state(find.byType(Navigator));
+    navigator.pop();
     await tester.pumpAndSettle();
 
     verify(mockPlayer.stop()).called(1);
