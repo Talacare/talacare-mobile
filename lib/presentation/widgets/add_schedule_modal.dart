@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/widgets/modal_button.dart';
 
-class AddScheduleTime extends StatefulWidget {
-  const AddScheduleTime({super.key});
+class AddScheduleModal extends StatefulWidget {
+  const AddScheduleModal({super.key});
 
   @override
-  State<AddScheduleTime> createState() => _AddScheduleTimeState();
+  State<AddScheduleModal> createState() => _AddScheduleModalState();
 }
 
-class _AddScheduleTimeState extends State<AddScheduleTime> {
+class _AddScheduleModalState extends State<AddScheduleModal> {
   DateTime selectedDate = DateTime.now();
 
   void _onDateChanged(DateTime newDate) {
