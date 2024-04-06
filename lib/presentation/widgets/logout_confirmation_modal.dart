@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
-import 'package:talacare/presentation/pages/home_page.dart';
+import 'package:talacare/injection.dart';
+import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/widgets/modal_button.dart';
 
 class LogoutConfirmationModal extends StatelessWidget {
@@ -60,11 +61,9 @@ class LogoutConfirmationModal extends StatelessWidget {
                   color: AppColors.coralPink,
                   borderColor: AppColors.softPink,
                   textColor: Colors.white,
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
+                  onTap: () async {
+                    Navigator.of(context).pop();
+                    await getIt<AuthProvider>().logOut();
                   },
                 ),
                 const SizedBox(height: 5),

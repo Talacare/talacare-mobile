@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/widgets/logout_confirmation_modal.dart';
 import 'package:talacare/presentation/widgets/modal_button.dart';
+import 'package:talacare/presentation/providers/auth_provider.dart';
 
 class ProfileModal extends StatelessWidget {
   const ProfileModal({
@@ -50,13 +52,18 @@ class ProfileModal extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/perawat.png'),
+                CircleAvatar(
+                  key: const Key('user_picture'),
+                  backgroundImage: NetworkImage(
+                    getIt<AuthProvider>().user?.photoURL ??
+                        'https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg',
+                  ),
                   radius: 80,
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "John Doe",
+                  key: const Key('user_name'),
+                  getIt<AuthProvider>().user?.name ?? "-",
                   style: TextStyle(
                     color: AppColors.mildBlue,
                     fontSize: 25,
@@ -64,7 +71,8 @@ class ProfileModal extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "johndoe@gmail.com",
+                  key: const Key('user_email'),
+                  getIt<AuthProvider>().user?.email ?? "-",
                   style: TextStyle(
                     color: AppColors.mediumBlue,
                     fontSize: 18,
