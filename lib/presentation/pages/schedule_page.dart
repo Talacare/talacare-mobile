@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/presentation/widgets/add_schedule_modal.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 
@@ -97,7 +98,13 @@ class SchedulePage extends StatelessWidget {
                     text: 'Tambah Jadwal',
                     colorScheme: ButtonColorScheme.purple,
                     icon: Icons.add,
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            const AddScheduleModal(),
+                      );
+                    },
                   ),
                   const Gap(20),
                   Button(
