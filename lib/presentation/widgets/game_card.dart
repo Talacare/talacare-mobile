@@ -45,7 +45,7 @@ class GameCard extends StatelessWidget {
               fontSize: 36,
             ),
           ),
-          const Gap(7),
+          const Gap(20),
           Button(
             key: Key(buttonName),
             text: 'Main',
