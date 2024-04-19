@@ -30,7 +30,7 @@ class NotificationService {
   }
 
   Future<void> showNotification(
-      {int id = 0, String? title, String? body, String? payLoad}) async {
+      {int id = 0, String? title, String? body}) async {
     return notificationsPlugin.show(
         id, title, body, await notificationDetails());
   }
@@ -52,7 +52,6 @@ class NotificationService {
     {int id = 0,
     String? title,
     String? body,
-    String? payLoad,
     required DateTime scheduledNotificationDateTime}
   ) async {
     await notificationsPlugin.zonedSchedule(
@@ -72,5 +71,13 @@ class NotificationService {
       uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time);
+  }
+
+  Future<void> cancelNotification(int id) async {
+    await notificationsPlugin.cancel(id);
+  }
+
+  Future<void> cancelAllNotification() async {
+    await notificationsPlugin.cancelAll();
   }
 }
