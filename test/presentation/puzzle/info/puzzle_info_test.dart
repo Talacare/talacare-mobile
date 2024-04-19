@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:talacare/data/models/image_pair.dart';
 
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
@@ -9,8 +10,19 @@ import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 void main() {
   late Widget puzzleInfo;
+  late List<ImagePair> image;
 
   setUp(() async {
+    image = [
+      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG"),
+      ImagePair(
+          "assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH"),
+      ImagePair("assets/images/puzzle_images/masker.png", "MASKER"),
+      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT"),
+    ];
+
+    StageState state = StageState([1, 2, 3, 0], 4, 0, image);
+
     puzzleInfo = MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
@@ -21,10 +33,7 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            imagePath: 'assets/images/perawat.png',
-            stageState: StageState([1, 2, 3, 0], 4, 0)
-          ),
+          home: PuzzleInfo(stageState: state),
         ));
   });
 
@@ -54,7 +63,7 @@ void main() {
               widget is Image &&
               widget.image is AssetImage &&
               (widget.image as AssetImage).assetName ==
-                  'assets/images/perawat.png',
+                  "assets/images/puzzle_images/perawat.png",
         ),
         findsOneWidget);
   });
@@ -114,8 +123,7 @@ void main() {
 
   testWidgets('PuzzleInfo widget change image star to lose image',
       (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MultiProvider(
+    await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
             create: (context) => TimerState(initialValue: true),
@@ -125,12 +133,8 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            imagePath: 'assets/images/perawat.png',
-            stageState: StageState([0, 0, 0, 0], 4, 0)
-          ),
-        ))
-    );
+          home: PuzzleInfo(stageState: StageState([0, 0, 0, 0], 4, 0, image)),
+        )));
 
     expect(
         find.byWidgetPredicate(
@@ -145,8 +149,7 @@ void main() {
 
   testWidgets('PuzzleInfo widget change image star to win image',
       (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MultiProvider(
+    await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
             create: (context) => TimerState(initialValue: false),
@@ -156,12 +159,8 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            imagePath: 'assets/images/perawat.png',
-            stageState: StageState([0, 0, 0, 0], 4, 0)
-          ),
-        ))
-    );
+          home: PuzzleInfo(stageState: StageState([0, 0, 0, 0], 4, 0, image)),
+        )));
 
     expect(
         find.byWidgetPredicate(

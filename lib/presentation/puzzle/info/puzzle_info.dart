@@ -8,16 +8,14 @@ import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class PuzzleInfo extends StatefulWidget {
   final StageState stageState;
-  final String imagePath;
 
-  const PuzzleInfo({super.key, required this.stageState, required this.imagePath});
+  const PuzzleInfo({super.key, required this.stageState});
 
   @override
   State<PuzzleInfo> createState() => _PuzzleInfoState();
 }
 
 class _PuzzleInfoState extends State<PuzzleInfo> {
-
   @override
   Widget build(BuildContext context) {
     final finishState = Provider.of<TimerState>(context);
@@ -102,6 +100,9 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
   }
 
   Widget buildDownSide() {
+    String puzzleImg =
+        widget.stageState.images[widget.stageState.stage - 1].image;
+
     return Container(
       padding: const EdgeInsets.only(top: 20),
       child: Row(
@@ -121,7 +122,7 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
             ],
           ),
           Image.asset(
-            widget.imagePath,
+            puzzleImg,
             width: 100,
             height: 100,
           ),

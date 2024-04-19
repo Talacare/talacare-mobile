@@ -77,14 +77,14 @@ class _NextInfoState extends State<NextInfo> {
         child: Center(
           child: Column(children: [
             SizedBox(
-              width: 203,
+              width: 300,
               height: 50,
               child: Text(
                 widget.name,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 50,
+                    fontSize: 40,
                     fontFamily: 'Digitalt',
                     fontWeight: FontWeight.w500,
                     height: 0,
@@ -121,7 +121,10 @@ class _NextInfoState extends State<NextInfo> {
                     MaterialPageRoute(
                         builder: (context) => PuzzlePage(
                               stageState: StageState(
-                                  currentState, widget.stageState.stage + 1, widget.stageState.score),
+                                  currentState,
+                                  widget.stageState.stage + 1,
+                                  widget.stageState.score,
+                                  widget.stageState.images),
                             )),
                   );
                 } else {
@@ -138,7 +141,8 @@ class _NextInfoState extends State<NextInfo> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => PuzzlePage(
-                                        stageState: StageState([1, 0, 0, 0], 1, 0),
+                                        stageState:
+                                            StageState([1, 0, 0, 0], 1, 0, []),
                                       )),
                             );
                           },
@@ -159,5 +163,11 @@ class _NextInfoState extends State<NextInfo> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.stop();
+    super.dispose();
   }
 }

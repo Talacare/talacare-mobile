@@ -2,17 +2,22 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
-
+import 'package:get_it/get_it.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
+import 'package:talacare/presentation/providers/auth_provider.dart';
+import 'login_page_test.mocks.dart';
+import 'package:talacare/presentation/pages/schedule_page.dart';
+import 'package:talacare/presentation/widgets/profile_modal.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
   late Widget homePage;
+  final getIt = GetIt.instance;
 
   TestWidgetsFlutterBinding.ensureInitialized();
   setupFirebaseCoreMocks();
@@ -20,9 +25,15 @@ void main() {
   setUp(() async {
     await Firebase.initializeApp();
 
+    getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
+
     homePage = const MaterialApp(
       home: HomePage(),
     );
+  });
+
+  tearDown(() {
+    getIt.unregister<AuthProvider>();
   });
 
   testWidgets('Verify the greeting text is showing', (tester) async {
@@ -102,5 +113,36 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(PuzzlePage), findsOneWidget);
+  });
+
+  testWidgets('Verify the schedule button navigates to Schedule Page',
+      (tester) async {
+    final mockObserver = MockNavigatorObserver();
+
+    await mockNetworkImagesFor(
+      () => tester.pumpWidget(
+        MaterialApp(
+          home: const HomePage(),
+          navigatorObservers: [mockObserver],
+        ),
+      ),
+    );
+
+    expect(find.byKey(const Key('schedule_button')), findsOneWidget);
+
+    await tester.ensureVisible(find.byKey(const Key('schedule_button')));
+    await tester.tap(find.byKey(const Key('schedule_button')));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SchedulePage), findsOneWidget);
+  });
+
+  testWidgets('Verify tapping on user picture shows profile modal',
+      (tester) async {
+    await mockNetworkImagesFor(() => tester.pumpWidget(homePage));
+    final userPictureFinder = find.byKey(const Key('user_picture'));
+    await tester.tap(userPictureFinder);
+    await tester.pumpAndSettle();
+    expect(find.byType(ProfileModal), findsOneWidget);
   });
 }

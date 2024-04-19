@@ -5,15 +5,20 @@ import 'package:flame_test/flame_test.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/world.dart';
 
+import 'jump_n_jump_test.mocks.dart';
+
 class TestJumpNJump extends JumpNJump {
   bool isGameOverOverlayAdded = false;
 
-  TestJumpNJump({super.children, super.character = Character.boy});
+  TestJumpNJump(
+      {super.children, super.character = Character.boy, super.audioManager});
 
   @override
   Future<void> onLoad() async {
@@ -37,11 +42,16 @@ class TestJumpNJump extends JumpNJump {
   }
 }
 
-final jumpNJumpGameTester = FlameTester(
-  TestJumpNJump.new,
-);
-
+@GenerateMocks([], customMocks: [
+  MockSpec<IAudioManager>(as: #MockAudioManagerForJumpNJumpTest),
+])
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  final mockAudioManager = MockAudioManagerForJumpNJumpTest();
+
+  final jumpNJumpGameTester =
+      FlameTester(() => TestJumpNJump(audioManager: mockAudioManager));
+
   group('JumpNJump Tests', () {
     // ignore: deprecated_member_use
     jumpNJumpGameTester.widgetTest('Game widget can be created',
@@ -145,5 +155,15 @@ void main() {
     game.onBackToMenu();
 
     expect(game.isGameOverOverlayAdded, isFalse);
+  });
+
+  jumpNJumpGameTester.test('Health decrement and automatic game over trigger',
+      (game) async {
+    game.dash.health.value = 5;
+    await game.ready();
+    await Future.delayed(const Duration(seconds: 5));
+    game.update(5.0);
+    expect(game.gameManager.isGameOver, isTrue);
+    expect(game.isGameOverOverlayAdded, isTrue);
   });
 }

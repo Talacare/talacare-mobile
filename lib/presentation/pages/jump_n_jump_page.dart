@@ -1,6 +1,9 @@
 import 'package:flame/game.dart' hide Route;
 import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/character_enum.dart';
+import 'package:talacare/presentation/jump_n_jump/health_bar.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/player.dart';
@@ -17,6 +20,7 @@ class JumpNJumpPage extends StatefulWidget {
 
 class _JumpNJumpPageState extends State<JumpNJumpPage> {
   late final JumpNJump game;
+  final audioManager = AudioManager();
 
   @override
   void initState() {
@@ -31,6 +35,7 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
           ),
         );
       },
+      audioManager: audioManager,
     );
   }
 
@@ -45,6 +50,14 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    audioManager.stopBackgroundMusic();
+    game.dash.health.removeListener(game.onHealthChanged);
+    game.gameManager.state = GameState.gameOver;
+    super.dispose();
   }
 
   Positioned _createControlButtons() {
@@ -83,11 +96,21 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
       right: 0,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _createScoreWidget(),
-            _createHighScoreWidget(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _createScoreWidget(),
+                _createHighScoreWidget(),
+              ],
+            ),
+            const SizedBox(height: 10),
+            HealthBar(
+              currentValue: game.dash.health,
+              maxValue: 100,
+            )
           ],
         ),
       ),

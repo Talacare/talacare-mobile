@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/presentation/widgets/modal_button.dart';
 
 class GameOverModal extends StatelessWidget {
   final int currentScore;
@@ -20,8 +22,8 @@ class GameOverModal extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            color: Color(0xFF5FCFFF),
+          style: TextStyle(
+            color: AppColors.mediumBlue,
             fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
@@ -30,71 +32,21 @@ class GameOverModal extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 5.0),
           decoration: ShapeDecoration(
-            color: const Color(0xFFC2FDFF),
+            color: AppColors.lightBlue,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18.0),
             ),
           ),
           child: Text(
             '$score',
-            style: const TextStyle(
-              color: Color(0xFF228AED),
+            style: TextStyle(
+              color: AppColors.mildBlue,
               fontSize: 24,
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildActionButton(String text, Color color, Color borderColor,
-      Color textColor, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      child: SizedBox(
-        height: 45,
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 0,
-              child: Container(
-                height: 40,
-                width: 150,
-                decoration: BoxDecoration(
-                  color: borderColor,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(33),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 40,
-              width: 150,
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(33),
-                ),
-                border: Border.all(
-                  width: 2,
-                  color: const Color(0xFFFF8080),
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 22,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -110,11 +62,11 @@ class GameOverModal extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                  color: Color(0xFFD3D8FF),
+                  color: AppColors.lavender,
                   blurRadius: 10,
-                  offset: Offset(0, 5),
+                  offset: const Offset(0, 5),
                 ),
               ],
             ),
@@ -125,7 +77,7 @@ class GameOverModal extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 30.0, vertical: 5.0),
                   decoration: ShapeDecoration(
-                    color: const Color(0xFFDD67ED),
+                    color: AppColors.lightPurple,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                     ),
@@ -143,15 +95,21 @@ class GameOverModal extends StatelessWidget {
                 _buildScoreContainer('Skor Terkini', currentScore, context),
                 _buildScoreContainer('Skor Tertinggi', highestScore, context),
                 const SizedBox(height: 15),
-                _buildActionButton('Main Lagi', const Color(0xFFFF8080),
-                    const Color(0xFFFFB8B8), Colors.white, onMainLagiPressed),
+                ModalButton(
+                  text: 'Main Lagi',
+                  color: AppColors.coralPink,
+                  borderColor: AppColors.softPink,
+                  textColor: Colors.white,
+                  onTap: onMainLagiPressed,
+                ),
                 const SizedBox(height: 5),
-                _buildActionButton(
-                    'Menu',
-                    Colors.white,
-                    const Color(0xFFFF8080),
-                    const Color(0xFFFF8080),
-                    onMenuPressed),
+                ModalButton(
+                  text: 'Menu',
+                  color: Colors.white,
+                  borderColor: AppColors.coralPink,
+                  textColor: AppColors.coralPink,
+                  onTap: onMenuPressed,
+                ),
               ],
             ),
           ),
