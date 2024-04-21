@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/data/models/schedule_model.dart';
-import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/providers/schedule_provider.dart';
 import 'package:talacare/presentation/widgets/custom_notification.dart';
 import 'package:talacare/presentation/widgets/modal_button.dart';
@@ -104,7 +103,8 @@ class _AddScheduleModalState extends State<AddScheduleModal> {
                           hour: selectedDate.hour,
                           minute: selectedDate.minute,
                         );
-                        await getIt<ScheduleProvider>()
+                        await di
+                            .getIt<ScheduleProvider>()
                             .createSchedule(schedule)
                             .then((_) {
                           if (!scheduleProvider.isError) {
