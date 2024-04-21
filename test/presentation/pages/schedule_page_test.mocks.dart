@@ -104,6 +104,13 @@ class MockScheduleProvider extends _i1.Mock implements _i5.ScheduleProvider {
       ) as String);
 
   @override
+  List<String> get schedules => (super.noSuchMethod(
+        Invocation.getter(#schedules),
+        returnValue: <String>[],
+        returnValueForMissingStub: <String>[],
+      ) as List<String>);
+
+  @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
         returnValue: false,
@@ -145,11 +152,30 @@ class MockScheduleProvider extends _i1.Mock implements _i5.ScheduleProvider {
       );
 
   @override
+  void setSchedules(List<String>? schedules) => super.noSuchMethod(
+        Invocation.method(
+          #setSchedules,
+          [schedules],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   _i3.Future<void> createSchedule(_i7.ScheduleEntity? schedule) =>
       (super.noSuchMethod(
         Invocation.method(
           #createSchedule,
           [schedule],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> getSchedulesByUserId() => (super.noSuchMethod(
+        Invocation.method(
+          #getSchedulesByUserId,
+          [],
         ),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
@@ -803,4 +829,14 @@ class MockScheduleUseCase extends _i1.Mock implements _i2.ScheduleUseCase {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<List<String>> getSchedulesByUserId() => (super.noSuchMethod(
+        Invocation.method(
+          #getSchedulesByUserId,
+          [],
+        ),
+        returnValue: _i3.Future<List<String>>.value(<String>[]),
+        returnValueForMissingStub: _i3.Future<List<String>>.value(<String>[]),
+      ) as _i3.Future<List<String>>);
 }

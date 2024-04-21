@@ -4,14 +4,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:get_it/get_it.dart';
 import 'package:network_image_mock/network_image_mock.dart';
+import 'package:provider/provider.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
+import 'package:talacare/presentation/providers/schedule_provider.dart';
 import 'login_page_test.mocks.dart';
 import 'package:talacare/presentation/pages/schedule_page.dart';
 import 'package:talacare/presentation/widgets/profile_modal.dart';
+
+import 'schedule_page_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
@@ -119,13 +123,17 @@ void main() {
       (tester) async {
     final mockObserver = MockNavigatorObserver();
 
+    getIt.registerLazySingleton(
+        () => ScheduleProvider(useCase: MockScheduleUseCase()));
+
     await mockNetworkImagesFor(
-      () => tester.pumpWidget(
-        MaterialApp(
+      () => tester.pumpWidget(ChangeNotifierProvider<ScheduleProvider>(
+        create: (_) => MockScheduleProvider(),
+        child: MaterialApp(
           home: const HomePage(),
           navigatorObservers: [mockObserver],
         ),
-      ),
+      )),
     );
 
     expect(find.byKey(const Key('schedule_button')), findsOneWidget);

@@ -32,4 +32,32 @@ void main() {
     await repository.createSchedule(scheduleModel);
     verify(mockRemoteDatasource.createSchedule(scheduleModel)).called(1);
   });
+
+  test(
+      'should call getSchedulesByUserId from ScheduleRemoteDatasource and return expected data',
+      () async {
+    final scheduleModels = [
+      const ScheduleModel(
+        id: 'schedule-id-123',
+        hour: 10,
+        minute: 30,
+        userId: 'user-id-456',
+      ),
+      const ScheduleModel(
+        id: 'schedule-id-124',
+        hour: 11,
+        minute: 0,
+        userId: 'user-id-456',
+      ),
+    ];
+
+    when(mockRemoteDatasource.getSchedulesByUserId())
+        .thenAnswer((_) async => scheduleModels);
+
+    final result = await repository.getSchedulesByUserId();
+
+    verify(mockRemoteDatasource.getSchedulesByUserId()).called(1);
+
+    expect(result, equals(scheduleModels));
+  });
 }

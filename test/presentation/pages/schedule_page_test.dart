@@ -37,7 +37,7 @@ void main() {
     return MaterialApp(
       home: ChangeNotifierProvider<ScheduleProvider>(
         create: (_) => scheduleProvider,
-        child: SchedulePage(),
+        child: const SchedulePage(),
       ),
     );
   }
