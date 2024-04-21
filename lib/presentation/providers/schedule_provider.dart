@@ -14,8 +14,8 @@ class ScheduleProvider extends ChangeNotifier {
   String _message = '';
   String get message => _message;
 
-  List<String> _schedules = [];
-  List<String> get schedules => _schedules;
+  List<Map<String, String>> _schedules = [];
+  List<Map<String, String>> get schedules => _schedules;
 
   ScheduleProvider({required this.useCase});
 
@@ -37,7 +37,7 @@ class ScheduleProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSchedules(List<String> schedules) {
+  void setSchedules(List<Map<String, String>> schedules) {
     _schedules = schedules;
     notifyListeners();
   }

@@ -10,12 +10,17 @@ class ScheduleUseCase {
     await scheduleRepository.createSchedule(schedule);
   }
 
-  Future<List<String>> getSchedulesByUserId() async {
+  Future<List<Map<String, String>>> getSchedulesByUserId() async {
     final schedules = await scheduleRepository.getSchedulesByUserId();
     final formattedSchedules = schedules.map((schedule) {
       final hour = schedule.hour.toString().padLeft(2, '0');
       final minute = schedule.minute.toString().padLeft(2, '0');
-      return '$hour:$minute';
+      final formattedTime = '$hour:$minute';
+
+      return {
+        'id': schedule.id!,
+        'time': formattedTime,
+      };
     }).toList();
 
     return formattedSchedules;

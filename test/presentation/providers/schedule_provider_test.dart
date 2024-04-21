@@ -46,7 +46,11 @@ void main() {
   });
 
   test('should fetch schedules by user ID successfully', () async {
-    const schedules = ['10:00', '15:30', '20:25'];
+    const schedules = [
+      {'id': '1', 'time': '09:05'},
+      {'id': '2', 'time': '14:20'},
+      {'id': '3', 'time': '23:59'},
+    ];
 
     when(mockScheduleUseCase.getSchedulesByUserId())
         .thenAnswer((_) async => Future.value(schedules));

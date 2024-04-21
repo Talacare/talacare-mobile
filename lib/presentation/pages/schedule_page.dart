@@ -52,7 +52,7 @@ class SchedulePageState extends State<SchedulePage> {
               shrinkWrap: true,
               itemCount: scheduleProvider.schedules.length,
               itemBuilder: (context, index) {
-                final String scheduleTime = scheduleProvider.schedules[index];
+                final String scheduleTime = scheduleProvider.schedules[index]['time']!;
 
                 return Container(
                   margin: const EdgeInsets.only(top: 20, left: 20, right: 20),

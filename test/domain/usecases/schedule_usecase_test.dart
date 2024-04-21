@@ -38,7 +38,11 @@ void main() {
 
     final formattedSchedules = await useCase.getSchedulesByUserId();
 
-    final expectedFormattedSchedules = ['09:05', '14:20', '23:59'];
+    final expectedFormattedSchedules = [
+      {'id': '1', 'time': '09:05'},
+      {'id': '2', 'time': '14:20'},
+      {'id': '3', 'time': '23:59'},
+    ];
     expect(formattedSchedules, expectedFormattedSchedules);
 
     verify(mockScheduleRepository.getSchedulesByUserId()).called(1);
