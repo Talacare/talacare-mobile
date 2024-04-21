@@ -15,7 +15,7 @@ class ScheduleUseCase {
     final formattedSchedules = schedules.map((schedule) {
       final hour = schedule.hour.toString().padLeft(2, '0');
       final minute = schedule.minute.toString().padLeft(2, '0');
-      return hour + ':' + minute;
+      return '$hour:$minute';
     }).toList();
 
     return formattedSchedules;
