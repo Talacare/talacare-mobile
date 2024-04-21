@@ -9,4 +9,15 @@ class ScheduleUseCase {
   Future<void> createSchedule(ScheduleEntity schedule) async {
     await scheduleRepository.createSchedule(schedule);
   }
+
+  Future<List<String>> getSchedulesByUserId() async {
+    final schedules = await scheduleRepository.getSchedulesByUserId();
+    final formattedSchedules = schedules.map((schedule) {
+      final hour = schedule.hour.toString().padLeft(2, '0');
+      final minute = schedule.minute.toString().padLeft(2, '0');
+      return hour + ':' + minute;
+    }).toList();
+
+    return formattedSchedules;
+  }
 }

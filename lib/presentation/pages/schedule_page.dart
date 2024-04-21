@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/presentation/providers/schedule_provider.dart';
 import 'package:talacare/presentation/widgets/add_schedule_modal.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/injection.dart' as di;
 
-class SchedulePage extends StatelessWidget {
-  SchedulePage({super.key});
+class SchedulePage extends StatefulWidget {
+  const SchedulePage({super.key});
 
-  final List<String> scheduleTimes = [
-    '08.00',
-    '09.00',
-    '10.00',
-    '11.59',
-    '20.20',
-    '23.00',
-  ];
+  @override
+  SchedulePageState createState() => SchedulePageState();
+}
+
+class SchedulePageState extends State<SchedulePage> {
+  void refreshSchedules() {
+    setState(() {});
+  }
 
   Widget _buildTitle(String text) {
     return Text(
@@ -32,43 +34,61 @@ class SchedulePage extends StatelessWidget {
   }
 
   Widget _buildListOfSchedules() {
-    return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: scheduleTimes.length,
-        itemBuilder: (context, index) {
-          final String scheduleTime = scheduleTimes[index];
-          return Container(
-            margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-            decoration: BoxDecoration(
+    return FutureBuilder(
+      future: di.getIt<ScheduleProvider>().getSchedulesByUserId(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  scheduleTime,
-                  style: TextStyle(
-                    color: AppColors.darkPurple,
-                    fontSize: 35,
-                    fontFamily: 'Digitalt',
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.96,
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete_outline),
-                  iconSize: 35,
-                  color: AppColors.darkPurple,
-                  onPressed: () {},
-                ),
-              ],
             ),
           );
-        },
-      ),
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          var scheduleProvider = di.getIt<ScheduleProvider>();
+          return Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: scheduleProvider.schedules.length,
+              itemBuilder: (context, index) {
+                final String scheduleTime = scheduleProvider.schedules[index];
+
+                return Container(
+                  margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        scheduleTime,
+                        style: TextStyle(
+                          color: AppColors.darkPurple,
+                          fontSize: 35,
+                          fontFamily: 'Digitalt',
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 0.96,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete_outline),
+                        iconSize: 35,
+                        color: AppColors.darkPurple,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          );
+        }
+      },
     );
   }
 
@@ -102,7 +122,7 @@ class SchedulePage extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) =>
-                            const AddScheduleModal(),
+                          AddScheduleModal(onScheduleAdded: refreshSchedules),
                       );
                     },
                   ),
