@@ -43,8 +43,6 @@ class SchedulePageState extends State<SchedulePage> {
               color: Colors.white,
             ),
           );
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
         } else {
           var scheduleProvider = di.getIt<ScheduleProvider>();
           return Expanded(
