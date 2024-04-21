@@ -46,47 +46,24 @@ void main() {
         .called(1);
   });
 
-  test('should throw an error when API returns FAILED status', () async {
+  test('should throw an error message when DioException is caught', () async {
     const scheduleModel = ScheduleModel(hour: 10, minute: 30);
+    const errorMessage = "Jadwal yang sama sudah tersedia";
 
     when(mockDio.post(any,
             data: anyNamed('data'), options: anyNamed('options')))
-        .thenAnswer((_) async => Response(
+        .thenThrow(DioException(
             requestOptions:
                 RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
-            statusCode: 400,
-            data: {'responseStatus': "FAILED", 'error': 'Invalid request'}));
+            response: Response(
+                requestOptions:
+                    RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
+                statusCode: 400,
+                data: {'responseMessage': errorMessage})));
 
     expect(
       () async => await dataSource.createSchedule(scheduleModel),
-      throwsA(predicate((e) => e == 'Invalid request')),
+      throwsA(predicate((e) => e == errorMessage)),
     );
-  });
-
-  test('should strip "Exception: " prefix and rethrow the rest of the message',
-      () async {
-    const scheduleModel = ScheduleModel(hour: 10, minute: 30);
-    const errorMessage = 'Exception: Network issue';
-
-    when(mockDio.post(any,
-            data: anyNamed('data'), options: anyNamed('options')))
-        .thenThrow(errorMessage);
-
-    expect(() async => await dataSource.createSchedule(scheduleModel),
-        throwsA(predicate((e) => e.toString() == 'Network issue')));
-  });
-
-  test(
-      'should pass through error messages that do not start with "Exception: "',
-      () async {
-    const scheduleModel = ScheduleModel(hour: 10, minute: 30);
-    const errorMessage = 'Timeout occurred';
-
-    when(mockDio.post(any,
-            data: anyNamed('data'), options: anyNamed('options')))
-        .thenThrow(errorMessage);
-
-    expect(() async => await dataSource.createSchedule(scheduleModel),
-        throwsA(predicate((e) => e.toString() == 'Timeout occurred')));
   });
 }

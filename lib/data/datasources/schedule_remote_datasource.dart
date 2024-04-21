@@ -21,7 +21,7 @@ class ScheduleRemoteDatasourceImpl extends ScheduleRemoteDatasource {
   Future<void> createSchedule(ScheduleModel scheduleModel) async {
     try {
       final token = await localDatasource.readData('access_token');
-      final response = await dio.post(
+      await dio.post(
         scheduleAPI,
         data: {'hour': scheduleModel.hour, 'minute': scheduleModel.minute},
         options: Options(
@@ -30,14 +30,8 @@ class ScheduleRemoteDatasourceImpl extends ScheduleRemoteDatasource {
           },
         ),
       );
-      if (response.data['responseStatus'] == "FAILED") {
-        throw response.data['error'];
-      }
-    } catch (e) {
-      var errorMessage = e.toString();
-      if (errorMessage.startsWith('Exception: ')) {
-        throw errorMessage.substring('Exception: '.length);
-      }
+    } on DioException catch (e) {
+      var errorMessage = e.response?.data['responseMessage'];
       throw errorMessage;
     }
   }
