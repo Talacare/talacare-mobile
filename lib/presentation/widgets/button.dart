@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/core/utils/button_color_util.dart';
@@ -39,38 +40,29 @@ class Button extends StatelessWidget {
     }
 
     Widget buildText() {
-      return Positioned(
-        left: 5,
-        top: 12,
-        child: SizedBox(
-          width: 269,
-          height: 24,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              icon != null
-                  ? Icon(
-                      icon,
-                      color: Colors.white,
-                    )
-                  : Container(),
-              const Gap(5),
-              Flexible(
-                child: Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontFamily: 'Digitalt',
-                    fontWeight: FontWeight.w500,
-                    height: 0,
-                    letterSpacing: 0.96,
-                  ),
-                ),
+      return Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (icon != null) ...[
+              Icon(
+                icon,
+                color: Colors.white,
               ),
+              const Gap(5)
             ],
-          ),
+            Flexible(child: Text(
+              text,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontFamily: 'Digitalt',
+                fontWeight: FontWeight.w500,
+                height: 0,
+                letterSpacing: 0.96,
+              ),
+            ),
+        )],
         ),
       );
     }
@@ -82,56 +74,33 @@ class Button extends StatelessWidget {
         height: 48,
         child: Stack(
           children: [
-            Positioned(
-              left: 0,
-              top: 0,
-              child: SizedBox(
-                width: 282,
-                height: 48,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(
-                        width: 282,
-                        height: 48,
-                        decoration: ShapeDecoration(
-                          color: bodyColor,
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                              width: 2,
-                              strokeAlign: BorderSide.strokeAlignOutside,
-                              color: Colors.white,
-                            ),
-                            borderRadius: BorderRadius.circular(33),
-                          ),
-                          shadows: [
-                            BoxShadow(
-                              color: firstShadowColor,
-                              blurRadius: 0,
-                              offset: const Offset(0, 2),
-                              spreadRadius: 0,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(
-                        width: 282,
-                        height: 43,
-                        decoration: ShapeDecoration(
-                          color: secondShadowColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(33),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+            Container(
+              decoration: ShapeDecoration(
+                color: bodyColor,
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(
+                    width: 2,
+                    strokeAlign: BorderSide.strokeAlignOutside,
+                    color: Colors.white,
+                  ),
+                  borderRadius: BorderRadius.circular(33),
+                ),
+                shadows: [
+                  BoxShadow(
+                    color: firstShadowColor,
+                    blurRadius: 0,
+                    offset: const Offset(0, 2),
+                    spreadRadius: 0,
+                  )
+                ],
+              ),
+            ),
+            Container(
+              height: 43,
+              decoration: ShapeDecoration(
+                color: secondShadowColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(33),
                 ),
               ),
             ),
