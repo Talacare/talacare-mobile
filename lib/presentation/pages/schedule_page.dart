@@ -6,7 +6,6 @@ import 'package:talacare/presentation/widgets/add_schedule_modal.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/injection.dart' as di;
-import 'package:talacare/presentation/widgets/custom_notification.dart';
 import 'package:talacare/presentation/widgets/modal_button.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -42,7 +41,7 @@ class SchedulePageState extends State<SchedulePage> {
         builder: (context) {
           return Container(
             width: double.infinity,
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

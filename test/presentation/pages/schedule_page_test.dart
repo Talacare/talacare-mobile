@@ -113,9 +113,12 @@ void main() {
 
         await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
 
-        await tester.pump();
+        await tester.pumpAndSettle();
 
-        expect(find.byKey(const Key('snapshot_error')), findsOneWidget);
+        expect(find.text('Gagal mengambil data'), findsOneWidget);
+        expect(find.text('Silakan kembali!'), findsOneWidget);
+
+        await tester.tap(find.text('Kembali'));
       });
     });
 
