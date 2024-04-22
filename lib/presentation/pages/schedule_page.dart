@@ -7,6 +7,7 @@ import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/injection.dart' as di;
 import 'package:talacare/presentation/widgets/custom_notification.dart';
+import 'package:talacare/presentation/widgets/modal_button.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
@@ -34,7 +35,69 @@ class SchedulePageState extends State<SchedulePage> {
     );
   }
 
-  Widget _buildListOfSchedules() {
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                    child: Image.asset(
+                  'assets/images/gagal_mengambil_data.png',
+                  width: 75,
+                  height: 75,
+                )),
+                const Gap(15),
+                Center(
+                  child: Text(
+                    'Gagal mengambil data',
+                    style: TextStyle(
+                      color: AppColors.mildBlue,
+                      fontSize: 28,
+                      fontFamily: 'Digitalt',
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.96,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    'Silakan kembali!',
+                    style: TextStyle(
+                      color: AppColors.mildBlue,
+                      fontSize: 28,
+                      fontFamily: 'Digitalt',
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.96,
+                    ),
+                  ),
+                ),
+                const Gap(20), // Spacing between text and button
+                Center(
+                  child: ModalButton(
+                      text: 'Kembali',
+                      color: Colors.white,
+                      borderColor: AppColors.coralPink,
+                      textColor: AppColors.coralPink,
+                      onTap: () => {
+                            Navigator.of(context)
+                              ..pop()
+                              ..pop()
+                          }),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  Widget _buildListOfSchedules(BuildContext context) {
     return FutureBuilder(
       future: di.getIt<ScheduleProvider>().getSchedulesByUserId(),
       builder: (context, snapshot) {
@@ -50,13 +113,11 @@ class SchedulePageState extends State<SchedulePage> {
           );
         } else if (snapshot.hasError) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            CustomNotification.show(
-              context,
-              message: scheduleProvider.message,
-              isSuccess: !scheduleProvider.isError,
-            );
+            _showBottomSheet(context);
           });
-          return Container(key: const Key('snapshot_error'));
+          return Center(
+            child: Container(),
+          );
         } else {
           return Expanded(
             child: ListView.builder(
@@ -116,7 +177,7 @@ class SchedulePageState extends State<SchedulePage> {
                   const Gap(20),
                   _buildTitle('JADWAL KONSUMSI'),
                   _buildTitle('OBAT KELASI BESI'),
-                  _buildListOfSchedules(),
+                  _buildListOfSchedules(context),
                 ],
               ),
             ),
