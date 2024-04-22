@@ -9,27 +9,48 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:talacare/data/datasources/auth_local_datasource.dart';
 import 'package:talacare/data/datasources/auth_remote_datasource.dart';
+import 'package:talacare/data/datasources/schedule_remote_datasource.dart';
 import 'package:talacare/data/repositories/auth_repository_impl.dart';
+import 'package:talacare/data/repositories/schedule_repository_impl.dart';
 import 'package:talacare/domain/repositories/auth_repository.dart';
+import 'package:talacare/domain/repositories/schedule_repository.dart';
 import 'package:talacare/domain/usecases/auth_usecase.dart';
+import 'package:talacare/domain/usecases/schedule_usecase.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart' as provider;
+import 'package:talacare/presentation/providers/schedule_provider.dart'
+    as provider;
 
 final getIt = GetIt.instance;
 
 Future<void> init() async {
   // Provider
   getIt.registerLazySingleton(() => provider.AuthProvider(useCase: getIt()));
+  getIt
+      .registerLazySingleton(() => provider.ScheduleProvider(useCase: getIt()));
 
   // Use cases
   getIt.registerLazySingleton(() => AuthUseCase(getIt()));
+  getIt.registerLazySingleton(() => ScheduleUseCase(getIt()));
 
   // Repository
-  getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<ScheduleRepository>(
+      () => ScheduleRepositoryImpl(getIt()));
 
   // Data source
-  getIt.registerLazySingleton<AuthRemoteDatasource>(() => AuthRemoteDatasourceImpl(googleSignIn: getIt(), firebaseAuthInstance: getIt(), dio: getIt(), localDatasource: getIt()));
+  getIt.registerLazySingleton<AuthRemoteDatasource>(() =>
+      AuthRemoteDatasourceImpl(
+          googleSignIn: getIt(),
+          firebaseAuthInstance: getIt(),
+          dio: getIt(),
+          localDatasource: getIt()));
 
-  getIt.registerLazySingleton<AuthLocalDatasource>(() => AuthLocalDatasourceImpl(storage: getIt()));
+  getIt.registerLazySingleton<AuthLocalDatasource>(
+      () => AuthLocalDatasourceImpl(storage: getIt()));
+
+  getIt.registerLazySingleton<ScheduleRemoteDatasource>(() =>
+      ScheduleRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));
 
   // External
   getIt.registerLazySingleton(() => GoogleSignIn());
