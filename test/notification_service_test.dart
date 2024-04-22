@@ -51,6 +51,7 @@ void main() {
             onTap: () {
               NotificationService()
                   .scheduleNotification(
+                    id: 0,
                     title: 'Sample title', 
                     body: 'It works!',
                     scheduledNotificationDateTime: DateTime(2040, 04, 05, 17, 30));
@@ -73,6 +74,7 @@ void main() {
             onTap: () {
               NotificationService()
                   .scheduleNotification(
+                    id: 0,
                     title: 'Sample title', 
                     body: 'It works!',
                     scheduledNotificationDateTime: DateTime(2020, 04, 05, 17, 30));

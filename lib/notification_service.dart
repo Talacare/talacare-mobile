@@ -48,16 +48,43 @@ class NotificationService {
     );
   }
 
+  Future<void> scheduleNotificationHelper(
+    {
+      required int id,
+      String? payload,
+      required String scheduledTime
+    }
+  ) async {
+
+    DateTime scheduleDate = DateTime(
+                  2020,
+                  04,
+                  05,
+                  int.parse(scheduledTime.substring(0,2)),
+                  int.parse(scheduledTime.substring(3))
+                );
+
+    await scheduleNotification(
+      id: id,
+      title: "Pengingat Obat",
+      body: "Jangan Lupa Minum Obat Kelasi Besi",
+      payload: payload,
+      scheduledNotificationDateTime: scheduleDate
+    );
+  }
+
   Future<void> scheduleNotification(
-    {int id = 0,
+    {required int id,
     String? title,
     String? body,
+    String? payload,
     required DateTime scheduledNotificationDateTime}
   ) async {
     await notificationsPlugin.zonedSchedule(
       id,
       title,
       body,
+      payload: payload,
       tz.TZDateTime.from(
         _nextInstanceOfTime(dateTime: scheduledNotificationDateTime),
         tz.local,

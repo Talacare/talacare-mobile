@@ -7,6 +7,7 @@ import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/injection.dart' as di;
 import 'package:talacare/presentation/widgets/modal_button.dart';
+import 'package:talacare/notification_service.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
@@ -97,6 +98,9 @@ class SchedulePageState extends State<SchedulePage> {
   }
 
   Widget _buildListOfSchedules(BuildContext context) {
+    
+    NotificationService().cancelAllNotification();
+
     return FutureBuilder(
       future: di.getIt<ScheduleProvider>().getSchedulesByUserId(),
       builder: (context, snapshot) {
@@ -125,6 +129,12 @@ class SchedulePageState extends State<SchedulePage> {
               itemBuilder: (context, index) {
                 final String scheduleTime =
                     scheduleProvider.schedules[index]['time']!;
+
+                NotificationService().scheduleNotificationHelper(
+                  id: index,
+                  payload: scheduleProvider.schedules[index]['id']!,
+                  scheduledTime: scheduleTime
+                );
 
                 return Container(
                   margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
