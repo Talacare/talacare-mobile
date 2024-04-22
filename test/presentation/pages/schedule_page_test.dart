@@ -100,6 +100,25 @@ void main() {
       expect(find.byType(SchedulePage), findsOneWidget);
     });
 
+    testWidgets('should show an error message when snapshot has error',
+        (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        getIt.unregister<ScheduleProvider>();
+        getIt.registerLazySingleton<ScheduleProvider>(
+            () => mockScheduleProvider);
+
+        when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
+          return Future.error('An error occurred');
+        });
+
+        await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
+
+        await tester.pump();
+
+        expect(find.byKey(const Key('snapshot_error')), findsOneWidget);
+      });
+    });
+
     testWidgets('should display list of schedules when snapshot has completed',
         (WidgetTester tester) async {
       await tester.runAsync(() async {
