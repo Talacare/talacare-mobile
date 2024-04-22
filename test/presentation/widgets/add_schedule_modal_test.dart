@@ -9,6 +9,8 @@ import 'package:talacare/presentation/providers/schedule_provider.dart';
 import 'package:talacare/presentation/widgets/add_schedule_modal.dart';
 import 'add_schedule_modal_test.mocks.dart';
 
+void mockOnScheduleAdded() {}
+
 @GenerateNiceMocks([
   MockSpec<ScheduleProvider>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<GetIt>(onMissingStub: OnMissingStub.returnDefault),
@@ -29,7 +31,7 @@ void main() {
       return ChangeNotifierProvider<ScheduleProvider>(
         create: (_) => scheduleProvider,
         child: const MaterialApp(
-          home: AddScheduleModal(),
+          home: AddScheduleModal(onScheduleAdded: mockOnScheduleAdded),
         ),
       );
     }

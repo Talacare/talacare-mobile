@@ -14,6 +14,9 @@ class ScheduleProvider extends ChangeNotifier {
   String _message = '';
   String get message => _message;
 
+  List<Map<String, String>> _schedules = [];
+  List<Map<String, String>> get schedules => _schedules;
+
   ScheduleProvider({required this.useCase});
 
   void setLoading(bool isLoading) {
@@ -34,6 +37,11 @@ class ScheduleProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setSchedules(List<Map<String, String>> schedules) {
+    _schedules = schedules;
+    notifyListeners();
+  }
+
   Future<void> createSchedule(ScheduleEntity schedule) async {
     try {
       setLoading(true);
@@ -47,6 +55,22 @@ class ScheduleProvider extends ChangeNotifier {
       setMessage(e.toString());
       setError(true, '$e');
       setLoading(false);
+    }
+  }
+
+  Future<void> getSchedulesByUserId() async {
+    try {
+      setLoading(true);
+      setError(false);
+      final formattedSchedules = await useCase.getSchedulesByUserId();
+      setSchedules(formattedSchedules);
+      setLoading(false);
+    } catch (e) {
+      debugPrint(e.toString());
+      setError(true, '$e');
+      setLoading(false);
+
+      throw Exception('Failed to get schedules: $e');
     }
   }
 }

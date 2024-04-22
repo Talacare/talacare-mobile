@@ -16,10 +16,11 @@ class PuzzleWidget extends StatefulWidget {
   });
 
   @override
-  State<PuzzleWidget> createState() => _PuzzleWidgetState();
+  State<PuzzleWidget> createState() => PuzzleWidgetState();
 }
 
-class _PuzzleWidgetState extends State<PuzzleWidget> {
+@visibleForTesting
+class PuzzleWidgetState extends State<PuzzleWidget> {
   late double pieceHeight, pieceWidth;
 
   List<List<DraggablePuzzlePiece>> pieces = [];
@@ -57,7 +58,7 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
             colId: shuffledPieces[idx].colPos,
             rowPos: i,
             colPos: j,
-            onSwap: _swapPieces,
+            onSwap: swapPieces,
           ),
         );
       }
@@ -81,7 +82,7 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
     return isShuffled;
   }
 
-  void _swapPieces(int rowPos, int colPos, int rowPos2, int colPos2) {
+  void swapPieces(int rowPos, int colPos, int rowPos2, int colPos2) {
     final audioPlayer = AudioPlayer();
     audioPlayer.play(AssetSource('move_piece.mp3'));
     setState(() {
@@ -95,7 +96,7 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
           colId: pieces[rowPos2][colPos2].colId,
           rowPos: rowPos,
           colPos: colPos,
-          onSwap: _swapPieces,
+          onSwap: swapPieces,
         );
         pieces[rowPos2][colPos2] = DraggablePuzzlePiece(
           image: widget.image,
@@ -105,7 +106,7 @@ class _PuzzleWidgetState extends State<PuzzleWidget> {
           colId: temp.colId,
           rowPos: rowPos2,
           colPos: colPos2,
-          onSwap: _swapPieces,
+          onSwap: swapPieces,
         );
       }
     });

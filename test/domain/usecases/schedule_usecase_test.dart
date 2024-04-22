@@ -25,4 +25,26 @@ void main() {
     await useCase.createSchedule(scheduleEntity);
     verify(mockScheduleRepository.createSchedule(scheduleEntity)).called(1);
   });
+
+  test('should return formatted schedules from getSchedulesByUserId', () async {
+    final mockSchedules = [
+      const ScheduleEntity(id: '1', hour: 9, minute: 5, userId: 'user1'),
+      const ScheduleEntity(id: '2', hour: 14, minute: 20, userId: 'user2'),
+      const ScheduleEntity(id: '3', hour: 23, minute: 59, userId: 'user3'),
+    ];
+
+    when(mockScheduleRepository.getSchedulesByUserId())
+        .thenAnswer((_) async => mockSchedules);
+
+    final formattedSchedules = await useCase.getSchedulesByUserId();
+
+    final expectedFormattedSchedules = [
+      {'id': '1', 'time': '09:05'},
+      {'id': '2', 'time': '14:20'},
+      {'id': '3', 'time': '23:59'},
+    ];
+    expect(formattedSchedules, expectedFormattedSchedules);
+
+    verify(mockScheduleRepository.getSchedulesByUserId()).called(1);
+  });
 }

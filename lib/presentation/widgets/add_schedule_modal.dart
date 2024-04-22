@@ -9,7 +9,9 @@ import 'package:talacare/presentation/widgets/modal_button.dart';
 import 'package:talacare/injection.dart' as di;
 
 class AddScheduleModal extends StatefulWidget {
-  const AddScheduleModal({super.key});
+  final VoidCallback onScheduleAdded;
+
+  const AddScheduleModal({super.key, required this.onScheduleAdded});
 
   @override
   State<AddScheduleModal> createState() => _AddScheduleModalState();
@@ -117,6 +119,7 @@ class _AddScheduleModalState extends State<AddScheduleModal> {
                               isSuccess: !scheduleProvider.isError,
                             );
                           });
+                          widget.onScheduleAdded();
                         });
                       },
                     );
