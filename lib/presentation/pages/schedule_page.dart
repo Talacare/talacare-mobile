@@ -6,6 +6,7 @@ import 'package:talacare/presentation/widgets/add_schedule_modal.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/injection.dart' as di;
+import 'package:talacare/presentation/widgets/custom_notification.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
@@ -37,20 +38,33 @@ class SchedulePageState extends State<SchedulePage> {
     return FutureBuilder(
       future: di.getIt<ScheduleProvider>().getSchedulesByUserId(),
       builder: (context, snapshot) {
+        var scheduleProvider = di.getIt<ScheduleProvider>();
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(
-              color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
             ),
           );
+        } else if (snapshot.hasError) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            CustomNotification.show(
+              context,
+              message: scheduleProvider.message,
+              isSuccess: !scheduleProvider.isError,
+            );
+          });
+          return Container(key: const Key('snapshot_error'));
         } else {
-          var scheduleProvider = di.getIt<ScheduleProvider>();
           return Expanded(
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: scheduleProvider.schedules.length,
               itemBuilder: (context, index) {
-                final String scheduleTime = scheduleProvider.schedules[index]['time']!;
+                final String scheduleTime =
+                    scheduleProvider.schedules[index]['time']!;
 
                 return Container(
                   margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
@@ -120,7 +134,7 @@ class SchedulePageState extends State<SchedulePage> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) =>
-                          AddScheduleModal(onScheduleAdded: refreshSchedules),
+                            AddScheduleModal(onScheduleAdded: refreshSchedules),
                       );
                     },
                   ),

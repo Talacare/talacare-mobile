@@ -60,10 +60,15 @@ class ScheduleProvider extends ChangeNotifier {
 
   Future<void> getSchedulesByUserId() async {
     try {
+      setLoading(true);
+      setError(false);
       final formattedSchedules = await useCase.getSchedulesByUserId();
       setSchedules(formattedSchedules);
+      setLoading(false);
     } catch (e) {
       debugPrint(e.toString());
+      setError(true, '$e');
+      setLoading(false);
 
       throw Exception('Failed to get schedules: $e');
     }
