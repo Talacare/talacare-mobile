@@ -7,6 +7,7 @@ class ModalButton extends StatelessWidget {
   final Color borderColor;
   final Color textColor;
   final VoidCallback onTap;
+  final bool isLoading;
 
   const ModalButton({
     super.key,
@@ -15,12 +16,13 @@ class ModalButton extends StatelessWidget {
     required this.borderColor,
     required this.textColor,
     required this.onTap,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: isLoading ? null : onTap,
       child: SizedBox(
         height: 45,
         child: Stack(
@@ -52,13 +54,17 @@ class ModalButton extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 22,
-                  ),
-                ),
+                child: isLoading
+                    ? const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      )
+                    : Text(
+                        text,
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 22,
+                        ),
+                      ),
               ),
             ),
           ],
