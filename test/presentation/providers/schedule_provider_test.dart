@@ -44,4 +44,33 @@ void main() {
     expect(scheduleProvider.message, contains(errorMessage));
     verify(mockScheduleUseCase.createSchedule(scheduleEntity)).called(1);
   });
+
+  test('should fetch schedules by user ID successfully', () async {
+    const schedules = [
+      {'id': '1', 'time': '09:05'},
+      {'id': '2', 'time': '14:20'},
+      {'id': '3', 'time': '23:59'},
+    ];
+
+    when(mockScheduleUseCase.getSchedulesByUserId())
+        .thenAnswer((_) async => Future.value(schedules));
+
+    await scheduleProvider.getSchedulesByUserId();
+
+    expect(scheduleProvider.schedules, schedules);
+    expect(scheduleProvider.isError, false);
+    verify(mockScheduleUseCase.getSchedulesByUserId()).called(1);
+  });
+
+  test('should handle errors when fetching schedules by user ID', () async {
+    const errorMessage = 'Failed to get schedules';
+    when(mockScheduleUseCase.getSchedulesByUserId())
+        .thenThrow(Exception(errorMessage));
+
+    expect(() async => await scheduleProvider.getSchedulesByUserId(),
+        throwsException);
+
+    expect(scheduleProvider.schedules, isEmpty);
+    verify(mockScheduleUseCase.getSchedulesByUserId()).called(1);
+  });
 }

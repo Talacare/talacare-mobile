@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/domain/usecases/schedule_usecase.dart';
 import 'package:talacare/presentation/pages/schedule_page.dart';
@@ -25,7 +26,7 @@ void main() {
 
   setUp(() async {
     mockScheduleProvider = MockScheduleProvider();
-    getIt.registerLazySingleton(
+    getIt.registerLazySingleton<ScheduleProvider>(
         () => ScheduleProvider(useCase: MockScheduleUseCase()));
   });
 
@@ -37,7 +38,7 @@ void main() {
     return MaterialApp(
       home: ChangeNotifierProvider<ScheduleProvider>(
         create: (_) => scheduleProvider,
-        child: SchedulePage(),
+        child: const SchedulePage(),
       ),
     );
   }
@@ -85,6 +86,68 @@ void main() {
         await tester.tap(deleteButtons.at(i));
         await tester.pump();
       }
+    });
+
+    testWidgets('should refresh schedules when refreshSchedules is called',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
+
+      SchedulePageState state = tester.state(find.byType(SchedulePage));
+      state.refreshSchedules();
+
+      await tester.pump();
+
+      expect(find.byType(SchedulePage), findsOneWidget);
+    });
+
+    testWidgets('should show an error message when snapshot has error',
+        (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        getIt.unregister<ScheduleProvider>();
+        getIt.registerLazySingleton<ScheduleProvider>(
+            () => mockScheduleProvider);
+
+        when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
+          return Future.error('An error occurred');
+        });
+
+        await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
+
+        await tester.pumpAndSettle();
+
+        expect(find.text('Gagal mengambil data'), findsOneWidget);
+        expect(find.text('Silakan kembali!'), findsOneWidget);
+
+        await tester.tap(find.text('Kembali'));
+      });
+    });
+
+    testWidgets('should display list of schedules when snapshot has completed',
+        (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        getIt.unregister<ScheduleProvider>();
+        getIt.registerLazySingleton<ScheduleProvider>(
+            () => mockScheduleProvider);
+        var testSchedules = [
+          {'time': '08:00'},
+          {'time': '12:00'},
+          {'time': '18:00'},
+        ];
+
+        when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
+          return Future.value();
+        });
+
+        when(mockScheduleProvider.schedules).thenReturn(testSchedules);
+
+        await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
+
+        await tester.pump();
+
+        for (var schedule in testSchedules) {
+          expect(find.text(schedule['time']!), findsOneWidget);
+        }
+      });
     });
   });
 }
