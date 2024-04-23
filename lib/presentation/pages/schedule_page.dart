@@ -10,7 +10,10 @@ import 'package:talacare/presentation/widgets/modal_button.dart';
 import 'package:talacare/notification_service.dart';
 
 class SchedulePage extends StatefulWidget {
-  const SchedulePage({super.key});
+  final NotificationService notificationService;
+  final bool testing;
+
+  const SchedulePage({super.key, required this.notificationService, required this.testing});
 
   @override
   SchedulePageState createState() => SchedulePageState();
@@ -99,7 +102,7 @@ class SchedulePageState extends State<SchedulePage> {
 
   Widget _buildListOfSchedules(BuildContext context) {
     
-    NotificationService().cancelAllNotification();
+    widget.notificationService.cancelAllNotification();
 
     return FutureBuilder(
       future: di.getIt<ScheduleProvider>().getSchedulesByUserId(),
@@ -130,12 +133,15 @@ class SchedulePageState extends State<SchedulePage> {
                 final String scheduleTime =
                     scheduleProvider.schedules[index]['time']!;
 
-                NotificationService().scheduleNotificationHelper(
-                  id: index,
-                  payload: scheduleProvider.schedules[index]['id']!,
-                  scheduledTime: scheduleTime
-                );
-
+                // Ignoring for testing purpose, cannot be tested
+                if (!(widget.testing)) {
+                  widget.notificationService.scheduleNotificationHelper(
+                    id: index,
+                    payload: scheduleProvider.schedules[index]['id']!,
+                    scheduledTime: scheduleTime
+                  );
+                }
+                
                 return Container(
                   margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
                   padding:

@@ -12,6 +12,7 @@ import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/presentation/widgets/profile_modal.dart';
+import 'package:talacare/notification_service.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -138,7 +139,10 @@ class HomePage extends StatelessWidget {
                   onTap: () async {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SchedulePage()),
+                      MaterialPageRoute(builder: (context) => SchedulePage(
+                        notificationService: NotificationService(),
+                        testing: false
+                      )),
                     );
                   },
                 ),

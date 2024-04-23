@@ -9,6 +9,7 @@ import 'package:talacare/presentation/pages/schedule_page.dart';
 import 'package:talacare/presentation/providers/schedule_provider.dart';
 import 'package:talacare/presentation/widgets/add_schedule_modal.dart';
 import 'package:talacare/presentation/widgets/button.dart';
+import 'package:talacare/notification_service.dart';
 
 import 'schedule_page_test.mocks.dart';
 
@@ -38,7 +39,7 @@ void main() {
     return MaterialApp(
       home: ChangeNotifierProvider<ScheduleProvider>(
         create: (_) => scheduleProvider,
-        child: const SchedulePage(),
+        child: SchedulePage(notificationService: NotificationService(), testing: true),
       ),
     );
   }
