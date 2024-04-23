@@ -55,6 +55,7 @@ class PuzzlePage extends StatelessWidget {
                       NextInfo(
                         name: name,
                         stageState: stageState,
+                        startTime: DateTime.now(),
                       ),
                     ],
                   ),
