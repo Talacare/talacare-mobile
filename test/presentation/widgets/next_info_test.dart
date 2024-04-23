@@ -329,6 +329,7 @@ void main() {
                 body: NextInfo(
                   name: "PERAWAT",
                   stageState: StageState([2, 2, 2, 0], 4, 50, image),
+                  startTime: DateTime.now(),
                 ),
               ),
             )),
