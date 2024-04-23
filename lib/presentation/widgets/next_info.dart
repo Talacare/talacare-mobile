@@ -5,11 +5,12 @@ import 'package:talacare/core/utils/text_to_speech.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
-import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/widgets/game_over_modal.dart';
+import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
 class NextInfo extends StatefulWidget {
   final StageState stageState;
@@ -34,6 +35,7 @@ class _NextInfoState extends State<NextInfo> {
   Widget build(BuildContext context) {
     final finishState = Provider.of<TimerState>(context);
     final clearState = Provider.of<CompleteState>(context);
+    final timeLeftState = Provider.of<TimeLeftState>(context);
 
     List<int> currentState = widget.stageState.starList;
 
@@ -47,7 +49,7 @@ class _NextInfoState extends State<NextInfo> {
 
     if (clearState.value) {
       currentState[widget.stageState.stage - 1] = 2;
-      widget.stageState.score += 25;
+      widget.stageState.score += (50 + timeLeftState.value);
       if (widget.stageState.stage < 4) {
         currentState[widget.stageState.stage] = 1;
       }

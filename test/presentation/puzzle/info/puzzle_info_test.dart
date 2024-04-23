@@ -7,6 +7,7 @@ import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/info/puzzle_info.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
 void main() {
   late Widget puzzleInfo;
@@ -30,6 +31,9 @@ void main() {
           ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
+          ),
+          ChangeNotifierProvider<TimeLeftState>(
+            create: (context) => TimeLeftState(initialValue: 60),
           ),
         ],
         child: MaterialApp(
@@ -131,6 +135,9 @@ void main() {
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
           ),
+          ChangeNotifierProvider<TimeLeftState>(
+            create: (context) => TimeLeftState(initialValue: 60),
+          ),
         ],
         child: MaterialApp(
           home: PuzzleInfo(stageState: StageState([0, 0, 0, 0], 4, 0, image)),
@@ -156,6 +163,9 @@ void main() {
           ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: true),
+          ),
+          ChangeNotifierProvider<TimeLeftState>(
+            create: (context) => TimeLeftState(initialValue: 60),
           ),
         ],
         child: MaterialApp(

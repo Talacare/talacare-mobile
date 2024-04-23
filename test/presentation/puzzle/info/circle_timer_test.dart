@@ -6,6 +6,7 @@ import 'package:talacare/core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
 class MockTimerState extends Mock implements TimerState {}
 
@@ -22,6 +23,9 @@ void main() {
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
           ),
+          ChangeNotifierProvider<TimeLeftState>(
+            create: (context) => TimeLeftState(initialValue: 60),
+          ),
         ],
         child: const MaterialApp(
           home: CircleTimer(),
@@ -34,6 +38,9 @@ void main() {
           ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: true),
+          ),
+          ChangeNotifierProvider<TimeLeftState>(
+            create: (context) => TimeLeftState(initialValue: 60),
           ),
         ],
         child: const MaterialApp(
@@ -102,6 +109,9 @@ void main() {
           ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
+          ),
+          ChangeNotifierProvider<TimeLeftState>(
+            create: (context) => TimeLeftState(initialValue: 60),
           ),
         ],
         child: const MaterialApp(
