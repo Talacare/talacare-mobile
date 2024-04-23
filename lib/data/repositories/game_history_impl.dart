@@ -9,5 +9,9 @@ class GameHistoryRepositoryImpl extends GameHistoryRepository {
   GameHistoryRepositoryImpl(this.gameHistoryRemoteDatasource);
 
   @override
-  Future<void> createGameHistory(GameHistoryEntity gameHistory) async {}
+  Future<void> createGameHistory(GameHistoryEntity gameHistory) async {
+    if (gameHistory is GameHistoryModel) {
+      await gameHistoryRemoteDatasource.createGameHistory(gameHistory);
+    }
+  }
 }

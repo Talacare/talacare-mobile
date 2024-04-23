@@ -18,5 +18,21 @@ class GameHistoryRemoteDatasourceImpl extends GameHistoryRemoteDatasource {
   });
 
   @override
-  Future<void> createGameHistory(GameHistoryModel gameHistoryModel) async {}
+  Future<void> createGameHistory(GameHistoryModel gameHistoryModel) async {
+    try {
+      final token = await localDatasource.readData('access_token');
+      await dio.post(
+        baseGameHistoryAPI,
+        data: gameHistoryModel.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+    } on DioException catch (e) {
+      var errorMessage = e.response?.data['responseMessage'];
+      throw errorMessage;
+    }
+  }
 }
