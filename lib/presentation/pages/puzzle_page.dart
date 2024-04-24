@@ -1,11 +1,12 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/data/models/image_pair.dart';
 import 'package:talacare/presentation/puzzle/game/puzzle.dart';
 import 'package:talacare/presentation/puzzle/info/puzzle_info.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
-import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';

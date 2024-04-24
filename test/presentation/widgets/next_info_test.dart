@@ -1,19 +1,20 @@
 import 'dart:async';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
+import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
+import 'package:network_image_mock/network_image_mock.dart';
+import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 import 'package:talacare/data/models/image_pair.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
-import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
-import 'package:mockito/mockito.dart';
-import 'package:network_image_mock/network_image_mock.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
 import '../pages/login_page_test.mocks.dart';
@@ -26,7 +27,12 @@ void main() {
   late List<ImagePair> image;
   final getIt = GetIt.instance;
 
+  TestWidgetsFlutterBinding.ensureInitialized();
+  setupFirebaseCoreMocks();    
+
   setUp(() async {
+    await Firebase.initializeApp();
+
     image = [
       ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG"),
       ImagePair(
