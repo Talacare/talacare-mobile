@@ -2,6 +2,9 @@ import 'package:flame/game.dart' hide Route;
 import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/health_bar.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
+import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/player.dart';
 
@@ -16,6 +19,7 @@ class JumpNJumpPage extends StatefulWidget {
 
 class _JumpNJumpPageState extends State<JumpNJumpPage> {
   late final JumpNJump game;
+  final audioManager = AudioManager();
 
   @override
   void initState() {
@@ -34,6 +38,14 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    audioManager.stopBackgroundMusic();
+    game.dash.health.removeListener(game.onHealthChanged);
+    game.gameManager.state = GameState.gameOver;
+    super.dispose();
   }
 
   Positioned _createControlButtons() {

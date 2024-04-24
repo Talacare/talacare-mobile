@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/presentation/providers/schedule_provider.dart';
+import 'package:talacare/presentation/widgets/add_schedule_modal.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/injection.dart' as di;
+import 'package:talacare/presentation/widgets/modal_button.dart';
 
-class SchedulePage extends StatelessWidget {
-  SchedulePage({super.key});
+class SchedulePage extends StatefulWidget {
+  const SchedulePage({super.key});
 
-  final List<String> scheduleTimes = [
-    '08.00',
-    '09.00',
-    '10.00',
-    '11.59',
-    '20.20',
-    '23.00',
-  ];
+  @override
+  SchedulePageState createState() => SchedulePageState();
+}
+
+class SchedulePageState extends State<SchedulePage> {
+  void refreshSchedules() {
+    setState(() {});
+  }
 
   Widget _buildTitle(String text) {
     return Text(
@@ -30,44 +34,133 @@ class SchedulePage extends StatelessWidget {
     );
   }
 
-  Widget _buildListOfSchedules() {
-    return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: scheduleTimes.length,
-        itemBuilder: (context, index) {
-          final String scheduleTime = scheduleTimes[index];
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
           return Container(
-            margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  scheduleTime,
-                  style: TextStyle(
-                    color: AppColors.darkPurple,
-                    fontSize: 35,
-                    fontFamily: 'Digitalt',
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.96,
+                Center(
+                    child: Image.asset(
+                  'assets/images/gagal_mengambil_data.png',
+                  width: 75,
+                  height: 75,
+                )),
+                const Gap(15),
+                Center(
+                  child: Text(
+                    'Gagal mengambil data',
+                    style: TextStyle(
+                      color: AppColors.mildBlue,
+                      fontSize: 28,
+                      fontFamily: 'Digitalt',
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.96,
+                    ),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.delete_outline),
-                  iconSize: 35,
-                  color: AppColors.darkPurple,
-                  onPressed: () {},
+                Center(
+                  child: Text(
+                    'Silakan kembali!',
+                    style: TextStyle(
+                      color: AppColors.mildBlue,
+                      fontSize: 28,
+                      fontFamily: 'Digitalt',
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.96,
+                    ),
+                  ),
+                ),
+                const Gap(20), // Spacing between text and button
+                Center(
+                  child: ModalButton(
+                      text: 'Kembali',
+                      color: Colors.white,
+                      borderColor: AppColors.coralPink,
+                      textColor: AppColors.coralPink,
+                      onTap: () => {
+                            Navigator.of(context)
+                              ..pop()
+                              ..pop()
+                          }),
                 ),
               ],
             ),
           );
-        },
-      ),
+        });
+  }
+
+  Widget _buildListOfSchedules(BuildContext context) {
+    return FutureBuilder(
+      future: di.getIt<ScheduleProvider>().getSchedulesByUserId(),
+      builder: (context, snapshot) {
+        var scheduleProvider = di.getIt<ScheduleProvider>();
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _showBottomSheet(context);
+          });
+          return Center(
+            child: Container(),
+          );
+        } else {
+          return Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: scheduleProvider.schedules.length,
+              itemBuilder: (context, index) {
+                final String scheduleTime =
+                    scheduleProvider.schedules[index]['time']!;
+
+                return Container(
+                  margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        scheduleTime,
+                        style: TextStyle(
+                          color: AppColors.darkPurple,
+                          fontSize: 35,
+                          fontFamily: 'Digitalt',
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 0.96,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete_outline),
+                        iconSize: 35,
+                        color: AppColors.darkPurple,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          );
+        }
+      },
     );
   }
 
@@ -83,7 +176,7 @@ class SchedulePage extends StatelessWidget {
                   const Gap(20),
                   _buildTitle('JADWAL KONSUMSI'),
                   _buildTitle('OBAT KELASI BESI'),
-                  _buildListOfSchedules(),
+                  _buildListOfSchedules(context),
                 ],
               ),
             ),
@@ -97,7 +190,13 @@ class SchedulePage extends StatelessWidget {
                     text: 'Tambah Jadwal',
                     colorScheme: ButtonColorScheme.purple,
                     icon: Icons.add,
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            AddScheduleModal(onScheduleAdded: refreshSchedules),
+                      );
+                    },
                   ),
                   const Gap(20),
                   Button(

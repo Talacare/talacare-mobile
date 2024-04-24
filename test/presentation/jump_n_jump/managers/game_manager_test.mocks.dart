@@ -2,7 +2,7 @@
 // in talacare/test/presentation/jump_n_jump/managers/game_manager_test.dart.
 // Do not manually edit this file.
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
+// ignore_for_file: no_leading_underscores_for_library_prefixes, invalid_use_of_internal_member
 import 'dart:async' as _i17;
 import 'dart:ui' as _i6;
 
@@ -636,7 +636,6 @@ class MockJumpNJump extends _i1.Mock implements _i14.JumpNJump {
       );
 
   @override
-  // ignore: invalid_use_of_internal_member
   _i9.OverlayManager get overlays => (super.noSuchMethod(
         Invocation.getter(#overlays),
         returnValue: _FakeOverlayManager_14(
@@ -744,6 +743,15 @@ class MockJumpNJump extends _i1.Mock implements _i14.JumpNJump {
         returnValue: _i17.Future<void>.value(),
         returnValueForMissingStub: _i17.Future<void>.value(),
       ) as _i17.Future<void>);
+
+  @override
+  void onHealthChanged() => super.noSuchMethod(
+        Invocation.method(
+          #onHealthChanged,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void update(double? dt) => super.noSuchMethod(

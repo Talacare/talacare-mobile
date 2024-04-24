@@ -3,6 +3,7 @@ import 'package:talacare/core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
 class CircleTimer extends StatefulWidget {
   const CircleTimer({super.key});
@@ -28,6 +29,9 @@ class _CircleTimerState extends State<CircleTimer>
         if (_controller.value == 0.0) {
           final timerState = Provider.of<TimerState>(context, listen: false);
           timerState.value = true;
+
+          final timeLeftState = Provider.of<TimeLeftState>(context, listen: false);
+          timeLeftState.value = 0;
         }
       });
   }
@@ -46,6 +50,9 @@ class _CircleTimerState extends State<CircleTimer>
 
             if (finish.value) {
               _controller.stop();
+
+              final timeLeftState = Provider.of<TimeLeftState>(context, listen: false);
+              timeLeftState.value = remainingTime;
             }
 
             return Stack(
