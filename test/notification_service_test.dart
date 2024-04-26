@@ -87,4 +87,42 @@ void main() {
     expect(find.byKey(const Key('test_button')), findsOneWidget);
     await tester.tap(find.byKey(const Key('test_button')));
   });
+
+  testWidgets('Verified that notification is cancel by id', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: InkWell(
+            key: const Key("test_button"),
+            onTap: () {
+              NotificationService()
+                  .cancelNotification(0);
+            },
+          ),
+        ),
+      )
+    );
+
+    expect(find.byKey(const Key('test_button')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('test_button')));
+  });
+
+  testWidgets('Verified that notification is cancel All', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: InkWell(
+            key: const Key("test_button"),
+            onTap: () {
+              NotificationService()
+                  .cancelAllNotification();
+            },
+          ),
+        ),
+      )
+    );
+
+    expect(find.byKey(const Key('test_button')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('test_button')));
+  });
 }
