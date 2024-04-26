@@ -11,7 +11,6 @@ import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/presentation/widgets/game_over_modal.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
-import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
 class NextInfo extends StatefulWidget {
