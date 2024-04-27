@@ -21,6 +21,7 @@ import 'schedule_page_test.mocks.dart';
 void main() {
   final getIt = GetIt.instance;
   late MockScheduleProvider mockScheduleProvider;
+  late NotificationService notificationService;
 
   TestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,8 @@ void main() {
     mockScheduleProvider = MockScheduleProvider();
     getIt.registerLazySingleton<ScheduleProvider>(
         () => ScheduleProvider(useCase: MockScheduleUseCase()));
+    notificationService = NotificationService();
+    notificationService.initNotification();
   });
 
   tearDown(() {
@@ -39,7 +42,7 @@ void main() {
     return MaterialApp(
       home: ChangeNotifierProvider<ScheduleProvider>(
         create: (_) => scheduleProvider,
-        child: SchedulePage(notificationService: NotificationService(), testing: true),
+        child: SchedulePage(notificationService: notificationService),
       ),
     );
   }

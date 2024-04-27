@@ -141,7 +141,6 @@ class HomePage extends StatelessWidget {
                       context,
                       MaterialPageRoute(builder: (context) => SchedulePage(
                         notificationService: NotificationService(),
-                        testing: false
                       )),
                     );
                   },
