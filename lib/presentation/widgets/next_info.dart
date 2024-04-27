@@ -76,14 +76,15 @@ class _NextInfoState extends State<NextInfo> {
       child: Container(
         padding: const EdgeInsets.only(top: 20, bottom: 20),
         child: Center(
-          child: Column(children: [
-            SizedBox(
-              width: 300,
-              height: 50,
-              child: Text(
-                widget.name,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
+          child: Column(
+            children: [
+              SizedBox(
+                width: 300,
+                height: 50,
+                child: Text(
+                  widget.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 40,
                     fontFamily: 'Digitalt',
@@ -106,30 +107,33 @@ class _NextInfoState extends State<NextInfo> {
                           // topLeft
                           offset: Offset(-1.5, 1.5),
                           color: Color(0xFFB20D78)),
-                    ]),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 60),
-            Button(
-              key: const Key('nextButton'),
-              text: 'Lanjut',
-              colorScheme: ButtonColorScheme.purple,
-              onTap: () {
-                audioPlayer.stop();
-                if (widget.stageState.stage < 4) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
+              const SizedBox(height: 60),
+              Button(
+                key: const Key('nextButton'),
+                text: 'Lanjut',
+                colorScheme: ButtonColorScheme.purple,
+                onTap: () {
+                  audioPlayer.stop();
+                  if (widget.stageState.stage < 4) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
                         builder: (context) => PuzzlePage(
-                              stageState: StageState(
-                                  currentState,
-                                  widget.stageState.stage + 1,
-                                  widget.stageState.score,
-                                  widget.stageState.images),
-                            )),
-                  );
-                } else {
-                  showDialog(
+                          stageState: StageState(
+                            currentState,
+                            widget.stageState.stage + 1,
+                            widget.stageState.score,
+                            widget.stageState.images,
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return GameOverModal(
@@ -137,28 +141,28 @@ class _NextInfoState extends State<NextInfo> {
                           currentScore: widget.stageState.score,
                           highestScore: 999,
                           onMainLagiPressed: () {
-                            Navigator.push(
-                              context,
+                            Navigator.of(context)
+                            ..pop()
+                            ..pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => PuzzlePage(
-                                        stageState:
-                                            StageState([1, 0, 0, 0], 1, 0, []),
-                                      )),
+                                builder: (context) => PuzzlePage(
+                                  stageState:
+                                  StageState([1, 0, 0, 0], 1, 0, []),
+                                ),
+                              ),
                             );
                           },
-                          onMenuPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
-                            );
-                          },
+                          onMenuPressed: () => Navigator.of(context)
+                            ..pop()
+                            ..pop(),
                         );
-                      });
-                }
-              },
-            )
-          ]),
+                      },
+                    );
+                  }
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
