@@ -39,7 +39,8 @@ void main() {
     return MaterialApp(
       home: ChangeNotifierProvider<ScheduleProvider>(
         create: (_) => scheduleProvider,
-        child: SchedulePage(notificationService: NotificationService(), testing: true),
+        child: SchedulePage(
+            notificationService: NotificationService(), testing: true),
       ),
     );
   }
@@ -47,6 +48,7 @@ void main() {
   group('SchedulePage widget test', () {
     testWidgets('Test header text', (WidgetTester tester) async {
       await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
+      await tester.pump(const Duration(seconds: 3));
 
       final headerText1 = find.text('JADWAL KONSUMSI');
       final headerText2 = find.text('OBAT KELASI BESI');
@@ -57,6 +59,7 @@ void main() {
 
     testWidgets('Test back button text', (WidgetTester tester) async {
       await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
+      await tester.pump(const Duration(seconds: 3));
 
       final backButton = find.widgetWithText(Button, 'Menu');
       expect(backButton, findsOneWidget);
@@ -79,6 +82,7 @@ void main() {
 
     testWidgets('Test delete button onPressed', (WidgetTester tester) async {
       await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
+      await tester.pump(const Duration(seconds: 3));
 
       final deleteButtons = find.byType(IconButton);
 
@@ -92,11 +96,13 @@ void main() {
     testWidgets('should refresh schedules when refreshSchedules is called',
         (WidgetTester tester) async {
       await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
+      await tester.pump(const Duration(seconds: 3));
 
       SchedulePageState state = tester.state(find.byType(SchedulePage));
       state.refreshSchedules();
 
       await tester.pump();
+      await tester.pump(const Duration(seconds: 3));
 
       expect(find.byType(SchedulePage), findsOneWidget);
     });
@@ -130,9 +136,9 @@ void main() {
         getIt.registerLazySingleton<ScheduleProvider>(
             () => mockScheduleProvider);
         var testSchedules = [
-          {'time': '08:00'},
-          {'time': '12:00'},
-          {'time': '18:00'},
+          {'id': '1', 'time': '08:00'},
+          {'id': '2', 'time': '12:00'},
+          {'id': '3', 'time': '18:00'},
         ];
 
         when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
