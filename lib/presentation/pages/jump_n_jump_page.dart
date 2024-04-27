@@ -27,14 +27,7 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
     super.initState();
     game = JumpNJump(
       character: widget.character!,
-      onBackToMenuCallback: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
-      },
+      onBackToMenuCallback: () => Navigator.pop(context),
       audioManager: audioManager,
     );
   }
