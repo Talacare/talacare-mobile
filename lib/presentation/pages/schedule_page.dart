@@ -11,15 +11,16 @@ import 'package:talacare/notification_service.dart';
 
 class SchedulePage extends StatefulWidget {
   final NotificationService notificationService;
-  final bool testing;
 
-  const SchedulePage({super.key, required this.notificationService, required this.testing});
+  const SchedulePage({super.key, required this.notificationService});
 
   @override
   SchedulePageState createState() => SchedulePageState();
 }
 
 class SchedulePageState extends State<SchedulePage> {
+  late List<Map<String, String>> schedules;
+  
   void refreshSchedules() {
     setState(() {});
   }
@@ -101,9 +102,6 @@ class SchedulePageState extends State<SchedulePage> {
   }
 
   Widget _buildListOfSchedules(BuildContext context) {
-    
-    widget.notificationService.cancelAllNotification();
-
     return FutureBuilder(
       future: di.getIt<ScheduleProvider>().getSchedulesByUserId(),
       builder: (context, snapshot) {
@@ -125,22 +123,17 @@ class SchedulePageState extends State<SchedulePage> {
             child: Container(),
           );
         } else {
+
+          schedules = scheduleProvider.schedules;
+          _createNotification(schedules);
+
           return Expanded(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: scheduleProvider.schedules.length,
+              itemCount: schedules.length,
               itemBuilder: (context, index) {
                 final String scheduleTime =
-                    scheduleProvider.schedules[index]['time']!;
-
-                // Ignoring for testing purpose, cannot be tested
-                if (!(widget.testing)) {
-                  widget.notificationService.scheduleNotificationHelper(
-                    id: index,
-                    payload: scheduleProvider.schedules[index]['id']!,
-                    scheduledTime: scheduleTime
-                  );
-                }
+                    schedules[index]['time']!;
                 
                 return Container(
                   margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
@@ -178,6 +171,19 @@ class SchedulePageState extends State<SchedulePage> {
         }
       },
     );
+  }
+
+  void _createNotification(List<Map<String, String>> schedules) {
+    widget.notificationService.cancelAllNotification();
+
+    for (var i = 0; i < schedules.length; i++) {
+      Map<String, String> schedule = schedules[i];
+      widget.notificationService.scheduleNotificationHelper(
+        id: i,
+        payload: schedule["id"],
+        scheduledTime: schedule["time"]!
+      );
+    }
   }
 
   @override

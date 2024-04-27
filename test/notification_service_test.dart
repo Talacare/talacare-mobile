@@ -88,6 +88,29 @@ void main() {
     await tester.tap(find.byKey(const Key('test_button')));
   });
 
+  testWidgets('Verified that notification is scheduled helper', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: InkWell(
+            key: const Key("test_button"),
+            onTap: () {
+              NotificationService()
+                  .scheduleNotificationHelper(
+                    id: 0,
+                    payload: 'It works!',
+                    scheduledTime: "20:20"
+                  );
+            },
+          ),
+        ),
+      )
+    );
+
+    expect(find.byKey(const Key('test_button')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('test_button')));
+  });
+
   testWidgets('Verified that notification is cancel by id', (tester) async {
     await tester.pumpWidget(
       MaterialApp(
