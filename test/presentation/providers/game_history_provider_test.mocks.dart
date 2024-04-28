@@ -3,13 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:talacare/domain/entities/game_history_entity.dart' as _i3;
+import 'package:talacare/domain/entities/game_history_entity.dart' as _i5;
 import 'package:talacare/domain/repositories/game_history_repository.dart'
     as _i2;
-import 'package:talacare/domain/usecases/game_history_usecase.dart' as _i4;
+import 'package:talacare/domain/usecases/game_history_usecase.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -35,22 +35,11 @@ class _FakeGameHistoryRepository_0 extends _i1.SmartFake
         );
 }
 
-class _FakeGameHistoryEntity_1 extends _i1.SmartFake
-    implements _i3.GameHistoryEntity {
-  _FakeGameHistoryEntity_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [GameHistoryUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGameHistoryUseCase extends _i1.Mock
-    implements _i4.GameHistoryUseCase {
+    implements _i3.GameHistoryUseCase {
   @override
   _i2.GameHistoryRepository get gameHistoryRepository => (super.noSuchMethod(
         Invocation.getter(#gameHistoryRepository),
@@ -65,38 +54,24 @@ class MockGameHistoryUseCase extends _i1.Mock
       ) as _i2.GameHistoryRepository);
 
   @override
-  _i5.Future<void> createGameHistory(_i3.GameHistoryEntity? gameHistory) =>
+  _i4.Future<void> createGameHistory(_i5.GameHistoryEntity? gameHistory) =>
       (super.noSuchMethod(
         Invocation.method(
           #createGameHistory,
           [gameHistory],
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
-  _i5.Future<_i3.GameHistoryEntity> getHighestScoreHistory(String? gameType) =>
+  _i4.Future<_i5.GameHistoryEntity?> getHighestScoreHistory(String? gameType) =>
       (super.noSuchMethod(
         Invocation.method(
           #getHighestScoreHistory,
           [gameType],
         ),
-        returnValue:
-            _i5.Future<_i3.GameHistoryEntity>.value(_FakeGameHistoryEntity_1(
-          this,
-          Invocation.method(
-            #getHighestScoreHistory,
-            [gameType],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i5.Future<_i3.GameHistoryEntity>.value(_FakeGameHistoryEntity_1(
-          this,
-          Invocation.method(
-            #getHighestScoreHistory,
-            [gameType],
-          ),
-        )),
-      ) as _i5.Future<_i3.GameHistoryEntity>);
+        returnValue: _i4.Future<_i5.GameHistoryEntity?>.value(),
+        returnValueForMissingStub: _i4.Future<_i5.GameHistoryEntity?>.value(),
+      ) as _i4.Future<_i5.GameHistoryEntity?>);
 }

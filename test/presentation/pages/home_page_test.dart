@@ -10,12 +10,14 @@ import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
+import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/providers/schedule_provider.dart';
 import 'login_page_test.mocks.dart';
 import 'package:talacare/presentation/pages/schedule_page.dart';
 import 'package:talacare/presentation/widgets/profile_modal.dart';
 
 import 'schedule_page_test.mocks.dart';
+import 'puzzle_page_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
@@ -30,7 +32,8 @@ void main() {
     await Firebase.initializeApp();
 
     getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
-
+    getIt.registerLazySingleton(
+        () => GameHistoryProvider(useCase: MockGameHistoryUseCase()));
     homePage = const MaterialApp(
       home: HomePage(),
     );
@@ -38,6 +41,7 @@ void main() {
 
   tearDown(() {
     getIt.unregister<AuthProvider>();
+    getIt.unregister<GameHistoryProvider>();
   });
 
   testWidgets('Verify the greeting text is showing', (tester) async {

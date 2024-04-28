@@ -12,7 +12,6 @@ import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/widgets/game_over_modal.dart';
-import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
@@ -21,13 +20,15 @@ class NextInfo extends StatefulWidget {
   final AudioPlayer? audioPlayer;
   final String name;
   final DateTime startTime;
+  final int highestScore;
 
   const NextInfo(
       {super.key,
       required this.stageState,
       required this.name,
       this.audioPlayer,
-      required this.startTime});
+      required this.startTime,
+      required this.highestScore});
 
   @override
   State<NextInfo> createState() => _NextInfoState();
@@ -149,7 +150,7 @@ class _NextInfoState extends State<NextInfo> {
                         return GameOverModal(
                           key: const Key("game-over"),
                           currentScore: widget.stageState.score,
-                          highestScore: 999,
+                          highestScore: widget.highestScore,
                           onMainLagiPressed: () {
                             Navigator.push(
                               context,

@@ -8,8 +8,10 @@ import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class PuzzleInfo extends StatefulWidget {
   final StageState stageState;
+  final int highestScore;
 
-  const PuzzleInfo({super.key, required this.stageState});
+  const PuzzleInfo(
+      {super.key, required this.stageState, required this.highestScore});
 
   @override
   State<PuzzleInfo> createState() => _PuzzleInfoState();
@@ -55,8 +57,8 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
             (index) => buildStarImage(starList[index]),
           ),
         ),
-        const Text(
-          'TERTINGGI: 75',
+        Text(
+          'TERTINGGI: ${widget.highestScore}',
           style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.normal,

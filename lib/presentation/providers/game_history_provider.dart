@@ -14,6 +14,9 @@ class GameHistoryProvider extends ChangeNotifier {
   String _message = '';
   String get message => _message;
 
+  GameHistoryEntity? _highestScoreHistory;
+  GameHistoryEntity? get highestScoreHistory => _highestScoreHistory;
+
   GameHistoryProvider({required this.useCase});
 
   void setLoading(bool isLoading) {
@@ -34,6 +37,11 @@ class GameHistoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setHighestScoreHistory(GameHistoryEntity? gameHistory) {
+    _highestScoreHistory = gameHistory;
+    notifyListeners();
+  }
+
   Future<void> createGameHistory(GameHistoryEntity gameHistory) async {
     try {
       setLoading(true);
@@ -41,13 +49,30 @@ class GameHistoryProvider extends ChangeNotifier {
       setMessage('');
 
       await useCase.createGameHistory(gameHistory);
-      setMessage('Game history berhasil dibuat');
+      setMessage('Successfully created game history');
       setLoading(false);
     } catch (e) {
       debugPrint(e.toString());
       setMessage(e.toString());
       setError(true, '$e');
       setLoading(false);
+    }
+  }
+
+  Future<GameHistoryEntity?> getHighestScoreHistory(String gameType) async {
+    try {
+      setLoading(true);
+      setError(false);
+      final highestScoreHistory =
+          await useCase.getHighestScoreHistory(gameType);
+      setHighestScoreHistory(highestScoreHistory);
+      setLoading(false);
+      return highestScoreHistory;
+    } catch (e) {
+      debugPrint(e.toString());
+      setError(true, '$e');
+      setLoading(false);
+      throw Exception('Failed to retrieve the highest score game history: $e');
     }
   }
 }

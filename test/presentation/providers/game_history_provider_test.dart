@@ -32,7 +32,7 @@ void main() {
 
     expect(gameHistoryProvider.isLoading, false);
     expect(gameHistoryProvider.isError, false);
-    expect(gameHistoryProvider.message, 'Game history berhasil dibuat');
+    expect(gameHistoryProvider.message, 'Successfully created game history');
     verify(mockGameHistoryUseCase.createGameHistory(gameHistoryEntity))
         .called(1);
   });
