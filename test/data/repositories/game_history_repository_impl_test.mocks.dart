@@ -3,12 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:talacare/data/datasources/game_history_remote_datasource.dart'
-    as _i3;
-import 'package:talacare/data/models/game_history_model.dart' as _i2;
+    as _i2;
+import 'package:talacare/data/models/game_history_model.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -23,55 +23,30 @@ import 'package:talacare/data/models/game_history_model.dart' as _i2;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeGameHistoryModel_0 extends _i1.SmartFake
-    implements _i2.GameHistoryModel {
-  _FakeGameHistoryModel_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [GameHistoryRemoteDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGameHistoryRemoteDatasource extends _i1.Mock
-    implements _i3.GameHistoryRemoteDatasource {
+    implements _i2.GameHistoryRemoteDatasource {
   @override
-  _i4.Future<void> createGameHistory(_i2.GameHistoryModel? gameHistoryModel) =>
+  _i3.Future<void> createGameHistory(_i4.GameHistoryModel? gameHistoryModel) =>
       (super.noSuchMethod(
         Invocation.method(
           #createGameHistory,
           [gameHistoryModel],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 
   @override
-  _i4.Future<_i2.GameHistoryModel> getHighestScoreHistory(String? gameType) =>
+  _i3.Future<_i4.GameHistoryModel?> getHighestScoreHistory(String? gameType) =>
       (super.noSuchMethod(
         Invocation.method(
           #getHighestScoreHistory,
           [gameType],
         ),
-        returnValue:
-            _i4.Future<_i2.GameHistoryModel>.value(_FakeGameHistoryModel_0(
-          this,
-          Invocation.method(
-            #getHighestScoreHistory,
-            [gameType],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i4.Future<_i2.GameHistoryModel>.value(_FakeGameHistoryModel_0(
-          this,
-          Invocation.method(
-            #getHighestScoreHistory,
-            [gameType],
-          ),
-        )),
-      ) as _i4.Future<_i2.GameHistoryModel>);
+        returnValue: _i3.Future<_i4.GameHistoryModel?>.value(),
+        returnValueForMissingStub: _i3.Future<_i4.GameHistoryModel?>.value(),
+      ) as _i3.Future<_i4.GameHistoryModel?>);
 }

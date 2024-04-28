@@ -5,7 +5,7 @@ import 'package:talacare/data/models/game_history_model.dart';
 
 abstract class GameHistoryRemoteDatasource {
   Future<void> createGameHistory(GameHistoryModel gameHistoryModel);
-  Future<GameHistoryModel> getHighestScoreHistory(String gameType);
+  Future<GameHistoryModel?> getHighestScoreHistory(String gameType);
 }
 
 class GameHistoryRemoteDatasourceImpl extends GameHistoryRemoteDatasource {
@@ -38,7 +38,7 @@ class GameHistoryRemoteDatasourceImpl extends GameHistoryRemoteDatasource {
   }
 
   @override
-  Future<GameHistoryModel> getHighestScoreHistory(String gameType) async {
+  Future<GameHistoryModel?> getHighestScoreHistory(String gameType) async {
     try {
       final token = await localDatasource.readData('access_token');
       final response = await dio.get(
@@ -49,8 +49,13 @@ class GameHistoryRemoteDatasourceImpl extends GameHistoryRemoteDatasource {
           },
         ),
       );
-      final gameHistoryModel = GameHistoryModel.fromJson(response.data['data']);
-      return gameHistoryModel;
+      if (response.data['data'] != null) {
+        final gameHistoryModel =
+            GameHistoryModel.fromJson(response.data['data']);
+        return gameHistoryModel;
+      } else {
+        return null;
+      }
     } on DioException catch (e) {
       var errorMessage = e.response?.data['responseMessage'];
       throw errorMessage;

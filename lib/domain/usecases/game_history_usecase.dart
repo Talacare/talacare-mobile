@@ -10,7 +10,7 @@ class GameHistoryUseCase {
     await gameHistoryRepository.createGameHistory(gameHistory);
   }
 
-  Future<GameHistoryEntity> getHighestScoreHistory(String gameType) async {
+  Future<GameHistoryEntity?> getHighestScoreHistory(String gameType) async {
     return await gameHistoryRepository.getHighestScoreHistory(gameType);
   }
 }
