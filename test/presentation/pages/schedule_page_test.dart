@@ -129,8 +129,10 @@ void main() {
         (WidgetTester tester) async {
       await tester.runAsync(() async {
         when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
-          return Future.error('An error occurred');
+          return Future.value();
         });
+
+        when(mockScheduleProvider.isError).thenReturn(true);
 
         await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
 
