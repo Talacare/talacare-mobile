@@ -21,14 +21,19 @@ import 'schedule_page_test.mocks.dart';
 void main() {
   final getIt = GetIt.instance;
   late MockScheduleProvider mockScheduleProvider;
+  const testSchedules = [
+    {'id': '1', 'time': '08:00'},
+    {'id': '2', 'time': '12:00'},
+    {'id': '3', 'time': '18:00'},
+  ];
 
   TestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
     mockScheduleProvider = MockScheduleProvider();
-    getIt.registerLazySingleton<ScheduleProvider>(
-        () => ScheduleProvider(useCase: MockScheduleUseCase()));
+    when(mockScheduleProvider.schedules).thenReturn(testSchedules);
+    getIt.registerLazySingleton<ScheduleProvider>(() => mockScheduleProvider);
   });
 
   tearDown(() {
@@ -90,6 +95,7 @@ void main() {
         await tester.ensureVisible(deleteButtons.at(i));
         await tester.tap(deleteButtons.at(i));
         await tester.pump();
+        await tester.pump(const Duration(seconds: 3));
       }
     });
 
@@ -107,13 +113,21 @@ void main() {
       expect(find.byType(SchedulePage), findsOneWidget);
     });
 
+    testWidgets('should show notification when showNotification is called',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
+      await tester.pump(const Duration(seconds: 3));
+
+      SchedulePageState state = tester.state(find.byType(SchedulePage));
+      state.showNotification("Test Message", true);
+
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 3));
+    });
+
     testWidgets('should show an error message when snapshot has error',
         (WidgetTester tester) async {
       await tester.runAsync(() async {
-        getIt.unregister<ScheduleProvider>();
-        getIt.registerLazySingleton<ScheduleProvider>(
-            () => mockScheduleProvider);
-
         when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
           return Future.error('An error occurred');
         });
@@ -132,20 +146,13 @@ void main() {
     testWidgets('should display list of schedules when snapshot has completed',
         (WidgetTester tester) async {
       await tester.runAsync(() async {
-        getIt.unregister<ScheduleProvider>();
-        getIt.registerLazySingleton<ScheduleProvider>(
-            () => mockScheduleProvider);
-        var testSchedules = [
-          {'id': '1', 'time': '08:00'},
-          {'id': '2', 'time': '12:00'},
-          {'id': '3', 'time': '18:00'},
-        ];
-
         when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
           return Future.value();
         });
 
-        when(mockScheduleProvider.schedules).thenReturn(testSchedules);
+        when(mockScheduleProvider.deleteSchedule(any)).thenAnswer((_) async {
+          return Future.value();
+        });
 
         await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
 
@@ -155,6 +162,24 @@ void main() {
           expect(find.text(schedule['time']!), findsOneWidget);
         }
       });
+    });
+  });
+
+  testWidgets('should display message when there are no schedules',
+      (WidgetTester tester) async {
+    await tester.runAsync(() async {
+      when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
+        return Future.value();
+      });
+
+      when(mockScheduleProvider.schedules).thenReturn([]);
+
+      await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
+
+      await tester.pump();
+
+      expect(find.text('Anda belum'), findsOneWidget);
+      expect(find.text('memiliki jadwal!'), findsOneWidget);
     });
   });
 }

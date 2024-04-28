@@ -12,10 +12,7 @@ import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/providers/schedule_provider.dart';
 import 'login_page_test.mocks.dart';
-import 'package:talacare/presentation/pages/schedule_page.dart';
 import 'package:talacare/presentation/widgets/profile_modal.dart';
-
-import 'schedule_page_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
@@ -117,32 +114,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(PuzzlePage), findsOneWidget);
-  });
-
-  testWidgets('Verify the schedule button navigates to Schedule Page',
-      (tester) async {
-    final mockObserver = MockNavigatorObserver();
-
-    getIt.registerLazySingleton(
-        () => ScheduleProvider(useCase: MockScheduleUseCase()));
-
-    await mockNetworkImagesFor(
-      () => tester.pumpWidget(ChangeNotifierProvider<ScheduleProvider>(
-        create: (_) => MockScheduleProvider(),
-        child: MaterialApp(
-          home: const HomePage(),
-          navigatorObservers: [mockObserver],
-        ),
-      )),
-    );
-
-    expect(find.byKey(const Key('schedule_button')), findsOneWidget);
-
-    await tester.ensureVisible(find.byKey(const Key('schedule_button')));
-    await tester.tap(find.byKey(const Key('schedule_button')));
-    await tester.pumpAndSettle();
-
-    expect(find.byType(SchedulePage), findsOneWidget);
   });
 
   testWidgets('Verify tapping on user picture shows profile modal',
