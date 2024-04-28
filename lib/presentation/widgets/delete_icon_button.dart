@@ -29,16 +29,16 @@ class _DeleteIconButtonState extends State<DeleteIconButton> {
     });
 
     widget.scheduleProvider.deleteSchedule(widget.scheduleId).then((_) {
-      bool isError = widget.scheduleProvider.isError;
+      bool isSuccess = !widget.scheduleProvider.isError;
       String message = widget.scheduleProvider.message;
 
-      if (isError) {
+      if (!isSuccess) {
         setState(() {
           showLoading = false;
         });
       }
-      
-      widget.showNotification(message, !isError);
+
+      widget.showNotification(message, isSuccess);
       widget.refreshSchedules();
     });
   }
