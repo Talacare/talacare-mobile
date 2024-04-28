@@ -3,12 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:talacare/domain/entities/game_history_entity.dart' as _i4;
+import 'package:talacare/domain/entities/game_history_entity.dart' as _i2;
 import 'package:talacare/domain/repositories/game_history_repository.dart'
-    as _i2;
+    as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -23,23 +23,51 @@ import 'package:talacare/domain/repositories/game_history_repository.dart'
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeGameHistoryEntity_0 extends _i1.SmartFake
+    implements _i2.GameHistoryEntity {
+  _FakeGameHistoryEntity_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [GameHistoryRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGameHistoryRepository extends _i1.Mock
-    implements _i2.GameHistoryRepository {
+    implements _i3.GameHistoryRepository {
   MockGameHistoryRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<void> createGameHistory(_i4.GameHistoryEntity? gameHistory) =>
+  _i4.Future<void> createGameHistory(_i2.GameHistoryEntity? gameHistory) =>
       (super.noSuchMethod(
         Invocation.method(
           #createGameHistory,
           [gameHistory],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<_i2.GameHistoryEntity> getHighestScoreHistory(String? gameType) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getHighestScoreHistory,
+          [gameType],
+        ),
+        returnValue:
+            _i4.Future<_i2.GameHistoryEntity>.value(_FakeGameHistoryEntity_0(
+          this,
+          Invocation.method(
+            #getHighestScoreHistory,
+            [gameType],
+          ),
+        )),
+      ) as _i4.Future<_i2.GameHistoryEntity>);
 }

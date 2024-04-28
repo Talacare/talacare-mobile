@@ -38,7 +38,22 @@ class GameHistoryRemoteDatasourceImpl extends GameHistoryRemoteDatasource {
   }
 
   @override
-  Future<GameHistoryModel> getHighestScoreHistory(String gameType) {
-    throw UnimplementedError();
+  Future<GameHistoryModel> getHighestScoreHistory(String gameType) async {
+    try {
+      final token = await localDatasource.readData('access_token');
+      final response = await dio.get(
+        '$baseGameHistoryAPI/high-score/$gameType',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      final gameHistoryModel = GameHistoryModel.fromJson(response.data['data']);
+      return gameHistoryModel;
+    } on DioException catch (e) {
+      var errorMessage = e.response?.data['responseMessage'];
+      throw errorMessage;
+    }
   }
 }

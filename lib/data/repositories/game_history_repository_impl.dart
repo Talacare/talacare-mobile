@@ -16,7 +16,7 @@ class GameHistoryRepositoryImpl extends GameHistoryRepository {
   }
 
   @override
-  Future<GameHistoryEntity> getHighestScoreHistory(String gameType) {
-    throw UnimplementedError();
+  Future<GameHistoryEntity> getHighestScoreHistory(String gameType) async {
+    return await gameHistoryRemoteDatasource.getHighestScoreHistory(gameType);
   }
 }
