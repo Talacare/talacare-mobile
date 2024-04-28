@@ -141,7 +141,7 @@ class SchedulePageState extends State<SchedulePage> {
               ),
             ),
           );
-        } else if (snapshot.hasError) {
+        } else if (scheduleProvider.isError) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _showBottomSheet(context);
           });
