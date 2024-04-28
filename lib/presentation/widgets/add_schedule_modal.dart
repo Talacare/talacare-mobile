@@ -109,16 +109,17 @@ class _AddScheduleModalState extends State<AddScheduleModal> {
                             .getIt<ScheduleProvider>()
                             .createSchedule(schedule)
                             .then((_) {
-                          if (!scheduleProvider.isError) {
-                            Navigator.of(context).pop();
-                          }
+                          bool isSuccess = !scheduleProvider.isError;
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             CustomNotification.show(
                               context,
                               message: scheduleProvider.message,
-                              isSuccess: !scheduleProvider.isError,
+                              isSuccess: isSuccess,
                             );
                           });
+                          if (!scheduleProvider.isError) {
+                            Navigator.of(context).pop();
+                          }
                           widget.onScheduleAdded();
                         });
                       },

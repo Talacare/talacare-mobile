@@ -6,6 +6,8 @@ import 'package:talacare/presentation/widgets/add_schedule_modal.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/injection.dart' as di;
+import 'package:talacare/presentation/widgets/custom_notification.dart';
+import 'package:talacare/presentation/widgets/delete_icon_button.dart';
 import 'package:talacare/presentation/widgets/modal_button.dart';
 import 'package:talacare/notification_service.dart';
 
@@ -13,7 +15,8 @@ class SchedulePage extends StatefulWidget {
   final NotificationService notificationService;
   final bool testing;
 
-  const SchedulePage({super.key, required this.notificationService, required this.testing});
+  const SchedulePage(
+      {super.key, required this.notificationService, required this.testing});
 
   @override
   SchedulePageState createState() => SchedulePageState();
@@ -22,6 +25,14 @@ class SchedulePage extends StatefulWidget {
 class SchedulePageState extends State<SchedulePage> {
   void refreshSchedules() {
     setState(() {});
+  }
+
+  void showNotification(String message, bool isSuccess) {
+    CustomNotification.show(
+      context,
+      message: message,
+      isSuccess: isSuccess,
+    );
   }
 
   Widget _buildTitle(String text) {
@@ -33,6 +44,20 @@ class SchedulePageState extends State<SchedulePage> {
         fontSize: 28,
         fontFamily: 'Digitalt',
         fontWeight: FontWeight.w500,
+        letterSpacing: 0.96,
+      ),
+    );
+  }
+
+  Widget _buildFlavorText(String text) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 25,
+        fontFamily: 'Digitalt',
+        fontWeight: FontWeight.w300,
         letterSpacing: 0.96,
       ),
     );
@@ -101,7 +126,6 @@ class SchedulePageState extends State<SchedulePage> {
   }
 
   Widget _buildListOfSchedules(BuildContext context) {
-    
     widget.notificationService.cancelAllNotification();
 
     return FutureBuilder(
@@ -124,6 +148,31 @@ class SchedulePageState extends State<SchedulePage> {
           return Center(
             child: Container(),
           );
+        } else if (scheduleProvider.schedules.isEmpty) {
+          double height = MediaQuery.of(context).size.height;
+          double gapValue = 0;
+          if (height > 450) {
+            gapValue = 20;
+          }
+          return LimitedBox(
+            maxHeight: height - 310,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/jadwal_kosong.png',
+                    width: height / 4,
+                    height: height / 4,
+                  ),
+                  Gap(gapValue),
+                  _buildFlavorText('Anda belum'),
+                  _buildFlavorText('memiliki jadwal!'),
+                ],
+              ),
+            ),
+          );
         } else {
           return Expanded(
             child: ListView.builder(
@@ -136,12 +185,11 @@ class SchedulePageState extends State<SchedulePage> {
                 // Ignoring for testing purpose, cannot be tested
                 if (!(widget.testing)) {
                   widget.notificationService.scheduleNotificationHelper(
-                    id: index,
-                    payload: scheduleProvider.schedules[index]['id']!,
-                    scheduledTime: scheduleTime
-                  );
+                      id: index,
+                      payload: scheduleProvider.schedules[index]['id']!,
+                      scheduledTime: scheduleTime);
                 }
-                
+
                 return Container(
                   margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
                   padding:
@@ -163,11 +211,11 @@ class SchedulePageState extends State<SchedulePage> {
                           letterSpacing: 0.96,
                         ),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.delete_outline),
-                        iconSize: 35,
-                        color: AppColors.darkPurple,
-                        onPressed: () {},
+                      DeleteIconButton(
+                        scheduleProvider: scheduleProvider,
+                        scheduleId: scheduleProvider.schedules[index]['id']!,
+                        refreshSchedules: refreshSchedules,
+                        showNotification: showNotification,
                       ),
                     ],
                   ),
