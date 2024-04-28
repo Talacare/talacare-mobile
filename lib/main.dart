@@ -25,7 +25,7 @@ Future<void> main() async {
   );
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-  await NotificationService().initNotification();
+  NotificationService().initNotification();
   
   await di.init();
   di.getIt<Dio>().interceptors.add(DioInterceptor());
