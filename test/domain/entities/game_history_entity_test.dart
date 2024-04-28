@@ -8,19 +8,19 @@ void main() {
   const score = 100;
 
   final gameHistory = GameHistoryEntity(
-    gameType: 'PUZZLE',
+    gameType: gameType,
     startTime: startTime,
     endTime: endTime,
-    score: 100,
+    score: score,
   );
 
   test('GameHistoryEntity instances with the same properties should be equal',
       () {
     final otherGameHistory = GameHistoryEntity(
-      gameType: 'PUZZLE',
+      gameType: gameType,
       startTime: startTime,
       endTime: endTime,
-      score: 100,
+      score: score,
     );
 
     expect(gameHistory, equals(otherGameHistory));

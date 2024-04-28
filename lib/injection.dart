@@ -12,7 +12,7 @@ import 'package:talacare/data/datasources/auth_remote_datasource.dart';
 import 'package:talacare/data/datasources/game_history_remote_datasource.dart';
 import 'package:talacare/data/datasources/schedule_remote_datasource.dart';
 import 'package:talacare/data/repositories/auth_repository_impl.dart';
-import 'package:talacare/data/repositories/game_history_impl.dart';
+import 'package:talacare/data/repositories/game_history_repository_impl.dart';
 import 'package:talacare/data/repositories/schedule_repository_impl.dart';
 import 'package:talacare/domain/repositories/auth_repository.dart';
 import 'package:talacare/domain/repositories/game_history_repository.dart';

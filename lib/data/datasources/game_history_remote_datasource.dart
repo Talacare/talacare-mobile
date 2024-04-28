@@ -5,6 +5,7 @@ import 'package:talacare/data/models/game_history_model.dart';
 
 abstract class GameHistoryRemoteDatasource {
   Future<void> createGameHistory(GameHistoryModel gameHistoryModel);
+  Future<GameHistoryModel> getHighestScoreHistory(String gameType);
 }
 
 class GameHistoryRemoteDatasourceImpl extends GameHistoryRemoteDatasource {
@@ -34,5 +35,10 @@ class GameHistoryRemoteDatasourceImpl extends GameHistoryRemoteDatasource {
       var errorMessage = e.response?.data['responseMessage'];
       throw errorMessage;
     }
+  }
+
+  @override
+  Future<GameHistoryModel> getHighestScoreHistory(String gameType) {
+    throw UnimplementedError();
   }
 }

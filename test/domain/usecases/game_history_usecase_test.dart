@@ -15,8 +15,17 @@ void main() {
     gameType: 'PUZZLE',
     startTime: DateTime.now(),
     endTime: DateTime.now(),
+    score: 75,
+  );
+
+  final expectedHighestScoreGameHistory = GameHistoryEntity(
+    gameType: 'PUZZLE',
+    startTime: DateTime.now(),
+    endTime: DateTime.now(),
     score: 100,
   );
+
+  final gameType = 'PUZZLE';
 
   setUp(() {
     mockGameHistoryRepository = MockGameHistoryRepository();
@@ -31,6 +40,20 @@ void main() {
     await useCase.createGameHistory(gameHistoryEntity);
 
     verify(mockGameHistoryRepository.createGameHistory(gameHistoryEntity))
+        .called(1);
+  });
+
+  test('should invoke getHighestScoreHistory on the game history repository',
+      () async {
+    when(mockGameHistoryRepository.getHighestScoreHistory(any))
+        .thenAnswer(((_) async => expectedHighestScoreGameHistory));
+
+    final highestScoreGameHistory =
+        await useCase.getHighestScoreHistory(gameType);
+
+    expect(highestScoreGameHistory, expectedHighestScoreGameHistory);
+
+    verify(mockGameHistoryRepository.getHighestScoreHistory(gameType))
         .called(1);
   });
 }
