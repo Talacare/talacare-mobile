@@ -26,6 +26,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
+    NotificationService().initNotification();
     mockScheduleProvider = MockScheduleProvider();
     getIt.registerLazySingleton<ScheduleProvider>(
         () => ScheduleProvider(useCase: MockScheduleUseCase()));
@@ -126,7 +127,6 @@ void main() {
     testWidgets('should display list of schedules when snapshot has completed',
         (WidgetTester tester) async {
       await tester.runAsync(() async {
-        NotificationService().initNotification();
         getIt.unregister<ScheduleProvider>();
         getIt.registerLazySingleton<ScheduleProvider>(
             () => mockScheduleProvider);
