@@ -107,18 +107,4 @@ class NotificationService {
   Future<void> cancelAllNotification() async {
     await notificationsPlugin.cancelAll();
   }
-
-  Future<void> checkPendingNotificationRequests() async {
-    final List<PendingNotificationRequest> pendingNotificationRequests =
-        await notificationsPlugin.pendingNotificationRequests();
-
-    print('${pendingNotificationRequests.length} pending notification ');
-
-    for (PendingNotificationRequest pendingNotificationRequest in pendingNotificationRequests) {
-      print(pendingNotificationRequest.id.toString() +
-          " " +
-          (pendingNotificationRequest.payload ?? ""));
-    }
-    print('NOW ' + tz.TZDateTime.now(tz.local).toString());
-  }
 }

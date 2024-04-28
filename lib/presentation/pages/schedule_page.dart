@@ -10,9 +10,7 @@ import 'package:talacare/presentation/widgets/modal_button.dart';
 import 'package:talacare/notification_service.dart';
 
 class SchedulePage extends StatefulWidget {
-  final NotificationService notificationService;
-
-  const SchedulePage({super.key, required this.notificationService});
+  const SchedulePage({super.key});
 
   @override
   SchedulePageState createState() => SchedulePageState();
@@ -174,11 +172,11 @@ class SchedulePageState extends State<SchedulePage> {
   }
 
   void _createNotification(List<Map<String, String>> schedules) {
-    widget.notificationService.cancelAllNotification();
+    NotificationService().cancelAllNotification();
 
     for (var i = 0; i < schedules.length; i++) {
       Map<String, String> schedule = schedules[i];
-      widget.notificationService.scheduleNotificationHelper(
+      NotificationService().scheduleNotificationHelper(
         id: i,
         payload: schedule["id"],
         scheduledTime: schedule["time"]!
