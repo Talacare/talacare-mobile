@@ -129,9 +129,8 @@ class SchedulePageState extends State<SchedulePage> {
       builder: (context, snapshot) {
         var scheduleProvider = di.getIt<ScheduleProvider>();
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 20),
+          return const Expanded(
+            child: Center(
               child: CircularProgressIndicator(
                 color: Colors.white,
               ),
@@ -150,8 +149,7 @@ class SchedulePageState extends State<SchedulePage> {
           if (height > 450) {
             gapValue = 20;
           }
-          return LimitedBox(
-            maxHeight: height - 310,
+          return Expanded(
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -239,47 +237,41 @@ class SchedulePageState extends State<SchedulePage> {
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(
-              child: Column(
-                children: [
-                  const Gap(20),
-                  _buildTitle('JADWAL KONSUMSI'),
-                  _buildTitle('OBAT KELASI BESI'),
-                  _buildListOfSchedules(context),
-                ],
-              ),
+            const Gap(20),
+            _buildTitle('JADWAL KONSUMSI'),
+            _buildTitle('OBAT KELASI BESI'),
+            _buildListOfSchedules(context),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Gap(10),
+            Button(
+              text: 'Tambah Jadwal',
+              colorScheme: ButtonColorScheme.purple,
+              icon: Icons.add,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      AddScheduleModal(onScheduleAdded: refreshSchedules),
+                );
+              },
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Gap(10),
-                  Button(
-                    text: 'Tambah Jadwal',
-                    colorScheme: ButtonColorScheme.purple,
-                    icon: Icons.add,
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            AddScheduleModal(onScheduleAdded: refreshSchedules),
-                      );
-                    },
-                  ),
-                  const Gap(20),
-                  Button(
-                    text: 'Menu',
-                    colorScheme: ButtonColorScheme.purple,
-                    icon: Icons.arrow_back,
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  const Gap(10),
-                ],
-              ),
+            const Gap(20),
+            Button(
+              text: 'Menu',
+              colorScheme: ButtonColorScheme.purple,
+              icon: Icons.arrow_back,
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
+            const Gap(10),
           ],
         ),
       ),
