@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/providers/schedule_provider.dart';
 import 'package:talacare/presentation/widgets/add_schedule_modal.dart';
@@ -20,10 +21,11 @@ class SchedulePage extends StatefulWidget {
 
 class SchedulePageState extends State<SchedulePage> {
   late List<Map<String, String>> schedules;
-  
-  void refreshSchedules() {
-    setState(() {});
+
+  Future<void> refreshSchedules() async {
+    await di.getIt<ScheduleProvider>().getSchedulesByUserId();
   }
+
 
   void showNotification(String message, bool isSuccess) {
     CustomNotification.show(
@@ -123,99 +125,91 @@ class SchedulePageState extends State<SchedulePage> {
         });
   }
 
-  Widget _buildListOfSchedules(BuildContext context) {
-    return FutureBuilder(
-      future: di.getIt<ScheduleProvider>().getSchedulesByUserId(),
-      builder: (context, snapshot) {
-        var scheduleProvider = di.getIt<ScheduleProvider>();
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Expanded(
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
+  Widget _buildListOfSchedules(
+      BuildContext context, ScheduleProvider scheduleProvider) {
+    if (scheduleProvider.isLoading) {
+      return const Expanded(
+        child: Center(
+          child: CircularProgressIndicator(
+            color: Colors.white,
+          ),
+        ),
+      );
+    } else if (scheduleProvider.isError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showBottomSheet(context);
+      });
+      return Center(
+        child: Container(),
+      );
+    } else if (scheduleProvider.schedules.isEmpty) {
+      double height = MediaQuery.of(context).size.height;
+      double gapValue = 0;
+      if (height > 450) {
+        gapValue = 20;
+      }
+      return Expanded(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/jadwal_kosong.png',
+                width: height / 4,
+                height: height / 4,
               ),
-            ),
-          );
-        } else if (scheduleProvider.isError) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _showBottomSheet(context);
-          });
-          return Center(
-            child: Container(),
-          );
-        } else if (scheduleProvider.schedules.isEmpty) {
-          double height = MediaQuery.of(context).size.height;
-          double gapValue = 0;
-          if (height > 450) {
-            gapValue = 20;
-          }
-          return Expanded(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Gap(gapValue),
+              _buildFlavorText('Anda belum'),
+              _buildFlavorText('memiliki jadwal!'),
+            ],
+          ),
+        ),
+      );
+    } else {
+      schedules = scheduleProvider.schedules;
+      _createNotification(schedules);
+
+      return Expanded(
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: schedules.length,
+          itemBuilder: (context, index) {
+            final String scheduleTime = schedules[index]['time']!;
+
+            return Container(
+              margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    'assets/images/jadwal_kosong.png',
-                    width: height / 4,
-                    height: height / 4,
+                  Text(
+                    scheduleTime,
+                    style: TextStyle(
+                      color: AppColors.darkPurple,
+                      fontSize: 35,
+                      fontFamily: 'Digitalt',
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.96,
+                    ),
                   ),
-                  Gap(gapValue),
-                  _buildFlavorText('Anda belum'),
-                  _buildFlavorText('memiliki jadwal!'),
+                  DeleteIconButton(
+                    scheduleProvider: scheduleProvider,
+                    scheduleId: scheduleProvider.schedules[index]['id']!,
+                    refreshSchedules: refreshSchedules,
+                    showNotification: showNotification,
+                  ),
                 ],
               ),
-            ),
-          );
-        } else {
-
-          schedules = scheduleProvider.schedules;
-          _createNotification(schedules);
-
-          return Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: schedules.length,
-              itemBuilder: (context, index) {
-                final String scheduleTime =
-                    schedules[index]['time']!;
-                
-                return Container(
-                  margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        scheduleTime,
-                        style: TextStyle(
-                          color: AppColors.darkPurple,
-                          fontSize: 35,
-                          fontFamily: 'Digitalt',
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 0.96,
-                        ),
-                      ),
-                      DeleteIconButton(
-                        scheduleProvider: scheduleProvider,
-                        scheduleId: scheduleProvider.schedules[index]['id']!,
-                        refreshSchedules: refreshSchedules,
-                        showNotification: showNotification,
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          );
-        }
-      },
-    );
+            );
+          },
+        ),
+      );
+    }
   }
 
   void _createNotification(List<Map<String, String>> schedules) {
@@ -224,15 +218,20 @@ class SchedulePageState extends State<SchedulePage> {
     for (var i = 0; i < schedules.length; i++) {
       Map<String, String> schedule = schedules[i];
       NotificationService().scheduleNotificationHelper(
-        id: i,
-        payload: schedule["id"],
-        scheduledTime: schedule["time"]!
-      );
+          id: i, payload: schedule["id"], scheduledTime: schedule["time"]!);
     }
   }
 
   @override
+  void initState() {
+    refreshSchedules();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    ScheduleProvider model = di.getIt<ScheduleProvider>();
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -240,7 +239,11 @@ class SchedulePageState extends State<SchedulePage> {
             const Gap(20),
             _buildTitle('JADWAL KONSUMSI'),
             _buildTitle('OBAT KELASI BESI'),
-            _buildListOfSchedules(context),
+            ChangeNotifierProvider<ScheduleProvider>.value(
+                value: model,
+                child: Consumer<ScheduleProvider>(
+                    builder: (context, scheduleProvider, _) =>
+                        _buildListOfSchedules(context, scheduleProvider))),
           ],
         ),
       ),
