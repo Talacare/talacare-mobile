@@ -4,7 +4,6 @@ import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/core/utils/text_to_speech.dart';
 import 'package:talacare/data/models/stage_state.dart';
-import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:provider/provider.dart';
