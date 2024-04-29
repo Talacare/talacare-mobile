@@ -4,13 +4,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:get_it/get_it.dart';
 import 'package:network_image_mock/network_image_mock.dart';
+import 'package:provider/provider.dart';
+import 'package:talacare/notification_service.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
+import 'package:talacare/presentation/pages/schedule_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
+import 'package:talacare/presentation/providers/schedule_provider.dart';
 import 'login_page_test.mocks.dart';
 import 'package:talacare/presentation/widgets/profile_modal.dart';
+
+import 'schedule_page_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
@@ -121,5 +127,41 @@ void main() {
     await tester.tap(userPictureFinder);
     await tester.pumpAndSettle();
     expect(find.byType(ProfileModal), findsOneWidget);
+  });
+
+  testWidgets('Verify the schedule button navigates to Schedule Page',
+      (tester) async {
+    NotificationService().initNotification();
+    final mockObserver = MockNavigatorObserver();
+
+    var mockScheduleProvider = MockScheduleProvider();
+    const testSchedules = [
+      {'id': '1', 'time': '08:00'},
+      {'id': '2', 'time': '12:00'},
+      {'id': '3', 'time': '18:00'},
+    ];
+    when(mockScheduleProvider.schedules).thenReturn(testSchedules);
+    when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
+      return Future.value();
+    });
+    getIt.registerLazySingleton<ScheduleProvider>(() => mockScheduleProvider);
+
+    await mockNetworkImagesFor(
+      () => tester.pumpWidget(ChangeNotifierProvider<ScheduleProvider>(
+        create: (_) => mockScheduleProvider,
+        child: MaterialApp(
+          home: const HomePage(),
+          navigatorObservers: [mockObserver],
+        ),
+      )),
+    );
+
+    expect(find.byKey(const Key('schedule_button')), findsOneWidget);
+
+    await tester.ensureVisible(find.byKey(const Key('schedule_button')));
+    await tester.tap(find.byKey(const Key('schedule_button')));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SchedulePage), findsOneWidget);
   });
 }
