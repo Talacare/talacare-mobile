@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/core/utils/text_to_speech.dart';
 import 'package:talacare/data/models/stage_state.dart';
@@ -84,7 +85,7 @@ class _NextInfoState extends State<NextInfo> {
                 child: Text(
                   widget.name,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontSize: 40,
                     fontFamily: 'Digitalt',
@@ -93,20 +94,20 @@ class _NextInfoState extends State<NextInfo> {
                     shadows: [
                       Shadow(
                           // bottomLeft
-                          offset: Offset(-1.5, -1.5),
-                          color: Color(0xFFB20D78)),
+                          offset: const Offset(-1.5, -1.5),
+                          color: AppColors.darkPink),
                       Shadow(
                           // bottomRight
-                          offset: Offset(3.5, -1.5),
-                          color: Color(0xFFB20D78)),
+                          offset: const Offset(3.5, -1.5),
+                          color: AppColors.darkPink),
                       Shadow(
                           // topRight
-                          offset: Offset(1.5, 1.5),
-                          color: Color(0xFFB20D78)),
+                          offset: const Offset(1.5, 1.5),
+                          color: AppColors.darkPink),
                       Shadow(
                           // topLeft
-                          offset: Offset(-1.5, 1.5),
-                          color: Color(0xFFB20D78)),
+                          offset: const Offset(-1.5, 1.5),
+                          color: AppColors.darkPink),
                     ],
                   ),
                 ),
