@@ -133,7 +133,6 @@ void main() {
     testWidgets('should show an error message when snapshot has error',
         (WidgetTester tester) async {
       await tester.runAsync(() async {
-        NotificationService().initNotification();
         when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
           return Future.value();
         });
