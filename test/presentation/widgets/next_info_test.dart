@@ -15,6 +15,7 @@ import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
 import '../pages/login_page_test.mocks.dart';
 import 'next_info_test.mocks.dart';
@@ -57,7 +58,10 @@ void main() {
                   create: (context) => TimerState(initialValue: true)),
               ChangeNotifierProvider<CompleteState>(
                 create: (context) => CompleteState(initialValue: false),
-              )
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
             ],
             child: MaterialApp(
               home: Scaffold(
@@ -85,7 +89,10 @@ void main() {
                     create: (context) => TimerState(initialValue: false)),
                 ChangeNotifierProvider<CompleteState>(
                   create: (context) => CompleteState(initialValue: true),
-                )
+                ),
+                ChangeNotifierProvider<TimeLeftState>(
+                  create: (context) => TimeLeftState(initialValue: 60),
+                ),
               ],
               child: MaterialApp(
                 home: Scaffold(
@@ -113,7 +120,10 @@ void main() {
               create: (context) => TimerState(initialValue: false)),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
-          )
+          ),
+          ChangeNotifierProvider<TimeLeftState>(
+            create: (context) => TimeLeftState(initialValue: 60),
+          ),
         ],
         child: MaterialApp(
           home: Scaffold(
@@ -140,7 +150,10 @@ void main() {
                   create: (context) => TimerState(initialValue: true)),
               ChangeNotifierProvider<CompleteState>(
                 create: (context) => CompleteState(initialValue: false),
-              )
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
             ],
             child: MaterialApp(
               home: Scaffold(
@@ -173,7 +186,10 @@ void main() {
                   create: (context) => TimerState(initialValue: true)),
               ChangeNotifierProvider<CompleteState>(
                 create: (context) => CompleteState(initialValue: false),
-              )
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
             ],
             child: MaterialApp(
               home: Scaffold(
@@ -209,7 +225,10 @@ void main() {
                   create: (context) => TimerState(initialValue: true)),
               ChangeNotifierProvider<CompleteState>(
                 create: (context) => CompleteState(initialValue: false),
-              )
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
             ],
             child: MaterialApp(
               home: Scaffold(
@@ -244,7 +263,10 @@ void main() {
                   create: (context) => TimerState(initialValue: true)),
               ChangeNotifierProvider<CompleteState>(
                 create: (context) => CompleteState(initialValue: false),
-              )
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
             ],
             child: MaterialApp(
               home: Scaffold(
@@ -267,6 +289,41 @@ void main() {
     expect(find.text('50'), findsOneWidget);
   });
 
+  testWidgets('Verify Score is added with time left', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MultiProvider(
+            providers: [
+              ChangeNotifierProvider<TimerState>(
+                  create: (context) => TimerState(initialValue: false)),
+              ChangeNotifierProvider<CompleteState>(
+                create: (context) => CompleteState(initialValue: true),
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
+            ],
+            child: MaterialApp(
+              home: Scaffold(
+                body: NextInfo(
+                  name: "PERAWAT",
+                  stageState: StageState([2, 2, 2, 0], 4, 50, image),
+                ),
+              ),
+            )),
+      ),
+    );
+
+    expect(find.byKey(const Key('nextButton')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('nextButton')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('game-over')), findsOneWidget);
+    expect(find.text('Menu'), findsOneWidget);
+
+    expect(find.text('160'), findsOneWidget);
+  });
+
   testWidgets('plays bgm.mp3 when PuzzlePage starts', (tester) async {
     final mockPlayer = MockAudioPlayer();
 
@@ -278,7 +335,10 @@ void main() {
                   create: (context) => TimerState(initialValue: false)),
               ChangeNotifierProvider<CompleteState>(
                 create: (context) => CompleteState(initialValue: false),
-              )
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
             ],
             child: MaterialApp(
               home: Scaffold(
@@ -311,7 +371,10 @@ void main() {
                   create: (context) => TimerState(initialValue: true)),
               ChangeNotifierProvider<CompleteState>(
                 create: (context) => CompleteState(initialValue: false),
-              )
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
             ],
             child: MaterialApp(
               home: Scaffold(
@@ -340,7 +403,10 @@ void main() {
               create: (context) => TimerState(initialValue: false)),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
-          )
+          ),
+          ChangeNotifierProvider<TimeLeftState>(
+            create: (context) => TimeLeftState(initialValue: 60),
+          ),
         ],
         child: MaterialApp(
           home: Scaffold(

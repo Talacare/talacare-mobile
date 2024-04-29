@@ -67,10 +67,40 @@ void main() {
     when(mockScheduleUseCase.getSchedulesByUserId())
         .thenThrow(Exception(errorMessage));
 
-    expect(() async => await scheduleProvider.getSchedulesByUserId(),
-        throwsException);
-
+    await scheduleProvider.getSchedulesByUserId();
+    
+    expect(scheduleProvider.message, contains(errorMessage));
     expect(scheduleProvider.schedules, isEmpty);
     verify(mockScheduleUseCase.getSchedulesByUserId()).called(1);
+  });
+
+  test('should correctly handle a successful schedule deletion', () async {
+    const scheduleId = 'schedule-123';
+
+    when(mockScheduleUseCase.deleteSchedule(scheduleId))
+        .thenAnswer((_) async => Future.value());
+
+    await scheduleProvider.deleteSchedule(scheduleId);
+
+    expect(scheduleProvider.isLoading, false);
+    expect(scheduleProvider.isError, false);
+    expect(scheduleProvider.message, 'Jadwal berhasil dihapus');
+
+    verify(mockScheduleUseCase.deleteSchedule(scheduleId)).called(1);
+  });
+
+  test('should correctly handle a failed schedule deletion', () async {
+    const scheduleId = 'schedule-123';
+    final error = Exception('Failed to delete schedule');
+
+    when(mockScheduleUseCase.deleteSchedule(scheduleId)).thenThrow(error);
+
+    await scheduleProvider.deleteSchedule(scheduleId);
+
+    expect(scheduleProvider.isLoading, false);
+    expect(scheduleProvider.isError, true);
+    expect(scheduleProvider.message, error.toString());
+
+    verify(mockScheduleUseCase.deleteSchedule(scheduleId)).called(1);
   });
 }

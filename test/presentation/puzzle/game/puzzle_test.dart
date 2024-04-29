@@ -24,7 +24,7 @@ void main() {
     multiProvider = MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
-              create: (context) => TimerState(initialValue: true)),
+              create: (context) => TimerState(initialValue: false)),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
           )

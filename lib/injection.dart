@@ -25,32 +25,22 @@ final getIt = GetIt.instance;
 Future<void> init() async {
   // Provider
   getIt.registerLazySingleton(() => provider.AuthProvider(useCase: getIt()));
-  getIt
-      .registerLazySingleton(() => provider.ScheduleProvider(useCase: getIt()));
+  getIt.registerLazySingleton(() => provider.ScheduleProvider(useCase: getIt()));
 
   // Use cases
   getIt.registerLazySingleton(() => AuthUseCase(getIt()));
   getIt.registerLazySingleton(() => ScheduleUseCase(getIt()));
 
   // Repository
-  getIt.registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImpl(getIt(), getIt()));
-  getIt.registerLazySingleton<ScheduleRepository>(
-      () => ScheduleRepositoryImpl(getIt()));
+  getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<ScheduleRepository>(() => ScheduleRepositoryImpl(getIt()));
 
   // Data source
-  getIt.registerLazySingleton<AuthRemoteDatasource>(() =>
-      AuthRemoteDatasourceImpl(
-          googleSignIn: getIt(),
-          firebaseAuthInstance: getIt(),
-          dio: getIt(),
-          localDatasource: getIt()));
+  getIt.registerLazySingleton<AuthRemoteDatasource>(() => AuthRemoteDatasourceImpl(googleSignIn: getIt(), firebaseAuthInstance: getIt(), dio: getIt(), localDatasource: getIt()));
 
-  getIt.registerLazySingleton<AuthLocalDatasource>(
-      () => AuthLocalDatasourceImpl(storage: getIt()));
+  getIt.registerLazySingleton<AuthLocalDatasource>(() => AuthLocalDatasourceImpl(storage: getIt()));
 
-  getIt.registerLazySingleton<ScheduleRemoteDatasource>(() =>
-      ScheduleRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));
+  getIt.registerLazySingleton<ScheduleRemoteDatasource>(() => ScheduleRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));
 
   // External
   getIt.registerLazySingleton(() => GoogleSignIn());

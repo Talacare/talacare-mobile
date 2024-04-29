@@ -161,6 +161,15 @@ class MockScheduleProvider extends _i1.Mock implements _i5.ScheduleProvider {
       );
 
   @override
+  void notifyListenersWithDelay() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListenersWithDelay,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   _i3.Future<void> createSchedule(_i7.ScheduleEntity? schedule) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -176,6 +185,16 @@ class MockScheduleProvider extends _i1.Mock implements _i5.ScheduleProvider {
         Invocation.method(
           #getSchedulesByUserId,
           [],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> deleteSchedule(String? scheduleId) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteSchedule,
+          [scheduleId],
         ),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
@@ -244,6 +263,50 @@ class MockGetIt extends _i1.Mock implements _i9.GetIt {
         Invocation.setter(
           #allowReassignment,
           _allowReassignment,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get skipDoubleRegistration => (super.noSuchMethod(
+        Invocation.getter(#skipDoubleRegistration),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set skipDoubleRegistration(bool? _skipDoubleRegistration) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #skipDoubleRegistration,
+          _skipDoubleRegistration,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get allowRegisterMultipleImplementationsOfoneType => (super.noSuchMethod(
+        Invocation.getter(#allowRegisterMultipleImplementationsOfoneType),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set allowRegisterMultipleImplementationsOfoneType(
+          bool? _allowRegisterMultipleImplementationsOfoneType) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #allowRegisterMultipleImplementationsOfoneType,
+          _allowRegisterMultipleImplementationsOfoneType,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void enableRegisteringMultipleInstancesOfOneType() => super.noSuchMethod(
+        Invocation.method(
+          #enableRegisteringMultipleInstancesOfOneType,
+          [],
         ),
         returnValueForMissingStub: null,
       );
@@ -371,6 +434,46 @@ class MockGetIt extends _i1.Mock implements _i9.GetIt {
               ),
             ),
       ) as _i3.Future<T>);
+
+  @override
+  Iterable<T> getAll<T extends Object>({
+    dynamic param1,
+    dynamic param2,
+    Type? type,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAll,
+          [],
+          {
+            #param1: param1,
+            #param2: param2,
+            #type: type,
+          },
+        ),
+        returnValue: <T>[],
+        returnValueForMissingStub: <T>[],
+      ) as Iterable<T>);
+
+  @override
+  _i3.Future<Iterable<T>> getAllAsync<T extends Object>({
+    dynamic param1,
+    dynamic param2,
+    Type? type,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAllAsync,
+          [],
+          {
+            #param1: param1,
+            #param2: param2,
+            #type: type,
+          },
+        ),
+        returnValue: _i3.Future<Iterable<T>>.value(<T>[]),
+        returnValueForMissingStub: _i3.Future<Iterable<T>>.value(<T>[]),
+      ) as _i3.Future<Iterable<T>>);
 
   @override
   T call<T extends Object>({
@@ -842,4 +945,14 @@ class MockScheduleUseCase extends _i1.Mock implements _i2.ScheduleUseCase {
         returnValueForMissingStub: _i3.Future<List<Map<String, String>>>.value(
             <Map<String, String>>[]),
       ) as _i3.Future<List<Map<String, String>>>);
+
+  @override
+  _i3.Future<void> deleteSchedule(String? scheduleId) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteSchedule,
+          [scheduleId],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 }

@@ -4,11 +4,12 @@ import 'package:provider/provider.dart';
 
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/data/models/image_pair.dart';
-import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/game/puzzle.dart';
 import 'package:talacare/presentation/puzzle/info/puzzle_info.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
+import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
 class PuzzlePage extends StatelessWidget {
   final StageState stageState;
@@ -25,6 +26,9 @@ class PuzzlePage extends StatelessWidget {
         ),
         ChangeNotifierProvider<CompleteState>(
           create: (context) => CompleteState(initialValue: false),
+        ),
+        ChangeNotifierProvider<TimeLeftState>(
+          create: (context) => TimeLeftState(initialValue: 60),
         ),
       ],
       child: FutureBuilder<List<ImagePair>>(

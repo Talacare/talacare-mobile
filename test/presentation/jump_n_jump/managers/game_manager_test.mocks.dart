@@ -2,7 +2,7 @@
 // in talacare/test/presentation/jump_n_jump/managers/game_manager_test.dart.
 // Do not manually edit this file.
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
+// ignore_for_file: no_leading_underscores_for_library_prefixes, invalid_use_of_internal_member
 import 'dart:async' as _i17;
 import 'dart:ui' as _i6;
 

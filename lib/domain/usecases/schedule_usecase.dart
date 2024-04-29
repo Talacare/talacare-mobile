@@ -25,4 +25,8 @@ class ScheduleUseCase {
 
     return formattedSchedules;
   }
+
+  Future<void> deleteSchedule(String scheduleId) async {
+    await scheduleRepository.deleteSchedule(scheduleId);
+  }
 }
