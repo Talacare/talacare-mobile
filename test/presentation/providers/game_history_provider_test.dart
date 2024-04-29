@@ -51,4 +51,53 @@ void main() {
     verify(mockGameHistoryUseCase.createGameHistory(gameHistoryEntity))
         .called(1);
   });
+
+  test('should correctly handle retrieving highest score history', () async {
+    final highestScoreHistory = GameHistoryEntity(
+      gameType: 'PUZZLE',
+      startTime: DateTime.now(),
+      endTime: DateTime.now(),
+      score: 150,
+    );
+
+    when(mockGameHistoryUseCase.getHighestScoreHistory('PUZZLE'))
+        .thenAnswer((_) async => highestScoreHistory);
+
+    await gameHistoryProvider.getHighestScoreHistory('PUZZLE');
+
+    expect(gameHistoryProvider.isLoading, false);
+    expect(gameHistoryProvider.isError, false);
+    expect(gameHistoryProvider.highestScoreHistory, highestScoreHistory);
+    verify(mockGameHistoryUseCase.getHighestScoreHistory('PUZZLE')).called(1);
+  });
+
+  test('should correctly handle error when retrieving highest score history',
+      () async {
+    const errorMessage = 'Failed to retrieve highest score game history';
+
+    when(mockGameHistoryUseCase.getHighestScoreHistory('PUZZLE'))
+        .thenThrow(Exception(errorMessage));
+
+    try {
+      await gameHistoryProvider.getHighestScoreHistory('PUZZLE');
+    } catch (e) {}
+
+    expect(gameHistoryProvider.isLoading, false);
+    expect(gameHistoryProvider.isError, true);
+    expect(gameHistoryProvider.message, contains(errorMessage));
+    verify(mockGameHistoryUseCase.getHighestScoreHistory('PUZZLE')).called(1);
+  });
+
+  test('should correctly handle setting highest score history', () {
+    final highestScoreHistory = GameHistoryEntity(
+      gameType: 'PUZZLE',
+      startTime: DateTime.now(),
+      endTime: DateTime.now(),
+      score: 150,
+    );
+
+    gameHistoryProvider.setHighestScoreHistory(highestScoreHistory);
+
+    expect(gameHistoryProvider.highestScoreHistory, highestScoreHistory);
+  });
 }

@@ -20,15 +20,14 @@ class NextInfo extends StatefulWidget {
   final AudioPlayer? audioPlayer;
   final String name;
   final DateTime startTime;
-  final int highestScore;
 
-  const NextInfo(
-      {super.key,
-      required this.stageState,
-      required this.name,
-      this.audioPlayer,
-      required this.startTime,
-      required this.highestScore});
+  const NextInfo({
+    super.key,
+    required this.stageState,
+    required this.name,
+    this.audioPlayer,
+    required this.startTime,
+  });
 
   @override
   State<NextInfo> createState() => _NextInfoState();
@@ -144,13 +143,17 @@ class _NextInfoState extends State<NextInfo> {
                   await getIt<GameHistoryProvider>()
                       .createGameHistory(gameHistory);
 
+                  final highestScoreHistory = await getIt<GameHistoryProvider>()
+                      .getHighestScoreHistory('PUZZLE');
+                  final highScore = highestScoreHistory?.score ?? 0;
+
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return GameOverModal(
                           key: const Key("game-over"),
                           currentScore: widget.stageState.score,
-                          highestScore: widget.highestScore,
+                          highestScore: highScore,
                           onMainLagiPressed: () {
                             Navigator.push(
                               context,

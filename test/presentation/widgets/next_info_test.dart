@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
 import 'package:talacare/data/models/image_pair.dart';
 import 'package:talacare/data/models/stage_state.dart';
-import 'package:talacare/domain/usecases/game_history_usecase.dart';
+import 'package:talacare/domain/entities/game_history_entity.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
@@ -18,20 +18,21 @@ import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
+import '../jump_n_jump/jump_n_jump_test.mocks.dart';
 import '../pages/login_page_test.mocks.dart';
 import 'next_info_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
-class MockGameHistoryUseCase extends Mock implements GameHistoryUseCase {}
-
 @GenerateMocks([AudioPlayer])
 void main() {
   late List<ImagePair> image;
+ 
   final getIt = GetIt.instance;
-  final highestScore = 100;
+  late MockGameHistoryProvider mockGameHistoryProvider;
 
   setUp(() async {
+    mockGameHistoryProvider = MockGameHistoryProvider();
     image = [
       ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG"),
       ImagePair(
@@ -40,15 +41,23 @@ void main() {
       ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT"),
     ];
 
+    when(mockGameHistoryProvider.getHighestScoreHistory('PUZZLE'))
+        .thenAnswer((_) async => GameHistoryEntity(
+              gameType: 'PUZZLE',
+              startTime: DateTime.now(),
+              endTime: DateTime.now(),
+              score: 75,
+            ));
+
     getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
-    getIt.registerLazySingleton(
-        () => GameHistoryProvider(useCase: MockGameHistoryUseCase()));
+
+    getIt.registerSingleton<GameHistoryProvider>(mockGameHistoryProvider);
+
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
   });
 
   tearDown(() {
-    getIt.unregister<AuthProvider>();
-    getIt.unregister<GameHistoryProvider>();
+    getIt.reset();
   });
 
   group('Win Puzzle Modal Widget Tests', () {
@@ -71,7 +80,6 @@ void main() {
                   name: "PERAWAT",
                   stageState: StageState([1, 0, 0, 0], 1, 0, image),
                   startTime: DateTime.now(),
-                  highestScore: highestScore,
                 ),
               ),
             )),
@@ -104,10 +112,10 @@ void main() {
               child: MaterialApp(
                 home: Scaffold(
                   body: NextInfo(
-                      name: "PERAWAT",
-                      stageState: StageState([2, 3, 2, 0], 4, 0, image),
-                      startTime: DateTime.now(),
-                      highestScore: highestScore),
+                    name: "PERAWAT",
+                    stageState: StageState([2, 3, 2, 0], 4, 0, image),
+                    startTime: DateTime.now(),
+                  ),
                 ),
               ),
             ),
@@ -137,10 +145,10 @@ void main() {
         child: MaterialApp(
           home: Scaffold(
             body: NextInfo(
-                name: "PERAWAT",
-                stageState: StageState([1, 0, 0, 0], 1, 0, image),
-                startTime: DateTime.now(),
-                highestScore: highestScore),
+              name: "PERAWAT",
+              stageState: StageState([1, 0, 0, 0], 1, 0, image),
+              startTime: DateTime.now(),
+            ),
           ),
         )));
 
@@ -171,10 +179,10 @@ void main() {
             child: MaterialApp(
               home: Scaffold(
                 body: NextInfo(
-                    name: "PERAWAT",
-                    stageState: StageState([2, 3, 2, 0], 4, 0, image),
-                    startTime: DateTime.now(),
-                    highestScore: highestScore),
+                  name: "PERAWAT",
+                  stageState: StageState([2, 3, 2, 0], 4, 0, image),
+                  startTime: DateTime.now(),
+                ),
               ),
             ),
           ),
@@ -213,10 +221,10 @@ void main() {
             child: MaterialApp(
               home: Scaffold(
                 body: NextInfo(
-                    name: "PERAWAT",
-                    stageState: StageState([2, 3, 2, 0], 4, 0, image),
-                    startTime: DateTime.now(),
-                    highestScore: highestScore),
+                  name: "PERAWAT",
+                  stageState: StageState([2, 3, 2, 0], 4, 0, image),
+                  startTime: DateTime.now(),
+                ),
               ),
             ),
           ),
@@ -254,10 +262,10 @@ void main() {
             child: MaterialApp(
               home: Scaffold(
                 body: NextInfo(
-                    name: "PERAWAT",
-                    stageState: StageState([2, 2, 2, 0], 4, 0, image),
-                    startTime: DateTime.now(),
-                    highestScore: highestScore),
+                  name: "PERAWAT",
+                  stageState: StageState([2, 2, 2, 0], 4, 0, image),
+                  startTime: DateTime.now(),
+                ),
               ),
             )),
       ),
@@ -293,10 +301,10 @@ void main() {
             child: MaterialApp(
               home: Scaffold(
                 body: NextInfo(
-                    name: "PERAWAT",
-                    stageState: StageState([2, 2, 2, 0], 4, 50, image),
-                    startTime: DateTime.now(),
-                    highestScore: highestScore),
+                  name: "PERAWAT",
+                  stageState: StageState([2, 2, 2, 0], 4, 50, image),
+                  startTime: DateTime.now(),
+                ),
               ),
             )),
       ),
@@ -329,10 +337,10 @@ void main() {
             child: MaterialApp(
               home: Scaffold(
                 body: NextInfo(
-                    name: "PERAWAT",
-                    stageState: StageState([2, 2, 2, 0], 4, 50, image),
-                    startTime: DateTime.now(),
-                    highestScore: highestScore),
+                  name: "PERAWAT",
+                  stageState: StageState([2, 2, 2, 0], 4, 50, image),
+                  startTime: DateTime.now(),
+                ),
               ),
             )),
       ),
@@ -367,11 +375,11 @@ void main() {
             child: MaterialApp(
               home: Scaffold(
                 body: NextInfo(
-                    name: "PERAWAT",
-                    stageState: StageState([2, 2, 2, 0], 4, 0, image),
-                    audioPlayer: mockPlayer,
-                    startTime: DateTime.now(),
-                    highestScore: highestScore),
+                  name: "PERAWAT",
+                  stageState: StageState([2, 2, 2, 0], 4, 0, image),
+                  audioPlayer: mockPlayer,
+                  startTime: DateTime.now(),
+                ),
               ),
             )),
       ),
@@ -404,11 +412,11 @@ void main() {
             child: MaterialApp(
               home: Scaffold(
                 body: NextInfo(
-                    name: "PERAWAT",
-                    stageState: StageState([2, 2, 2, 0], 4, 0, image),
-                    audioPlayer: mockPlayer,
-                    startTime: DateTime.now(),
-                    highestScore: highestScore),
+                  name: "PERAWAT",
+                  stageState: StageState([2, 2, 2, 0], 4, 0, image),
+                  audioPlayer: mockPlayer,
+                  startTime: DateTime.now(),
+                ),
               ),
             )),
       ),
@@ -437,11 +445,11 @@ void main() {
         child: MaterialApp(
           home: Scaffold(
               body: NextInfo(
-                  name: "PERAWAT",
-                  stageState: StageState([1, 0, 0, 0], 1, 0, image),
-                  audioPlayer: mockPlayer,
-                  startTime: DateTime.now(),
-                  highestScore: highestScore)),
+            name: "PERAWAT",
+            stageState: StageState([1, 0, 0, 0], 1, 0, image),
+            audioPlayer: mockPlayer,
+            startTime: DateTime.now(),
+          )),
         )));
 
     final NavigatorState navigator = tester.state(find.byType(Navigator));

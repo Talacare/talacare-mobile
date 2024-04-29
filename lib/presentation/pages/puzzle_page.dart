@@ -69,7 +69,6 @@ class PuzzlePage extends StatelessWidget {
                               name: name,
                               stageState: stageState,
                               startTime: DateTime.now(),
-                              highestScore: highestScore,
                             ),
                           ],
                         ),

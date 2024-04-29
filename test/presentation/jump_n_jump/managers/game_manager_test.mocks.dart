@@ -266,16 +266,6 @@ class MockJumpNJump extends _i1.Mock implements _i14.JumpNJump {
   }
 
   @override
-  set onBackToMenuCallback(_i6.VoidCallback? _onBackToMenuCallback) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #onBackToMenuCallback,
-          _onBackToMenuCallback,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
   set audioManager(_i15.IAudioManager? _audioManager) => super.noSuchMethod(
         Invocation.setter(
           #audioManager,
@@ -829,10 +819,10 @@ class MockJumpNJump extends _i1.Mock implements _i14.JumpNJump {
       );
 
   @override
-  void onBackToMenu() => super.noSuchMethod(
+  void onBackToMenu(_i11.BuildContext? context) => super.noSuchMethod(
         Invocation.method(
           #onBackToMenu,
-          [],
+          [context],
         ),
         returnValueForMissingStub: null,
       );
