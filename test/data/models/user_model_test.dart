@@ -9,7 +9,6 @@ void main() {
   const String photoURL = 'https://example.com/photo.jpg';
   const UserRole role = UserRole.USER;
 
-
   const userModel = UserModel(
     email: email,
     name: name,
@@ -53,7 +52,7 @@ void main() {
     expect(userModel.email, email);
     expect(userModel.name, name);
     expect(userModel.photoURL, photoURL);
-    expect(userModel.role, UserRole.USER);
+    expect(userModel.role, role);
   });
 
   test('Deserialization from uncompleted JSON', () {
