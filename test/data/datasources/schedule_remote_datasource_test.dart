@@ -73,8 +73,8 @@ void main() {
       {'hour': 14, 'minute': 45},
     ];
 
-    when(mockDio.get(any, options: anyNamed('options')))
-        .thenAnswer((_) async => Response(
+    when(mockDio.get(any, options: anyNamed('options'))).thenAnswer((_) async =>
+        Response(
             requestOptions:
                 RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
             statusCode: 200,
@@ -89,20 +89,63 @@ void main() {
     verify(mockDio.get(any, options: anyNamed('options'))).called(1);
   });
 
-  test('should throw an error message when DioException is caught on getSchedulesByUserId', () async {
+  test(
+      'should throw an error message when DioException is caught on getSchedulesByUserId',
+      () async {
     const errorMessage = "Failed to retrieve schedules";
 
-    when(mockDio.get(any, options: anyNamed('options')))
-        .thenThrow(DioException(
-            requestOptions: RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
-            response: Response(
-                requestOptions: RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
-                statusCode: 400,
-                data: {'responseMessage': errorMessage})));
+    when(mockDio.get(any, options: anyNamed('options'))).thenThrow(DioException(
+        requestOptions:
+            RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
+        response: Response(
+            requestOptions:
+                RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
+            statusCode: 400,
+            data: {'responseMessage': errorMessage})));
 
     expect(
       () async => await dataSource.getSchedulesByUserId(),
       throwsA(predicate((e) => e == errorMessage)),
+    );
+  });
+
+  test('Should delete schedule successfully', () async {
+    const scheduleId = '123';
+
+    when(mockDio.delete(any,
+            data: anyNamed('data'), options: anyNamed('options')))
+        .thenAnswer((_) async => Response(
+            requestOptions: RequestOptions(
+                path: '${dotenv.env['API_URL']!}/schedule/$scheduleId'),
+            statusCode: 200,
+            data: {'responseStatus': "SUCCESS"}));
+
+    await dataSource.deleteSchedule(scheduleId);
+
+    verify(mockDio.delete(
+      '${dotenv.env['API_URL']!}/schedule/$scheduleId',
+      options: anyNamed('options'),
+    )).called(1);
+  });
+
+  test('Should throw error if DioException occurs', () async {
+    const scheduleId = '123';
+    final dioErrorResponse = Response(
+      requestOptions: RequestOptions(path: ''),
+      data: {'responseMessage': 'Not Authorized'},
+    );
+    final dioException = DioException(
+      requestOptions: RequestOptions(path: ''),
+      response: dioErrorResponse,
+    );
+    when(mockDio.delete(
+      '${dotenv.env['API_URL']!}/schedule/$scheduleId',
+      options: anyNamed('options'),
+    )).thenThrow(dioException);
+
+    expect(
+      () async => await dataSource.deleteSchedule(scheduleId),
+      throwsA('Not Authorized'),
     );
   });
 }

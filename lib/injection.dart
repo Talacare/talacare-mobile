@@ -50,18 +50,11 @@ Future<void> init() async {
       () => GameHistoryRepositoryImpl(getIt()));
 
   // Data source
-  getIt.registerLazySingleton<AuthRemoteDatasource>(() =>
-      AuthRemoteDatasourceImpl(
-          googleSignIn: getIt(),
-          firebaseAuthInstance: getIt(),
-          dio: getIt(),
-          localDatasource: getIt()));
+  getIt.registerLazySingleton<AuthRemoteDatasource>(() => AuthRemoteDatasourceImpl(googleSignIn: getIt(), firebaseAuthInstance: getIt(), dio: getIt(), localDatasource: getIt()));
 
-  getIt.registerLazySingleton<AuthLocalDatasource>(
-      () => AuthLocalDatasourceImpl(storage: getIt()));
+  getIt.registerLazySingleton<AuthLocalDatasource>(() => AuthLocalDatasourceImpl(storage: getIt()));
 
-  getIt.registerLazySingleton<ScheduleRemoteDatasource>(() =>
-      ScheduleRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));
+  getIt.registerLazySingleton<ScheduleRemoteDatasource>(() => ScheduleRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));
 
   getIt.registerLazySingleton<GameHistoryRemoteDatasource>(() =>
       GameHistoryRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));

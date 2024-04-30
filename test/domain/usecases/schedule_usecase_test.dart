@@ -47,4 +47,12 @@ void main() {
 
     verify(mockScheduleRepository.getSchedulesByUserId()).called(1);
   });
+
+  test('should invoke deleteSchedule on the schedule repository', () async {
+    const scheduleId = '123';
+    when(mockScheduleRepository.deleteSchedule(any))
+        .thenAnswer((_) async => {});
+    await useCase.deleteSchedule(scheduleId);
+    verify(mockScheduleRepository.deleteSchedule(scheduleId)).called(1);
+  });
 }
