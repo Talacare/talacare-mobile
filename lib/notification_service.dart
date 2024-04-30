@@ -19,7 +19,7 @@ class NotificationService {
     var initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid);
     await notificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {});
+        onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {}); // coverage:ignore-line
   }
 
   notificationDetails() {

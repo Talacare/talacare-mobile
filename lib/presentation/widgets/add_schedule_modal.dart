@@ -68,6 +68,7 @@ class _AddScheduleModalState extends State<AddScheduleModal> {
                         fontSize: 25,
                         fontWeight: FontWeight.w500,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   const SizedBox(height: 20),

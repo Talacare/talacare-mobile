@@ -42,7 +42,7 @@ class ScheduleProvider extends ChangeNotifier {
     notifyListenersWithDelay();
   }
 
-  void notifyListenersWithDelay(){
+  void notifyListenersWithDelay() {
     Future.delayed(const Duration(milliseconds: 10), () => notifyListeners());
   }
 
