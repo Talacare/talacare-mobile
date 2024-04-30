@@ -58,8 +58,7 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
     final topOfLowestBloodBag = bloodBags.first.position.y;
 
     final screenBottom = gameRef.dash.position.y +
-        (gameRef.size.x / 2) +
-        gameRef.screenBufferSpace;
+        (gameRef.size.y / 2);
 
     if (topOfLowestBloodBag > screenBottom) {
       var newBloodBagY = generateNextY();

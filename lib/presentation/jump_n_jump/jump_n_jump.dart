@@ -137,7 +137,7 @@ class JumpNJump extends FlameGame
       if (gameManager.isGameOver) {
         timer.cancel();
       } else {
-        dash.decreaseHealth(1);
+        dash.decreaseHealth(2);
       }
     });
   }

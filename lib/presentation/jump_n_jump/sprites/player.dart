@@ -44,8 +44,8 @@ class Player extends SpriteGroupComponent<PlayerState>
   int _hAxisInput = 0;
 
   final double moveSpeed = 400;
-  final double _gravity = 7;
-  final double jumpSpeed = 700;
+  final double _gravity = 14;
+  final double jumpSpeed = 1000;
   final ValueNotifier<double> health = ValueNotifier<double>(100);
 
   final int movingLeftInput = -1;
