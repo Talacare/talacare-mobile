@@ -21,7 +21,7 @@ class ScheduleProvider extends ChangeNotifier {
 
   void setLoading(bool isLoading) {
     _isLoading = isLoading;
-    notifyListeners();
+    notifyListenersWithDelay();
   }
 
   void setError(bool isError, [String? message]) {
@@ -29,17 +29,21 @@ class ScheduleProvider extends ChangeNotifier {
     if (message != null) {
       _message = message;
     }
-    notifyListeners();
+    notifyListenersWithDelay();
   }
 
   void setMessage(String message) {
     _message = message;
-    notifyListeners();
+    notifyListenersWithDelay();
   }
 
   void setSchedules(List<Map<String, String>> schedules) {
     _schedules = schedules;
-    notifyListeners();
+    notifyListenersWithDelay();
+  }
+
+  void notifyListenersWithDelay() {
+    Future.delayed(const Duration(milliseconds: 10), () => notifyListeners());
   }
 
   Future<void> createSchedule(ScheduleEntity schedule) async {
@@ -52,7 +56,6 @@ class ScheduleProvider extends ChangeNotifier {
       setLoading(false);
     } catch (e) {
       debugPrint(e.toString());
-      setMessage(e.toString());
       setError(true, '$e');
       setLoading(false);
     }
@@ -69,8 +72,21 @@ class ScheduleProvider extends ChangeNotifier {
       debugPrint(e.toString());
       setError(true, '$e');
       setLoading(false);
+    }
+  }
 
-      throw Exception('Failed to get schedules: $e');
+  Future<void> deleteSchedule(String scheduleId) async {
+    try {
+      setLoading(true);
+      setError(false);
+      setMessage('');
+      await useCase.deleteSchedule(scheduleId);
+      setMessage('Jadwal berhasil dihapus');
+      setLoading(false);
+    } catch (e) {
+      debugPrint(e.toString());
+      setError(true, '$e');
+      setLoading(false);
     }
   }
 }

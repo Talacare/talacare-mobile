@@ -60,4 +60,11 @@ void main() {
 
     expect(result, equals(scheduleModels));
   });
+
+  test('should call delete schedule of schedule remote datasource', () async {
+    when(mockRemoteDatasource.deleteSchedule(scheduleModel.id))
+        .thenAnswer((_) async => Future.value());
+    await repository.deleteSchedule(scheduleModel.id!);
+    verify(mockRemoteDatasource.deleteSchedule(scheduleModel.id)).called(1);
+  });
 }
