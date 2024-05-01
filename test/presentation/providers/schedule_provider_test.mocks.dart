@@ -61,4 +61,27 @@ class MockScheduleUseCase extends _i1.Mock implements _i3.ScheduleUseCase {
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<List<Map<String, String>>> getSchedulesByUserId() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getSchedulesByUserId,
+          [],
+        ),
+        returnValue: _i4.Future<List<Map<String, String>>>.value(
+            <Map<String, String>>[]),
+        returnValueForMissingStub: _i4.Future<List<Map<String, String>>>.value(
+            <Map<String, String>>[]),
+      ) as _i4.Future<List<Map<String, String>>>);
+
+  @override
+  _i4.Future<void> deleteSchedule(String? scheduleId) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteSchedule,
+          [scheduleId],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }

@@ -14,11 +14,14 @@ class ScheduleProvider extends ChangeNotifier {
   String _message = '';
   String get message => _message;
 
+  List<Map<String, String>> _schedules = [];
+  List<Map<String, String>> get schedules => _schedules;
+
   ScheduleProvider({required this.useCase});
 
   void setLoading(bool isLoading) {
     _isLoading = isLoading;
-    notifyListeners();
+    notifyListenersWithDelay();
   }
 
   void setError(bool isError, [String? message]) {
@@ -26,12 +29,21 @@ class ScheduleProvider extends ChangeNotifier {
     if (message != null) {
       _message = message;
     }
-    notifyListeners();
+    notifyListenersWithDelay();
   }
 
   void setMessage(String message) {
     _message = message;
-    notifyListeners();
+    notifyListenersWithDelay();
+  }
+
+  void setSchedules(List<Map<String, String>> schedules) {
+    _schedules = schedules;
+    notifyListenersWithDelay();
+  }
+
+  void notifyListenersWithDelay() {
+    Future.delayed(const Duration(milliseconds: 10), () => notifyListeners());
   }
 
   Future<void> createSchedule(ScheduleEntity schedule) async {
@@ -44,7 +56,35 @@ class ScheduleProvider extends ChangeNotifier {
       setLoading(false);
     } catch (e) {
       debugPrint(e.toString());
-      setMessage(e.toString());
+      setError(true, '$e');
+      setLoading(false);
+    }
+  }
+
+  Future<void> getSchedulesByUserId() async {
+    try {
+      setLoading(true);
+      setError(false);
+      final formattedSchedules = await useCase.getSchedulesByUserId();
+      setSchedules(formattedSchedules);
+      setLoading(false);
+    } catch (e) {
+      debugPrint(e.toString());
+      setError(true, '$e');
+      setLoading(false);
+    }
+  }
+
+  Future<void> deleteSchedule(String scheduleId) async {
+    try {
+      setLoading(true);
+      setError(false);
+      setMessage('');
+      await useCase.deleteSchedule(scheduleId);
+      setMessage('Jadwal berhasil dihapus');
+      setLoading(false);
+    } catch (e) {
+      debugPrint(e.toString());
       setError(true, '$e');
       setLoading(false);
     }

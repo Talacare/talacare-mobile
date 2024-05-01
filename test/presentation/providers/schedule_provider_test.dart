@@ -44,4 +44,63 @@ void main() {
     expect(scheduleProvider.message, contains(errorMessage));
     verify(mockScheduleUseCase.createSchedule(scheduleEntity)).called(1);
   });
+
+  test('should fetch schedules by user ID successfully', () async {
+    const schedules = [
+      {'id': '1', 'time': '09:05'},
+      {'id': '2', 'time': '14:20'},
+      {'id': '3', 'time': '23:59'},
+    ];
+
+    when(mockScheduleUseCase.getSchedulesByUserId())
+        .thenAnswer((_) async => Future.value(schedules));
+
+    await scheduleProvider.getSchedulesByUserId();
+
+    expect(scheduleProvider.schedules, schedules);
+    expect(scheduleProvider.isError, false);
+    verify(mockScheduleUseCase.getSchedulesByUserId()).called(1);
+  });
+
+  test('should handle errors when fetching schedules by user ID', () async {
+    const errorMessage = 'Failed to get schedules';
+    when(mockScheduleUseCase.getSchedulesByUserId())
+        .thenThrow(Exception(errorMessage));
+
+    await scheduleProvider.getSchedulesByUserId();
+    
+    expect(scheduleProvider.message, contains(errorMessage));
+    expect(scheduleProvider.schedules, isEmpty);
+    verify(mockScheduleUseCase.getSchedulesByUserId()).called(1);
+  });
+
+  test('should correctly handle a successful schedule deletion', () async {
+    const scheduleId = 'schedule-123';
+
+    when(mockScheduleUseCase.deleteSchedule(scheduleId))
+        .thenAnswer((_) async => Future.value());
+
+    await scheduleProvider.deleteSchedule(scheduleId);
+
+    expect(scheduleProvider.isLoading, false);
+    expect(scheduleProvider.isError, false);
+    expect(scheduleProvider.message, 'Jadwal berhasil dihapus');
+
+    verify(mockScheduleUseCase.deleteSchedule(scheduleId)).called(1);
+  });
+
+  test('should correctly handle a failed schedule deletion', () async {
+    const scheduleId = 'schedule-123';
+    final error = Exception('Failed to delete schedule');
+
+    when(mockScheduleUseCase.deleteSchedule(scheduleId)).thenThrow(error);
+
+    await scheduleProvider.deleteSchedule(scheduleId);
+
+    expect(scheduleProvider.isLoading, false);
+    expect(scheduleProvider.isError, true);
+    expect(scheduleProvider.message, error.toString());
+
+    verify(mockScheduleUseCase.deleteSchedule(scheduleId)).called(1);
+  });
 }

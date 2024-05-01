@@ -62,7 +62,7 @@ class MockDio extends Mock implements Dio {
       "responseMessage": "Login Successful",
       "responseCode": 200,
       "responseStatus": "SUCCESS",
-      "token": "token"
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmb29AZW1haWwuY29tIiwiZXhwIjoxNjM4ODU1MzA1LCJpYXQiOjE2Mzg4MTkzMDV9.q4FWV7yVDAs_DREiF524VZ-udnqwV81GEOgdCj6QQAs"
     };
 
     final response =

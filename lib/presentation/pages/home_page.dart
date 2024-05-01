@@ -107,6 +107,7 @@ class HomePage extends StatelessWidget {
                   key: const Key('jump_n_jump_card'),
                   buttonName: "jump_n_jump_button",
                   onTap: () {
+                    AnalyticsEngineUtil.userPlaysJumpNJump();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -140,7 +141,8 @@ class HomePage extends StatelessWidget {
                   onTap: () async {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SchedulePage()),
+                      MaterialPageRoute(builder: (context) => const SchedulePage()
+                      ),
                     );
                   },
                 ),

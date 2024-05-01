@@ -1,26 +1,33 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/core/utils/analytics_engine_util.dart';
 import 'package:talacare/core/utils/text_to_speech.dart';
+import 'package:talacare/data/models/game_history_model.dart';
 import 'package:talacare/data/models/stage_state.dart';
+import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
+import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/button.dart';
-import 'package:provider/provider.dart';
 import 'package:talacare/presentation/widgets/game_over_modal.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
 class NextInfo extends StatefulWidget {
   final StageState stageState;
   final AudioPlayer? audioPlayer;
   final String name;
+  final DateTime startTime;
 
   const NextInfo({
     super.key,
     required this.stageState,
     required this.name,
     this.audioPlayer,
+    required this.startTime,
   });
 
   @override
@@ -34,6 +41,7 @@ class _NextInfoState extends State<NextInfo> {
   Widget build(BuildContext context) {
     final finishState = Provider.of<TimerState>(context);
     final clearState = Provider.of<CompleteState>(context);
+    final timeLeftState = Provider.of<TimeLeftState>(context);
 
     List<int> currentState = widget.stageState.starList;
 
@@ -47,7 +55,7 @@ class _NextInfoState extends State<NextInfo> {
 
     if (clearState.value) {
       currentState[widget.stageState.stage - 1] = 2;
-      widget.stageState.score += 25;
+      widget.stageState.score += (50 + timeLeftState.value);
       if (widget.stageState.stage < 4) {
         currentState[widget.stageState.stage] = 1;
       }
@@ -112,7 +120,7 @@ class _NextInfoState extends State<NextInfo> {
               key: const Key('nextButton'),
               text: 'Lanjut',
               colorScheme: ButtonColorScheme.purple,
-              onTap: () {
+              onTap: () async {
                 audioPlayer.stop();
                 if (widget.stageState.stage < 4) {
                   Navigator.push(
@@ -127,14 +135,29 @@ class _NextInfoState extends State<NextInfo> {
                             )),
                   );
                 } else {
+                  final gameHistory = GameHistoryModel(
+                    gameType: 'PUZZLE',
+                    startTime: widget.startTime,
+                    endTime: DateTime.now(),
+                    score: widget.stageState.score,
+                  );
+                  await getIt<GameHistoryProvider>()
+                      .createGameHistory(gameHistory);
+
+                  final highestScoreHistory = await getIt<GameHistoryProvider>()
+                      .getHighestScoreHistory('PUZZLE');
+                  final highScore = highestScoreHistory?.score ?? 0;
+
                   showDialog(
+                      // ignore: use_build_context_synchronously
                       context: context,
                       builder: (BuildContext context) {
                         return GameOverModal(
                           key: const Key("game-over"),
                           currentScore: widget.stageState.score,
-                          highestScore: 999,
+                          highestScore: highScore,
                           onMainLagiPressed: () {
+                            AnalyticsEngineUtil.userPlaysPuzzleAgain();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -145,6 +168,7 @@ class _NextInfoState extends State<NextInfo> {
                             );
                           },
                           onMenuPressed: () {
+                            AnalyticsEngineUtil.userStopPlaysPuzzle();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
