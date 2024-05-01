@@ -2,7 +2,7 @@
 // in talacare/test/presentation/jump_n_jump/managers/game_manager_test.dart.
 // Do not manually edit this file.
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes, invalid_use_of_internal_member
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i17;
 import 'dart:ui' as _i6;
 
@@ -819,10 +819,10 @@ class MockJumpNJump extends _i1.Mock implements _i14.JumpNJump {
       );
 
   @override
-  void onBackToMenu() => super.noSuchMethod(
+  void onBackToMenu(_i11.BuildContext? context) => super.noSuchMethod(
         Invocation.method(
           #onBackToMenu,
-          [],
+          [context],
         ),
         returnValueForMissingStub: null,
       );
