@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talacare/core/enums/user_role.dart';
 import 'package:talacare/domain/entities/user_entity.dart';
 
 void main() {
@@ -6,6 +7,7 @@ void main() {
     email: 'test@example.com',
     name: 'Test User',
     photoURL: 'https://example.com/photo.jpg',
+    role: UserRole.ADMIN,
   );
 
   test('UserEntity instances with the same properties should be equal', () {
@@ -13,6 +15,7 @@ void main() {
       email: 'test@example.com',
       name: 'Test User',
       photoURL: 'https://example.com/photo.jpg',
+      role: UserRole.ADMIN,
     );
 
     expect(user, equals(otherUser));
@@ -24,6 +27,7 @@ void main() {
       email: 'test2@example.com',
       name: 'Test User 2',
       photoURL: 'https://example.com/photo2.jpg',
+      role: UserRole.USER,
     );
     expect(user, isNot(equals(otherUser)));
   });
@@ -34,7 +38,12 @@ void main() {
       expect(
         user.props,
         equals(
-          ['test@example.com', 'Test User', 'https://example.com/photo.jpg'],
+          [
+            'test@example.com',
+            'Test User',
+            'https://example.com/photo.jpg',
+            UserRole.ADMIN,
+          ],
         ),
       );
     },
