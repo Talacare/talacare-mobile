@@ -101,7 +101,7 @@ void main() {
     testWidgets('createGameWidget should create a GameWidget',
         (WidgetTester tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: JumpNJumpPage(character: Character.boy),
         ),
       );

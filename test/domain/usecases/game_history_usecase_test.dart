@@ -25,7 +25,7 @@ void main() {
     score: 100,
   );
 
-  final gameType = 'PUZZLE';
+  const gameType = 'PUZZLE';
 
   setUp(() {
     mockGameHistoryRepository = MockGameHistoryRepository();

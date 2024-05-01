@@ -80,6 +80,7 @@ void main() {
 
     try {
       await gameHistoryProvider.getHighestScoreHistory('PUZZLE');
+      // ignore: empty_catches
     } catch (e) {}
 
     expect(gameHistoryProvider.isLoading, false);

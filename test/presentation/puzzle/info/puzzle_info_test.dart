@@ -12,7 +12,7 @@ import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 void main() {
   late Widget puzzleInfo;
   late List<ImagePair> image;
-  final highestScore = 100;
+  const highestScore = 100;
 
   setUp(() async {
     image = [

@@ -15,6 +15,7 @@ import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/world.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 
+// ignore: library_prefixes
 import 'jump_n_jump_test.mocks.dart' as JumpNJumpTestMocks;
 
 @GenerateNiceMocks([
@@ -113,7 +114,8 @@ void main() {
               10);
       game.update(0.0);
 
-      game.overlays.addEntry('gameOverOverlay', (context, game) => SizedBox());
+      game.overlays
+          .addEntry('gameOverOverlay', (context, game) => const SizedBox());
       game.overlays.add('gameOverOverlay');
 
       expect(game.gameManager.state, GameState.gameOver);
@@ -123,7 +125,7 @@ void main() {
     jumpNJumpGameTester.test('Game transitions to game over state correctly',
         (game) async {
       game.onLose();
-      game.overlays.addEntry('gameOverOverlay', (context, game) => SizedBox());
+      game.overlays.addEntry('gameOverOverlay', (context, game) => const SizedBox());
       game.overlays.add('gameOverOverlay');
 
       expect(game.gameManager.state, GameState.gameOver);
@@ -132,7 +134,7 @@ void main() {
 
     jumpNJumpGameTester.test('Modal shown when game over', (game) async {
       game.onLose();
-      game.overlays.addEntry('gameOverOverlay', (context, game) => SizedBox());
+      game.overlays.addEntry('gameOverOverlay', (context, game) => const SizedBox());
       game.overlays.add('gameOverOverlay');
 
       expect(game.gameManager.isGameOver, isTrue);
@@ -142,7 +144,7 @@ void main() {
     jumpNJumpGameTester.test('Game Over state is correctly triggered',
         (game) async {
       game.onLose();
-      game.overlays.addEntry('gameOverOverlay', (context, game) => SizedBox());
+      game.overlays.addEntry('gameOverOverlay', (context, game) => const SizedBox());
       game.overlays.add('gameOverOverlay');
 
       expect(game.gameManager.isGameOver, isTrue);
