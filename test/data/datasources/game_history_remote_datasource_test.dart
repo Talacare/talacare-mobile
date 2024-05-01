@@ -91,7 +91,7 @@ void main() {
       endTime: DateTime.parse('2024-04-04 12:00:00.000'),
       score: 100,
     );
-    final gameType = 'PUZZLE';
+    const gameType = 'PUZZLE';
 
     final fakeHighestScoreGameHistoryData = {
       'gameType': 'PUZZLE',
@@ -104,7 +104,7 @@ void main() {
         .thenAnswer(((_) async => Response(
               requestOptions: RequestOptions(
                   path:
-                      '${dotenv.env['API_URL']!}/game-history/high-score/${gameType}'),
+                      '${dotenv.env['API_URL']!}/game-history/high-score/$gameType'),
               statusCode: 200,
               data: {
                 'responseStatus': "SUCCESS",
@@ -123,7 +123,7 @@ void main() {
   test(
       'should throw an error message when DioException is caught on getHighestScoreHistory',
       () async {
-    final gameType = 'PUZZLE';
+    const gameType = 'PUZZLE';
 
     const errorMessage = "Failed to retrieve highest score game history";
 

@@ -28,7 +28,7 @@ void main() {
     score: 100,
   );
 
-  final gameType = 'PUZZLE';
+  const gameType = 'PUZZLE';
 
   setUp(() {
     mockRemoteDatasource = MockGameHistoryRemoteDatasource();

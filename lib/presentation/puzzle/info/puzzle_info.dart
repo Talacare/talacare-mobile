@@ -59,7 +59,7 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
         ),
         Text(
           'TERTINGGI: ${widget.highestScore}',
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.normal,
               color: Colors.white,
