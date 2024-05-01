@@ -6,6 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:talacare/data/datasources/auth_local_datasource.dart';
 
 import '../models/user_model.dart';
@@ -38,7 +39,8 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
       await _storeToStorage(user, userModel);
       return userModel;
     } catch (e) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(FlutterErrorDetails(exception: e));
+      FirebaseCrashlytics.instance
+          .recordFlutterFatalError(FlutterErrorDetails(exception: e));
       throw Exception('Sign-in failed: $e');
     }
   }
@@ -76,8 +78,13 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
     final token = await user.getIdToken();
     final response = await dio.get(authAPI,
         options: Options(headers: {'Authorization': token}));
+
+    Map<String, dynamic> decodedToken =
+        JwtDecoder.decode(response.data["token"]);
+
     await localDatasource.storeData('access_token', response.data["token"]);
     await localDatasource.storeData('user', json.encode(userModel));
+    await localDatasource.storeData("role", decodedToken['role']);
   }
 
   @override
@@ -90,5 +97,9 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
     } catch (e) {
       throw Exception('Logout failed: $e');
     }
+  }
+
+  Map<String, dynamic> decodeJwtToken(String token) {
+    return JwtDecoder.decode(token);
   }
 }
