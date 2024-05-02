@@ -20,4 +20,9 @@ class ScheduleRepositoryImpl extends ScheduleRepository {
     final schedules = await scheduleRemoteDatasource.getSchedulesByUserId();
     return schedules;
   }
+
+  @override
+  Future<void> deleteSchedule(String scheduleId) async {
+    await scheduleRemoteDatasource.deleteSchedule(scheduleId);
+  }
 }

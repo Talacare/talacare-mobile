@@ -52,4 +52,14 @@ class MockScheduleRepository extends _i1.Mock
         returnValue:
             _i3.Future<List<_i4.ScheduleEntity>>.value(<_i4.ScheduleEntity>[]),
       ) as _i3.Future<List<_i4.ScheduleEntity>>);
+
+  @override
+  _i3.Future<void> deleteSchedule(String? scheduleId) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteSchedule,
+          [scheduleId],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 }

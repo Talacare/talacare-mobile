@@ -12,6 +12,7 @@ import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 void main() {
   late Widget puzzleInfo;
   late List<ImagePair> image;
+  const highestScore = 100;
 
   setUp(() async {
     image = [
@@ -37,7 +38,10 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(stageState: state),
+          home: PuzzleInfo(
+            stageState: state,
+            highestScore: highestScore,
+          ),
         ));
   });
 
@@ -53,7 +57,7 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(puzzleInfo);
 
-    expect(find.text('TERTINGGI: 75'), findsOneWidget);
+    expect(find.text('TERTINGGI: $highestScore'), findsOneWidget);
     expect(find.text('SISA WAKTU'), findsOneWidget);
   });
 
@@ -140,7 +144,10 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(stageState: StageState([0, 0, 0, 0], 4, 0, image)),
+          home: PuzzleInfo(
+            stageState: StageState([0, 0, 0, 0], 4, 0, image),
+            highestScore: highestScore,
+          ),
         )));
 
     expect(
@@ -169,7 +176,10 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(stageState: StageState([0, 0, 0, 0], 4, 0, image)),
+          home: PuzzleInfo(
+            stageState: StageState([0, 0, 0, 0], 4, 0, image),
+            highestScore: highestScore,
+          ),
         )));
 
     expect(

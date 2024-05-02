@@ -1,21 +1,25 @@
 import 'dart:async';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
+import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
+import 'package:network_image_mock/network_image_mock.dart';
+import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 import 'package:talacare/data/models/image_pair.dart';
 import 'package:talacare/data/models/stage_state.dart';
+import 'package:talacare/domain/entities/game_history_entity.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
+import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
-import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
-import 'package:mockito/mockito.dart';
-import 'package:network_image_mock/network_image_mock.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
+import '../jump_n_jump/jump_n_jump_test.mocks.dart';
 import '../pages/login_page_test.mocks.dart';
 import 'next_info_test.mocks.dart';
 
@@ -24,9 +28,17 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 @GenerateMocks([AudioPlayer])
 void main() {
   late List<ImagePair> image;
+ 
   final getIt = GetIt.instance;
+  late MockGameHistoryProvider mockGameHistoryProvider;
+
+  TestWidgetsFlutterBinding.ensureInitialized();
+  setupFirebaseCoreMocks();    
 
   setUp(() async {
+    mockGameHistoryProvider = MockGameHistoryProvider();
+    await Firebase.initializeApp();
+
     image = [
       ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG"),
       ImagePair(
@@ -35,12 +47,23 @@ void main() {
       ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT"),
     ];
 
+    when(mockGameHistoryProvider.getHighestScoreHistory('PUZZLE'))
+        .thenAnswer((_) async => GameHistoryEntity(
+              gameType: 'PUZZLE',
+              startTime: DateTime.now(),
+              endTime: DateTime.now(),
+              score: 75,
+            ));
+
     getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
+
+    getIt.registerSingleton<GameHistoryProvider>(mockGameHistoryProvider);
+
     AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
   });
 
   tearDown(() {
-    getIt.unregister<AuthProvider>();
+    getIt.reset();
   });
 
   group('Win Puzzle Modal Widget Tests', () {
@@ -62,6 +85,7 @@ void main() {
                 body: NextInfo(
                   name: "PERAWAT",
                   stageState: StageState([1, 0, 0, 0], 1, 0, image),
+                  startTime: DateTime.now(),
                 ),
               ),
             )),
@@ -77,10 +101,13 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: MultiProvider(
+          home: ChangeNotifierProvider(
+            create: (_) => getIt<GameHistoryProvider>(),
+            child: MultiProvider(
               providers: [
                 ChangeNotifierProvider<TimerState>(
-                    create: (context) => TimerState(initialValue: false)),
+                  create: (context) => TimerState(initialValue: true),
+                ),
                 ChangeNotifierProvider<CompleteState>(
                   create: (context) => CompleteState(initialValue: true),
                 ),
@@ -92,14 +119,16 @@ void main() {
                 home: Scaffold(
                   body: NextInfo(
                     name: "PERAWAT",
-                    stageState: StageState([1, 0, 0, 0], 1, 0, image),
+                    stageState: StageState([2, 3, 2, 0], 4, 0, image),
+                    startTime: DateTime.now(),
                   ),
                 ),
-              )),
+              ),
+            ),
+          ),
           navigatorObservers: [mockObserver],
         ),
       );
-
       expect(find.byKey(const Key('nextButton')), findsOneWidget);
       await tester.tap(find.byKey(const Key('nextButton')));
       await tester.pumpAndSettle();
@@ -124,6 +153,7 @@ void main() {
             body: NextInfo(
               name: "PERAWAT",
               stageState: StageState([1, 0, 0, 0], 1, 0, image),
+              startTime: DateTime.now(),
             ),
           ),
         )));
@@ -138,10 +168,13 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
-        home: MultiProvider(
+        home: ChangeNotifierProvider(
+          create: (_) => getIt<GameHistoryProvider>(),
+          child: MultiProvider(
             providers: [
               ChangeNotifierProvider<TimerState>(
-                  create: (context) => TimerState(initialValue: true)),
+                create: (context) => TimerState(initialValue: true),
+              ),
               ChangeNotifierProvider<CompleteState>(
                 create: (context) => CompleteState(initialValue: false),
               ),
@@ -154,9 +187,12 @@ void main() {
                 body: NextInfo(
                   name: "PERAWAT",
                   stageState: StageState([2, 3, 2, 0], 4, 0, image),
+                  startTime: DateTime.now(),
                 ),
               ),
-            )),
+            ),
+          ),
+        ),
         navigatorObservers: [mockObserver],
       ),
     );
@@ -174,10 +210,13 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
-        home: MultiProvider(
+        home: ChangeNotifierProvider(
+          create: (_) => getIt<GameHistoryProvider>(),
+          child: MultiProvider(
             providers: [
               ChangeNotifierProvider<TimerState>(
-                  create: (context) => TimerState(initialValue: true)),
+                create: (context) => TimerState(initialValue: true),
+              ),
               ChangeNotifierProvider<CompleteState>(
                 create: (context) => CompleteState(initialValue: false),
               ),
@@ -189,14 +228,16 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4, 0, image),
+                  stageState: StageState([2, 3, 2, 0], 4, 0, image),
+                  startTime: DateTime.now(),
                 ),
               ),
-            )),
+            ),
+          ),
+        ),
         navigatorObservers: [mockObserver],
       ),
     );
-
     expect(find.byKey(const Key('nextButton')), findsOneWidget);
     await tester.tap(find.byKey(const Key('nextButton')));
     await tester.pumpAndSettle();
@@ -229,6 +270,7 @@ void main() {
                 body: NextInfo(
                   name: "PERAWAT",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
+                  startTime: DateTime.now(),
                 ),
               ),
             )),
@@ -267,6 +309,7 @@ void main() {
                 body: NextInfo(
                   name: "PERAWAT",
                   stageState: StageState([2, 2, 2, 0], 4, 50, image),
+                  startTime: DateTime.now(),
                 ),
               ),
             )),
@@ -302,6 +345,7 @@ void main() {
                 body: NextInfo(
                   name: "PERAWAT",
                   stageState: StageState([2, 2, 2, 0], 4, 50, image),
+                  startTime: DateTime.now(),
                 ),
               ),
             )),
@@ -340,6 +384,7 @@ void main() {
                   name: "PERAWAT",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   audioPlayer: mockPlayer,
+                  startTime: DateTime.now(),
                 ),
               ),
             )),
@@ -376,6 +421,7 @@ void main() {
                   name: "PERAWAT",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   audioPlayer: mockPlayer,
+                  startTime: DateTime.now(),
                 ),
               ),
             )),
@@ -408,6 +454,7 @@ void main() {
             name: "PERAWAT",
             stageState: StageState([1, 0, 0, 0], 1, 0, image),
             audioPlayer: mockPlayer,
+            startTime: DateTime.now(),
           )),
         )));
 
