@@ -41,7 +41,7 @@ class _ChooseCharacterState extends State<ChooseCharacterPage> {
                       }),
                       isSelected: _character == Character.boy,
                       imageName: 'boy_head.png',
-                      characterName: 'Laki-Laki',
+                      characterName: 'Tala',
                     ),
                     const Gap(30),
                     CharacterCard(
@@ -50,7 +50,7 @@ class _ChooseCharacterState extends State<ChooseCharacterPage> {
                       }),
                       isSelected: _character == Character.girl,
                       imageName: 'girl_head.png',
-                      characterName: 'Perempuan',
+                      characterName: 'Talia',
                     ),
                   ],
                 ),
