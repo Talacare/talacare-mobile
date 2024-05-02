@@ -150,7 +150,8 @@ class _NextInfoState extends State<NextInfo> {
                   final highestScoreHistory = await getIt<GameHistoryProvider>()
                       .getHighestScoreHistory('PUZZLE');
                   final highScore = highestScoreHistory?.score ?? 0;
-                    showDialog(
+                  // ignore: use_build_context_synchronously
+                  showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return GameOverModal(
