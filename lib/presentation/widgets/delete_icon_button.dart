@@ -6,7 +6,7 @@ class DeleteIconButton extends StatefulWidget {
   final ScheduleProvider scheduleProvider;
   final String scheduleId;
   final VoidCallback refreshSchedules;
-  final Function(String, bool) showNotification;
+  final Function(String, bool, String) showNotification;
 
   const DeleteIconButton({
     super.key,
@@ -38,7 +38,7 @@ class _DeleteIconButtonState extends State<DeleteIconButton> {
         });
       }
 
-      widget.showNotification(message, isSuccess);
+      widget.showNotification(message, isSuccess, widget.scheduleId);
       widget.refreshSchedules();
     });
   }
