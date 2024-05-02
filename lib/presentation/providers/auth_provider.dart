@@ -27,20 +27,24 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setError(bool isError) {
+    _isError = isError;
+    notifyListeners();
+  }
+
   Future<void> signInWithGoogle() async {
     try {
+      setError(false);
       setLoading(true);
 
       final userEntity = await useCase.signInGoogle();
-      setUser(userEntity);
 
+      setUser(userEntity);
       setLoading(false);
     } catch (e) {
       debugPrint(e.toString());
       setLoading(false);
-
-      _isError = true;
-      notifyListeners();
+      setError(true);
     }
   }
 
@@ -51,18 +55,17 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> logOut() async {
     try {
+      setError(false);
       setLoading(true);
 
       await useCase.logOut();
-      setUser(null);
 
+      setUser(null);
       setLoading(false);
     } catch (e) {
       debugPrint(e.toString());
       setLoading(false);
-
-      _isError = true;
-      notifyListeners();
+      setError(true);
     }
   }
 }

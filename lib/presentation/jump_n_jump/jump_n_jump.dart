@@ -194,8 +194,6 @@ class JumpNJump extends FlameGame
 
   void onBackToMenu(BuildContext context) {
     overlays.remove('gameOverOverlay');
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const HomePage()),
-    );
+    Navigator.pop(context);
   }
 }
