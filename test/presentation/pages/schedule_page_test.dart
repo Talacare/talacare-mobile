@@ -124,7 +124,7 @@ void main() {
       await tester.pump(const Duration(seconds: 3));
 
       SchedulePageState state = tester.state(find.byType(SchedulePage));
-      state.showNotification("Test Message", true);
+      state.showNotification("Test Message", true, "payload");
 
       await tester.pump();
       await tester.pump(const Duration(seconds: 3));

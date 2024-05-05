@@ -22,7 +22,7 @@ void main() {
               scheduleProvider: mockScheduleProvider,
               scheduleId: 'test-id',
               refreshSchedules: () {},
-              showNotification: (String message, bool isSuccess) {},
+              showNotification: (String message, bool isSuccess, String payload) {},
             ),
           ),
         );
@@ -48,7 +48,7 @@ void main() {
               scheduleProvider: mockScheduleProvider,
               scheduleId: 'test-id',
               refreshSchedules: () {},
-              showNotification: (String message, bool isSuccess) {},
+              showNotification: (String message, bool isSuccess, String payload) {},
             ),
           ),
         );
@@ -75,7 +75,7 @@ void main() {
               scheduleProvider: mockScheduleProvider,
               scheduleId: 'test-id',
               refreshSchedules: () {},
-              showNotification: (String message, bool isSuccess) {},
+              showNotification: (String message, bool isSuccess, String payload) {},
             ),
           ),
         );
@@ -101,7 +101,7 @@ void main() {
               scheduleProvider: mockScheduleProvider,
               scheduleId: 'test-id',
               refreshSchedules: () {},
-              showNotification: (String message, bool isSuccess) {},
+              showNotification: (String message, bool isSuccess, String payload) {},
             ),
           ),
         );
