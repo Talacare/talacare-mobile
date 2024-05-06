@@ -127,5 +127,11 @@ void main() {
       game.dash.decreaseHealth(10.0);
       expect(game.dash.health.value, equals(40.0));
     });
+
+    jumpNJumpGameTester.test('Test Player Velocity on GameOver', (game) async {
+      game.dash.isGameOver = true;
+      game.dash.update(0.1);
+      expect(game.dash.velocity, equals(Vector2(0, 500)));
+    });
   });
 }
