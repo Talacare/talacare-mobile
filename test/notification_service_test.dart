@@ -143,7 +143,7 @@ void main() {
       );
 
       expect(find.byKey(const Key('test_button')), findsOneWidget);
-      // await tester.tap(find.byKey(const Key('test_button')));
+      await tester.tap(find.byKey(const Key('test_button')));
     });
   });
 }
