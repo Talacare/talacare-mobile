@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:talacare/core/enums/user_role.dart';
@@ -42,6 +44,7 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
 
       return userModel;
     } catch (e) {
+      FirebaseCrashlytics.instance.recordFlutterFatalError(FlutterErrorDetails(exception: e));
       throw Exception('Sign-in failed: $e');
     }
   }
