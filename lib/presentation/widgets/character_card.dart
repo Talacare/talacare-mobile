@@ -5,12 +5,14 @@ class CharacterCard extends StatelessWidget {
   final void Function() onTap;
   final bool isSelected;
   final String imageName;
+  final String characterName;
 
   const CharacterCard({
     super.key,
     required this.onTap,
     required this.isSelected,
     required this.imageName,
+    required this.characterName,
   });
 
   @override
@@ -34,7 +36,15 @@ class CharacterCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Image.asset('assets/images/jump_n_jump/characters/$imageName'),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/images/jump_n_jump/characters/$imageName'),
+            const SizedBox(height: 10),
+            Text(characterName,
+                style: const TextStyle(color: Colors.white, fontSize: 20)),
+          ],
+        ),
       ),
     );
   }

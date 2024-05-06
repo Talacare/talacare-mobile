@@ -287,7 +287,7 @@ void main() {
     await tester.tap(find.text('Menu'));
     await mockNetworkImagesFor(() => tester.pumpAndSettle());
 
-    expect(find.byKey(const Key('greeting')), findsOneWidget);
+    expect(find.byKey(const Key('game-over')), findsNothing);
   });
 
   testWidgets('Verify Score is showing', (tester) async {

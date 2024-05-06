@@ -7,10 +7,8 @@ import 'package:talacare/data/models/game_history_model.dart';
 import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
-
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/managers.dart';
-import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/widgets/game_over_modal.dart';
 import './world.dart';
@@ -194,8 +192,6 @@ class JumpNJump extends FlameGame
 
   void onBackToMenu(BuildContext context) {
     overlays.remove('gameOverOverlay');
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const HomePage()),
-    );
+    Navigator.pop(context);
   }
 }
