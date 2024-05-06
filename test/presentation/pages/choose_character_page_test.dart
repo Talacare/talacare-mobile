@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
+import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/widgets/character_card.dart';
+
+import '../jump_n_jump/jump_n_jump_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
@@ -21,6 +25,18 @@ void main() {
     final container = inkWell.child as Container;
     return (container.decoration as BoxDecoration).boxShadow![0];
   }
+
+  final getIt = GetIt.instance;
+  late MockGameHistoryProvider mockGameHistoryProvider;
+
+  setUp(() async {
+    mockGameHistoryProvider = MockGameHistoryProvider();
+    getIt.registerSingleton<GameHistoryProvider>(mockGameHistoryProvider);
+  });
+
+  tearDown(() {
+    getIt.reset();
+  });
 
   testWidgets(
       '[Positive] Verify that all the character cards, title, and button are visible',

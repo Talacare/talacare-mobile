@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talacare/core/enums/user_role.dart';
 import 'package:talacare/data/models/user_model.dart';
 import 'package:talacare/domain/entities/user_entity.dart';
 
@@ -6,17 +7,20 @@ void main() {
   const String email = 'test@example.com';
   const String name = 'Test User';
   const String photoURL = 'https://example.com/photo.jpg';
+  const UserRole role = UserRole.USER;
 
   const userModel = UserModel(
     email: email,
     name: name,
     photoURL: photoURL,
+    role: role,
   );
 
   const json = {
     'email': email,
     'name': name,
     'photoURL': photoURL,
+    'role': 'USER',
   };
 
   test(
@@ -30,6 +34,7 @@ void main() {
     expect(userModel.email, email);
     expect(userModel.name, name);
     expect(userModel.photoURL, photoURL);
+    expect(userModel.role, role);
   });
 
   test('Serialization to JSON', () {
@@ -38,6 +43,7 @@ void main() {
     expect(json['email'], email);
     expect(json['name'], name);
     expect(json['photoURL'], photoURL);
+    expect(json['role'], 'USER');
   });
 
   test('Deserialization from JSON', () {
@@ -46,6 +52,7 @@ void main() {
     expect(userModel.email, email);
     expect(userModel.name, name);
     expect(userModel.photoURL, photoURL);
+    expect(userModel.role, role);
   });
 
   test('Deserialization from uncompleted JSON', () {

@@ -4,13 +4,15 @@ import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/widgets/character_card.dart';
 
 void main() {
-  Widget getCharacterCard(bool isSelected, String imagePath) {
+  Widget getCharacterCard(
+      bool isSelected, String imagePath, String characterName) {
     return MaterialApp(
       home: Scaffold(
         body: CharacterCard(
           onTap: () {},
           isSelected: isSelected,
           imageName: imagePath,
+          characterName: characterName,
         ),
       ),
     );
@@ -18,7 +20,8 @@ void main() {
 
   testWidgets('Verify the selected character card widget',
       (WidgetTester tester) async {
-    await tester.pumpWidget(getCharacterCard(true, 'boy_head.png'));
+    await tester
+        .pumpWidget(getCharacterCard(true, 'boy_head.png', 'Laki-Laki'));
 
     final containerDecoration = tester
         .widget<Container>(find.byType(Container))
@@ -28,6 +31,7 @@ void main() {
     expect(find.byType(InkWell), findsOneWidget);
     expect(find.byType(Container), findsOneWidget);
     expect(find.byType(Image), findsOneWidget);
+    expect(find.byType(Text), findsOneWidget);
     expect(containerDecoration.color, AppColors.purple);
     expect(containerDecoration.border, isA<Border>());
     expect(containerDecoration.border!.top.color, Colors.white);
@@ -42,7 +46,8 @@ void main() {
 
   testWidgets('Verify the unselected character card widget',
       (WidgetTester tester) async {
-    await tester.pumpWidget(getCharacterCard(false, 'boy_head.png'));
+    await tester
+        .pumpWidget(getCharacterCard(false, 'boy_head.png', 'Laki-Laki'));
 
     final nonSelectedContainerDecoration = tester
         .widget<Container>(find.byType(Container))
@@ -52,6 +57,7 @@ void main() {
     expect(find.byType(InkWell), findsOneWidget);
     expect(find.byType(Container), findsOneWidget);
     expect(find.byType(Image), findsOneWidget);
+    expect(find.byType(Text), findsOneWidget);
     expect(nonSelectedContainerDecoration.color, AppColors.purple);
     expect(nonSelectedContainerDecoration.border, isA<Border>());
     expect(nonSelectedContainerDecoration.border!.top.color, Colors.white);
@@ -67,7 +73,7 @@ void main() {
 
   testWidgets('Verify the character card widget with invalid image name',
       (WidgetTester tester) async {
-    await tester.pumpWidget(getCharacterCard(true, 'invalid.png'));
+    await tester.pumpWidget(getCharacterCard(true, 'invalid.png', ''));
 
     expect(tester.takeException(), isNotNull);
   });

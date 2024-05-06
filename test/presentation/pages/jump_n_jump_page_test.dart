@@ -1,10 +1,37 @@
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/health_bar.dart';
 import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
+import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
+import 'package:talacare/presentation/providers/game_history_provider.dart';
 
+import 'puzzle_page_test.mocks.dart';
+
+class MockNavigatorObserver extends Mock implements NavigatorObserver {}
+
+@GenerateNiceMocks([
+  MockSpec<GameHistoryProvider>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<GetIt>(onMissingStub: OnMissingStub.returnDefault),
+])
 void main() {
+  late GetIt getIt;
+  late MockGameHistoryProvider mockGameHistoryProvider;
+
+  setUp(() {
+    getIt = GetIt.instance;
+    mockGameHistoryProvider = MockGameHistoryProvider();
+    getIt.registerSingleton<GameHistoryProvider>(mockGameHistoryProvider);
+  });
+
+  tearDown(() {
+    getIt.reset();
+  });
+
   group('JumpNJumpPage Widget Tests', () {
     testWidgets('Coin icon and score display are correctly shown',
         (WidgetTester tester) async {
@@ -23,6 +50,7 @@ void main() {
           home: JumpNJumpPage(
         character: Character.girl,
       )));
+      await tester.pumpAndSettle();
 
       expect(find.byKey(const Key('highScoreDisplay')), findsOneWidget);
     });
@@ -68,6 +96,18 @@ void main() {
       )));
       await tester.pumpAndSettle();
       expect(find.byType(HealthBar), findsOneWidget);
+    });
+
+    testWidgets('createGameWidget should create a GameWidget',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: JumpNJumpPage(character: Character.boy),
+        ),
+      );
+
+      final gameWidget = find.byType(GameWidget<JumpNJump>);
+      expect(gameWidget, findsOneWidget);
     });
   });
 }

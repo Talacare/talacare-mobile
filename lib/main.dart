@@ -1,13 +1,15 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/notification_service.dart';
+import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/core/interceptors/dio_interceptor.dart';
-import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/pages/login_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 
@@ -24,11 +26,14 @@ Future<void> main() async {
   );
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
+  NotificationService().initNotification();
+  
   await di.init();
   di.getIt<Dio>().interceptors.add(DioInterceptor());
   di.getIt<AuthProvider>().getLocalStoredUser();
 
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

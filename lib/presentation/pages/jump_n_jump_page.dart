@@ -1,11 +1,13 @@
 import 'package:flame/game.dart' hide Route;
 import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/character_enum.dart';
+import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/jump_n_jump/health_bar.dart';
-import 'package:talacare/presentation/pages/home_page.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/player.dart';
-import 'package:talacare/presentation/widgets/game_over_modal.dart';
+import 'package:talacare/presentation/providers/game_history_provider.dart';
 
 class JumpNJumpPage extends StatefulWidget {
   final Character? character;
@@ -18,21 +20,19 @@ class JumpNJumpPage extends StatefulWidget {
 
 class _JumpNJumpPageState extends State<JumpNJumpPage> {
   late final JumpNJump game;
+  final audioManager = AudioManager();
 
   @override
   void initState() {
     super.initState();
-    game = JumpNJump(
-      character: widget.character!,
-      onBackToMenuCallback: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
-      },
-    );
+    game = JumpNJump(character: widget.character!);
+    _initializeHighestScore();
+  }
+
+  Future<void> _initializeHighestScore() async {
+    final highestScoreEntity = await getIt<GameHistoryProvider>()
+        .getHighestScoreHistory('JUMP_N_JUMP');
+    game.gameManager.highScore.value = highestScoreEntity?.score ?? 0;
   }
 
   @override
@@ -46,6 +46,14 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    audioManager.stopBackgroundMusic();
+    game.dash.health.removeListener(game.onHealthChanged);
+    game.gameManager.state = GameState.gameOver;
+    super.dispose();
   }
 
   Positioned _createControlButtons() {
@@ -150,15 +158,6 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
   GameWidget<JumpNJump> _createGameWidget() {
     return GameWidget<JumpNJump>(
       game: game,
-      overlayBuilderMap: {
-        'gameOverOverlay': (context, JumpNJump game) => GameOverModal(
-              currentScore: game.gameManager.score.value,
-              highestScore: game.gameManager.highScore.value,
-              onMainLagiPressed: game.onRestartGame,
-              onMenuPressed: game.onBackToMenu,
-            ),
-      },
-      initialActiveOverlays: const [],
     );
   }
 }
