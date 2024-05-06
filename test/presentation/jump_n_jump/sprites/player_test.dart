@@ -133,5 +133,18 @@ void main() {
       game.dash.update(0.1);
       expect(game.dash.velocity, equals(Vector2(0, 500)));
     });
+
+    jumpNJumpGameTester.test('Test Player Ignores Platform on GameOver', (game) async {
+      game.dash.velocity = Vector2(0, 10);
+      game.dash.isGameOver = true;
+
+      final intersectionPoints = {Vector2(10, 10)};
+      Platform platform = Platform();
+      platform.position.y = game.dash.position.y + game.dash.size.y / 2 - 25;
+      game.dash.onCollision(intersectionPoints, platform);
+      game.dash.update(0.1);
+      
+      expect(game.dash.velocity, equals(Vector2(0, 500)));
+    });
   });
 }
