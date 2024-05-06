@@ -50,18 +50,27 @@ class Button extends StatelessWidget {
               ),
               const Gap(5)
             ],
-            Flexible(child: Text(
-              text,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontFamily: 'Digitalt',
-                fontWeight: FontWeight.w500,
-                height: 0,
-                letterSpacing: 0.96,
+            Flexible(
+              child: Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontFamily: 'Digitalt',
+                  fontWeight: FontWeight.w500,
+                  height: 0,
+                  letterSpacing: 0.96,
+                  shadows: [
+                    Shadow(
+                      color: Colors.red,
+                      offset: Offset(0.0, 0.0),
+                      blurRadius: 11.0,
+                    ),
+                  ],
+                ),
               ),
-            ),
-        )],
+            )
+          ],
         ),
       );
     }

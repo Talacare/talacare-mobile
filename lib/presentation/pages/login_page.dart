@@ -53,7 +53,7 @@ class LoginPage extends StatelessWidget {
                     return Button(
                       key: const Key('login_button'),
                       isLoading: authProvider.isLoading,
-                      text: 'Login',
+                      text: 'Masuk',
                       onTap: () async =>
                           await getIt<AuthProvider>().signInWithGoogle(),
                     );

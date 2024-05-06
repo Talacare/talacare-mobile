@@ -14,14 +14,17 @@ enum DashDirection { left, right }
 
 class PlayerState {
   bool isMoving, isMovingDown, isLowHealth;
-  PlayerState({required this.isMoving, required this.isMovingDown, required this.isLowHealth});
-  
+  PlayerState(
+      {required this.isMoving,
+      required this.isMovingDown,
+      required this.isLowHealth});
+
   @override
   bool operator ==(Object other) {
     return other is PlayerState &&
-           isMoving == other.isMoving &&
-           isMovingDown == other.isMovingDown &&
-           isLowHealth == other.isLowHealth;
+        isMoving == other.isMoving &&
+        isMovingDown == other.isMovingDown &&
+        isLowHealth == other.isLowHealth;
   }
 
   @override
@@ -35,7 +38,7 @@ class Player extends SpriteGroupComponent<PlayerState>
 
   Player({super.position, this.character, this.audioManager})
       : super(
-          size: Vector2(70, 120),
+          size: Vector2(70, 140),
           anchor: Anchor.center,
           priority: 1,
         );
@@ -73,34 +76,52 @@ class Player extends SpriteGroupComponent<PlayerState>
 
     sprites = <PlayerState, Sprite>{
       PlayerState(
-        isMoving: false, isMovingDown: false, isLowHealth: false,
+        isMoving: false,
+        isMovingDown: false,
+        isLowHealth: false,
       ): idle!,
       PlayerState(
-        isMoving: true, isMovingDown: false, isLowHealth: false,
+        isMoving: true,
+        isMovingDown: false,
+        isLowHealth: false,
       ): move!,
       PlayerState(
-        isMoving: false, isMovingDown: true, isLowHealth: false,
+        isMoving: false,
+        isMovingDown: true,
+        isLowHealth: false,
       ): idleDown!,
       PlayerState(
-        isMoving: true, isMovingDown: true, isLowHealth: false,
+        isMoving: true,
+        isMovingDown: true,
+        isLowHealth: false,
       ): moveDown!,
       PlayerState(
-        isMoving: false, isMovingDown: false, isLowHealth: true,
+        isMoving: false,
+        isMovingDown: false,
+        isLowHealth: true,
       ): idleTired!,
       PlayerState(
-        isMoving: true, isMovingDown: false, isLowHealth: true,
+        isMoving: true,
+        isMovingDown: false,
+        isLowHealth: true,
       ): moveTired!,
       PlayerState(
-        isMoving: false, isMovingDown: true, isLowHealth: true,
+        isMoving: false,
+        isMovingDown: true,
+        isLowHealth: true,
       ): idleDownTired!,
       PlayerState(
-        isMoving: true, isMovingDown: true, isLowHealth: true,
+        isMoving: true,
+        isMovingDown: true,
+        isLowHealth: true,
       ): moveDownTired!,
     };
 
     current = PlayerState(
-        isMoving: false, isMovingDown: false, isLowHealth: false,
-      );
+      isMoving: false,
+      isMovingDown: false,
+      isLowHealth: false,
+    );
   }
 
   @override
@@ -191,10 +212,8 @@ class Player extends SpriteGroupComponent<PlayerState>
 
   Future<void> handleCharacterAsset() async {
     if (character == Character.boy) {
-      idle =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_idle.png');
-      move =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_move.png');
+      idle = await gameRef.loadSprite('jump_n_jump/characters/boy_idle.png');
+      move = await gameRef.loadSprite('jump_n_jump/characters/boy_move.png');
       idleDown =
           await gameRef.loadSprite('jump_n_jump/characters/boy_idle_down.png');
       moveDown =
@@ -203,27 +222,25 @@ class Player extends SpriteGroupComponent<PlayerState>
           await gameRef.loadSprite('jump_n_jump/characters/boy_idle_tired.png');
       moveTired =
           await gameRef.loadSprite('jump_n_jump/characters/boy_move_tired.png');
-      idleDownTired =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_idle_down_tired.png');
-      moveDownTired =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_move_down_tired.png');
+      idleDownTired = await gameRef
+          .loadSprite('jump_n_jump/characters/boy_idle_down_tired.png');
+      moveDownTired = await gameRef
+          .loadSprite('jump_n_jump/characters/boy_move_down_tired.png');
     } else if (character == Character.girl) {
-      idle =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_idle.png');
-      move =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_move.png');
+      idle = await gameRef.loadSprite('jump_n_jump/characters/girl_idle.png');
+      move = await gameRef.loadSprite('jump_n_jump/characters/girl_move.png');
       idleDown =
           await gameRef.loadSprite('jump_n_jump/characters/girl_idle_down.png');
       moveDown =
           await gameRef.loadSprite('jump_n_jump/characters/girl_move_down.png');
-      idleTired =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_idle_tired.png');
-      moveTired =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_move_tired.png');
-      idleDownTired =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_idle_down_tired.png');
-      moveDownTired =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_move_down_tired.png');
+      idleTired = await gameRef
+          .loadSprite('jump_n_jump/characters/girl_idle_tired.png');
+      moveTired = await gameRef
+          .loadSprite('jump_n_jump/characters/girl_move_tired.png');
+      idleDownTired = await gameRef
+          .loadSprite('jump_n_jump/characters/girl_idle_down_tired.png');
+      moveDownTired = await gameRef
+          .loadSprite('jump_n_jump/characters/girl_move_down_tired.png');
     }
   }
 

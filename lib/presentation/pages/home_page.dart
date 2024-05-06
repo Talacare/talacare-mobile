@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Welcome To',
+          'Selamat Datang di',
           style: _getTextStyle(1, Colors.white, 22),
         ),
         Stack(
@@ -138,8 +138,8 @@ class HomePage extends StatelessWidget {
                   onTap: () async {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SchedulePage()
-                      ),
+                      MaterialPageRoute(
+                          builder: (context) => const SchedulePage()),
                     );
                   },
                 ),
