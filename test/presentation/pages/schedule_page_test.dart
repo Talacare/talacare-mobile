@@ -124,7 +124,7 @@ void main() {
       await tester.pump(const Duration(seconds: 3));
 
       SchedulePageState state = tester.state(find.byType(SchedulePage));
-      state.showNotification("Test Message", true);
+      state.showNotification("Test Message", true, "payload");
 
       await tester.pump();
       await tester.pump(const Duration(seconds: 3));
@@ -170,23 +170,23 @@ void main() {
         }
       });
     });
-  });
 
-  testWidgets('should display message when there are no schedules',
-      (WidgetTester tester) async {
-    await tester.runAsync(() async {
-      when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
-        return Future.value();
+    testWidgets('should display message when there are no schedules',
+        (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        when(mockScheduleProvider.getSchedulesByUserId()).thenAnswer((_) async {
+          return Future.value();
+        });
+
+        when(mockScheduleProvider.schedules).thenReturn([]);
+
+        await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
+
+        await tester.pump();
+
+        expect(find.text('Anda belum'), findsOneWidget);
+        expect(find.text('memiliki jadwal!'), findsOneWidget);
       });
-
-      when(mockScheduleProvider.schedules).thenReturn([]);
-
-      await tester.pumpWidget(buildSchedulePage(mockScheduleProvider));
-
-      await tester.pump();
-
-      expect(find.text('Anda belum'), findsOneWidget);
-      expect(find.text('memiliki jadwal!'), findsOneWidget);
     });
   });
 }
