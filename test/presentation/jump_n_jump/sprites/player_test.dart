@@ -28,7 +28,9 @@ void main() {
       game.dash.handleControlButtonPress(DashDirection.left, true);
       game.update(0.1);
 
-      expect(game.dash.current, equals(DashDirection.left));
+      expect(game.dash.current, equals(PlayerState(
+        isMoving: true, isMovingDown: false, isLowHealth: false,
+      )));
       expect(game.dash.velocity.x, lessThan(0));
 
       game.dash.handleControlButtonPress(DashDirection.left, false);
@@ -38,7 +40,9 @@ void main() {
       game.dash.handleControlButtonPress(DashDirection.right, true);
       game.update(0.1);
 
-      expect(game.dash.current, equals(DashDirection.right));
+      expect(game.dash.current, equals(PlayerState(
+        isMoving: true, isMovingDown: false, isLowHealth: false,
+      )));
       expect(game.dash.velocity.x, greaterThan(0));
 
       game.dash.handleControlButtonPress(DashDirection.right, false);
@@ -48,11 +52,10 @@ void main() {
       game.dash.velocity = Vector2(0, 10);
 
       final intersectionPoints = {Vector2(10, 10)};
-      bool isCollidingVertically =
-          (intersectionPoints.first.y - intersectionPoints.last.y).abs() < 5;
-      game.dash.onCollision(intersectionPoints, Platform());
+      Platform platform = Platform();
+      platform.position.y = game.dash.position.y + game.dash.size.y / 2 - 25;
+      game.dash.onCollision(intersectionPoints, platform);
 
-      expect(isCollidingVertically, isTrue);
       expect(game.dash.velocity.y, -game.dash.jumpSpeed);
     });
 
@@ -68,16 +71,28 @@ void main() {
       game.dash.character = Character.boy;
       game.dash.handleCharacterAsset();
 
-      expect(game.dash.leftDash, isNotNull);
-      expect(game.dash.rightDash, isNotNull);
+      expect(game.dash.idle, isNotNull);
+      expect(game.dash.move, isNotNull);
+      expect(game.dash.idleDown, isNotNull);
+      expect(game.dash.moveDown, isNotNull);
+      expect(game.dash.idleTired, isNotNull);
+      expect(game.dash.moveTired, isNotNull);
+      expect(game.dash.idleDownTired, isNotNull);
+      expect(game.dash.moveDownTired, isNotNull);
     });
 
     jumpNJumpGameTester.test('Test Player Character (Girl)', (game) async {
       game.dash.character = Character.girl;
       game.dash.handleCharacterAsset();
 
-      expect(game.dash.leftDash, isNotNull);
-      expect(game.dash.rightDash, isNotNull);
+      expect(game.dash.idle, isNotNull);
+      expect(game.dash.move, isNotNull);
+      expect(game.dash.idleDown, isNotNull);
+      expect(game.dash.moveDown, isNotNull);
+      expect(game.dash.idleTired, isNotNull);
+      expect(game.dash.moveTired, isNotNull);
+      expect(game.dash.idleDownTired, isNotNull);
+      expect(game.dash.moveDownTired, isNotNull);
     });
 
     jumpNJumpGameTester
@@ -86,9 +101,9 @@ void main() {
       final player = Player(character: Character.girl);
       player.size = Vector2(70, 120);
       await game.ensureAdd(player);
-      player.position.x = game.size.x + player.size.x + 11;
+      player.position.x = game.size.x + player.size.x / 2 + 1;
       game.update(0.1);
-      expect(player.position.x, equals(player.size.x / 2));
+      expect(player.position.x, equals(-(player.size.x / 2)));
     });
 
     jumpNJumpGameTester.test(
