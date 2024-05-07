@@ -26,9 +26,9 @@ void main() {
         .thenAnswer((_) async => 'fake_token');
   });
 
-  test('should post data to API to create schedule on success', () async {
-    when(mockDio.post(any, options: anyNamed('options'))).thenAnswer(
-        (_) async => Response(
+  test('should get data to API to create schedule on success', () async {
+    when(mockDio.get(any, options: anyNamed('options'))).thenAnswer((_) async =>
+        Response(
             requestOptions:
                 RequestOptions(path: '${dotenv.env['API_URL']!}/export-data'),
             statusCode: 200,
@@ -36,7 +36,7 @@ void main() {
 
     await dataSource.exportData();
 
-    verify(mockDio.post(any, options: anyNamed('options'))).called(1);
+    verify(mockDio.get(any, options: anyNamed('options'))).called(1);
   });
 
   test(
@@ -44,15 +44,14 @@ void main() {
       () async {
     const errorMessage = "Export data failed";
 
-    when(mockDio.post(any, options: anyNamed('options'))).thenThrow(
-        DioException(
+    when(mockDio.get(any, options: anyNamed('options'))).thenThrow(DioException(
+        requestOptions:
+            RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
+        response: Response(
             requestOptions:
                 RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
-            response: Response(
-                requestOptions:
-                    RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
-                statusCode: 400,
-                data: {'responseMessage': errorMessage})));
+            statusCode: 400,
+            data: {'responseMessage': errorMessage})));
 
     expect(
       () async => await dataSource.exportData(),
@@ -65,15 +64,14 @@ void main() {
       () async {
     const errorMessage = "Only user with role admin can export the game data";
 
-    when(mockDio.post(any, options: anyNamed('options'))).thenThrow(
-        DioException(
+    when(mockDio.get(any, options: anyNamed('options'))).thenThrow(DioException(
+        requestOptions:
+            RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
+        response: Response(
             requestOptions:
                 RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
-            response: Response(
-                requestOptions:
-                    RequestOptions(path: '${dotenv.env['API_URL']!}/schedule'),
-                statusCode: 400,
-                data: {'responseMessage': errorMessage})));
+            statusCode: 400,
+            data: {'responseMessage': errorMessage})));
 
     expect(
       () async => await dataSource.exportData(),
