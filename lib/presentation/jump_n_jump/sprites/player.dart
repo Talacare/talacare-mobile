@@ -37,7 +37,11 @@ class Player extends SpriteGroupComponent<PlayerState>
   late Character? character;
   bool isGameOver;
 
-  Player({super.position, this.character, this.audioManager, this.isGameOver = false})
+  Player(
+      {super.position,
+      this.character,
+      this.audioManager,
+      this.isGameOver = false})
       : super(
           size: Vector2(70, 120),
           anchor: Anchor.center,
@@ -58,63 +62,31 @@ class Player extends SpriteGroupComponent<PlayerState>
   bool _isMovingLeft = false;
   bool _isMovingRight = false;
 
-  Sprite? idle;
-  Sprite? move;
-  Sprite? idleDown;
-  Sprite? moveDown;
-  Sprite? idleTired;
-  Sprite? moveTired;
-  Sprite? idleDownTired;
-  Sprite? moveDownTired;
-
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
     await add(CircleHitbox());
 
-    sprites = <PlayerState, Sprite>{
-      PlayerState(
-        isMoving: false,
-        isMovingDown: false,
-        isLowHealth: false,
-      ): idle!,
-      PlayerState(
-        isMoving: true,
-        isMovingDown: false,
-        isLowHealth: false,
-      ): move!,
-      PlayerState(
-        isMoving: false,
-        isMovingDown: true,
-        isLowHealth: false,
-      ): idleDown!,
-      PlayerState(
-        isMoving: true,
-        isMovingDown: true,
-        isLowHealth: false,
-      ): moveDown!,
-      PlayerState(
-        isMoving: false,
-        isMovingDown: false,
-        isLowHealth: true,
-      ): idleTired!,
-      PlayerState(
-        isMoving: true,
-        isMovingDown: false,
-        isLowHealth: true,
-      ): moveTired!,
-      PlayerState(
-        isMoving: false,
-        isMovingDown: true,
-        isLowHealth: true,
-      ): idleDownTired!,
-      PlayerState(
-        isMoving: true,
-        isMovingDown: true,
-        isLowHealth: true,
-      ): moveDownTired!,
-    };
+    List<PlayerState> states = [
+      PlayerState(isMoving: false, isMovingDown: false, isLowHealth: false),
+      PlayerState(isMoving: true, isMovingDown: false, isLowHealth: false),
+      PlayerState(isMoving: false, isMovingDown: true, isLowHealth: false),
+      PlayerState(isMoving: true, isMovingDown: true, isLowHealth: false),
+      PlayerState(isMoving: false, isMovingDown: false, isLowHealth: true),
+      PlayerState(isMoving: true, isMovingDown: false, isLowHealth: true),
+      PlayerState(isMoving: false, isMovingDown: true, isLowHealth: true),
+      PlayerState(isMoving: true, isMovingDown: true, isLowHealth: true),
+    ];
+
+    Map<PlayerState, Sprite> spritesMap = {};
+
+    for (var state in states) {
+      String key = getStateKey(state);
+      spritesMap[state] = await gameRef.loadSprite(key);
+    }
+
+    sprites = spritesMap;
 
     current = PlayerState(
       isMoving: false,
@@ -217,40 +189,6 @@ class Player extends SpriteGroupComponent<PlayerState>
     }
   }
 
-  Future<void> handleCharacterAsset() async {
-    if (character == Character.boy) {
-      idle = await gameRef.loadSprite('jump_n_jump/characters/boy_idle.png');
-      move = await gameRef.loadSprite('jump_n_jump/characters/boy_move.png');
-      idleDown =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_idle_down.png');
-      moveDown =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_move_down.png');
-      idleTired =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_idle_tired.png');
-      moveTired =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_move_tired.png');
-      idleDownTired = await gameRef
-          .loadSprite('jump_n_jump/characters/boy_idle_down_tired.png');
-      moveDownTired = await gameRef
-          .loadSprite('jump_n_jump/characters/boy_move_down_tired.png');
-    } else if (character == Character.girl) {
-      idle = await gameRef.loadSprite('jump_n_jump/characters/girl_idle.png');
-      move = await gameRef.loadSprite('jump_n_jump/characters/girl_move.png');
-      idleDown =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_idle_down.png');
-      moveDown =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_move_down.png');
-      idleTired = await gameRef
-          .loadSprite('jump_n_jump/characters/girl_idle_tired.png');
-      moveTired = await gameRef
-          .loadSprite('jump_n_jump/characters/girl_move_tired.png');
-      idleDownTired = await gameRef
-          .loadSprite('jump_n_jump/characters/girl_idle_down_tired.png');
-      moveDownTired = await gameRef
-          .loadSprite('jump_n_jump/characters/girl_move_down_tired.png');
-    }
-  }
-
   void increaseHealth(double amount) {
     double newHealth = health.value + amount;
     health.value = newHealth.clamp(0.0, 100.0);
@@ -259,5 +197,14 @@ class Player extends SpriteGroupComponent<PlayerState>
   void decreaseHealth(double amount) {
     double newHealth = health.value - amount;
     health.value = newHealth.clamp(0.0, 100.0);
+  }
+
+  String getStateKey(PlayerState state) {
+    String characterBase =
+        'jump_n_jump/characters/${character.toString().split('.').last}';
+    String key = state.isMoving ? 'move' : 'idle';
+    if (state.isMovingDown) key += '_down';
+    if (state.isLowHealth) key += '_tired';
+    return '${characterBase}_$key.png';
   }
 }
