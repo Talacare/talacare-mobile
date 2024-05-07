@@ -43,7 +43,7 @@ class Player extends SpriteGroupComponent<PlayerState>
       this.audioManager,
       this.isGameOver = false})
       : super(
-          size: Vector2(70, 120),
+          size: Vector2(70, 140),
           anchor: Anchor.center,
           priority: 1,
         );
@@ -190,7 +190,7 @@ class Player extends SpriteGroupComponent<PlayerState>
       flipHorizontally();
     }
   }
-
+  
   void increaseHealth(double amount) {
     double newHealth = health.value + amount;
     health.value = newHealth.clamp(0.0, 100.0);
