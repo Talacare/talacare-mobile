@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Welcome To',
+          'Selamat Datang di',
           style: _getTextStyle(1, Colors.white, 22),
         ),
         Stack(

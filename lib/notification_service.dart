@@ -48,31 +48,6 @@ class NotificationService {
     );
   }
 
-  Future<void> scheduleNotificationHelper(
-    {
-      required int id,
-      String? payload,
-      required String scheduledTime
-    }
-  ) async {
-
-    DateTime scheduleDate = DateTime(
-                  2020,
-                  04,
-                  05,
-                  int.parse(scheduledTime.substring(0,2)),
-                  int.parse(scheduledTime.substring(3))
-                );
-
-    await scheduleNotification(
-      id: id,
-      title: "Pengingat Obat",
-      body: "Jangan Lupa Minum Obat Kelasi Besi",
-      payload: payload,
-      scheduledNotificationDateTime: scheduleDate
-    );
-  }
-
   Future<void> scheduleNotification(
     {required int id,
     String? title,
@@ -106,5 +81,17 @@ class NotificationService {
 
   Future<void> cancelAllNotification() async {
     await notificationsPlugin.cancelAll();
+  }
+
+  Future<void> cancelNotificationPayload(String payload) async {
+    final List<PendingNotificationRequest> pendingNotificationRequests =
+        await notificationsPlugin.pendingNotificationRequests();
+
+    for (PendingNotificationRequest pendingNotificationRequest in pendingNotificationRequests) {
+      if (pendingNotificationRequest.payload == payload) {
+        cancelNotification(pendingNotificationRequest.id);
+        break;
+      }
+    }
   }
 }

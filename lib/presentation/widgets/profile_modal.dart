@@ -80,7 +80,7 @@ class ProfileModal extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ModalButton(
-                  text: 'Logout',
+                  text: 'Keluar',
                   color: AppColors.coralPink,
                   borderColor: AppColors.softPink,
                   textColor: Colors.white,

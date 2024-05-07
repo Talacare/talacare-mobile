@@ -58,8 +58,7 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
     final topOfLowestPlatform = platforms.first.position.y;
 
     final screenBottom = gameRef.dash.position.y +
-        (gameRef.size.x / 2) +
-        gameRef.screenBufferSpace;
+        (gameRef.size.y / 2);
 
     if (topOfLowestPlatform > screenBottom) {
       var newPlatY = generateNextY();

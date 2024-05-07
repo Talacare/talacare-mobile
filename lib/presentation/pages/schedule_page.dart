@@ -10,7 +10,8 @@ import 'package:talacare/injection.dart' as di;
 import 'package:talacare/presentation/widgets/custom_notification.dart';
 import 'package:talacare/presentation/widgets/delete_icon_button.dart';
 import 'package:talacare/presentation/widgets/modal_button.dart';
-import 'package:talacare/notification_service.dart';
+import 'package:talacare/domain/repositories/notification_adapter.dart';
+import 'package:talacare/data/repositories/schedule_notification_adapter.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
@@ -21,13 +22,18 @@ class SchedulePage extends StatefulWidget {
 
 class SchedulePageState extends State<SchedulePage> {
   late List<Map<String, String>> schedules;
+  NotificationAdapter scheduleNotification = ScheduleNotificationAdapter();
 
   Future<void> refreshSchedules() async {
     await di.getIt<ScheduleProvider>().getSchedulesByUserId();
   }
 
 
-  void showNotification(String message, bool isSuccess) {
+  void showNotification(String message, bool isSuccess, String payload) {
+    if (isSuccess) {
+      scheduleNotification.deleteNotification(payload);
+    }
+
     CustomNotification.show(
       context,
       message: message,
@@ -168,7 +174,7 @@ class SchedulePageState extends State<SchedulePage> {
       );
     } else {
       schedules = scheduleProvider.schedules;
-      _createNotification(schedules);
+      scheduleNotification.createNotification(schedules);
 
       return Expanded(
         child: ListView.builder(
@@ -199,7 +205,7 @@ class SchedulePageState extends State<SchedulePage> {
                   ),
                   DeleteIconButton(
                     scheduleProvider: scheduleProvider,
-                    scheduleId: scheduleProvider.schedules[index]['id']!,
+                    scheduleId: schedules[index]['id']!,
                     refreshSchedules: refreshSchedules,
                     showNotification: showNotification,
                   ),
@@ -209,16 +215,6 @@ class SchedulePageState extends State<SchedulePage> {
           },
         ),
       );
-    }
-  }
-
-  void _createNotification(List<Map<String, String>> schedules) {
-    NotificationService().cancelAllNotification();
-
-    for (var i = 0; i < schedules.length; i++) {
-      Map<String, String> schedule = schedules[i];
-      NotificationService().scheduleNotificationHelper(
-          id: i, payload: schedule["id"], scheduledTime: schedule["time"]!);
     }
   }
 

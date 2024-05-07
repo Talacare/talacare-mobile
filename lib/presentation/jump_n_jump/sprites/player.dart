@@ -12,14 +12,33 @@ import 'platform.dart';
 
 enum DashDirection { left, right }
 
-class Player extends SpriteGroupComponent<DashDirection>
+class PlayerState {
+  bool isMoving, isMovingDown, isLowHealth;
+  PlayerState(
+      {required this.isMoving,
+      required this.isMovingDown,
+      required this.isLowHealth});
+
+  @override
+  bool operator ==(Object other) {
+    return other is PlayerState &&
+        isMoving == other.isMoving &&
+        isMovingDown == other.isMovingDown &&
+        isLowHealth == other.isLowHealth;
+  }
+
+  @override
+  int get hashCode => Object.hash(isMoving, isMovingDown, isLowHealth);
+}
+
+class Player extends SpriteGroupComponent<PlayerState>
     with HasGameRef<JumpNJump>, KeyboardHandler, CollisionCallbacks {
   late IAudioManager? audioManager;
   late Character? character;
 
   Player({super.position, this.character, this.audioManager})
       : super(
-          size: Vector2(70, 120),
+          size: Vector2(70, 140),
           anchor: Anchor.center,
           priority: 1,
         );
@@ -28,8 +47,8 @@ class Player extends SpriteGroupComponent<DashDirection>
   int _hAxisInput = 0;
 
   final double moveSpeed = 400;
-  final double _gravity = 7;
-  final double jumpSpeed = 700;
+  final double _gravity = 14;
+  final double jumpSpeed = 1000;
   final ValueNotifier<double> health = ValueNotifier<double>(100);
 
   final int movingLeftInput = -1;
@@ -38,8 +57,14 @@ class Player extends SpriteGroupComponent<DashDirection>
   bool _isMovingLeft = false;
   bool _isMovingRight = false;
 
-  Sprite? leftDash;
-  Sprite? rightDash;
+  Sprite? idle;
+  Sprite? move;
+  Sprite? idleDown;
+  Sprite? moveDown;
+  Sprite? idleTired;
+  Sprite? moveTired;
+  Sprite? idleDownTired;
+  Sprite? moveDownTired;
 
   @override
   Future<void> onLoad() async {
@@ -49,12 +74,54 @@ class Player extends SpriteGroupComponent<DashDirection>
 
     await handleCharacterAsset();
 
-    sprites = <DashDirection, Sprite>{
-      DashDirection.left: leftDash!,
-      DashDirection.right: rightDash!,
+    sprites = <PlayerState, Sprite>{
+      PlayerState(
+        isMoving: false,
+        isMovingDown: false,
+        isLowHealth: false,
+      ): idle!,
+      PlayerState(
+        isMoving: true,
+        isMovingDown: false,
+        isLowHealth: false,
+      ): move!,
+      PlayerState(
+        isMoving: false,
+        isMovingDown: true,
+        isLowHealth: false,
+      ): idleDown!,
+      PlayerState(
+        isMoving: true,
+        isMovingDown: true,
+        isLowHealth: false,
+      ): moveDown!,
+      PlayerState(
+        isMoving: false,
+        isMovingDown: false,
+        isLowHealth: true,
+      ): idleTired!,
+      PlayerState(
+        isMoving: true,
+        isMovingDown: false,
+        isLowHealth: true,
+      ): moveTired!,
+      PlayerState(
+        isMoving: false,
+        isMovingDown: true,
+        isLowHealth: true,
+      ): idleDownTired!,
+      PlayerState(
+        isMoving: true,
+        isMovingDown: true,
+        isLowHealth: true,
+      ): moveDownTired!,
     };
 
-    current = DashDirection.right;
+    current = PlayerState(
+      isMoving: false,
+      isMovingDown: false,
+      isLowHealth: false,
+    );
   }
 
   @override
@@ -70,11 +137,23 @@ class Player extends SpriteGroupComponent<DashDirection>
     velocity.x = _hAxisInput * moveSpeed;
     velocity.y += _gravity;
 
-    if (position.x < size.x / 2) {
-      position.x = gameRef.size.x + size.x + 10;
+    if (position.x < -(size.x / 2)) {
+      position.x = gameRef.size.x + size.x / 2;
     }
-    if (position.x > gameRef.size.x + size.x + 10) {
-      position.x = size.x / 2;
+    if (position.x > gameRef.size.x + size.x / 2) {
+      position.x = -(size.x / 2);
+    }
+
+    if (velocity.y > 0) {
+      current?.isMovingDown = true;
+    } else {
+      current?.isMovingDown = false;
+    }
+
+    if (health.value < 30) {
+      current?.isLowHealth = true;
+    } else {
+      current?.isLowHealth = false;
     }
 
     position += velocity * dt;
@@ -87,22 +166,17 @@ class Player extends SpriteGroupComponent<DashDirection>
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Platform) {
       bool isMovingDown = velocity.y > 0;
-      bool isCollidingVertically =
-          (intersectionPoints.first.y - intersectionPoints.last.y).abs() < 5;
+      bool isCollidingWithFeet =
+          other.position.y - (position.y + size.y / 2) > -45;
 
-      if (isMovingDown && isCollidingVertically) {
+      if (isMovingDown && isCollidingWithFeet) {
         jump();
       }
     }
 
     if (other is BloodBag) {
-      bool isCollidingVertically =
-          (intersectionPoints.first.y - intersectionPoints.last.y).abs() < 5;
-
-      if (isCollidingVertically) {
-        other.removeFromParent();
-        increaseHealth(7);
-      }
+      other.removeFromParent();
+      increaseHealth(7);
     }
 
     super.onCollision(intersectionPoints, other);
@@ -121,27 +195,52 @@ class Player extends SpriteGroupComponent<DashDirection>
     if (direction == DashDirection.left) {
       _isMovingLeft = isPressed;
       if (isPressed) {
-        current = DashDirection.left;
+        current?.isMoving = true;
+      } else {
+        current?.isMoving = false;
       }
     } else if (direction == DashDirection.right) {
       _isMovingRight = isPressed;
       if (isPressed) {
-        current = DashDirection.right;
+        current?.isMoving = true;
+      } else {
+        current?.isMoving = false;
       }
+      flipHorizontally();
     }
   }
 
   Future<void> handleCharacterAsset() async {
     if (character == Character.boy) {
-      leftDash =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_left.png');
-      rightDash =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_right.png');
+      idle = await gameRef.loadSprite('jump_n_jump/characters/boy_idle.png');
+      move = await gameRef.loadSprite('jump_n_jump/characters/boy_move.png');
+      idleDown =
+          await gameRef.loadSprite('jump_n_jump/characters/boy_idle_down.png');
+      moveDown =
+          await gameRef.loadSprite('jump_n_jump/characters/boy_move_down.png');
+      idleTired =
+          await gameRef.loadSprite('jump_n_jump/characters/boy_idle_tired.png');
+      moveTired =
+          await gameRef.loadSprite('jump_n_jump/characters/boy_move_tired.png');
+      idleDownTired = await gameRef
+          .loadSprite('jump_n_jump/characters/boy_idle_down_tired.png');
+      moveDownTired = await gameRef
+          .loadSprite('jump_n_jump/characters/boy_move_down_tired.png');
     } else if (character == Character.girl) {
-      leftDash =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_left.png');
-      rightDash =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_right.png');
+      idle = await gameRef.loadSprite('jump_n_jump/characters/girl_idle.png');
+      move = await gameRef.loadSprite('jump_n_jump/characters/girl_move.png');
+      idleDown =
+          await gameRef.loadSprite('jump_n_jump/characters/girl_idle_down.png');
+      moveDown =
+          await gameRef.loadSprite('jump_n_jump/characters/girl_move_down.png');
+      idleTired = await gameRef
+          .loadSprite('jump_n_jump/characters/girl_idle_tired.png');
+      moveTired = await gameRef
+          .loadSprite('jump_n_jump/characters/girl_move_tired.png');
+      idleDownTired = await gameRef
+          .loadSprite('jump_n_jump/characters/girl_idle_down_tired.png');
+      moveDownTired = await gameRef
+          .loadSprite('jump_n_jump/characters/girl_move_down_tired.png');
     }
   }
 
