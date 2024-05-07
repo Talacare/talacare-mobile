@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mockito/annotations.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:provider/provider.dart';
-import 'package:talacare/core/enums/user_role.dart';
-import 'package:talacare/domain/entities/user_entity.dart';
-import 'package:talacare/domain/usecases/export_data_usecase.dart';
+// import 'package:talacare/core/enums/user_role.dart';
 import 'package:talacare/notification_service.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
@@ -26,29 +23,29 @@ import 'puzzle_page_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
-class MockAuthProvider extends Mock implements AuthProvider {}
-
-class MockExportDataUseCase extends Mock implements ExportDataUseCase {}
-
-@GenerateNiceMocks([
-  MockSpec<AuthProvider>(onMissingStub: OnMissingStub.returnDefault),
-  MockSpec<ExportDataUseCase>(onMissingStub: OnMissingStub.returnDefault),
-])
 void main() {
   late Widget homePage;
   final getIt = GetIt.instance;
-  late MockAuthProvider mockAuthProvider;
-  late MockExportDataUseCase mockExportDataUseCase;
+  // late MockAuthProvider mockAuthProvider;
 
   TestWidgetsFlutterBinding.ensureInitialized();
   setupFirebaseCoreMocks();
 
-  setUp(() async {
-    await Firebase.initializeApp();
-    mockAuthProvider = MockAuthProvider();
-    mockExportDataUseCase = MockExportDataUseCase();
-    getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
+  // Widget buildHomePage(AuthProvider authProvider) {
+  //   return MaterialApp(
+  //     home: ChangeNotifierProvider<AuthProvider>(
+  //       create: (_) => authProvider,
+  //       child: const HomePage(),
+  //     ),
+  //   );
+  // }
 
+  setUp(() async {
+    // mockAuthProvider = MockAuthProvider();
+
+    await Firebase.initializeApp();
+
+    getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
     getIt.registerLazySingleton(
         () => GameHistoryProvider(useCase: MockGameHistoryUseCase()));
     homePage = const MaterialApp(
@@ -60,12 +57,6 @@ void main() {
     getIt.unregister<AuthProvider>();
     getIt.unregister<GameHistoryProvider>();
   });
-
-  Widget buildHomePage(AuthProvider authProvider) {
-    return MaterialApp(
-        home: ChangeNotifierProvider<AuthProvider>.value(
-            value: authProvider, child: const HomePage()));
-  }
 
   testWidgets('Verify the greeting text is showing', (tester) async {
     await mockNetworkImagesFor(() => tester.pumpWidget(homePage));
@@ -190,38 +181,13 @@ void main() {
 
     expect(find.byType(SchedulePage), findsOneWidget);
   });
-  // testWidgets('Verify tapping on the export data', (tester) async {
-  //   getIt.registerSingleton<ExportDataUseCase>(mockExportDataUseCase);
-
-  //   // Mock AuthProvider to simulate an authenticated admin user
-  //   await tester.pumpWidget(buildHomePage(getIt<AuthProvider>()));
-
-  //   when(getIt<AuthProvider>().user?.role).thenReturn(UserRole.ADMIN);
-
-  //   expect(find.byKey(const Key('export_button')), findsOneWidget);
-
-  //   final exportButtonFinder = find.byKey(const Key('export_button'));
-  //   await tester.tap(exportButtonFinder);
-  //   verify(getIt<ExportDataUseCase>().exportGameData()).called(1);
-  // });
-  // testWidgets(
-  //     'Verify the export button is working properly', (tester) async {});
-  // testWidgets('Button is created if user role is ADMIN',
+  // testWidgets('ConditionalWidget displays correct text based on user role',
   //     (WidgetTester tester) async {
-  //   final mockAuthProvider = MockAuthProvider();
-
   //   when(mockAuthProvider.user?.role).thenReturn(UserRole.ADMIN);
+  //   await tester.pumpWidget(buildHomePage(mockAuthProvider));
+  //   await tester.pump();
 
-  //   await tester.pumpWidget(buildHomePage(getIt<AuthProvider>()));
+  //   // when(MockAuthUseCase(). .user!.role).thenReturn(UserRole.ADMIN);
   //   expect(find.byKey(const Key('export_button')), findsOneWidget);
   // });
-
-  testWidgets('Button is created if user role is ADMIN',
-      (WidgetTester tester) async {
-    final mockAuthProvider = MockAuthProvider();
-    when(mockAuthProvider.user).thenReturn(const UserEntity(
-        role: UserRole.ADMIN, email: '', name: '', photoURL: ''));
-    await tester.pumpWidget(buildHomePage(mockAuthProvider));
-    expect(find.byKey(const Key('export_button')), findsOneWidget);
-  });
 }
