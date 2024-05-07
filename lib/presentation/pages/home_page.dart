@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/core/enums/user_role.dart';
 
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/core/utils/analytics_engine_util.dart';
+import 'package:talacare/domain/usecases/export_data_usecase.dart';
 import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
@@ -14,10 +16,44 @@ import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/presentation/widgets/profile_modal.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({
     super.key,
   });
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _exportingGameData = false;
+
+  void _exportGameData() async {
+    setState(() {
+      _exportingGameData = true;
+    });
+    await getIt<ExportDataUseCase>().exportGameData();
+    setState(() {
+      _exportingGameData = false;
+    });
+
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(
+      buildSnackBar(),
+    );
+  }
+
+  SnackBar buildSnackBar() {
+    return SnackBar(
+      key: const Key('snack_bar'),
+      backgroundColor: Colors.green,
+      content: Text(
+        'Game Data Berhasil Dikirim ke ${getIt<AuthProvider>().user!.email}',
+        style: const TextStyle(fontSize: 20),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
 
   Widget _buildHeader(BuildContext context) {
     return Row(
@@ -141,11 +177,22 @@ class HomePage extends StatelessWidget {
                   onTap: () async {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SchedulePage()
-                      ),
+                      MaterialPageRoute(
+                          builder: (context) => const SchedulePage()),
                     );
                   },
                 ),
+                const Gap(20),
+                if (getIt<AuthProvider>().user?.role == UserRole.ADMIN)
+                  Button(
+                    key: const Key('export_button'),
+                    text: _exportingGameData ? 'Mengekspor...' : 'Ekspor Data',
+                    colorScheme: ButtonColorScheme.purple,
+                    icon: _exportingGameData
+                        ? Icons.hourglass_empty
+                        : Icons.download,
+                    onTap: _exportingGameData ? null : _exportGameData,
+                  ),
               ],
             ),
           ),

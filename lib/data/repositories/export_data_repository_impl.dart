@@ -8,6 +8,8 @@ class ExportDataRepositoryImpl extends ExportDataRepository {
 
   @override
   Future<void> exportGameData() async {
+    print("hello worlds");
+
     await exportDataRemoteDatasource.exportData();
   }
 }

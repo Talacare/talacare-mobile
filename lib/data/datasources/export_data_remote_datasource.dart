@@ -20,7 +20,7 @@ class ExportDataRemoteDatasourceImpl extends ExportDataRemoteDatasource {
   Future<void> exportData() async {
     try {
       final token = await localDatasource.readData('access_token');
-      await dio.post(
+      await dio.get(
         exportDataApi,
         options: Options(
           headers: {
@@ -29,6 +29,7 @@ class ExportDataRemoteDatasourceImpl extends ExportDataRemoteDatasource {
         ),
       );
     } on DioException catch (e) {
+      print(e.response?.data);
       var errorMessage = e.response?.data['responseMessage'];
       throw errorMessage;
     }

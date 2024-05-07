@@ -1,4 +1,3 @@
-import 'package:talacare/domain/entities/schedule_entity.dart';
 import 'package:talacare/domain/repositories/export_data_repository.dart';
 
 class ExportDataUseCase {
@@ -6,7 +5,7 @@ class ExportDataUseCase {
 
   ExportDataUseCase(this.exportDataRepository);
 
-  Future<void> createSchedule(ScheduleEntity schedule) async {
+  Future<void> exportGameData() async {
     await exportDataRepository.exportGameData();
   }
 }
