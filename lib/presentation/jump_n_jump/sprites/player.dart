@@ -73,8 +73,6 @@ class Player extends SpriteGroupComponent<PlayerState>
 
     await add(CircleHitbox());
 
-    await handleCharacterAsset();
-
     sprites = <PlayerState, Sprite>{
       PlayerState(
         isMoving: false,

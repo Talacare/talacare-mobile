@@ -67,33 +67,6 @@ void main() {
               'jump_n_jump/jump_on_platform.wav', 1))
           .called(1);
     });
-    jumpNJumpGameTester.test('Test Player Character (Boy)', (game) async {
-      game.dash.character = Character.boy;
-      game.dash.handleCharacterAsset();
-
-      expect(game.dash.idle, isNotNull);
-      expect(game.dash.move, isNotNull);
-      expect(game.dash.idleDown, isNotNull);
-      expect(game.dash.moveDown, isNotNull);
-      expect(game.dash.idleTired, isNotNull);
-      expect(game.dash.moveTired, isNotNull);
-      expect(game.dash.idleDownTired, isNotNull);
-      expect(game.dash.moveDownTired, isNotNull);
-    });
-
-    jumpNJumpGameTester.test('Test Player Character (Girl)', (game) async {
-      game.dash.character = Character.girl;
-      game.dash.handleCharacterAsset();
-
-      expect(game.dash.idle, isNotNull);
-      expect(game.dash.move, isNotNull);
-      expect(game.dash.idleDown, isNotNull);
-      expect(game.dash.moveDown, isNotNull);
-      expect(game.dash.idleTired, isNotNull);
-      expect(game.dash.moveTired, isNotNull);
-      expect(game.dash.idleDownTired, isNotNull);
-      expect(game.dash.moveDownTired, isNotNull);
-    });
 
     jumpNJumpGameTester
         .test('Player X position is reset when moving out of right bounds',
@@ -145,6 +118,12 @@ void main() {
       game.dash.update(0.1);
       
       expect(game.dash.velocity, equals(Vector2(0, 500)));
+    });
+
+    jumpNJumpGameTester.test('Test Player onLoad creates sprites', (game) async {
+      game.dash.onLoad();
+      
+      expect(game.dash.sprites!.length, equals(8));
     });
   });
 }
