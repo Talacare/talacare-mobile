@@ -42,6 +42,13 @@ class Player extends SpriteGroupComponent<PlayerState>
   static const double lowHealthJumpSpeedMultiplier = 0.8;
   static const double megaJumpSpeedMultiplier = 1.5;
   static const double lowHealthThreshold = 30;
+  static const double healthIncreaseBloodBag = 7;
+  static const double minHealth = 0;
+  static const double maxHealth = 100;
+  static const double gravity = 14;
+  static const int originalHAxisInput = 0;
+  static const int movingLeftInput = -1;
+  static const int movingRightInput = 1;
 
   Player({super.position, this.character, this.audioManager})
       : super(
@@ -51,15 +58,12 @@ class Player extends SpriteGroupComponent<PlayerState>
         );
 
   Vector2 velocity = Vector2.zero();
-  int _hAxisInput = 0;
 
   double moveSpeed = originalMoveSpeed;
-  final double _gravity = 14;
   double jumpSpeed = originalJumpSpeed;
-  final ValueNotifier<double> health = ValueNotifier<double>(100);
+  int hAxisInput = originalHAxisInput;
 
-  final int movingLeftInput = -1;
-  final int movingRightInput = 1;
+  final ValueNotifier<double> health = ValueNotifier<double>(100);
 
   bool _isMovingLeft = false;
   bool _isMovingRight = false;
@@ -134,11 +138,11 @@ class Player extends SpriteGroupComponent<PlayerState>
   @override
   void update(double dt) {
     if (_isMovingLeft) {
-      _hAxisInput = movingLeftInput;
+      hAxisInput = movingLeftInput;
     } else if (_isMovingRight) {
-      _hAxisInput = movingRightInput;
+      hAxisInput = movingRightInput;
     } else {
-      _hAxisInput = 0;
+      hAxisInput = originalHAxisInput;
     }
 
     if (health.value < lowHealthThreshold) {
@@ -149,8 +153,8 @@ class Player extends SpriteGroupComponent<PlayerState>
       moveSpeed = originalMoveSpeed;
     }
 
-    velocity.x = _hAxisInput * moveSpeed;
-    velocity.y += _gravity;
+    velocity.x = hAxisInput * moveSpeed;
+    velocity.y += gravity;
 
     if (position.x < -(size.x / 2)) {
       position.x = gameRef.size.x + size.x / 2;
@@ -185,7 +189,7 @@ class Player extends SpriteGroupComponent<PlayerState>
 
     if (other is BloodBag) {
       other.removeFromParent();
-      increaseHealth(7);
+      increaseHealth(healthIncreaseBloodBag);
     }
 
     super.onCollision(intersectionPoints, other);
@@ -264,11 +268,11 @@ class Player extends SpriteGroupComponent<PlayerState>
 
   void increaseHealth(double amount) {
     double newHealth = health.value + amount;
-    health.value = newHealth.clamp(0.0, 100.0);
+    health.value = newHealth.clamp(minHealth, maxHealth);
   }
 
   void decreaseHealth(double amount) {
     double newHealth = health.value - amount;
-    health.value = newHealth.clamp(0.0, 100.0);
+    health.value = newHealth.clamp(minHealth, maxHealth);
   }
 }

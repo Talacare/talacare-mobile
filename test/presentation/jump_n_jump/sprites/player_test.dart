@@ -177,5 +177,39 @@ void main() {
               Player.megaJumpSpeedMultiplier *
               Player.lowHealthJumpSpeedMultiplier));
     });
+
+    jumpNJumpGameTester.test('Test Player Velocity Calculation', (game) async {
+      game.dash.moveSpeed = 200.0;
+      game.dash.hAxisInput = 1;
+      game.dash.update(0.1);
+
+      expect(game.dash.velocity.x, equals(0));
+    });
+
+    jumpNJumpGameTester
+        .test('Test Player X Position Reset When Moving Out of Left Bounds',
+            (game) async {
+      game.dash.position.x = -(game.dash.size.x / 2) - 1;
+      game.update(0.1);
+
+      expect(game.dash.position.x, equals(game.size.x + game.dash.size.x / 2));
+    });
+
+    jumpNJumpGameTester
+        .test('Test Player X Position Reset When Moving Out of Right Bounds',
+            (game) async {
+      game.dash.position.x = game.size.x + game.dash.size.x / 2 + 1;
+      game.update(0.1);
+
+      expect(game.dash.position.x, equals(-(game.dash.size.x / 2)));
+    });
+
+    jumpNJumpGameTester.test('Test Player Mega Jump Velocity', (game) async {
+      game.dash.jumpSpeed = 500.0;
+      game.dash.megaJump();
+
+      expect(game.dash.velocity.y,
+          equals(-500.0 * Player.megaJumpSpeedMultiplier));
+    });
   });
 }
