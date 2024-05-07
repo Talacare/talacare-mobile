@@ -141,6 +141,14 @@ class Player extends SpriteGroupComponent<PlayerState>
       _hAxisInput = 0;
     }
 
+    if (health.value < lowHealthThreshold) {
+      current?.isLowHealth = true;
+      moveSpeed = originalMoveSpeed * lowHealthMoveSpeedMultiplier;
+    } else {
+      current?.isLowHealth = false;
+      moveSpeed = originalMoveSpeed;
+    }
+
     velocity.x = _hAxisInput * moveSpeed;
     velocity.y += _gravity;
 
@@ -155,12 +163,6 @@ class Player extends SpriteGroupComponent<PlayerState>
       current?.isMovingDown = true;
     } else {
       current?.isMovingDown = false;
-    }
-
-    if (health.value < 30) {
-      current?.isLowHealth = true;
-    } else {
-      current?.isLowHealth = false;
     }
 
     position += velocity * dt;
@@ -191,11 +193,20 @@ class Player extends SpriteGroupComponent<PlayerState>
 
   void jump() {
     audioManager!.playSoundEffect('jump_n_jump/jump_on_platform.wav', 1);
-    velocity.y = -jumpSpeed;
+    if (health.value < lowHealthThreshold) {
+      velocity.y = -jumpSpeed * lowHealthJumpSpeedMultiplier;
+    } else {
+      velocity.y = -jumpSpeed;
+    }
   }
 
   void megaJump() {
-    velocity.y = -jumpSpeed * 1.5;
+    if (health.value < lowHealthThreshold) {
+      velocity.y =
+          -jumpSpeed * megaJumpSpeedMultiplier * lowHealthJumpSpeedMultiplier;
+    } else {
+      velocity.y = -jumpSpeed * megaJumpSpeedMultiplier;
+    }
   }
 
   void handleControlButtonPress(DashDirection direction, bool isPressed) {
