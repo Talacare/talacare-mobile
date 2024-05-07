@@ -28,9 +28,13 @@ void main() {
       game.dash.handleControlButtonPress(DashDirection.left, true);
       game.update(0.1);
 
-      expect(game.dash.current, equals(PlayerState(
-        isMoving: true, isMovingDown: false, isLowHealth: false,
-      )));
+      expect(
+          game.dash.current,
+          equals(PlayerState(
+            isMoving: true,
+            isMovingDown: false,
+            isLowHealth: false,
+          )));
       expect(game.dash.velocity.x, lessThan(0));
 
       game.dash.handleControlButtonPress(DashDirection.left, false);
@@ -40,9 +44,13 @@ void main() {
       game.dash.handleControlButtonPress(DashDirection.right, true);
       game.update(0.1);
 
-      expect(game.dash.current, equals(PlayerState(
-        isMoving: true, isMovingDown: false, isLowHealth: false,
-      )));
+      expect(
+          game.dash.current,
+          equals(PlayerState(
+            isMoving: true,
+            isMovingDown: false,
+            isLowHealth: false,
+          )));
       expect(game.dash.velocity.x, greaterThan(0));
 
       game.dash.handleControlButtonPress(DashDirection.right, false);
@@ -126,6 +134,48 @@ void main() {
       game.dash.health.value = 50.0;
       game.dash.decreaseHealth(10.0);
       expect(game.dash.health.value, equals(40.0));
+    });
+
+    jumpNJumpGameTester.test('Test Player Move Speed Reduced When Low Health',
+        (game) async {
+      game.dash.health.value = 20.0;
+      game.dash.moveSpeed = Player.originalMoveSpeed;
+      game.update(0.1);
+
+      expect(game.dash.current?.isLowHealth, isTrue);
+      expect(
+          game.dash.moveSpeed,
+          equals(
+              Player.originalMoveSpeed * Player.lowHealthMoveSpeedMultiplier));
+    });
+
+    jumpNJumpGameTester.test('Test Player Jump Speed Reduced When Low Health',
+        (game) async {
+      game.dash.health.value = 20.0;
+      game.dash.jumpSpeed = Player.originalJumpSpeed;
+      game.update(0.1);
+      game.dash.jump();
+
+      expect(game.dash.current?.isLowHealth, isTrue);
+      expect(
+          game.dash.velocity.y,
+          equals(
+              -Player.originalJumpSpeed * Player.lowHealthJumpSpeedMultiplier));
+    });
+
+    jumpNJumpGameTester.test(
+        'Test Player Mega Jump Speed Reduced When Low Health', (game) async {
+      game.dash.health.value = 20.0;
+      game.dash.jumpSpeed = Player.originalJumpSpeed;
+      game.update(0.1);
+      game.dash.megaJump();
+
+      expect(game.dash.current?.isLowHealth, isTrue);
+      expect(
+          game.dash.velocity.y,
+          equals(-Player.originalJumpSpeed *
+              Player.megaJumpSpeedMultiplier *
+              Player.lowHealthJumpSpeedMultiplier));
     });
   });
 }
