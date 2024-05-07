@@ -99,6 +99,7 @@ class JumpNJump extends FlameGame
     if (children.contains(bloodBagManager)) bloodBagManager.removeFromParent();
     dash.health.value = 100;
     dash.velocity = Vector2.zero();
+    dash.isGameOver = false;
     gameManager.score.value = 0;
 
     camera.worldBounds = Rect.fromLTRB(
@@ -142,7 +143,7 @@ class JumpNJump extends FlameGame
       if (gameManager.isGameOver) {
         timer.cancel();
       } else {
-        dash.decreaseHealth(2);
+        dash.decreaseHealth(20);
       }
     });
   }
@@ -153,6 +154,8 @@ class JumpNJump extends FlameGame
   }
 
   void onLose() async {
+    dash.isGameOver = true;
+
     if (audioManager != null) {
       audioManager!.playSoundEffect('jump_n_jump/game_over.wav', 1);
       audioManager!.stopBackgroundMusic();
