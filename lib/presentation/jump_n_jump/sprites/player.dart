@@ -68,16 +68,18 @@ class Player extends SpriteGroupComponent<PlayerState>
 
     await add(CircleHitbox());
 
-    List<PlayerState> states = [
-      PlayerState(isMoving: false, isMovingDown: false, isLowHealth: false),
-      PlayerState(isMoving: true, isMovingDown: false, isLowHealth: false),
-      PlayerState(isMoving: false, isMovingDown: true, isLowHealth: false),
-      PlayerState(isMoving: true, isMovingDown: true, isLowHealth: false),
-      PlayerState(isMoving: false, isMovingDown: false, isLowHealth: true),
-      PlayerState(isMoving: true, isMovingDown: false, isLowHealth: true),
-      PlayerState(isMoving: false, isMovingDown: true, isLowHealth: true),
-      PlayerState(isMoving: true, isMovingDown: true, isLowHealth: true),
-    ];
+    List<PlayerState> states = [];
+    for (var isMoving in [false, true]) {
+      for (var isMovingDown in [false, true]) {
+        for (var isLowHealth in [false, true]) {
+          states.add(PlayerState(
+            isMoving: isMoving,
+            isMovingDown: isMovingDown,
+            isLowHealth: isLowHealth,
+          ));
+        }
+      }
+    }
 
     Map<PlayerState, Sprite> spritesMap = {};
 
