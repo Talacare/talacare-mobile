@@ -4,9 +4,9 @@ name: Testing
 on:
   # Triggers the workflow on push or pull request events but only for the feat-prefix branch
   push:
-    branches: ['feat/**']
+    branches: ['feat/**', 'fix/**']
   pull_request:
-    branches: ['feat/**']
+    branches: ['feat/**', 'fix/**']
 
 jobs:
   Test:
