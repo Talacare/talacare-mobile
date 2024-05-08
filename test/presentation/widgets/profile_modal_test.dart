@@ -55,7 +55,7 @@ void main() {
     testWidgets('Logout button triggers confirmation modal',
         (WidgetTester tester) async {
       await mockNetworkImagesFor(() => tester.pumpWidget(profileModal));
-      final logoutButtonFinder = find.text('Logout');
+      final logoutButtonFinder = find.text('Keluar');
       await tester.tap(logoutButtonFinder);
       await tester.pumpAndSettle();
       expect(find.byType(LogoutConfirmationModal), findsOneWidget);
