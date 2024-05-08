@@ -28,9 +28,13 @@ void main() {
       game.dash.handleControlButtonPress(DashDirection.left, true);
       game.update(0.1);
 
-      expect(game.dash.current, equals(PlayerState(
-        isMoving: true, isMovingDown: false, isLowHealth: false,
-      )));
+      expect(
+          game.dash.current,
+          equals(PlayerState(
+            isMoving: true,
+            isMovingDown: false,
+            isLowHealth: false,
+          )));
       expect(game.dash.velocity.x, lessThan(0));
 
       game.dash.handleControlButtonPress(DashDirection.left, false);
@@ -40,9 +44,13 @@ void main() {
       game.dash.handleControlButtonPress(DashDirection.right, true);
       game.update(0.1);
 
-      expect(game.dash.current, equals(PlayerState(
-        isMoving: true, isMovingDown: false, isLowHealth: false,
-      )));
+      expect(
+          game.dash.current,
+          equals(PlayerState(
+            isMoving: true,
+            isMovingDown: false,
+            isLowHealth: false,
+          )));
       expect(game.dash.velocity.x, greaterThan(0));
 
       game.dash.handleControlButtonPress(DashDirection.right, false);
@@ -101,13 +109,76 @@ void main() {
       expect(game.dash.health.value, equals(40.0));
     });
 
-    jumpNJumpGameTester.test('Test Player Velocity on GameOver', (game) async {
-      game.dash.isGameOver = true;
-      game.dash.update(0.1);
-      expect(game.dash.velocity, equals(Vector2(0, 500)));
+    jumpNJumpGameTester.test('Test Player Move Speed Reduced When Low Health',
+        (game) async {
+      game.dash.health.value = 20.0;
+      game.dash.moveSpeed = Player.originalMoveSpeed;
+      game.update(0.1);
+
+      expect(game.dash.current?.isLowHealth, isTrue);
+      expect(
+          game.dash.moveSpeed,
+          equals(
+              Player.originalMoveSpeed * Player.lowHealthMoveSpeedMultiplier));
     });
 
-    jumpNJumpGameTester.test('Test Player Ignores Platform on GameOver', (game) async {
+    jumpNJumpGameTester.test('Test Player Jump Speed Reduced When Low Health',
+        (game) async {
+      game.dash.health.value = 20.0;
+      game.dash.jumpSpeed = Player.originalJumpSpeed;
+      game.update(0.1);
+      game.dash.jump();
+
+      expect(game.dash.current?.isLowHealth, isTrue);
+      expect(
+          game.dash.velocity.y,
+          equals(
+              -Player.originalJumpSpeed * Player.lowHealthJumpSpeedMultiplier));
+    });
+
+    jumpNJumpGameTester.test(
+        'Test Player Mega Jump Speed Reduced When Low Health', (game) async {
+      game.dash.health.value = 20.0;
+      game.dash.jumpSpeed = Player.originalJumpSpeed;
+      game.update(0.1);
+      game.dash.megaJump();
+
+      expect(game.dash.current?.isLowHealth, isTrue);
+      expect(
+          game.dash.velocity.y,
+          equals(-Player.originalJumpSpeed *
+              Player.megaJumpSpeedMultiplier *
+              Player.lowHealthJumpSpeedMultiplier));
+    });
+
+    jumpNJumpGameTester.test('Test Player Velocity Calculation', (game) async {
+      game.dash.moveSpeed = 200.0;
+      game.dash.hAxisInput = 1;
+      game.dash.update(0.1);
+
+      expect(game.dash.velocity.x, equals(0));
+    });
+
+    jumpNJumpGameTester
+        .test('Test Player X Position Reset When Moving Out of Left Bounds',
+            (game) async {
+      game.dash.position.x = -(game.dash.size.x / 2) - 1;
+      game.update(0.1);
+
+      expect(game.dash.position.x, equals(game.size.x + game.dash.size.x / 2));
+    });
+
+    jumpNJumpGameTester
+        .test('Test Player X Position Reset When Moving Out of Right Bounds',
+            (game) async {
+      game.dash.position.x = game.size.x + game.dash.size.x / 2 + 1;
+      game.update(0.1);
+
+      expect(game.dash.position.x, equals(-(game.dash.size.x / 2)));
+    });
+
+    jumpNJumpGameTester.test('Test Player Ignores Platform on GameOver',
+        (game) async {
       game.dash.velocity = Vector2(0, 10);
       game.dash.isGameOver = true;
 
@@ -116,14 +187,29 @@ void main() {
       platform.position.y = game.dash.position.y + game.dash.size.y / 2 - 25;
       game.dash.onCollision(intersectionPoints, platform);
       game.dash.update(0.1);
-      
+
       expect(game.dash.velocity, equals(Vector2(0, 500)));
     });
 
-    jumpNJumpGameTester.test('Test Player onLoad creates sprites', (game) async {
+    jumpNJumpGameTester.test('Test Player onLoad creates sprites',
+        (game) async {
       game.dash.onLoad();
-      
+
       expect(game.dash.sprites!.length, equals(8));
+    });
+
+    jumpNJumpGameTester.test('Test Player Mega Jump Velocity', (game) async {
+      game.dash.jumpSpeed = 500.0;
+      game.dash.megaJump();
+
+      expect(game.dash.velocity.y,
+          equals(-500.0 * Player.megaJumpSpeedMultiplier));
+    });
+
+    jumpNJumpGameTester.test('Test Player Velocity on GameOver', (game) async {
+      game.dash.isGameOver = true;
+      game.dash.update(0.1);
+      expect(game.dash.velocity, equals(Vector2(0, 500)));
     });
   });
 }

@@ -37,6 +37,20 @@ class Player extends SpriteGroupComponent<PlayerState>
   late Character? character;
   bool isGameOver;
 
+  static const double originalMoveSpeed = 400;
+  static const double originalJumpSpeed = 1000;
+  static const double lowHealthMoveSpeedMultiplier = 0.5;
+  static const double lowHealthJumpSpeedMultiplier = 0.8;
+  static const double megaJumpSpeedMultiplier = 1.5;
+  static const double lowHealthThreshold = 30;
+  static const double healthIncreaseBloodBag = 7;
+  static const double minHealth = 0;
+  static const double maxHealth = 100;
+  static const double gravity = 14;
+  static const int originalHAxisInput = 0;
+  static const int movingLeftInput = -1;
+  static const int movingRightInput = 1;
+
   Player(
       {super.position,
       this.character,
@@ -49,15 +63,12 @@ class Player extends SpriteGroupComponent<PlayerState>
         );
 
   Vector2 velocity = Vector2.zero();
-  int _hAxisInput = 0;
 
-  final double moveSpeed = 400;
-  final double _gravity = 14;
-  final double jumpSpeed = 1000;
+  double moveSpeed = originalMoveSpeed;
+  double jumpSpeed = originalJumpSpeed;
+  int hAxisInput = originalHAxisInput;
+
   final ValueNotifier<double> health = ValueNotifier<double>(100);
-
-  final int movingLeftInput = -1;
-  final int movingRightInput = 1;
 
   bool _isMovingLeft = false;
   bool _isMovingRight = false;
@@ -109,15 +120,23 @@ class Player extends SpriteGroupComponent<PlayerState>
     }
 
     if (_isMovingLeft) {
-      _hAxisInput = movingLeftInput;
+      hAxisInput = movingLeftInput;
     } else if (_isMovingRight) {
-      _hAxisInput = movingRightInput;
+      hAxisInput = movingRightInput;
     } else {
-      _hAxisInput = 0;
+      hAxisInput = originalHAxisInput;
     }
 
-    velocity.x = _hAxisInput * moveSpeed;
-    velocity.y += _gravity;
+    if (health.value < lowHealthThreshold) {
+      current?.isLowHealth = true;
+      moveSpeed = originalMoveSpeed * lowHealthMoveSpeedMultiplier;
+    } else {
+      current?.isLowHealth = false;
+      moveSpeed = originalMoveSpeed;
+    }
+
+    velocity.x = hAxisInput * moveSpeed;
+    velocity.y += gravity;
 
     if (position.x < -(size.x / 2)) {
       position.x = gameRef.size.x + size.x / 2;
@@ -130,12 +149,6 @@ class Player extends SpriteGroupComponent<PlayerState>
       current?.isMovingDown = true;
     } else {
       current?.isMovingDown = false;
-    }
-
-    if (health.value < 30) {
-      current?.isLowHealth = true;
-    } else {
-      current?.isLowHealth = false;
     }
 
     position += velocity * dt;
@@ -157,7 +170,7 @@ class Player extends SpriteGroupComponent<PlayerState>
 
     if (other is BloodBag) {
       other.removeFromParent();
-      increaseHealth(7);
+      increaseHealth(healthIncreaseBloodBag);
     }
 
     super.onCollision(intersectionPoints, other);
@@ -165,11 +178,20 @@ class Player extends SpriteGroupComponent<PlayerState>
 
   void jump() {
     audioManager!.playSoundEffect('jump_n_jump/jump_on_platform.wav', 1);
-    velocity.y = -jumpSpeed;
+    if (health.value < lowHealthThreshold) {
+      velocity.y = -jumpSpeed * lowHealthJumpSpeedMultiplier;
+    } else {
+      velocity.y = -jumpSpeed;
+    }
   }
 
   void megaJump() {
-    velocity.y = -jumpSpeed * 1.5;
+    if (health.value < lowHealthThreshold) {
+      velocity.y =
+          -jumpSpeed * megaJumpSpeedMultiplier * lowHealthJumpSpeedMultiplier;
+    } else {
+      velocity.y = -jumpSpeed * megaJumpSpeedMultiplier;
+    }
   }
 
   void handleControlButtonPress(DashDirection direction, bool isPressed) {
@@ -193,12 +215,12 @@ class Player extends SpriteGroupComponent<PlayerState>
   
   void increaseHealth(double amount) {
     double newHealth = health.value + amount;
-    health.value = newHealth.clamp(0.0, 100.0);
+    health.value = newHealth.clamp(minHealth, maxHealth);
   }
 
   void decreaseHealth(double amount) {
     double newHealth = health.value - amount;
-    health.value = newHealth.clamp(0.0, 100.0);
+    health.value = newHealth.clamp(minHealth, maxHealth);
   }
 
   String getStateKey(PlayerState state) {
