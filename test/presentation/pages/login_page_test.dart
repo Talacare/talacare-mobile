@@ -69,6 +69,7 @@ void main() {
     await tester.pumpWidget(buildLoginPage(getIt<AuthProvider>()));
     final loginButtonFinder = find.byKey(const Key('login_button'));
     await tester.tap(loginButtonFinder);
+    await tester.pumpAndSettle(const Duration(seconds: 1));
     verify(getIt<AuthProvider>().signInWithGoogle()).called(1);
   });
 }
