@@ -125,6 +125,15 @@ class MockAuthProvider extends _i1.Mock implements _i6.AuthProvider {
       );
 
   @override
+  void setError(bool? isError) => super.noSuchMethod(
+        Invocation.method(
+          #setError,
+          [isError],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   _i3.Future<void> signInWithGoogle() => (super.noSuchMethod(
         Invocation.method(
           #signInWithGoogle,
@@ -217,6 +226,50 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
         Invocation.setter(
           #allowReassignment,
           _allowReassignment,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get skipDoubleRegistration => (super.noSuchMethod(
+        Invocation.getter(#skipDoubleRegistration),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set skipDoubleRegistration(bool? _skipDoubleRegistration) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #skipDoubleRegistration,
+          _skipDoubleRegistration,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get allowRegisterMultipleImplementationsOfoneType => (super.noSuchMethod(
+        Invocation.getter(#allowRegisterMultipleImplementationsOfoneType),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set allowRegisterMultipleImplementationsOfoneType(
+          bool? _allowRegisterMultipleImplementationsOfoneType) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #allowRegisterMultipleImplementationsOfoneType,
+          _allowRegisterMultipleImplementationsOfoneType,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void enableRegisteringMultipleInstancesOfOneType() => super.noSuchMethod(
+        Invocation.method(
+          #enableRegisteringMultipleInstancesOfOneType,
+          [],
         ),
         returnValueForMissingStub: null,
       );
@@ -344,6 +397,46 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
               ),
             ),
       ) as _i3.Future<T>);
+
+  @override
+  Iterable<T> getAll<T extends Object>({
+    dynamic param1,
+    dynamic param2,
+    Type? type,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAll,
+          [],
+          {
+            #param1: param1,
+            #param2: param2,
+            #type: type,
+          },
+        ),
+        returnValue: <T>[],
+        returnValueForMissingStub: <T>[],
+      ) as Iterable<T>);
+
+  @override
+  _i3.Future<Iterable<T>> getAllAsync<T extends Object>({
+    dynamic param1,
+    dynamic param2,
+    Type? type,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAllAsync,
+          [],
+          {
+            #param1: param1,
+            #param2: param2,
+            #type: type,
+          },
+        ),
+        returnValue: _i3.Future<Iterable<T>>.value(<T>[]),
+        returnValueForMissingStub: _i3.Future<Iterable<T>>.value(<T>[]),
+      ) as _i3.Future<Iterable<T>>);
 
   @override
   T call<T extends Object>({
