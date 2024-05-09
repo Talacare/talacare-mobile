@@ -212,7 +212,8 @@ void main() {
     await tester.ensureVisible(find.byKey(const Key('export_button')));
 
     await tester.tap(find.byKey(const Key('export_button')));
-    await tester.pump();
+    await tester
+        .pumpAndSettle(const Duration(seconds: 5)); // Extend the duration
 
     expect(find.text('Mengekspor...'), findsNothing);
     expect(find.text('Ekspor Data'), findsOneWidget);
