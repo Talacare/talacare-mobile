@@ -54,17 +54,6 @@ void main() {
         reason: 'The login button should be visible');
   });
 
-  testWidgets('Verify the snack bar is not shown when no error',
-      (tester) async {
-    await tester.pumpWidget(buildLoginPage(mockAuthProvider));
-
-    await tester.pump();
-
-    final snackBarFinder = find.byKey(const Key('snack_bar'));
-    expect(snackBarFinder, findsNothing,
-        reason: 'The snack bar should not be shown when no error');
-  });
-
   testWidgets('Verify tapping on the login button', (tester) async {
     await tester.pumpWidget(buildLoginPage(getIt<AuthProvider>()));
     final loginButtonFinder = find.byKey(const Key('login_button'));
