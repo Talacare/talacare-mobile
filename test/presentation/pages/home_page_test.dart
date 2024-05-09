@@ -214,12 +214,6 @@ void main() {
     await tester.tap(find.byKey(const Key('export_button')));
     await tester.pump();
 
-    await tester.pump(const Duration(seconds: 1));
-
-    expect(find.byType(SnackBar), findsOneWidget);
-
-    await tester.pump();
-
     expect(find.text('Mengekspor...'), findsNothing);
     expect(find.text('Ekspor Data'), findsOneWidget);
 

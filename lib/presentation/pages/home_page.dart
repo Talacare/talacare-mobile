@@ -11,6 +11,7 @@ import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/pages/schedule_page.dart';
+import 'package:talacare/presentation/widgets/custom_notification.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/widgets/button.dart';
@@ -39,21 +40,11 @@ class _HomePageState extends State<HomePage> {
     });
 
     // ignore: use_build_context_synchronously
-    ScaffoldMessenger.of(context).showSnackBar(
-      buildSnackBar(),
-    );
-  }
-
-  SnackBar buildSnackBar() {
-    return SnackBar(
-      key: const Key('snack_bar'),
-      backgroundColor: Colors.green,
-      content: Text(
-        'Game Data Berhasil Dikirim ke ${getIt<AuthProvider>().user!.email}',
-        style: const TextStyle(fontSize: 20),
-        textAlign: TextAlign.center,
-      ),
-    );
+    CustomNotification.show(
+        // ignore: use_build_context_synchronously
+        context,
+        message:
+            'Game Data Berhasil Dikirim ke ${getIt<AuthProvider>().user!.email}');
   }
 
   Widget _buildHeader(BuildContext context) {
