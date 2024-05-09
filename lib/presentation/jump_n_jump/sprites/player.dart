@@ -35,8 +35,27 @@ class Player extends SpriteGroupComponent<PlayerState>
     with HasGameRef<JumpNJump>, KeyboardHandler, CollisionCallbacks {
   late IAudioManager? audioManager;
   late Character? character;
+  bool isGameOver;
 
-  Player({super.position, this.character, this.audioManager})
+  static const double originalMoveSpeed = 400;
+  static const double originalJumpSpeed = 1000;
+  static const double lowHealthMoveSpeedMultiplier = 0.5;
+  static const double lowHealthJumpSpeedMultiplier = 0.8;
+  static const double megaJumpSpeedMultiplier = 1.5;
+  static const double lowHealthThreshold = 30;
+  static const double healthIncreaseBloodBag = 7;
+  static const double minHealth = 0;
+  static const double maxHealth = 100;
+  static const double gravity = 14;
+  static const int originalHAxisInput = 0;
+  static const int movingLeftInput = -1;
+  static const int movingRightInput = 1;
+
+  Player(
+      {super.position,
+      this.character,
+      this.audioManager,
+      this.isGameOver = false})
       : super(
           size: Vector2(70, 140),
           anchor: Anchor.center,
@@ -44,27 +63,15 @@ class Player extends SpriteGroupComponent<PlayerState>
         );
 
   Vector2 velocity = Vector2.zero();
-  int _hAxisInput = 0;
 
-  final double moveSpeed = 400;
-  final double _gravity = 14;
-  final double jumpSpeed = 1000;
+  double moveSpeed = originalMoveSpeed;
+  double jumpSpeed = originalJumpSpeed;
+  int hAxisInput = originalHAxisInput;
+
   final ValueNotifier<double> health = ValueNotifier<double>(100);
-
-  final int movingLeftInput = -1;
-  final int movingRightInput = 1;
 
   bool _isMovingLeft = false;
   bool _isMovingRight = false;
-
-  Sprite? idle;
-  Sprite? move;
-  Sprite? idleDown;
-  Sprite? moveDown;
-  Sprite? idleTired;
-  Sprite? moveTired;
-  Sprite? idleDownTired;
-  Sprite? moveDownTired;
 
   @override
   Future<void> onLoad() async {
@@ -72,50 +79,27 @@ class Player extends SpriteGroupComponent<PlayerState>
 
     await add(CircleHitbox());
 
-    await handleCharacterAsset();
+    List<PlayerState> states = [];
+    for (var isMoving in [false, true]) {
+      for (var isMovingDown in [false, true]) {
+        for (var isLowHealth in [false, true]) {
+          states.add(PlayerState(
+            isMoving: isMoving,
+            isMovingDown: isMovingDown,
+            isLowHealth: isLowHealth,
+          ));
+        }
+      }
+    }
 
-    sprites = <PlayerState, Sprite>{
-      PlayerState(
-        isMoving: false,
-        isMovingDown: false,
-        isLowHealth: false,
-      ): idle!,
-      PlayerState(
-        isMoving: true,
-        isMovingDown: false,
-        isLowHealth: false,
-      ): move!,
-      PlayerState(
-        isMoving: false,
-        isMovingDown: true,
-        isLowHealth: false,
-      ): idleDown!,
-      PlayerState(
-        isMoving: true,
-        isMovingDown: true,
-        isLowHealth: false,
-      ): moveDown!,
-      PlayerState(
-        isMoving: false,
-        isMovingDown: false,
-        isLowHealth: true,
-      ): idleTired!,
-      PlayerState(
-        isMoving: true,
-        isMovingDown: false,
-        isLowHealth: true,
-      ): moveTired!,
-      PlayerState(
-        isMoving: false,
-        isMovingDown: true,
-        isLowHealth: true,
-      ): idleDownTired!,
-      PlayerState(
-        isMoving: true,
-        isMovingDown: true,
-        isLowHealth: true,
-      ): moveDownTired!,
-    };
+    Map<PlayerState, Sprite> spritesMap = {};
+
+    for (var state in states) {
+      String key = getStateKey(state);
+      spritesMap[state] = await gameRef.loadSprite(key);
+    }
+
+    sprites = spritesMap;
 
     current = PlayerState(
       isMoving: false,
@@ -126,16 +110,33 @@ class Player extends SpriteGroupComponent<PlayerState>
 
   @override
   void update(double dt) {
-    if (_isMovingLeft) {
-      _hAxisInput = movingLeftInput;
-    } else if (_isMovingRight) {
-      _hAxisInput = movingRightInput;
-    } else {
-      _hAxisInput = 0;
+    super.update(dt);
+    if (isGameOver) {
+      velocity.x = 0;
+      velocity.y = 500;
+      position += velocity * dt;
+      current?.isMovingDown = true;
+      return;
     }
 
-    velocity.x = _hAxisInput * moveSpeed;
-    velocity.y += _gravity;
+    if (_isMovingLeft) {
+      hAxisInput = movingLeftInput;
+    } else if (_isMovingRight) {
+      hAxisInput = movingRightInput;
+    } else {
+      hAxisInput = originalHAxisInput;
+    }
+
+    if (health.value < lowHealthThreshold) {
+      current?.isLowHealth = true;
+      moveSpeed = originalMoveSpeed * lowHealthMoveSpeedMultiplier;
+    } else {
+      current?.isLowHealth = false;
+      moveSpeed = originalMoveSpeed;
+    }
+
+    velocity.x = hAxisInput * moveSpeed;
+    velocity.y += gravity;
 
     if (position.x < -(size.x / 2)) {
       position.x = gameRef.size.x + size.x / 2;
@@ -150,14 +151,7 @@ class Player extends SpriteGroupComponent<PlayerState>
       current?.isMovingDown = false;
     }
 
-    if (health.value < 30) {
-      current?.isLowHealth = true;
-    } else {
-      current?.isLowHealth = false;
-    }
-
     position += velocity * dt;
-    super.update(dt);
   }
 
   bool get isMovingDown => velocity.y > 0;
@@ -169,14 +163,14 @@ class Player extends SpriteGroupComponent<PlayerState>
       bool isCollidingWithFeet =
           other.position.y - (position.y + size.y / 2) > -45;
 
-      if (isMovingDown && isCollidingWithFeet) {
+      if (isMovingDown && isCollidingWithFeet && !isGameOver) {
         jump();
       }
     }
 
     if (other is BloodBag) {
       other.removeFromParent();
-      increaseHealth(7);
+      increaseHealth(healthIncreaseBloodBag);
     }
 
     super.onCollision(intersectionPoints, other);
@@ -184,24 +178,33 @@ class Player extends SpriteGroupComponent<PlayerState>
 
   void jump() {
     audioManager!.playSoundEffect('jump_n_jump/jump_on_platform.wav', 1);
-    velocity.y = -jumpSpeed;
+    if (health.value < lowHealthThreshold) {
+      velocity.y = -jumpSpeed * lowHealthJumpSpeedMultiplier;
+    } else {
+      velocity.y = -jumpSpeed;
+    }
   }
 
   void megaJump() {
-    velocity.y = -jumpSpeed * 1.5;
+    if (health.value < lowHealthThreshold) {
+      velocity.y =
+          -jumpSpeed * megaJumpSpeedMultiplier * lowHealthJumpSpeedMultiplier;
+    } else {
+      velocity.y = -jumpSpeed * megaJumpSpeedMultiplier;
+    }
   }
 
   void handleControlButtonPress(DashDirection direction, bool isPressed) {
     if (direction == DashDirection.left) {
       _isMovingLeft = isPressed;
-      if (isPressed) {
+      if (isPressed && !isGameOver) {
         current?.isMoving = true;
       } else {
         current?.isMoving = false;
       }
     } else if (direction == DashDirection.right) {
       _isMovingRight = isPressed;
-      if (isPressed) {
+      if (isPressed && !isGameOver) {
         current?.isMoving = true;
       } else {
         current?.isMoving = false;
@@ -209,48 +212,23 @@ class Player extends SpriteGroupComponent<PlayerState>
       flipHorizontally();
     }
   }
-
-  Future<void> handleCharacterAsset() async {
-    if (character == Character.boy) {
-      idle = await gameRef.loadSprite('jump_n_jump/characters/boy_idle.png');
-      move = await gameRef.loadSprite('jump_n_jump/characters/boy_move.png');
-      idleDown =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_idle_down.png');
-      moveDown =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_move_down.png');
-      idleTired =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_idle_tired.png');
-      moveTired =
-          await gameRef.loadSprite('jump_n_jump/characters/boy_move_tired.png');
-      idleDownTired = await gameRef
-          .loadSprite('jump_n_jump/characters/boy_idle_down_tired.png');
-      moveDownTired = await gameRef
-          .loadSprite('jump_n_jump/characters/boy_move_down_tired.png');
-    } else if (character == Character.girl) {
-      idle = await gameRef.loadSprite('jump_n_jump/characters/girl_idle.png');
-      move = await gameRef.loadSprite('jump_n_jump/characters/girl_move.png');
-      idleDown =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_idle_down.png');
-      moveDown =
-          await gameRef.loadSprite('jump_n_jump/characters/girl_move_down.png');
-      idleTired = await gameRef
-          .loadSprite('jump_n_jump/characters/girl_idle_tired.png');
-      moveTired = await gameRef
-          .loadSprite('jump_n_jump/characters/girl_move_tired.png');
-      idleDownTired = await gameRef
-          .loadSprite('jump_n_jump/characters/girl_idle_down_tired.png');
-      moveDownTired = await gameRef
-          .loadSprite('jump_n_jump/characters/girl_move_down_tired.png');
-    }
-  }
-
+  
   void increaseHealth(double amount) {
     double newHealth = health.value + amount;
-    health.value = newHealth.clamp(0.0, 100.0);
+    health.value = newHealth.clamp(minHealth, maxHealth);
   }
 
   void decreaseHealth(double amount) {
     double newHealth = health.value - amount;
-    health.value = newHealth.clamp(0.0, 100.0);
+    health.value = newHealth.clamp(minHealth, maxHealth);
+  }
+
+  String getStateKey(PlayerState state) {
+    String characterBase =
+        'jump_n_jump/characters/${character.toString().split('.').last}';
+    String key = state.isMoving ? 'move' : 'idle';
+    if (state.isMovingDown) key += '_down';
+    if (state.isLowHealth) key += '_tired';
+    return '${characterBase}_$key.png';
   }
 }
