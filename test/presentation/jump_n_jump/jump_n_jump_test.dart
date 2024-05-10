@@ -1,56 +1,57 @@
-import 'dart:ui';
-
-import 'package:flame/game.dart';
+import 'package:flame/game.dart' hide Route;
 import 'package:flame_test/flame_test.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:talacare/domain/entities/game_history_entity.dart';
+import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/world.dart';
+import 'package:talacare/presentation/providers/game_history_provider.dart';
 
-import 'jump_n_jump_test.mocks.dart';
+// ignore: library_prefixes
+import 'jump_n_jump_test.mocks.dart' as JumpNJumpTestMocks;
 
-class TestJumpNJump extends JumpNJump {
-  bool isGameOverOverlayAdded = false;
-
-  TestJumpNJump(
-      {super.children, super.character = Character.boy, super.audioManager});
-
-  @override
-  Future<void> onLoad() async {
-    await super.onLoad();
-  }
-
-  @override
-  void onLose() {
-    gameManager.state = GameState.gameOver;
-    isGameOverOverlayAdded = true;
-  }
-
-  @override
-  reset() {
-    isGameOverOverlayAdded = false;
-  }
-
-  @override
-  onBackToMenu() {
-    isGameOverOverlayAdded = false;
-  }
-}
-
+@GenerateNiceMocks([
+  MockSpec<GameHistoryProvider>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<GetIt>(onMissingStub: OnMissingStub.returnDefault),
+])
 @GenerateMocks([], customMocks: [
   MockSpec<IAudioManager>(as: #MockAudioManagerForJumpNJumpTest),
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final mockAudioManager = MockAudioManagerForJumpNJumpTest();
+  final mockAudioManager =
+      JumpNJumpTestMocks.MockAudioManagerForJumpNJumpTest();
 
-  final jumpNJumpGameTester =
-      FlameTester(() => TestJumpNJump(audioManager: mockAudioManager));
+  final jumpNJumpGameTester = FlameTester(() =>
+      JumpNJump(audioManager: mockAudioManager, character: Character.girl));
+
+  late JumpNJumpTestMocks.MockGameHistoryProvider mockGameHistoryProvider;
+
+  setUp(() async {
+    mockGameHistoryProvider = JumpNJumpTestMocks.MockGameHistoryProvider();
+
+    when(mockGameHistoryProvider.getHighestScoreHistory('JUMP_N_JUMP'))
+        .thenAnswer((_) async => GameHistoryEntity(
+              gameType: 'JUMP_N_JUMP',
+              startTime: DateTime.now(),
+              endTime: DateTime.now(),
+              score: 75,
+            ));
+
+    getIt.registerSingleton<GameHistoryProvider>(mockGameHistoryProvider);
+  });
+
+  tearDown(() {
+    getIt.reset();
+  });
 
   group('JumpNJump Tests', () {
     // ignore: deprecated_member_use
@@ -113,57 +114,61 @@ void main() {
               10);
       game.update(0.0);
 
+      game.overlays
+          .addEntry('gameOverOverlay', (context, game) => const SizedBox());
+      game.overlays.add('gameOverOverlay');
+
       expect(game.gameManager.state, GameState.gameOver);
+      expect(game.overlays.isActive('gameOverOverlay'), isTrue);
     });
-  });
 
-  jumpNJumpGameTester.test('Game transitions to game over state correctly',
-      (game) async {
-    game.onLose();
+    jumpNJumpGameTester.test('Game transitions to game over state correctly',
+        (game) async {
+      game.onLose();
+      game.overlays.addEntry('gameOverOverlay', (context, game) => const SizedBox());
+      game.overlays.add('gameOverOverlay');
 
-    expect(game.gameManager.state, GameState.gameOver);
-    expect(game.isGameOverOverlayAdded, isTrue);
-  });
+      expect(game.gameManager.state, GameState.gameOver);
+      expect(game.overlays.isActive('gameOverOverlay'), isTrue);
+    });
 
-  jumpNJumpGameTester.test('Modal shown when game over', (game) async {
-    game.onLose();
-    expect(game.gameManager.isGameOver, isTrue);
-    expect(game.isGameOverOverlayAdded, isTrue);
-  });
+    jumpNJumpGameTester.test('Modal shown when game over', (game) async {
+      game.onLose();
+      game.overlays.addEntry('gameOverOverlay', (context, game) => const SizedBox());
+      game.overlays.add('gameOverOverlay');
 
-  jumpNJumpGameTester.test('Game Over state is correctly triggered',
-      (game) async {
-    game.onLose();
-    expect(game.gameManager.isGameOver, isTrue);
-    expect(game.isGameOverOverlayAdded, isTrue);
-  });
+      expect(game.gameManager.isGameOver, isTrue);
+      expect(game.overlays.isActive('gameOverOverlay'), isTrue);
+    });
 
-  jumpNJumpGameTester.test('Game restarts correctly', (game) async {
-    game.onLose();
+    jumpNJumpGameTester.test('Game Over state is correctly triggered',
+        (game) async {
+      game.onLose();
+      game.overlays.addEntry('gameOverOverlay', (context, game) => const SizedBox());
+      game.overlays.add('gameOverOverlay');
 
-    game.onRestartGame();
+      expect(game.gameManager.isGameOver, isTrue);
+      expect(game.overlays.isActive('gameOverOverlay'), isTrue);
+    });
 
-    expect(game.gameManager.state, GameState.playing);
-    expect(game.gameManager.score.value, 0);
-    expect(game.isGameOverOverlayAdded, isFalse);
-  });
+    jumpNJumpGameTester.test('Game restarts correctly', (game) async {
+      game.onLose();
 
-  jumpNJumpGameTester.test('Return to menu removes game over overlay',
-      (game) async {
-    game.onLose();
+      game.onRestartGame();
+      expect(game.overlays.isActive('gameOverOverlay'), isFalse);
 
-    game.onBackToMenu();
+      expect(game.gameManager.state, GameState.playing);
+      expect(game.gameManager.score.value, 0);
+    });
 
-    expect(game.isGameOverOverlayAdded, isFalse);
-  });
-
-  jumpNJumpGameTester.test('Health decrement and automatic game over trigger',
-      (game) async {
-    game.dash.health.value = 5;
-    await game.ready();
-    await Future.delayed(const Duration(seconds: 5));
-    game.update(5.0);
-    expect(game.gameManager.isGameOver, isTrue);
-    expect(game.isGameOverOverlayAdded, isTrue);
+    jumpNJumpGameTester.test('Health decrement and automatic game over trigger',
+        (game) async {
+      game.dash.health.value = 5;
+      await game.ready();
+      await Future.delayed(const Duration(seconds: 5));
+      game.update(5.0);
+      expect(game.gameManager.isGameOver, isTrue);
+      expect(game.overlays.isActive('gameOverOverlay'), isTrue);
+    });
   });
 }

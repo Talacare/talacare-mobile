@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:talacare/core/enums/user_role.dart';
 import 'package:talacare/data/datasources/auth_local_datasource.dart';
 import 'package:talacare/data/datasources/auth_remote_datasource.dart';
 import 'package:talacare/data/models/user_model.dart';
@@ -22,6 +23,7 @@ void main() {
     email: 'test@example.com',
     name: 'Test User',
     photoURL: 'https://example.com/photo.jpg',
+    role: UserRole.USER,
   );
 
   setUp(() {

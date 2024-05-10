@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Welcome To',
+          'Selamat Datang di',
           style: _getTextStyle(1, Colors.white, 22),
         ),
         Stack(
@@ -104,6 +104,7 @@ class HomePage extends StatelessWidget {
                   key: const Key('jump_n_jump_card'),
                   buttonName: "jump_n_jump_button",
                   onTap: () {
+                    AnalyticsEngineUtil.userPlaysJumpNJump();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -137,7 +138,8 @@ class HomePage extends StatelessWidget {
                   onTap: () async {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SchedulePage()),
+                      MaterialPageRoute(
+                          builder: (context) => const SchedulePage()),
                     );
                   },
                 ),

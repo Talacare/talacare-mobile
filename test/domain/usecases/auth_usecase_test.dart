@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:talacare/core/enums/user_role.dart';
 import 'package:talacare/domain/entities/user_entity.dart';
 import 'package:talacare/domain/repositories/auth_repository.dart';
 import 'package:talacare/domain/usecases/auth_usecase.dart';
@@ -13,7 +14,9 @@ void main() {
   const userEntity = UserEntity(
       email: 'test@example.com',
       name: 'Test User',
-      photoURL: 'https://example.com/photo.jpg');
+      photoURL: 'https://example.com/photo.jpg',
+      role: UserRole.USER,
+  );
 
   setUp(() {
     mockAuthRepository = MockAuthRepository();

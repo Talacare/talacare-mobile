@@ -9,7 +9,9 @@ import 'package:talacare/presentation/widgets/modal_button.dart';
 import 'package:talacare/injection.dart' as di;
 
 class AddScheduleModal extends StatefulWidget {
-  const AddScheduleModal({super.key});
+  final VoidCallback onScheduleAdded;
+
+  const AddScheduleModal({super.key, required this.onScheduleAdded});
 
   @override
   State<AddScheduleModal> createState() => _AddScheduleModalState();
@@ -66,6 +68,7 @@ class _AddScheduleModalState extends State<AddScheduleModal> {
                         fontSize: 25,
                         fontWeight: FontWeight.w500,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -107,16 +110,18 @@ class _AddScheduleModalState extends State<AddScheduleModal> {
                             .getIt<ScheduleProvider>()
                             .createSchedule(schedule)
                             .then((_) {
-                          if (!scheduleProvider.isError) {
-                            Navigator.of(context).pop();
-                          }
+                          bool isSuccess = !scheduleProvider.isError;
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             CustomNotification.show(
                               context,
                               message: scheduleProvider.message,
-                              isSuccess: !scheduleProvider.isError,
+                              isSuccess: isSuccess,
                             );
                           });
+                          if (!scheduleProvider.isError) {
+                            Navigator.of(context).pop();
+                          }
+                          widget.onScheduleAdded();
                         });
                       },
                     );
