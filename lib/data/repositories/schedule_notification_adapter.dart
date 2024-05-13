@@ -2,7 +2,7 @@ import 'package:talacare/domain/repositories/notification_adapter.dart';
 import 'package:talacare/notification_service.dart';
 
 class ScheduleNotificationAdapter extends NotificationAdapter {
-  DateTime _changeTimeFormat(String scheduledTime) {
+  DateTime changeTimeFormat(String scheduledTime) {
     return DateTime(
                   2020,
                   04,
@@ -24,7 +24,7 @@ class ScheduleNotificationAdapter extends NotificationAdapter {
         title: "Pengingat Obat",
         body: "Jangan Lupa Minum Obat Kelasi Besi",
         payload: schedule["id"]!,
-        scheduledNotificationDateTime: _changeTimeFormat(schedule["time"]!)
+        scheduledNotificationDateTime: changeTimeFormat(schedule["time"]!)
       );
     }
   }
