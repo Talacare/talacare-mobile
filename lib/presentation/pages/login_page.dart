@@ -41,8 +41,8 @@ class LoginPage extends StatelessWidget {
                             CustomNotification.show(
                               // ignore: use_build_context_synchronously
                               context,
-                              message: 'Silakan coba lagi',
                               isSuccess: false,
+                              message: 'Silakan coba lagi',
                             )
                         } else if (authProvider.user != null || true) {
                             CustomNotification.show(
