@@ -95,5 +95,28 @@ void main() {
             reason: 'Next button should be visible');
       });
     });
+
+    testWidgets('Check if pause button is showing', (tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(puzzlePage);
+        await tester.pumpAndSettle();
+
+        final findLanjut = find.byKey(const Key('pauseButton'));
+        expect(findLanjut, findsOneWidget,
+            reason: 'Next button should be visible');
+      });
+    });
+
+    testWidgets('Check pause button is working', (tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(puzzlePage);
+        await tester.pumpAndSettle(const Duration(seconds: 20));
+
+        await tester.tap(find.byKey(const Key('pauseButton')));
+        await tester.pumpAndSettle();
+
+        expect(find.text('40'), findsOneWidget);
+      });
+    });
   });
 }
