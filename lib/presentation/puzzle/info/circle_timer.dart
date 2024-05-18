@@ -36,6 +36,14 @@ class _CircleTimerState extends State<CircleTimer>
       });
   }
 
+  void stopTimer() {
+    _controller.stop();
+  }
+
+  void resumeTimer() {
+    _controller.reverse(from: _controller.value);
+  }
+
   @override
   Widget build(BuildContext context) {
     final finish = Provider.of<CompleteState>(context);
