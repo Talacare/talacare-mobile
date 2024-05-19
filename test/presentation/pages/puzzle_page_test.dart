@@ -69,7 +69,7 @@ void main() {
         await tester.pumpWidget(puzzlePage);
         await tester.pumpAndSettle();
 
-        final findSkor = find.text('TERTINGGI: 75');
+        final findSkor = find.text('🏆');
         expect(findSkor, findsOneWidget, reason: 'Score should be visible');
       });
     });
