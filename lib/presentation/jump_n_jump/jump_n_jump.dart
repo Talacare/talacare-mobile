@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
@@ -18,16 +19,18 @@ class JumpNJump extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
   final Character? character;
   IAudioManager? audioManager;
+  final Random random;
 
   JumpNJump({
     this.character,
     this.audioManager,
+    Random? random,
     super.children,
-  });
+  }): random = random ?? Random(), super();
 
   GameManager gameManager = GameManager();
   final WorldGame world = WorldGame();
-  PlatformManager platformManager = PlatformManager();
+  PlatformManager platformManager = PlatformManager(random: Random());
 
   BloodBagManager bloodBagManager = BloodBagManager();
   Player dash = Player();
@@ -111,7 +114,7 @@ class JumpNJump extends FlameGame
       (world.size.y - dash.size.y) / 2,
     );
 
-    platformManager = PlatformManager();
+    platformManager = PlatformManager(random: random);
     bloodBagManager = BloodBagManager();
 
     add(bloodBagManager);
