@@ -3,11 +3,9 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:math' as _i2;
-
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart'
-    as _i3;
+    as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -22,47 +20,11 @@ import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interf
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [Random].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockRandom extends _i1.Mock implements _i2.Random {
-  MockRandom() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  int nextInt(int? max) => (super.noSuchMethod(
-        Invocation.method(
-          #nextInt,
-          [max],
-        ),
-        returnValue: 0,
-      ) as int);
-
-  @override
-  double nextDouble() => (super.noSuchMethod(
-        Invocation.method(
-          #nextDouble,
-          [],
-        ),
-        returnValue: 0.0,
-      ) as double);
-
-  @override
-  bool nextBool() => (super.noSuchMethod(
-        Invocation.method(
-          #nextBool,
-          [],
-        ),
-        returnValue: false,
-      ) as bool);
-}
-
 /// A class which mocks [IAudioManager].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAudioManagerForPlatformTest extends _i1.Mock
-    implements _i3.IAudioManager {
+    implements _i2.IAudioManager {
   MockAudioManagerForPlatformTest() {
     _i1.throwOnMissingStub(this);
   }

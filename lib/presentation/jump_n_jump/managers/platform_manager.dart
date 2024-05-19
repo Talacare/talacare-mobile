@@ -6,14 +6,14 @@ import '../jump_n_jump.dart';
 import '../sprites/platform.dart';
 
 class PlatformManager extends Component with HasGameRef<JumpNJump> {
-  final Random random;
+  final Random random = Random();
   final List<Platform> platforms = [];
 
   final double maxVerticalDistanceToNextPlatform = 350;
 
   final double minVerticalDistanceToNextPlatform = 200;
 
-  PlatformManager({required this.random}) : super();
+  PlatformManager() : super();
 
   @override
   void onMount() {
@@ -57,7 +57,8 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
   void update(double dt) {
     final topOfLowestPlatform = platforms.first.position.y;
 
-    final screenBottom = gameRef.dash.position.y + (gameRef.size.y / 2);
+    final screenBottom = gameRef.dash.position.y +
+        (gameRef.size.y / 2);
 
     if (topOfLowestPlatform > screenBottom) {
       var newPlatY = generateNextY();

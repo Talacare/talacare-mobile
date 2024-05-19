@@ -125,15 +125,6 @@ class MockAuthProvider extends _i1.Mock implements _i6.AuthProvider {
       );
 
   @override
-  void setError(bool? isError) => super.noSuchMethod(
-        Invocation.method(
-          #setError,
-          [isError],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
   _i3.Future<void> signInWithGoogle() => (super.noSuchMethod(
         Invocation.method(
           #signInWithGoogle,
