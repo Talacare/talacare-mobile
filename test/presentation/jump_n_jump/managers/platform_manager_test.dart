@@ -18,14 +18,14 @@ void main() {
 
   group('Platform Tests', () {
     jumpNJumpGameTester.test('Test number of platform generated', (game) async {
-      expect(game.platformManager.platforms.length, equals(5));
+      expect(game.platformManager.items.length, equals(5));
     });
 
     jumpNJumpGameTester.test('Test Remove and Add Platform', (game) async {
       game.dash.position.y = 0;
 
       final platformsBeforeUpdate =
-          game.platformManager.platforms.first.position;
+          game.platformManager.items.first.position;
       
       game.dash.jump();
       game.update(0.1);
@@ -33,7 +33,7 @@ void main() {
       game.update(0.1);
 
       final platformsAfterUpdate =
-          game.platformManager.platforms.first.position;
+          game.platformManager.items.first.position;
 
       expect(platformsAfterUpdate, isNot(equals(platformsBeforeUpdate)));
     });
