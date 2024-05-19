@@ -18,7 +18,7 @@ class GameModal extends StatelessWidget {
     this.isPause = false,
   });
 
-  Widget _buildScoreContainer(String title, int score, BuildContext context) {
+  Widget _buildScoreContainer(String title, int score) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -52,6 +52,26 @@ class GameModal extends StatelessWidget {
     );
   }
 
+  Widget _buildTitle() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+      decoration: ShapeDecoration(
+        color: AppColors.lightPurple,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+        ),
+      ),
+      child: Text(
+        isPause ? "Istirahat Dulu?" : "Yuk Main Lagi!",
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 25,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -75,27 +95,10 @@ class GameModal extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 5.0),
-                  decoration: ShapeDecoration(
-                    color: AppColors.lightPurple,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                    ),
-                  ),
-                  child: Text(
-                    isPause ? "Istirahat Dulu?" : "Yuk Main Lagi!",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
+                _buildTitle(),
                 const SizedBox(height: 10),
-                _buildScoreContainer('Skor Terkini', currentScore, context),
-                _buildScoreContainer('Skor Tertinggi', highestScore, context),
+                _buildScoreContainer('Skor Terkini', currentScore),
+                _buildScoreContainer('Skor Tertinggi', highestScore),
                 const SizedBox(height: 15),
                 ModalButton(
                   text: isPause ? "Lanjutkan" : 'Main Lagi',
