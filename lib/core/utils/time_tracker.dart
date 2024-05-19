@@ -1,0 +1,76 @@
+import 'dart:async';
+import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class TimeTracker with WidgetsBindingObserver {
+  Timer? _timer;
+  int accumulatedTime = 0;
+  static const int dailyLimit = 2 * 3600; // unit = second
+
+  void start() {
+    WidgetsBinding.instance.addObserver(this);
+    resetTimer();
+    startTimer();
+    resetDailyTimeIfNeeded();
+  }
+
+  void stop() {
+    WidgetsBinding.instance.removeObserver(this);
+    stopTimer();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      resetDailyTimeIfNeeded();
+      loadAccumulatedTime();
+      startTimer();
+    } else if (state == AppLifecycleState.paused) {
+      stopTimer();
+      saveAccumulatedTime();
+    }
+  }
+
+  void startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (accumulatedTime < dailyLimit) {
+        accumulatedTime++;
+      } else {
+        stopTimer();
+        // print("Daily limit of 2 hours reached");
+      }
+    });
+  }
+
+  void resetTimer() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('accumulatedTime', 0);
+  }
+
+  void stopTimer() {
+    _timer?.cancel();
+    _timer = null;
+  }
+
+  void resetDailyTimeIfNeeded() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? lastDate = prefs.getString('lastDate');
+    String todayDate = DateTime.now().toIso8601String().split('T').first;
+
+    if (lastDate == null || lastDate != todayDate) {
+      await prefs.setString('lastDate', todayDate);
+      accumulatedTime = 0;
+      saveAccumulatedTime();
+    }
+  }
+
+  void loadAccumulatedTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    accumulatedTime = prefs.getInt('accumulatedTime') ?? 0;
+  }
+
+  void saveAccumulatedTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('accumulatedTime', accumulatedTime);
+  }
+}
