@@ -17,6 +17,8 @@ class _CircleTimerState extends State<CircleTimer>
   late AnimationController _controller;
   final int _start = 60;
 
+  late final AppLifecycleListener _listener;
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +36,12 @@ class _CircleTimerState extends State<CircleTimer>
           timeLeftState.value = 0;
         }
       });
+    
+    // Pass all the callbacks for the transitions you want to listen to
+    _listener = AppLifecycleListener(
+      onInactive: stopTimer,
+      onResume: resumeTimer,
+    );
   }
 
   void stopTimer() {
@@ -96,6 +104,7 @@ class _CircleTimerState extends State<CircleTimer>
   @override
   void dispose() {
     _controller.dispose();
+    _listener.dispose();
     super.dispose();
   }
 }
