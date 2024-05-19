@@ -7,7 +7,7 @@ import '../sprites/blood_bag.dart';
 
 class BloodBagManager extends Component with HasGameRef<JumpNJump> {
   final Random random = Random();
-  final List<BloodBag> bloodBags = [];
+  final List<BloodBag> items = [];
 
   final double maxVerticalDistanceToNextBloodBag = 1000;
 
@@ -26,7 +26,7 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
       if (i != 0) {
         currentY = generateNextY();
       }
-      bloodBags.add(
+      items.add(
         BloodBag(
           position: Vector2(
             random.nextInt(gameRef.size.x.floor()).toDouble(),
@@ -36,7 +36,7 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
       );
     }
 
-    for (var bloodBag in bloodBags) {
+    for (var bloodBag in items) {
       add(bloodBag);
     }
 
@@ -44,7 +44,7 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
   }
 
   double generateNextY() {
-    final currentHighestBloodBagY = bloodBags.last.center.y;
+    final currentHighestBloodBagY = items.last.center.y;
     final distanceToNextY = minVerticalDistanceToNextBloodBag.toInt() +
         random
             .nextInt((maxVerticalDistanceToNextBloodBag -
@@ -57,7 +57,7 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
 
   @override
   void update(double dt) {
-    final topOfLowestBloodBag = bloodBags.first.position.y;
+    final topOfLowestBloodBag = items.first.position.y;
 
     final screenBottom = gameRef.camera.position.y + gameRef.size.y;
 
@@ -67,16 +67,16 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
       var newBloodBagX = random.nextInt(gameRef.size.x.floor() - 60).toDouble();
       var newBloodBag = BloodBag(position: Vector2(newBloodBagX, newBloodBagY));
 
-      while (bloodBags.first.position == newBloodBag.position) {
+      while (items.first.position == newBloodBag.position) {
         var newBloodBagY = generateNextY();
         var newBloodBagX =
             random.nextInt(gameRef.size.x.floor() - 60).toDouble();
         newBloodBag = BloodBag(position: Vector2(newBloodBagX, newBloodBagY));
       }
       add(newBloodBag);
-      bloodBags.add(newBloodBag);
+      items.add(newBloodBag);
 
-      final lowestBloodBag = bloodBags.removeAt(0);
+      final lowestBloodBag = items.removeAt(0);
 
       lowestBloodBag.removeFromParent();
     }

@@ -7,7 +7,7 @@ import '../sprites/platform.dart';
 
 class PlatformManager extends Component with HasGameRef<JumpNJump> {
   final Random random = Random();
-  final List<Platform> platforms = [];
+  final List<Platform> items = [];
 
   final double maxVerticalDistanceToNextPlatform = 350;
 
@@ -26,7 +26,7 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
       if (i != 0) {
         currentY = generateNextY();
       }
-      platforms.add(
+      items.add(
         Platform(
           position: Vector2(
             random.nextInt(gameRef.size.x.floor()).toDouble(),
@@ -36,7 +36,7 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
       );
     }
 
-    for (var platform in platforms) {
+    for (var platform in items) {
       add(platform);
     }
 
@@ -44,7 +44,7 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
   }
 
   double generateNextY() {
-    final currentHighestPlatformY = platforms.last.center.y;
+    final currentHighestPlatformY = items.last.center.y;
     final distanceToNextY = minVerticalDistanceToNextPlatform.toInt() +
         random
             .nextInt((maxVerticalDistanceToNextPlatform -
@@ -57,7 +57,7 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
 
   @override
   void update(double dt) {
-    final topOfLowestPlatform = platforms.first.position.y;
+    final topOfLowestPlatform = items.first.position.y;
 
     final screenBottom = gameRef.camera.position.y + gameRef.size.y;
 
@@ -66,15 +66,15 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
 
       var newPlatX = random.nextInt(gameRef.size.x.floor() - 60).toDouble();
       var newPlat = Platform(position: Vector2(newPlatX, newPlatY));
-      while (platforms.first.position == newPlat.position) {
+      while (items.first.position == newPlat.position) {
         newPlat = Platform(position: Vector2(newPlatX, newPlatY));
       }
 
       add(newPlat);
 
-      platforms.add(newPlat);
+      items.add(newPlat);
 
-      final lowestPlat = platforms.removeAt(0);
+      final lowestPlat = items.removeAt(0);
 
       lowestPlat.removeFromParent();
 
