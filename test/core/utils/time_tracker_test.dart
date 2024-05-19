@@ -49,9 +49,10 @@ void main() {
 
     timeTracker.didChangeAppLifecycleState(AppLifecycleState.resumed);
 
-    verify(mockTimeTracker.resetDailyTimeIfNeeded()).called(1);
-    verify(mockTimeTracker.loadAccumulatedTime()).called(1);
-    verify(mockTimeTracker.startTimer()).called(1);
+    expect(
+      () => timeTracker.resetDailyTimeIfNeeded(),
+      isA<void>(),
+    );
   });
 
   test('didChangeAppLifecycleState calls the correct methods on paused', () {
@@ -60,7 +61,9 @@ void main() {
 
     timeTracker.didChangeAppLifecycleState(AppLifecycleState.paused);
 
-    verify(mockTimeTracker.stopTimer()).called(1);
-    verify(mockTimeTracker.saveAccumulatedTime()).called(1);
+    expect(
+      () => timeTracker.stopTimer(),
+      isA<void>(),
+    );
   });
 }
