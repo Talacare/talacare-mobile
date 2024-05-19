@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flame/components.dart' as flame_components;
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
@@ -64,23 +65,12 @@ class JumpNJump extends FlameGame
     }
 
     if (gameManager.isPlaying) {
-      final Rect worldBounds = Rect.fromLTRB(
+      camera.worldBounds = Rect.fromLTRB(
         0,
         camera.position.y - screenBufferSpace,
         camera.gameSize.x,
         camera.position.y + world.size.y,
       );
-
-      if (dash.isMovingDown) {
-        camera.worldBounds = worldBounds;
-      }
-
-      var isInTopHalfOfScreen = dash.position.y <= (world.size.y / 2);
-      if (!dash.isMovingDown && isInTopHalfOfScreen) {
-        camera.followComponent(dash);
-
-        camera.worldBounds = worldBounds;
-      }
 
       if (dash.position.y >
           camera.position.y + world.size.y + dash.size.y + screenBufferSpace) {
@@ -100,11 +90,12 @@ class JumpNJump extends FlameGame
 
     camera.worldBounds = Rect.fromLTRB(
       0,
-      -world.size.y,
+      0.0 - screenBufferSpace,
       camera.gameSize.x,
-      world.size.y + screenBufferSpace,
+      world.size.y,
     );
-    camera.followComponent(dash);
+    const relativeOffset = flame_components.Anchor(0.5, 0.4);
+    camera.followComponent(dash, relativeOffset: relativeOffset);
 
     dash.position = Vector2(
       (world.size.x - dash.size.x) / 2,
