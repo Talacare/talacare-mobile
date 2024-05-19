@@ -9,11 +9,11 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
   final Random random = Random();
   final List<BloodBag> bloodBags = [];
 
-  final double maxVerticalDistanceToNextBloodBag;
+  final double maxVerticalDistanceToNextBloodBag = 500;
 
   final double minVerticalDistanceToNextBloodBag = 300;
 
-  BloodBagManager({required this.maxVerticalDistanceToNextBloodBag}) : super();
+  BloodBagManager() : super();
 
   @override
   void onMount() {
@@ -57,8 +57,7 @@ class BloodBagManager extends Component with HasGameRef<JumpNJump> {
   void update(double dt) {
     final topOfLowestBloodBag = bloodBags.first.position.y;
 
-    final screenBottom = gameRef.dash.position.y +
-        (gameRef.size.y / 2);
+    final screenBottom = gameRef.dash.position.y + (gameRef.size.y / 2);
 
     if (topOfLowestBloodBag > screenBottom) {
       var newBloodBagY = generateNextY();

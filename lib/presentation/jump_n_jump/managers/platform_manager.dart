@@ -9,11 +9,11 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
   final Random random = Random();
   final List<Platform> platforms = [];
 
-  final double maxVerticalDistanceToNextPlatform;
+  final double maxVerticalDistanceToNextPlatform = 350;
 
   final double minVerticalDistanceToNextPlatform = 200;
 
-  PlatformManager({required this.maxVerticalDistanceToNextPlatform}) : super();
+  PlatformManager() : super();
 
   @override
   void onMount() {

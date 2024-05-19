@@ -27,13 +27,9 @@ class JumpNJump extends FlameGame
 
   GameManager gameManager = GameManager();
   final WorldGame world = WorldGame();
-  PlatformManager platformManager = PlatformManager(
-    maxVerticalDistanceToNextPlatform: 350,
-  );
+  PlatformManager platformManager = PlatformManager();
 
-  BloodBagManager bloodBagManager = BloodBagManager(
-    maxVerticalDistanceToNextBloodBag: 500,
-  );
+  BloodBagManager bloodBagManager = BloodBagManager();
   Player dash = Player();
   int screenBufferSpace = 100;
 
@@ -115,13 +111,8 @@ class JumpNJump extends FlameGame
       (world.size.y - dash.size.y) / 2,
     );
 
-    platformManager = PlatformManager(
-      maxVerticalDistanceToNextPlatform: 350,
-    );
-
-    bloodBagManager = BloodBagManager(
-      maxVerticalDistanceToNextBloodBag: 500,
-    );
+    platformManager = PlatformManager();
+    bloodBagManager = BloodBagManager();
 
     add(bloodBagManager);
     add(platformManager);
