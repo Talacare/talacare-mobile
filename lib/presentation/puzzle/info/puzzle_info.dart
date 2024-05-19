@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/puzzle/info/circle_timer.dart';
 
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+import 'package:talacare/presentation/widgets/pause_button.dart';
+import 'package:talacare/presentation/widgets/score_and_pause.dart';
 
 class PuzzleInfo extends StatefulWidget {
   final StageState stageState;
@@ -57,13 +61,9 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
             (index) => buildStarImage(starList[index]),
           ),
         ),
-        Text(
-          'TERTINGGI: ${widget.highestScore}',
-          style: const TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.normal,
-              color: Colors.white,
-              fontFamily: 'Digitalt'),
+        ScoreAndPause(
+          highScore: widget.highestScore,
+          onPauseTap: () {},
         )
       ],
     );

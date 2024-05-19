@@ -8,7 +8,7 @@ class PauseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double size = 50;
+    const double size = 35;
 
     return InkWell(
       key: const Key('pause_button'),
