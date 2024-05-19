@@ -26,8 +26,11 @@ void main() {
 
       final bloodBagBeforeUpdate =
           game.bloodBagManager.bloodBags.first.position;
-
-      game.bloodBagManager.update(0.0);
+      
+      game.dash.jump();
+      game.update(0.1);
+      game.update(0.1);
+      game.update(0.1);
 
       final bloodBagAfterUpdate = game.bloodBagManager.bloodBags.first.position;
 
