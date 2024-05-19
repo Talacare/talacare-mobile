@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/widgets/modal_button.dart';
 
-class GameOverModal extends StatelessWidget {
+class GameModal extends StatelessWidget {
   final int currentScore;
   final int highestScore;
   final VoidCallback onMainLagiPressed;
   final VoidCallback onMenuPressed;
+  final bool isPause;
 
-  const GameOverModal({
+  const GameModal({
     super.key,
     required this.currentScore,
     required this.highestScore,
     required this.onMainLagiPressed,
     required this.onMenuPressed,
+    this.isPause = false,
   });
 
   Widget _buildScoreContainer(String title, int score, BuildContext context) {
@@ -82,9 +84,9 @@ class GameOverModal extends StatelessWidget {
                       borderRadius: BorderRadius.circular(18.0),
                     ),
                   ),
-                  child: const Text(
-                    "Yuk Main Lagi!",
-                    style: TextStyle(
+                  child: Text(
+                    isPause ? "Istirahat Dulu?" : "Yuk Main Lagi!",
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
@@ -96,7 +98,7 @@ class GameOverModal extends StatelessWidget {
                 _buildScoreContainer('Skor Tertinggi', highestScore, context),
                 const SizedBox(height: 15),
                 ModalButton(
-                  text: 'Main Lagi',
+                  text: isPause ? "Lanjutkan" : 'Main Lagi',
                   color: AppColors.coralPink,
                   borderColor: AppColors.softPink,
                   textColor: Colors.white,
@@ -104,7 +106,7 @@ class GameOverModal extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 ModalButton(
-                  text: 'Menu',
+                  text: isPause ? 'Akhiri' : 'Selesai',
                   color: Colors.white,
                   borderColor: AppColors.coralPink,
                   textColor: AppColors.coralPink,
