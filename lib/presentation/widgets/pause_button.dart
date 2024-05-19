@@ -13,7 +13,10 @@ class PauseButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.orange, width: 3),
+          border: Border.all(
+            color: AppColors.orange,
+            width: 3,
+          ),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Stack(
