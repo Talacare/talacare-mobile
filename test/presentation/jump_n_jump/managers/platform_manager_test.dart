@@ -18,7 +18,7 @@ void main() {
 
   group('Platform Tests', () {
     jumpNJumpGameTester.test('Test number of platform generated', (game) async {
-      expect(game.platformManager.platforms.length, equals(9));
+      expect(game.platformManager.platforms.length, equals(5));
     });
 
     jumpNJumpGameTester.test('Test Remove and Add Platform', (game) async {
