@@ -8,6 +8,8 @@ class PauseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double size = 50;
+
     return InkWell(
       key: const Key('pause_button'),
       onTap: onTap,
@@ -23,8 +25,8 @@ class PauseButton extends StatelessWidget {
           children: [
             Container(
               key: const Key('shadow_layer'),
-              width: 50,
-              height: 50,
+              width: size,
+              height: size,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: AppColors.darkGreen,
@@ -32,8 +34,8 @@ class PauseButton extends StatelessWidget {
             ),
             Container(
               key: const Key('main_layer'),
-              width: 50,
-              height: 45,
+              width: size,
+              height: size - 5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: AppColors.mediumGreen,
@@ -42,7 +44,7 @@ class PauseButton extends StatelessWidget {
                 key: Key('pause_icon'),
                 Icons.pause,
                 color: Colors.white,
-                size: 35,
+                size: size - 15,
               ),
             ),
           ],
