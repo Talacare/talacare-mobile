@@ -20,7 +20,9 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
     var currentY =
         gameRef.size.y - (random.nextInt(gameRef.size.y.floor()) / 3);
 
-    for (var i = 0; i < 9; i++) {
+    for (var i = 0;
+        i < (gameRef.size.y / minVerticalDistanceToNextPlatform).ceil() + 2;
+        i++) {
       if (i != 0) {
         currentY = generateNextY();
       }
@@ -57,8 +59,7 @@ class PlatformManager extends Component with HasGameRef<JumpNJump> {
   void update(double dt) {
     final topOfLowestPlatform = platforms.first.position.y;
 
-    final screenBottom = gameRef.camera.position.y +
-        gameRef.size.y;
+    final screenBottom = gameRef.camera.position.y + gameRef.size.y;
 
     if (topOfLowestPlatform > screenBottom) {
       var newPlatY = generateNextY();
