@@ -26,8 +26,11 @@ void main() {
 
       final platformsBeforeUpdate =
           game.platformManager.platforms.first.position;
-
-      game.platformManager.update(0.0);
+      
+      game.dash.jump();
+      game.update(0.1);
+      game.update(0.1);
+      game.update(0.1);
 
       final platformsAfterUpdate =
           game.platformManager.platforms.first.position;
