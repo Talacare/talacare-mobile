@@ -11,7 +11,7 @@ import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/button.dart';
-import 'package:talacare/presentation/widgets/game_over_modal.dart';
+import 'package:talacare/presentation/widgets/game_modal.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
@@ -97,19 +97,19 @@ class _NextInfoState extends State<NextInfo> {
                     height: 0,
                     shadows: [
                       Shadow(
-                          // bottomLeft
+                        // bottomLeft
                           offset: const Offset(-1.5, -1.5),
                           color: AppColors.darkPink),
                       Shadow(
-                          // bottomRight
+                        // bottomRight
                           offset: const Offset(3.5, -1.5),
                           color: AppColors.darkPink),
                       Shadow(
-                          // topRight
+                        // topRight
                           offset: const Offset(1.5, 1.5),
                           color: AppColors.darkPink),
                       Shadow(
-                          // topLeft
+                        // topLeft
                           offset: const Offset(-1.5, 1.5),
                           color: AppColors.darkPink),
                     ],
@@ -138,37 +138,37 @@ class _NextInfoState extends State<NextInfo> {
                       ),
                     );
                   } else {
-                  final gameHistory = GameHistoryModel(
-                    gameType: 'PUZZLE',
-                    startTime: widget.startTime,
-                    endTime: DateTime.now(),
-                    score: widget.stageState.score,
-                  );
-                  await getIt<GameHistoryProvider>()
-                      .createGameHistory(gameHistory);
+                    final gameHistory = GameHistoryModel(
+                      gameType: 'PUZZLE',
+                      startTime: widget.startTime,
+                      endTime: DateTime.now(),
+                      score: widget.stageState.score,
+                    );
+                    await getIt<GameHistoryProvider>()
+                        .createGameHistory(gameHistory);
 
-                  final highestScoreHistory = await getIt<GameHistoryProvider>()
-                      .getHighestScoreHistory('PUZZLE');
-                  final highScore = highestScoreHistory?.score ?? 0;
+                    final highestScoreHistory = await getIt<GameHistoryProvider>()
+                        .getHighestScoreHistory('PUZZLE');
+                    final highScore = highestScoreHistory?.score ?? 0;
                     showDialog(
                       // ignore: use_build_context_synchronously
                       context: context,
                       builder: (BuildContext context) {
-                        return GameOverModal(
+                        return GameModal(
                           key: const Key("game-over"),
                           currentScore: widget.stageState.score,
                           highestScore: highScore,
                           onMainLagiPressed: () {
                             Navigator.of(context)
-                            ..pop()
-                            ..pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => PuzzlePage(
-                                  stageState:
-                                  StageState([1, 0, 0, 0], 1, 0, []),
+                              ..pop()
+                              ..pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => PuzzlePage(
+                                    stageState:
+                                    StageState([1, 0, 0, 0], 1, 0, []),
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
                           },
                           onMenuPressed: () => Navigator.of(context)
                             ..pop()

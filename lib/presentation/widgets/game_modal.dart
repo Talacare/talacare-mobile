@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/widgets/modal_button.dart';
 
-class GameOverModal extends StatelessWidget {
+class GameModal extends StatelessWidget {
   final int currentScore;
   final int highestScore;
   final VoidCallback onMainLagiPressed;
   final VoidCallback onMenuPressed;
+  final bool isPause;
 
-  const GameOverModal({
+  const GameModal({
     super.key,
     required this.currentScore,
     required this.highestScore,
     required this.onMainLagiPressed,
     required this.onMenuPressed,
+    this.isPause = false,
   });
 
-  Widget _buildScoreContainer(String title, int score, BuildContext context) {
+  Widget _buildScoreContainer(String title, int score) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -50,6 +52,26 @@ class GameOverModal extends StatelessWidget {
     );
   }
 
+  Widget _buildTitle() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+      decoration: ShapeDecoration(
+        color: AppColors.lightPurple,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+        ),
+      ),
+      child: Text(
+        isPause ? "Istirahat Dulu?" : "Yuk Main Lagi!",
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 25,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -73,30 +95,13 @@ class GameOverModal extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 5.0),
-                  decoration: ShapeDecoration(
-                    color: AppColors.lightPurple,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                    ),
-                  ),
-                  child: const Text(
-                    "Yuk Main Lagi!",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
+                _buildTitle(),
                 const SizedBox(height: 10),
-                _buildScoreContainer('Skor Terkini', currentScore, context),
-                _buildScoreContainer('Skor Tertinggi', highestScore, context),
+                _buildScoreContainer('Skor Terkini', currentScore),
+                _buildScoreContainer('Skor Tertinggi', highestScore),
                 const SizedBox(height: 15),
                 ModalButton(
-                  text: 'Main Lagi',
+                  text: isPause ? "Lanjutkan" : 'Main Lagi',
                   color: AppColors.coralPink,
                   borderColor: AppColors.softPink,
                   textColor: Colors.white,
@@ -104,7 +109,7 @@ class GameOverModal extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 ModalButton(
-                  text: 'Menu',
+                  text: isPause ? 'Akhiri' : 'Selesai',
                   color: Colors.white,
                   borderColor: AppColors.coralPink,
                   textColor: AppColors.coralPink,

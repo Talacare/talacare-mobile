@@ -11,7 +11,7 @@ import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/managers.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
-import 'package:talacare/presentation/widgets/game_over_modal.dart';
+import 'package:talacare/presentation/widgets/game_modal.dart';
 import './world.dart';
 import 'sprites/sprites.dart';
 
@@ -167,7 +167,7 @@ class JumpNJump extends FlameGame
 
     overlays.addEntry(
       'gameOverOverlay',
-      (context, game) => GameOverModal(
+          (context, game) => GameModal(
         currentScore: gameManager.score.value,
         highestScore: highestScoreHistory?.score ?? 0,
         onMainLagiPressed: onRestartGame,

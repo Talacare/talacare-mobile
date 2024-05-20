@@ -282,9 +282,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('game-over')), findsOneWidget);
-    expect(find.text('Menu'), findsOneWidget);
+    expect(find.text('Selesai'), findsOneWidget);
 
-    await tester.tap(find.text('Menu'));
+    await tester.tap(find.text('Selesai'));
     await mockNetworkImagesFor(() => tester.pumpAndSettle());
 
     expect(find.byKey(const Key('game-over')), findsNothing);
@@ -321,7 +321,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('game-over')), findsOneWidget);
-    expect(find.text('Menu'), findsOneWidget);
+    expect(find.text('Selesai'), findsOneWidget);
 
     expect(find.text('50'), findsOneWidget);
   });
@@ -357,7 +357,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('game-over')), findsOneWidget);
-    expect(find.text('Menu'), findsOneWidget);
+    expect(find.text('Selesai'), findsOneWidget);
 
     expect(find.text('160'), findsOneWidget);
   });

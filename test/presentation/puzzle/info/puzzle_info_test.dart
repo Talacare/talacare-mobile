@@ -38,9 +38,11 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            stageState: state,
-            highestScore: highestScore,
+          home: Scaffold(
+            body: PuzzleInfo(
+              stageState: state,
+              highestScore: highestScore,
+            ),
           ),
         ));
   });
@@ -57,7 +59,7 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(puzzleInfo);
 
-    expect(find.text('TERTINGGI: $highestScore'), findsOneWidget);
+    expect(find.text('🏆'), findsOneWidget);
     expect(find.text('SISA WAKTU'), findsOneWidget);
   });
 
@@ -80,8 +82,8 @@ void main() {
     await tester.pumpWidget(puzzleInfo);
 
     expect(find.byType(Column), findsNWidgets(3));
-    expect(find.byType(Row), findsNWidgets(3));
-    expect(find.byType(Container), findsNWidgets(3));
+    expect(find.byType(Row), findsNWidgets(4));
+    expect(find.byType(Container), findsNWidgets(7));
   });
 
   testWidgets('PuzzleInfo widget displays correct star image',
@@ -144,9 +146,11 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            stageState: StageState([0, 0, 0, 0], 4, 0, image),
-            highestScore: highestScore,
+          home: Scaffold(
+            body: PuzzleInfo(
+              stageState: StageState([0, 0, 0, 0], 4, 0, image),
+              highestScore: highestScore,
+            ),
           ),
         )));
 
@@ -176,9 +180,11 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            stageState: StageState([0, 0, 0, 0], 4, 0, image),
-            highestScore: highestScore,
+          home: Scaffold(
+            body: PuzzleInfo(
+              stageState: StageState([0, 0, 0, 0], 4, 0, image),
+              highestScore: highestScore,
+            ),
           ),
         )));
 
