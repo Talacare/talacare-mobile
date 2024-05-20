@@ -141,14 +141,6 @@ class PuzzleWidgetState extends State<PuzzleWidget> {
     pieceHeight = widget.image.height! / widget.rows;
     pieceWidth = widget.image.width! / widget.cols;
 
-    final timeEnds = Provider.of<TimerState>(context);
-
-    if (timeEnds.value) {
-      setState(() {
-        isGameSolved = true;
-      });
-    }
-
     _generatePieces();
 
     return Stack(

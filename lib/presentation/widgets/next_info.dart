@@ -12,7 +12,6 @@ import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/presentation/widgets/game_modal.dart';
-import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 
 class NextInfo extends StatefulWidget {
@@ -38,36 +37,32 @@ class _NextInfoState extends State<NextInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final finishState = Provider.of<TimerState>(context);
-    final clearState = Provider.of<CompleteState>(context);
+    final isComplete = Provider.of<CompleteState>(context);
     final timeLeftState = Provider.of<TimeLeftState>(context);
 
     List<int> currentState = widget.stageState.starList;
 
-    if (finishState.value) {
-      currentState[widget.stageState.stage - 1] = 3;
+    if (isComplete.value) {
+      if (timeLeftState.value > 0) {
+        currentState[widget.stageState.stage - 1] = 2;
+        widget.stageState.score += (50 + timeLeftState.value);
+      } else {
+        currentState[widget.stageState.stage - 1] = 3;
+      }
 
       if (widget.stageState.stage < 4) {
         currentState[widget.stageState.stage] = 1;
       }
     }
 
-    if (clearState.value) {
-      currentState[widget.stageState.stage - 1] = 2;
-      widget.stageState.score += (50 + timeLeftState.value);
-      if (widget.stageState.stage < 4) {
-        currentState[widget.stageState.stage] = 1;
-      }
-    }
-
-    if (!finishState.value && !clearState.value) {
+    if (!isComplete.value) {
       audioPlayer.play(AssetSource('bgm.mp3'));
     } else {
       audioPlayer.stop();
 
-      if (clearState.value) {
+      if (timeLeftState.value > 0) {
         audioPlayer.play(AssetSource('success.wav'));
-      } else if (finishState.value) {
+      } else if (timeLeftState.value == 0) {
         audioPlayer.play(AssetSource('game_over.wav'));
       }
 
@@ -77,7 +72,7 @@ class _NextInfoState extends State<NextInfo> {
     }
 
     return Visibility(
-      visible: finishState.value | clearState.value,
+      visible: isComplete.value,
       child: Container(
         padding: const EdgeInsets.only(top: 20, bottom: 20),
         child: Center(
