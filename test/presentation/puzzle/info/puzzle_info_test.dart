@@ -136,7 +136,7 @@ void main() {
     await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
-            create: (context) => TimerState(initialValue: true),
+            create: (context) => TimerState(initialValue: false),
           ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
@@ -153,6 +153,8 @@ void main() {
             ),
           ),
         )));
+      
+    await tester.pump(const Duration(seconds: 60));
 
     expect(
         find.byWidgetPredicate(

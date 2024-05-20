@@ -18,7 +18,7 @@ void main() {
     circleTimer = MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
-            create: (context) => TimerState(initialValue: true),
+            create: (context) => TimerState(initialValue: false),
           ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
@@ -34,7 +34,7 @@ void main() {
     circleCompleted = MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
-            create: (context) => TimerState(initialValue: true),
+            create: (context) => TimerState(initialValue: false),
           ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: true),
@@ -98,14 +98,41 @@ void main() {
     expect(find.text('60'), findsOneWidget);
   });
 
-  testWidgets('CircleTimer sets timerState to true after 60 seconds',
+  testWidgets('CircleTimer sets isComplete to true after 60 seconds',
       (WidgetTester tester) async {
-    final timerState = TimerState(initialValue: false);
+    final isComplete = CompleteState(initialValue: false);
 
     await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
-            create: (_) => timerState,
+            create: (_) => TimerState(initialValue: false),
+          ),
+          ChangeNotifierProvider<CompleteState>(
+            create: (context) => isComplete,
+          ),
+          ChangeNotifierProvider<TimeLeftState>(
+            create: (context) => TimeLeftState(initialValue: 60),
+          ),
+        ],
+        child: const MaterialApp(
+          home: CircleTimer(),
+        )));
+
+    expect(isComplete.value, false);
+
+    await tester.pump(const Duration(seconds: 60));
+
+    expect(isComplete.value, true);
+  });
+
+  testWidgets('CircleTimer pause time when timePause to true',
+      (WidgetTester tester) async {
+    final timePause = TimerState(initialValue: true);
+
+    await tester.pumpWidget(MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TimerState>(
+            create: (_) => timePause,
           ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
@@ -118,10 +145,10 @@ void main() {
           home: CircleTimer(),
         )));
 
-    expect(timerState.value, false);
+    expect(timePause.value, true);
 
     await tester.pump(const Duration(seconds: 60));
 
-    expect(timerState.value, true);
+    expect(find.text('60'), findsOneWidget);
   });
 }

@@ -72,7 +72,7 @@ class _CircleTimerState extends State<CircleTimer>
               timeLeftState.value = remainingTime;
             } else {
               if (timePause.value) {
-              stopTimer();
+                stopTimer();
               } else {
                 resumeTimer();
               }

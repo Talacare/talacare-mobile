@@ -13,6 +13,7 @@ import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/presentation/widgets/game_modal.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
+import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class NextInfo extends StatefulWidget {
   final StageState stageState;
@@ -39,6 +40,7 @@ class _NextInfoState extends State<NextInfo> {
   Widget build(BuildContext context) {
     final isComplete = Provider.of<CompleteState>(context);
     final timeLeftState = Provider.of<TimeLeftState>(context);
+    final timePause = Provider.of<TimerState>(context);
 
     List<int> currentState = widget.stageState.starList;
 
@@ -55,11 +57,12 @@ class _NextInfoState extends State<NextInfo> {
       }
     }
 
-    if (!isComplete.value) {
+    if (!isComplete.value & !timePause.value) {
       audioPlayer.play(AssetSource('bgm.mp3'));
+    } else if (timePause.value) {
+      audioPlayer.stop();
     } else {
       audioPlayer.stop();
-
       if (timeLeftState.value > 0) {
         audioPlayer.play(AssetSource('success.wav'));
       } else if (timeLeftState.value == 0) {

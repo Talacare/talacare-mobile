@@ -4,7 +4,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/game/draggable_puzzle_piece.dart';
 import 'package:talacare/presentation/puzzle/game/puzzle_piece_pos.dart';
-import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class PuzzleWidget extends StatefulWidget {
   final Image image;
@@ -140,6 +139,14 @@ class PuzzleWidgetState extends State<PuzzleWidget> {
   Widget build(BuildContext context) {
     pieceHeight = widget.image.height! / widget.rows;
     pieceWidth = widget.image.width! / widget.cols;
+
+    final isComplate = Provider.of<CompleteState>(context);
+
+    if (isComplate.value) {
+      setState(() {
+        isGameSolved = true;
+      });
+    }
 
     _generatePieces();
 
