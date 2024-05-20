@@ -464,4 +464,36 @@ void main() {
 
     verify(mockPlayer.stop()).called(1);
   });
+
+  testWidgets('Verify currentState changes when stage is completed', (tester) async {
+      await tester.pumpWidget(
+        MultiProvider(
+            providers: [
+              ChangeNotifierProvider<TimerState>(
+                  create: (context) => TimerState(initialValue: true)),
+              ChangeNotifierProvider<CompleteState>(
+                create: (context) => CompleteState(initialValue: true),
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
+            ],
+            child: MaterialApp(
+              home: Scaffold(
+                body: NextInfo(
+                  name: "PERAWAT",
+                  stageState: StageState([1, 0, 0, 0], 1, 0, image),
+                  startTime: DateTime.now(),
+                ),
+              ),
+            )),
+      );
+
+      expect(find.text('PERAWAT'), findsOneWidget);
+      expect(find.text('Lanjut'), findsOneWidget);
+      expect(find.byKey(const Key('nextButton')), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('nextButton')));
+      await tester.pumpAndSettle();
+    });
 }
