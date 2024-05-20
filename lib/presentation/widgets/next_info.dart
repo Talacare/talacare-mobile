@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/core/utils/analytics_engine_util.dart';
 import 'package:talacare/core/utils/text_to_speech.dart';
 import 'package:talacare/data/models/game_history_model.dart';
 import 'package:talacare/data/models/stage_state.dart';
@@ -159,6 +160,7 @@ class _NextInfoState extends State<NextInfo> {
                           currentScore: widget.stageState.score,
                           highestScore: highScore,
                           onMainLagiPressed: () {
+                            AnalyticsEngineUtil.userPlaysPuzzleAgain();
                             Navigator.of(context)
                             ..pop()
                             ..pushReplacement(
@@ -170,9 +172,12 @@ class _NextInfoState extends State<NextInfo> {
                               ),
                             );
                           },
-                          onMenuPressed: () => Navigator.of(context)
+                          onMenuPressed: () {
+                            AnalyticsEngineUtil.userStopPlaysPuzzle();
+                            Navigator.of(context)
                             ..pop()
-                            ..pop(),
+                            ..pop();
+                          },
                         );
                       },
                     );
