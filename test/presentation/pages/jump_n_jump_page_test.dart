@@ -5,10 +5,12 @@ import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/core/enums/character_enum.dart';
+import 'package:talacare/domain/entities/game_history_entity.dart';
 import 'package:talacare/presentation/jump_n_jump/health_bar.dart';
 import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
+import 'package:talacare/presentation/widgets/game_over_modal.dart';
 
 import 'puzzle_page_test.mocks.dart';
 
@@ -108,6 +110,57 @@ void main() {
 
       final gameWidget = find.byType(GameWidget<JumpNJump>);
       expect(gameWidget, findsOneWidget);
+    });
+
+    testWidgets('createGameWidget should create a GameWidget',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: JumpNJumpPage(character: Character.boy),
+        ),
+      );
+
+      final gameWidget = find.byType(GameWidget<JumpNJump>);
+      expect(gameWidget, findsOneWidget);
+    });
+
+    testWidgets('onLose should create a GameWidget',
+        (WidgetTester tester) async {
+      const key = Key('jump_n_jump_page_key');
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: JumpNJumpPage(key: key, character: Character.boy),
+        ),
+      );
+
+      final JumpNJumpPageState state =
+          tester.state<JumpNJumpPageState>(find.byType(JumpNJumpPage));
+      state.game.gameManager.startTime = DateTime.now();
+      state.game.onLose();
+
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('onBackToMenu should remove overlays',
+        (WidgetTester tester) async {
+      const key = Key('jump_n_jump_page_key');
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: JumpNJumpPage(key: key, character: Character.boy),
+        ),
+      );
+
+      final JumpNJumpPageState state =
+          tester.state<JumpNJumpPageState>(find.byType(JumpNJumpPage));
+      state.game.gameManager.startTime = DateTime.now();
+      state.game.onLose();
+      state.game.onBackToMenu(tester.element(find.byKey(key)));
+
+      await tester.pumpAndSettle();
+
+      expect(state.game.overlays.isActive('gameOverOverlay'), isTrue);
     });
   });
 }
