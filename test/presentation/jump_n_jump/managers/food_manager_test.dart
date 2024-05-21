@@ -10,31 +10,30 @@ final jumpNJumpGameTester =
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  TestWidgetsFlutterBinding.ensureInitialized();
   final mockAudioManager = MockAudioManagerForJumpNJumpTest();
   final jumpNJumpGameTester = FlameTester(() =>
       JumpNJump(character: Character.boy, audioManager: mockAudioManager));
 
-  group('BloodBag Manager Tests', () {
-    jumpNJumpGameTester.test('Test number of blood bag generated',
+  group('Food Manager Tests', () {
+    jumpNJumpGameTester.test('Test number of food generated',
         (game) async {
-      expect(game.bloodBagManager.items.length, equals(3));
+      expect(game.foodManager.items.length, equals(4));
     });
 
-    jumpNJumpGameTester.test('Test Remove and Add Blood Bag', (game) async {
+    jumpNJumpGameTester.test('Test Remove and Add Food', (game) async {
       game.dash.position.y = 0;
 
-      final bloodBagBeforeUpdate =
-          game.bloodBagManager.items.first.position;
+      final foodBeforeUpdate =
+          game.foodManager.items.first.position;
       
       game.dash.jump();
       game.update(0.1);
       game.update(0.1);
       game.update(0.1);
 
-      final bloodBagAfterUpdate = game.bloodBagManager.items.first.position;
+      final foodAfterUpdate = game.foodManager.items.first.position;
 
-      expect(bloodBagAfterUpdate, isNot(equals(bloodBagBeforeUpdate)));
+      expect(foodAfterUpdate, isNot(equals(foodBeforeUpdate)));
     });
   });
 }
