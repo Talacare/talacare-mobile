@@ -27,8 +27,12 @@ class AudioManager implements IAudioManager {
   }
 
   @override
-  void pauseBackgroundMusic() {}
+  void pauseBackgroundMusic() {
+    flameAudioWrapper.pauseBgm();
+  }
 
   @override
-  void resumeBackgroundMusic() {}
+  void resumeBackgroundMusic() {
+    flameAudioWrapper.resumeBgm();
+  }
 }
