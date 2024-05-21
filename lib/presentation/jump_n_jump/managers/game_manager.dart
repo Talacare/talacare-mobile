@@ -23,6 +23,10 @@ class GameManager extends Component with HasGameRef<JumpNJump> {
   void increaseScore() {
     score.value += 1;
   }
+
+  void pauseGame() {}
+
+  void resumeGame() {}
 }
 
-enum GameState { playing, gameOver }
+enum GameState { playing, gameOver, paused }
