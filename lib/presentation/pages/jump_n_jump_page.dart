@@ -8,6 +8,7 @@ import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/player.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
+import 'package:talacare/presentation/widgets/game_modal.dart';
 import 'package:talacare/presentation/widgets/score_and_pause.dart';
 
 class JumpNJumpPage extends StatefulWidget {
@@ -16,12 +17,12 @@ class JumpNJumpPage extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _JumpNJumpPageState createState() => _JumpNJumpPageState();
+  JumpNJumpPageState createState() => JumpNJumpPageState();
 }
 
-class _JumpNJumpPageState extends State<JumpNJumpPage> {
+class JumpNJumpPageState extends State<JumpNJumpPage> {
   late final JumpNJump game;
-  final audioManager = AudioManager();
+  AudioManager audioManager = AudioManager();
 
   @override
   void initState() {
@@ -35,6 +36,10 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
         .getHighestScoreHistory('JUMP_N_JUMP');
     game.gameManager.highScore.value = highestScoreEntity?.score ?? 0;
   }
+
+  void handlePause(BuildContext context) {}
+
+  void handleResume() {}
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +126,7 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
         return ScoreAndPause(
           key: const Key('highScoreDisplay'),
           highScore: highScore,
-          onPauseTap: () {},
+          onPauseTap: () => handlePause(context),
         );
       },
     );
