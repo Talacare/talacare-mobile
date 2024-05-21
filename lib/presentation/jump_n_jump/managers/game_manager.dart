@@ -24,9 +24,19 @@ class GameManager extends Component with HasGameRef<JumpNJump> {
     score.value += 1;
   }
 
-  void pauseGame() {}
+  void pauseGame() {
+    if (state == GameState.playing) {
+      state = GameState.paused;
+      gameRef.pauseEngine();
+    }
+  }
 
-  void resumeGame() {}
+  void resumeGame() {
+    if (state == GameState.paused) {
+      state = GameState.playing;
+      gameRef.resumeEngine();
+    }
+  }
 }
 
 enum GameState { playing, gameOver, paused }
