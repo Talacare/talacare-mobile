@@ -44,7 +44,7 @@ class Player extends SpriteGroupComponent<PlayerState>
   static const double lowHealthJumpSpeedMultiplier = 0.8;
   static const double megaJumpSpeedMultiplier = 1.5;
   static const double lowHealthThreshold = 30;
-  static const double healthIncreaseBloodBag = 5;
+  static const double healthIncreaseBloodBag = 7;
   static const double healthIncreaseFood = 2;
   static const double minHealth = 0;
   static const double maxHealth = 100;
