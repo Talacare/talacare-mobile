@@ -368,6 +368,41 @@ void main() {
     expect(find.text('160'), findsOneWidget);
   });
 
+  testWidgets('Verify Lanjut Button is showing when complete', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MultiProvider(
+            providers: [
+              ChangeNotifierProvider<TimerState>(
+                create: (context) => TimerState(initialValue: true),
+              ),
+              ChangeNotifierProvider<CompleteState>(
+                create: (context) => CompleteState(initialValue: true),
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
+            ],
+            child: MaterialApp(
+              home: Scaffold(
+                body: NextInfo(
+                  name: "PERAWAT",
+                  stageState: StageState([2, 2, 1, 0], 3, 50, image),
+                  startTime: DateTime.now(),
+                ),
+              ),
+            )),
+      ),
+    );
+
+    expect(find.text('PERAWAT'), findsOneWidget);
+    expect(find.text('Lanjut'), findsOneWidget);
+    expect(find.byKey(const Key('nextButton')), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('nextButton')));
+    await tester.pumpAndSettle();
+  });
+
   testWidgets('plays bgm.mp3 when PuzzlePage starts', (tester) async {
     final mockPlayer = MockAudioPlayer();
 
