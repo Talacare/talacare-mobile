@@ -4,7 +4,7 @@ import 'package:talacare/presentation/jump_n_jump/sprites/food.dart';
 
 class FoodManager extends ObjectManager<Food> {
   FoodManager()
-      : super(650, 350);
+      : super(750, 450);
 
   @override
   Food createItem(Vector2 position) {

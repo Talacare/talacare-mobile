@@ -5,7 +5,7 @@ import '../sprites/blood_bag.dart';
 
 class BloodBagManager extends ObjectManager<BloodBag> {
   BloodBagManager()
-      : super(2500, 1900);
+      : super(2700, 2100);
 
   @override
   BloodBag createItem(Vector2 position) {
