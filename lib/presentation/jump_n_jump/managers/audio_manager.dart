@@ -25,4 +25,10 @@ class AudioManager implements IAudioManager {
       flameAudioWrapper.playSfx(fileName, volume);
     }
   }
+
+  @override
+  void pauseBackgroundMusic() {}
+
+  @override
+  void resumeBackgroundMusic() {}
 }
