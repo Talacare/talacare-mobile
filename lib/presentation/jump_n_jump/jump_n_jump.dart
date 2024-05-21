@@ -9,6 +9,7 @@ import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
 import 'package:talacare/core/enums/character_enum.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/food_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/managers.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/widgets/game_over_modal.dart';
@@ -31,6 +32,7 @@ class JumpNJump extends FlameGame
   PlatformManager platformManager = PlatformManager();
 
   BloodBagManager bloodBagManager = BloodBagManager();
+  FoodManager foodManager = FoodManager();
   Player dash = Player();
   int screenBufferSpace = 100;
 
@@ -83,6 +85,7 @@ class JumpNJump extends FlameGame
   void initializeGame() {
     if (children.contains(platformManager)) platformManager.removeFromParent();
     if (children.contains(bloodBagManager)) bloodBagManager.removeFromParent();
+    if (children.contains(foodManager)) foodManager.removeFromParent();
     dash.health.value = 100;
     dash.velocity = Vector2.zero();
     dash.isGameOver = false;
@@ -104,9 +107,11 @@ class JumpNJump extends FlameGame
 
     platformManager = PlatformManager();
     bloodBagManager = BloodBagManager();
+    foodManager = FoodManager();
 
-    add(bloodBagManager);
     add(platformManager);
+    add(bloodBagManager);
+    add(foodManager);
   }
 
   @override
@@ -160,7 +165,7 @@ class JumpNJump extends FlameGame
       'gameOverOverlay',
       (context, game) => GameOverModal(
         currentScore: gameManager.score.value,
-        highestScore: highestScoreHistory?.score ?? 0,
+        highestScore: gameManager.highScore.value,
         onMainLagiPressed: onRestartGame,
         onMenuPressed: () {
           onBackToMenu(context);

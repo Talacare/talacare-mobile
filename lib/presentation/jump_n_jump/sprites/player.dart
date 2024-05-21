@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:talacare/presentation/jump_n_jump/sprites/food.dart';
 import 'blood_bag.dart';
 
 import '../jump_n_jump.dart';
@@ -43,7 +44,8 @@ class Player extends SpriteGroupComponent<PlayerState>
   static const double lowHealthJumpSpeedMultiplier = 0.8;
   static const double megaJumpSpeedMultiplier = 1.5;
   static const double lowHealthThreshold = 30;
-  static const double healthIncreaseBloodBag = 7;
+  static const double healthIncreaseBloodBag = 5;
+  static const double healthIncreaseFood = 2;
   static const double minHealth = 0;
   static const double maxHealth = 100;
   static const double gravity = 14;
@@ -171,6 +173,11 @@ class Player extends SpriteGroupComponent<PlayerState>
     if (other is BloodBag) {
       other.removeFromParent();
       increaseHealth(healthIncreaseBloodBag);
+    }
+
+    if (other is Food) {
+      other.removeFromParent();
+      increaseHealth(healthIncreaseFood);
     }
 
     super.onCollision(intersectionPoints, other);
