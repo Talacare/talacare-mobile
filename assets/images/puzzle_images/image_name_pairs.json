@@ -20,6 +20,10 @@
         "name": "MASKER"
     },
     {
+        "image": "assets/images/puzzle_images/masker2.png",
+        "name": "MASKER"
+    },
+    {
         "image": "assets/images/puzzle_images/obat.png",
         "name": "OBAT"
     },
@@ -32,23 +36,19 @@
         "name": "PERAWAT"
     },
     {
-        "image": "assets/images/puzzle_images/ranjang.jpg",
+        "image": "assets/images/puzzle_images/ranjang.png",
         "name": "RANJANG"
     },
     {
-        "image": "assets/images/puzzle_images/seldarahmerah.png",
-        "name": "SEL DARAH MERAH"
-    },
-    {
-        "image": "assets/images/puzzle_images/seldarahmerah2.png",
-        "name": "SEL DARAH MERAH"
-    },
-    {
-        "image": "assets/images/puzzle_images/seldarahmerah3.png",
-        "name": "SEL DARAH MERAH"
+        "image": "assets/images/puzzle_images/ranjang2.png",
+        "name": "RANJANG"
     },
     {
         "image": "assets/images/puzzle_images/stetoskop.png",
+        "name": "STETOSKOP"
+    },
+    {
+        "image": "assets/images/puzzle_images/stetoskop2.png",
         "name": "STETOSKOP"
     },
     {
