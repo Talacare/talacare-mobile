@@ -145,7 +145,7 @@ void main() {
       state.audioManager = mockAudioManager;
       state.game.gameManager = mockGameManager;
 
-      state.handlePause(state.context);
+      state.handlePause();
 
       await tester.pumpAndSettle();
 
@@ -186,7 +186,7 @@ void main() {
       state.audioManager = mockAudioManager;
       state.game.gameManager = mockGameManager;
 
-      state.handlePause(state.context);
+      state.handlePause();
 
       await tester.pumpAndSettle();
 
@@ -214,7 +214,7 @@ void main() {
       state.audioManager = mockAudioManager;
       state.game.gameManager = mockGameManager;
 
-      state.handlePause(state.context);
+      state.handlePause();
 
       await tester.pumpAndSettle();
 

@@ -37,7 +37,7 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
     game.gameManager.highScore.value = highestScoreEntity?.score ?? 0;
   }
 
-  void handlePause(BuildContext context) {
+  void handlePause() {
     game.gameManager.pauseGame();
     audioManager.pauseBackgroundMusic();
     showDialog(
@@ -153,7 +153,7 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
         return ScoreAndPause(
           key: const Key('highScoreDisplay'),
           highScore: highScore,
-          onPauseTap: () => handlePause(context),
+          onPauseTap: handlePause,
         );
       },
     );
