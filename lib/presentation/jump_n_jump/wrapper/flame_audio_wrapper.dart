@@ -13,7 +13,11 @@ class FlameAudioWrapper {
     FlameAudio.play(fileName);
   }
 
-  void pauseBgm() {}
+  void pauseBgm() {
+    FlameAudio.bgm.pause();
+  }
 
-  void resumeBgm() {}
+  void resumeBgm() {
+    FlameAudio.bgm.resume();
+  }
 }
