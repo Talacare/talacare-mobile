@@ -161,7 +161,7 @@ class Player extends SpriteGroupComponent<PlayerState>
     if (other is Platform) {
       bool isMovingDown = velocity.y > 0;
       bool isCollidingWithFeet =
-          other.position.y - (position.y + size.y / 2) > -45;
+          other.position.y - (position.y + size.y / 2) > -70;
 
       if (isMovingDown && isCollidingWithFeet && !isGameOver) {
         jump();
