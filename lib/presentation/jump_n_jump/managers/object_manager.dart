@@ -67,10 +67,6 @@ abstract class ObjectManager<T extends SpriteComponent> extends Component
       var newItemX = random.nextInt(gameRef.size.x.floor() - 60).toDouble();
       var newItem = createItem(Vector2(newItemX, newItemY));
 
-      while (items.first.position == newItem.position) {
-        var newItemX = random.nextInt(gameRef.size.x.floor() - 60).toDouble();
-        newItem = createItem(Vector2(newItemX, newItemY));
-      }
       add(newItem);
       items.add(newItem);
 
