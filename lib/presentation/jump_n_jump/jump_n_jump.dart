@@ -47,6 +47,7 @@ class JumpNJump extends FlameGame
 
     await add(world);
     await add(dash);
+    await add(gameManager);
 
     dash.health.addListener(onHealthChanged);
 
@@ -167,7 +168,7 @@ class JumpNJump extends FlameGame
 
     overlays.addEntry(
       'gameOverOverlay',
-          (context, game) => GameModal(
+      (context, game) => GameModal(
         currentScore: gameManager.score.value,
         highestScore: highestScoreHistory?.score ?? 0,
         onMainLagiPressed: onRestartGame,

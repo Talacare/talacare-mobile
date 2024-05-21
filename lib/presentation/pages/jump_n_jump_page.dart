@@ -37,9 +37,36 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
     game.gameManager.highScore.value = highestScoreEntity?.score ?? 0;
   }
 
-  void handlePause(BuildContext context) {}
+  void handlePause(BuildContext context) {
+    game.gameManager.pauseGame();
+    audioManager.pauseBackgroundMusic();
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return GameModal(
+          key: const Key("game-pause"),
+          isPause: true,
+          currentScore: game.gameManager.score.value,
+          highestScore: game.gameManager.highScore.value,
+          onMainLagiPressed: () {
+            Navigator.of(context).pop();
+            handleResume();
+          },
+          onMenuPressed: () {
+            Navigator.of(context)
+              ..pop()
+              ..pop();
+          },
+        );
+      },
+    );
+  }
 
-  void handleResume() {}
+  void handleResume() {
+    game.gameManager.resumeGame();
+    audioManager.resumeBackgroundMusic();
+  }
 
   @override
   Widget build(BuildContext context) {

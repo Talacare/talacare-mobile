@@ -3,16 +3,22 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
-import 'dart:ui' as _i7;
+import 'dart:async' as _i7;
+import 'dart:ui' as _i3;
 
-import 'package:get_it/get_it.dart' as _i8;
+import 'package:flame/components.dart' as _i4;
+import 'package:flame/src/gestures/events.dart' as _i9;
+import 'package:flutter/material.dart' as _i2;
+import 'package:get_it/get_it.dart' as _i13;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i5;
-import 'package:talacare/domain/entities/game_history_entity.dart' as _i6;
-import 'package:talacare/domain/usecases/game_history_usecase.dart' as _i2;
+import 'package:mockito/src/dummies.dart' as _i11;
+import 'package:talacare/domain/entities/game_history_entity.dart' as _i12;
+import 'package:talacare/domain/usecases/game_history_usecase.dart' as _i6;
+import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart' as _i5;
+import 'package:talacare/presentation/jump_n_jump/managers/managers.dart'
+    as _i8;
 import 'package:talacare/presentation/providers/game_history_provider.dart'
-    as _i4;
+    as _i10;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -27,9 +33,9 @@ import 'package:talacare/presentation/providers/game_history_provider.dart'
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeGameHistoryUseCase_0 extends _i1.SmartFake
-    implements _i2.GameHistoryUseCase {
-  _FakeGameHistoryUseCase_0(
+class _FakeValueNotifier_0<T> extends _i1.SmartFake
+    implements _i2.ValueNotifier<T> {
+  _FakeValueNotifier_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -38,33 +44,697 @@ class _FakeGameHistoryUseCase_0 extends _i1.SmartFake
         );
 }
 
-class _FakeFuture_1<T1> extends _i1.SmartFake implements _i3.Future<T1> {
-  _FakeFuture_1(
+class _FakeColor_1 extends _i1.SmartFake implements _i3.Color {
+  _FakeColor_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
           parent,
           parentInvocation,
         );
+}
+
+class _FakeComponentSet_2 extends _i1.SmartFake implements _i4.ComponentSet {
+  _FakeComponentSet_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePaint_3 extends _i1.SmartFake implements _i3.Paint {
+  _FakePaint_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeTextPaint_4 extends _i1.SmartFake implements _i4.TextPaint {
+  _FakeTextPaint_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeJumpNJump_5 extends _i1.SmartFake implements _i5.JumpNJump {
+  _FakeJumpNJump_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeVector2_6 extends _i1.SmartFake implements _i4.Vector2 {
+  _FakeVector2_6(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeGameHistoryUseCase_7 extends _i1.SmartFake
+    implements _i6.GameHistoryUseCase {
+  _FakeGameHistoryUseCase_7(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeFuture_8<T1> extends _i1.SmartFake implements _i7.Future<T1> {
+  _FakeFuture_8(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+/// A class which mocks [GameManager].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGameManager extends _i1.Mock implements _i8.GameManager {
+  MockGameManager() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.ValueNotifier<int> get score => (super.noSuchMethod(
+        Invocation.getter(#score),
+        returnValue: _FakeValueNotifier_0<int>(
+          this,
+          Invocation.getter(#score),
+        ),
+      ) as _i2.ValueNotifier<int>);
+
+  @override
+  set score(_i2.ValueNotifier<int>? _score) => super.noSuchMethod(
+        Invocation.setter(
+          #score,
+          _score,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i2.ValueNotifier<int> get highScore => (super.noSuchMethod(
+        Invocation.getter(#highScore),
+        returnValue: _FakeValueNotifier_0<int>(
+          this,
+          Invocation.getter(#highScore),
+        ),
+      ) as _i2.ValueNotifier<int>);
+
+  @override
+  set highScore(_i2.ValueNotifier<int>? _highScore) => super.noSuchMethod(
+        Invocation.setter(
+          #highScore,
+          _highScore,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set startTime(DateTime? _startTime) => super.noSuchMethod(
+        Invocation.setter(
+          #startTime,
+          _startTime,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i8.GameState get state => (super.noSuchMethod(
+        Invocation.getter(#state),
+        returnValue: _i8.GameState.playing,
+      ) as _i8.GameState);
+
+  @override
+  set state(_i8.GameState? _state) => super.noSuchMethod(
+        Invocation.setter(
+          #state,
+          _state,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get isPlaying => (super.noSuchMethod(
+        Invocation.getter(#isPlaying),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool get isGameOver => (super.noSuchMethod(
+        Invocation.getter(#isGameOver),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool get debugMode => (super.noSuchMethod(
+        Invocation.getter(#debugMode),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  set debugMode(bool? _debugMode) => super.noSuchMethod(
+        Invocation.setter(
+          #debugMode,
+          _debugMode,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i3.Color get debugColor => (super.noSuchMethod(
+        Invocation.getter(#debugColor),
+        returnValue: _FakeColor_1(
+          this,
+          Invocation.getter(#debugColor),
+        ),
+      ) as _i3.Color);
+
+  @override
+  set debugColor(_i3.Color? _debugColor) => super.noSuchMethod(
+        Invocation.setter(
+          #debugColor,
+          _debugColor,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i4.PositionType get positionType => (super.noSuchMethod(
+        Invocation.getter(#positionType),
+        returnValue: _i4.PositionType.game,
+      ) as _i4.PositionType);
+
+  @override
+  set positionType(_i4.PositionType? _positionType) => super.noSuchMethod(
+        Invocation.setter(
+          #positionType,
+          _positionType,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get isLoading => (super.noSuchMethod(
+        Invocation.getter(#isLoading),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool get isLoaded => (super.noSuchMethod(
+        Invocation.getter(#isLoaded),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool get isMounted => (super.noSuchMethod(
+        Invocation.getter(#isMounted),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool get isRemoving => (super.noSuchMethod(
+        Invocation.getter(#isRemoving),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i7.Future<void> get loaded => (super.noSuchMethod(
+        Invocation.getter(#loaded),
+        returnValue: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<void> get mounted => (super.noSuchMethod(
+        Invocation.getter(#mounted),
+        returnValue: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  set parent(_i4.Component? newParent) => super.noSuchMethod(
+        Invocation.setter(
+          #parent,
+          newParent,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i4.ComponentSet get children => (super.noSuchMethod(
+        Invocation.getter(#children),
+        returnValue: _FakeComponentSet_2(
+          this,
+          Invocation.getter(#children),
+        ),
+      ) as _i4.ComponentSet);
+
+  @override
+  bool get hasChildren => (super.noSuchMethod(
+        Invocation.getter(#hasChildren),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  int get priority => (super.noSuchMethod(
+        Invocation.getter(#priority),
+        returnValue: 0,
+      ) as int);
+
+  @override
+  set priority(int? newPriority) => super.noSuchMethod(
+        Invocation.setter(
+          #priority,
+          newPriority,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  get lifecycle => throw UnsupportedError(
+      r'"lifecycle" cannot be used without a mockito fallback generator.');
+
+  @override
+  bool get hasPendingLifecycleEvents => (super.noSuchMethod(
+        Invocation.getter(#hasPendingLifecycleEvents),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i3.Paint get debugPaint => (super.noSuchMethod(
+        Invocation.getter(#debugPaint),
+        returnValue: _FakePaint_3(
+          this,
+          Invocation.getter(#debugPaint),
+        ),
+      ) as _i3.Paint);
+
+  @override
+  _i4.TextPaint get debugTextPaint => (super.noSuchMethod(
+        Invocation.getter(#debugTextPaint),
+        returnValue: _FakeTextPaint_4(
+          this,
+          Invocation.getter(#debugTextPaint),
+        ),
+      ) as _i4.TextPaint);
+
+  @override
+  _i5.JumpNJump get gameRef => (super.noSuchMethod(
+        Invocation.getter(#gameRef),
+        returnValue: _FakeJumpNJump_5(
+          this,
+          Invocation.getter(#gameRef),
+        ),
+      ) as _i5.JumpNJump);
+
+  @override
+  void reset() => super.noSuchMethod(
+        Invocation.method(
+          #reset,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void increaseScore() => super.noSuchMethod(
+        Invocation.method(
+          #increaseScore,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void pauseGame() => super.noSuchMethod(
+        Invocation.method(
+          #pauseGame,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void resumeGame() => super.noSuchMethod(
+        Invocation.method(
+          #resumeGame,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i4.ComponentSet createComponentSet() => (super.noSuchMethod(
+        Invocation.method(
+          #createComponentSet,
+          [],
+        ),
+        returnValue: _FakeComponentSet_2(
+          this,
+          Invocation.method(
+            #createComponentSet,
+            [],
+          ),
+        ),
+      ) as _i4.ComponentSet);
+
+  @override
+  Iterable<_i4.Component> ancestors({bool? includeSelf = false}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #ancestors,
+          [],
+          {#includeSelf: includeSelf},
+        ),
+        returnValue: <_i4.Component>[],
+      ) as Iterable<_i4.Component>);
+
+  @override
+  Iterable<_i4.Component> descendants({
+    bool? includeSelf = false,
+    bool? reversed = false,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #descendants,
+          [],
+          {
+            #includeSelf: includeSelf,
+            #reversed: reversed,
+          },
+        ),
+        returnValue: <_i4.Component>[],
+      ) as Iterable<_i4.Component>);
+
+  @override
+  bool propagateToChildren<T extends _i4.Component>(
+    bool Function(T)? handler, {
+    bool? includeSelf = false,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #propagateToChildren,
+          [handler],
+          {#includeSelf: includeSelf},
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool contains(_i4.Component? c) => (super.noSuchMethod(
+        Invocation.method(
+          #contains,
+          [c],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  void onGameResize(_i4.Vector2? size) => super.noSuchMethod(
+        Invocation.method(
+          #onGameResize,
+          [size],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i7.Future<void>? onLoad() => (super.noSuchMethod(
+        Invocation.method(
+          #onLoad,
+          [],
+        ),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>?);
+
+  @override
+  void onMount() => super.noSuchMethod(
+        Invocation.method(
+          #onMount,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onRemove() => super.noSuchMethod(
+        Invocation.method(
+          #onRemove,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void update(double? dt) => super.noSuchMethod(
+        Invocation.method(
+          #update,
+          [dt],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void updateTree(double? dt) => super.noSuchMethod(
+        Invocation.method(
+          #updateTree,
+          [dt],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void render(_i3.Canvas? canvas) => super.noSuchMethod(
+        Invocation.method(
+          #render,
+          [canvas],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void renderTree(_i3.Canvas? canvas) => super.noSuchMethod(
+        Invocation.method(
+          #renderTree,
+          [canvas],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i7.Future<void>? add(_i4.Component? component) => (super.noSuchMethod(
+        Invocation.method(
+          #add,
+          [component],
+        ),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>?);
+
+  @override
+  _i7.Future<void> addAll(Iterable<_i4.Component>? components) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addAll,
+          [components],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<void>? addToParent(_i4.Component? parent) => (super.noSuchMethod(
+        Invocation.method(
+          #addToParent,
+          [parent],
+        ),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>?);
+
+  @override
+  void remove(_i4.Component? component) => super.noSuchMethod(
+        Invocation.method(
+          #remove,
+          [component],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeAll(Iterable<_i4.Component>? components) => super.noSuchMethod(
+        Invocation.method(
+          #removeAll,
+          [components],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeFromParent() => super.noSuchMethod(
+        Invocation.method(
+          #removeFromParent,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void changeParent(_i4.Component? newParent) => super.noSuchMethod(
+        Invocation.method(
+          #changeParent,
+          [newParent],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool containsLocalPoint(_i4.Vector2? point) => (super.noSuchMethod(
+        Invocation.method(
+          #containsLocalPoint,
+          [point],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool containsPoint(_i4.Vector2? point) => (super.noSuchMethod(
+        Invocation.method(
+          #containsPoint,
+          [point],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  Iterable<_i4.Component> componentsAtPoint(
+    _i4.Vector2? point, [
+    List<_i4.Vector2>? nestedPoints,
+  ]) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #componentsAtPoint,
+          [
+            point,
+            nestedPoints,
+          ],
+        ),
+        returnValue: <_i4.Component>[],
+      ) as Iterable<_i4.Component>);
+
+  @override
+  void changePriorityWithoutResorting(int? priority) => super.noSuchMethod(
+        Invocation.method(
+          #changePriorityWithoutResorting,
+          [priority],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void reorderChildren() => super.noSuchMethod(
+        Invocation.method(
+          #reorderChildren,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void processPendingLifecycleEvents() => super.noSuchMethod(
+        Invocation.method(
+          #processPendingLifecycleEvents,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void handleResize(_i4.Vector2? size) => super.noSuchMethod(
+        Invocation.method(
+          #handleResize,
+          [size],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void setMounted() => super.noSuchMethod(
+        Invocation.method(
+          #setMounted,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void renderDebugMode(_i3.Canvas? canvas) => super.noSuchMethod(
+        Invocation.method(
+          #renderDebugMode,
+          [canvas],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i4.Vector2 eventPosition(_i9.PositionInfo<dynamic>? info) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #eventPosition,
+          [info],
+        ),
+        returnValue: _FakeVector2_6(
+          this,
+          Invocation.method(
+            #eventPosition,
+            [info],
+          ),
+        ),
+      ) as _i4.Vector2);
+
+  @override
+  void mockGameRef(_i5.JumpNJump? gameRef) => super.noSuchMethod(
+        Invocation.method(
+          #mockGameRef,
+          [gameRef],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
 
 /// A class which mocks [GameHistoryProvider].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGameHistoryProvider extends _i1.Mock
-    implements _i4.GameHistoryProvider {
+    implements _i10.GameHistoryProvider {
   @override
-  _i2.GameHistoryUseCase get useCase => (super.noSuchMethod(
+  _i6.GameHistoryUseCase get useCase => (super.noSuchMethod(
         Invocation.getter(#useCase),
-        returnValue: _FakeGameHistoryUseCase_0(
+        returnValue: _FakeGameHistoryUseCase_7(
           this,
           Invocation.getter(#useCase),
         ),
-        returnValueForMissingStub: _FakeGameHistoryUseCase_0(
+        returnValueForMissingStub: _FakeGameHistoryUseCase_7(
           this,
           Invocation.getter(#useCase),
         ),
-      ) as _i2.GameHistoryUseCase);
+      ) as _i6.GameHistoryUseCase);
 
   @override
   bool get isLoading => (super.noSuchMethod(
@@ -83,11 +753,11 @@ class MockGameHistoryProvider extends _i1.Mock
   @override
   String get message => (super.noSuchMethod(
         Invocation.getter(#message),
-        returnValue: _i5.dummyValue<String>(
+        returnValue: _i11.dummyValue<String>(
           this,
           Invocation.getter(#message),
         ),
-        returnValueForMissingStub: _i5.dummyValue<String>(
+        returnValueForMissingStub: _i11.dummyValue<String>(
           this,
           Invocation.getter(#message),
         ),
@@ -135,7 +805,7 @@ class MockGameHistoryProvider extends _i1.Mock
       );
 
   @override
-  void setHighestScoreHistory(_i6.GameHistoryEntity? gameHistory) =>
+  void setHighestScoreHistory(_i12.GameHistoryEntity? gameHistory) =>
       super.noSuchMethod(
         Invocation.method(
           #setHighestScoreHistory,
@@ -145,29 +815,30 @@ class MockGameHistoryProvider extends _i1.Mock
       );
 
   @override
-  _i3.Future<void> createGameHistory(_i6.GameHistoryEntity? gameHistory) =>
+  _i7.Future<void> createGameHistory(_i12.GameHistoryEntity? gameHistory) =>
       (super.noSuchMethod(
         Invocation.method(
           #createGameHistory,
           [gameHistory],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i3.Future<_i6.GameHistoryEntity?> getHighestScoreHistory(String? gameType) =>
+  _i7.Future<_i12.GameHistoryEntity?> getHighestScoreHistory(
+          String? gameType) =>
       (super.noSuchMethod(
         Invocation.method(
           #getHighestScoreHistory,
           [gameType],
         ),
-        returnValue: _i3.Future<_i6.GameHistoryEntity?>.value(),
-        returnValueForMissingStub: _i3.Future<_i6.GameHistoryEntity?>.value(),
-      ) as _i3.Future<_i6.GameHistoryEntity?>);
+        returnValue: _i7.Future<_i12.GameHistoryEntity?>.value(),
+        returnValueForMissingStub: _i7.Future<_i12.GameHistoryEntity?>.value(),
+      ) as _i7.Future<_i12.GameHistoryEntity?>);
 
   @override
-  void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i3.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
@@ -176,7 +847,7 @@ class MockGameHistoryProvider extends _i1.Mock
       );
 
   @override
-  void removeListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i3.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
@@ -206,7 +877,7 @@ class MockGameHistoryProvider extends _i1.Mock
 /// A class which mocks [GetIt].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetIt extends _i1.Mock implements _i8.GetIt {
+class MockGetIt extends _i1.Mock implements _i13.GetIt {
   @override
   set onScopeChanged(void Function(bool)? _onScopeChanged) =>
       super.noSuchMethod(
@@ -251,7 +922,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
             #type: type,
           },
         ),
-        returnValue: _i5.dummyValue<T>(
+        returnValue: _i11.dummyValue<T>(
           this,
           Invocation.method(
             #get,
@@ -264,7 +935,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
             },
           ),
         ),
-        returnValueForMissingStub: _i5.dummyValue<T>(
+        returnValueForMissingStub: _i11.dummyValue<T>(
           this,
           Invocation.method(
             #get,
@@ -280,7 +951,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
       ) as T);
 
   @override
-  _i3.Future<T> getAsync<T extends Object>({
+  _i7.Future<T> getAsync<T extends Object>({
     String? instanceName,
     dynamic param1,
     dynamic param2,
@@ -297,8 +968,8 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
             #type: type,
           },
         ),
-        returnValue: _i5.ifNotNull(
-              _i5.dummyValueOrNull<T>(
+        returnValue: _i11.ifNotNull(
+              _i11.dummyValueOrNull<T>(
                 this,
                 Invocation.method(
                   #getAsync,
@@ -311,9 +982,9 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
                   },
                 ),
               ),
-              (T v) => _i3.Future<T>.value(v),
+              (T v) => _i7.Future<T>.value(v),
             ) ??
-            _FakeFuture_1<T>(
+            _FakeFuture_8<T>(
               this,
               Invocation.method(
                 #getAsync,
@@ -326,8 +997,8 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
                 },
               ),
             ),
-        returnValueForMissingStub: _i5.ifNotNull(
-              _i5.dummyValueOrNull<T>(
+        returnValueForMissingStub: _i11.ifNotNull(
+              _i11.dummyValueOrNull<T>(
                 this,
                 Invocation.method(
                   #getAsync,
@@ -340,9 +1011,9 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
                   },
                 ),
               ),
-              (T v) => _i3.Future<T>.value(v),
+              (T v) => _i7.Future<T>.value(v),
             ) ??
-            _FakeFuture_1<T>(
+            _FakeFuture_8<T>(
               this,
               Invocation.method(
                 #getAsync,
@@ -355,7 +1026,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
                 },
               ),
             ),
-      ) as _i3.Future<T>);
+      ) as _i7.Future<T>);
 
   @override
   T call<T extends Object>({
@@ -375,7 +1046,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
             #type: type,
           },
         ),
-        returnValue: _i5.dummyValue<T>(
+        returnValue: _i11.dummyValue<T>(
           this,
           Invocation.method(
             #call,
@@ -388,7 +1059,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
             },
           ),
         ),
-        returnValueForMissingStub: _i5.dummyValue<T>(
+        returnValueForMissingStub: _i11.dummyValue<T>(
           this,
           Invocation.method(
             #call,
@@ -405,7 +1076,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
 
   @override
   void registerFactory<T extends Object>(
-    _i8.FactoryFunc<T>? factoryFunc, {
+    _i13.FactoryFunc<T>? factoryFunc, {
     String? instanceName,
   }) =>
       super.noSuchMethod(
@@ -419,7 +1090,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
 
   @override
   void registerFactoryParam<T extends Object, P1, P2>(
-    _i8.FactoryFuncParam<T, P1, P2>? factoryFunc, {
+    _i13.FactoryFuncParam<T, P1, P2>? factoryFunc, {
     String? instanceName,
   }) =>
       super.noSuchMethod(
@@ -433,7 +1104,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
 
   @override
   void registerFactoryAsync<T extends Object>(
-    _i8.FactoryFuncAsync<T>? factoryFunc, {
+    _i13.FactoryFuncAsync<T>? factoryFunc, {
     String? instanceName,
   }) =>
       super.noSuchMethod(
@@ -447,7 +1118,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
 
   @override
   void registerFactoryParamAsync<T extends Object, P1, P2>(
-    _i8.FactoryFuncParamAsync<T, P1?, P2?>? factoryFunc, {
+    _i13.FactoryFuncParamAsync<T, P1?, P2?>? factoryFunc, {
     String? instanceName,
   }) =>
       super.noSuchMethod(
@@ -464,7 +1135,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
     T? instance, {
     String? instanceName,
     bool? signalsReady,
-    _i8.DisposingFunc<T>? dispose,
+    _i13.DisposingFunc<T>? dispose,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -476,7 +1147,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
             #dispose: dispose,
           },
         ),
-        returnValue: _i5.dummyValue<T>(
+        returnValue: _i11.dummyValue<T>(
           this,
           Invocation.method(
             #registerSingleton,
@@ -488,7 +1159,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
             },
           ),
         ),
-        returnValueForMissingStub: _i5.dummyValue<T>(
+        returnValueForMissingStub: _i11.dummyValue<T>(
           this,
           Invocation.method(
             #registerSingleton,
@@ -504,11 +1175,11 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
 
   @override
   void registerSingletonWithDependencies<T extends Object>(
-    _i8.FactoryFunc<T>? factoryFunc, {
+    _i13.FactoryFunc<T>? factoryFunc, {
     String? instanceName,
     Iterable<Type>? dependsOn,
     bool? signalsReady,
-    _i8.DisposingFunc<T>? dispose,
+    _i13.DisposingFunc<T>? dispose,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -526,11 +1197,11 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
 
   @override
   void registerSingletonAsync<T extends Object>(
-    _i8.FactoryFuncAsync<T>? factoryFunc, {
+    _i13.FactoryFuncAsync<T>? factoryFunc, {
     String? instanceName,
     Iterable<Type>? dependsOn,
     bool? signalsReady,
-    _i8.DisposingFunc<T>? dispose,
+    _i13.DisposingFunc<T>? dispose,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -548,9 +1219,9 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
 
   @override
   void registerLazySingleton<T extends Object>(
-    _i8.FactoryFunc<T>? factoryFunc, {
+    _i13.FactoryFunc<T>? factoryFunc, {
     String? instanceName,
-    _i8.DisposingFunc<T>? dispose,
+    _i13.DisposingFunc<T>? dispose,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -566,9 +1237,9 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
 
   @override
   void registerLazySingletonAsync<T extends Object>(
-    _i8.FactoryFuncAsync<T>? factoryFunc, {
+    _i13.FactoryFuncAsync<T>? factoryFunc, {
     String? instanceName,
-    _i8.DisposingFunc<T>? dispose,
+    _i13.DisposingFunc<T>? dispose,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -601,32 +1272,32 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
       ) as bool);
 
   @override
-  _i3.Future<void> reset({bool? dispose = true}) => (super.noSuchMethod(
+  _i7.Future<void> reset({bool? dispose = true}) => (super.noSuchMethod(
         Invocation.method(
           #reset,
           [],
           {#dispose: dispose},
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i3.Future<void> resetScope({bool? dispose = true}) => (super.noSuchMethod(
+  _i7.Future<void> resetScope({bool? dispose = true}) => (super.noSuchMethod(
         Invocation.method(
           #resetScope,
           [],
           {#dispose: dispose},
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
   void pushNewScope({
-    void Function(_i8.GetIt)? init,
+    void Function(_i13.GetIt)? init,
     String? scopeName,
-    _i8.ScopeDisposeFunc? dispose,
+    _i13.ScopeDisposeFunc? dispose,
     bool? isFinal,
   }) =>
       super.noSuchMethod(
@@ -644,10 +1315,10 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
       );
 
   @override
-  _i3.Future<void> pushNewScopeAsync({
-    _i3.Future<void> Function(_i8.GetIt)? init,
+  _i7.Future<void> pushNewScopeAsync({
+    _i7.Future<void> Function(_i13.GetIt)? init,
     String? scopeName,
-    _i8.ScopeDisposeFunc? dispose,
+    _i13.ScopeDisposeFunc? dispose,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -659,22 +1330,22 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
             #dispose: dispose,
           },
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i3.Future<void> popScope() => (super.noSuchMethod(
+  _i7.Future<void> popScope() => (super.noSuchMethod(
         Invocation.method(
           #popScope,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i3.Future<bool> popScopesTill(
+  _i7.Future<bool> popScopesTill(
     String? name, {
     bool? inclusive = true,
   }) =>
@@ -684,19 +1355,19 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
           [name],
           {#inclusive: inclusive},
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i7.Future<bool>.value(false),
+        returnValueForMissingStub: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
 
   @override
-  _i3.Future<void> dropScope(String? scopeName) => (super.noSuchMethod(
+  _i7.Future<void> dropScope(String? scopeName) => (super.noSuchMethod(
         Invocation.method(
           #dropScope,
           [scopeName],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
   bool hasScope(String? scopeName) => (super.noSuchMethod(
@@ -709,7 +1380,7 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
       ) as bool);
 
   @override
-  _i3.Future<void> allReady({
+  _i7.Future<void> allReady({
     Duration? timeout,
     bool? ignorePendingAsyncCreation = false,
   }) =>
@@ -722,12 +1393,12 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
             #ignorePendingAsyncCreation: ignorePendingAsyncCreation,
           },
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i3.Future<void> isReady<T extends Object>({
+  _i7.Future<void> isReady<T extends Object>({
     Object? instance,
     String? instanceName,
     Duration? timeout,
@@ -744,9 +1415,9 @@ class MockGetIt extends _i1.Mock implements _i8.GetIt {
             #callee: callee,
           },
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
   bool isReadySync<T extends Object>({
