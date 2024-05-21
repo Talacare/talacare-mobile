@@ -5,12 +5,10 @@ import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/core/enums/character_enum.dart';
-import 'package:talacare/domain/entities/game_history_entity.dart';
 import 'package:talacare/presentation/jump_n_jump/health_bar.dart';
 import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
-import 'package:talacare/presentation/widgets/game_over_modal.dart';
 
 import 'puzzle_page_test.mocks.dart';
 
