@@ -10,7 +10,6 @@ final jumpNJumpGameTester =
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  TestWidgetsFlutterBinding.ensureInitialized();
   final mockAudioManager = MockAudioManagerForJumpNJumpTest();
   final jumpNJumpGameTester = FlameTester(() =>
       JumpNJump(character: Character.boy, audioManager: mockAudioManager));
