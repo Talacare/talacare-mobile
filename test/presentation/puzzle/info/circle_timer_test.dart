@@ -28,7 +28,10 @@ void main() {
           ),
         ],
         child: const MaterialApp(
-          home: CircleTimer(),
+          home: CircleTimer(
+            currentScore: 12,
+            highestScore: 30,
+          ),
         ));
 
     circleCompleted = MultiProvider(
@@ -44,7 +47,10 @@ void main() {
           ),
         ],
         child: const MaterialApp(
-          home: CircleTimer(),
+          home: CircleTimer(
+            currentScore: 12,
+            highestScore: 30,
+          ),
         ));
   });
 
@@ -115,7 +121,10 @@ void main() {
           ),
         ],
         child: const MaterialApp(
-          home: CircleTimer(),
+          home: CircleTimer(
+            currentScore: 12,
+            highestScore: 30,
+          ),
         )));
 
     expect(isComplete.value, false);
@@ -142,7 +151,10 @@ void main() {
           ),
         ],
         child: const MaterialApp(
-          home: CircleTimer(),
+          home: CircleTimer(
+            currentScore: 12,
+            highestScore: 30,
+          ),
         )));
 
     expect(timePause.value, true);

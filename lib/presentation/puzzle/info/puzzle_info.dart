@@ -127,16 +127,19 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
   Widget buildDownSide() {
     String puzzleImg =
         widget.stageState.images[widget.stageState.stage - 1].image;
-
+    
     return Container(
       padding: const EdgeInsets.only(top: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+          Column(
             children: [
-              CircleTimer(),
-              Text(
+              CircleTimer(
+                currentScore: widget.stageState.score,
+                highestScore: widget.highestScore,
+              ),
+              const Text(
                 'SISA WAKTU',
                 style: TextStyle(
                     fontSize: 25,

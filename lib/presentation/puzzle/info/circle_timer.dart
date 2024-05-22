@@ -4,9 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
+import 'package:talacare/presentation/widgets/game_modal.dart';
 
 class CircleTimer extends StatefulWidget {
-  const CircleTimer({super.key});
+  final int currentScore;
+  final int highestScore;
+  
+  const CircleTimer(
+    {super.key, required this.currentScore, required this.highestScore});
 
   @override
   State<CircleTimer> createState() => _CircleTimerState();
@@ -15,9 +20,8 @@ class CircleTimer extends StatefulWidget {
 class _CircleTimerState extends State<CircleTimer>
     with TickerProviderStateMixin {
   late AnimationController _controller;
-  final int _start = 60;
-
   late final AppLifecycleListener _listener;
+  final int _start = 60;
 
   @override
   void initState() {
@@ -40,17 +44,37 @@ class _CircleTimerState extends State<CircleTimer>
     // Pass all the callbacks for the transitions you want to listen to
     _listener = AppLifecycleListener(
       onInactive: stopTimer,
-      onResume: resumeTimer,
     );
   }
 
+  // coverage:ignore-start
   void stopTimer() {
-    _controller.stop();
-  }
+    final timePause = Provider.of<TimerState>(context, listen: false);
+    timePause.value = true;
 
-  void resumeTimer() {
-    _controller.reverse(from: _controller.value);
+    showDialog(
+      // ignore: use_build_context_synchronously
+      context: context,
+      builder: (BuildContext context) {
+        return GameModal(
+          key: const Key("game-pause"),
+          isPause: true,
+          currentScore: widget.currentScore,
+          highestScore: widget.highestScore,
+          onMainLagiPressed: () {
+            timePause.value = false;
+
+            Navigator.of(context)
+              .pop();
+          },
+          onMenuPressed: () => Navigator.of(context)
+            ..pop()
+            ..pop(),
+        );
+      },
+    );
   }
+  // coverage:ignore-end
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +96,11 @@ class _CircleTimerState extends State<CircleTimer>
               timeLeftState.value = remainingTime;
             } else {
               if (timePause.value) {
-                stopTimer();
+                _controller.stop();
               } else {
-                resumeTimer();
+                _controller.reverse(from: _controller.value);
               }
             }
-
-            
 
             return Stack(
               alignment: Alignment.center,
