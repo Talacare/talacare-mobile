@@ -16,11 +16,11 @@ void main() {
 
   setUp(() async {
     image = [
-      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG"),
+      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG", "voices/jantung.mp3"),
       ImagePair(
-          "assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH"),
-      ImagePair("assets/images/puzzle_images/masker.png", "MASKER"),
-      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT"),
+          "assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH", "voices/kantongdarah.mp3"),
+      ImagePair("assets/images/puzzle_images/masker.png", "MASKER", "voices/masker.mp3"),
+      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT", "voices/perawat.mp3"),
     ];
 
     StageState state = StageState([1, 2, 3, 0], 4, 0, image);

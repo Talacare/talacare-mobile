@@ -20,7 +20,8 @@ class StageState {
       for (var pair in jsonData) {
         String image = pair["image"];
         String name = pair["name"];
-        shuffledPairs.add(ImagePair(image, name));
+        String voice = pair["voice"];
+        shuffledPairs.add(ImagePair(image, name, voice));
       }
       shuffledPairs.shuffle();
 
