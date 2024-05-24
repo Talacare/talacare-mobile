@@ -107,7 +107,7 @@ class HomePage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            const StoryPage(storyType: 'placeholder'),
+                            const StoryPage(storyType: 'JUMP_N_JUMP'),
                       ),
                     );
                   },

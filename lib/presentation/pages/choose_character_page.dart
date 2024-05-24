@@ -35,7 +35,7 @@ class _ChooseCharacterState extends State<ChooseCharacterPage> {
       top: 20.0,
       left: 20.0,
       child: HomeButton(
-        onTap: () => Navigator.of(context).pop(),
+        onTap: () => Navigator.of(context)..pop()..pop(),
       ),
     );
   }

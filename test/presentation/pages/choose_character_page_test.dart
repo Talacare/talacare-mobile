@@ -5,6 +5,7 @@ import 'package:mockito/mockito.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/jump_n_jump_page.dart';
+import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/widgets/character_card.dart';
 import 'package:talacare/presentation/widgets/home_button.dart';
@@ -100,7 +101,17 @@ void main() {
 
   testWidgets('triggers onTap when home button is tapped',
       (WidgetTester tester) async {
-    await tester.pumpWidget(characterPage);
+    await tester.pumpWidget(MaterialApp(
+      home: Navigator(
+        pages: const [
+          MaterialPage(child: StoryPage(storyType: 'JUMP_N_JUMP')),
+          MaterialPage(child: ChooseCharacterPage()),
+        ],
+        onPopPage: (route, result) {
+          return route.didPop(result);
+        },
+      ),
+    ));
     expect(find.byType(HomeButton), findsOneWidget);
     await tester.tap(find.byType(HomeButton));
     await tester.pumpAndSettle();
