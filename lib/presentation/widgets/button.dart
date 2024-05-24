@@ -9,14 +9,19 @@ class Button extends StatelessWidget {
   final void Function()? onTap;
   final bool isLoading;
   final IconData? icon;
+  final double? width;
+  final double? height;
 
-  const Button(
-      {super.key,
-      required this.text,
-      this.onTap,
-      this.colorScheme = ButtonColorScheme.green,
-      this.icon,
-      this.isLoading = false});
+  const Button({
+    super.key,
+    required this.text,
+    this.onTap,
+    this.colorScheme = ButtonColorScheme.green,
+    this.icon,
+    this.isLoading = false,
+    this.width = 282,
+    this.height = 48,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +83,8 @@ class Button extends StatelessWidget {
     return InkWell(
       onTap: isLoading ? null : onTap,
       child: SizedBox(
-        width: 282,
-        height: 48,
+        width: width,
+        height: height,
         child: Stack(
           children: [
             Container(
@@ -104,7 +109,7 @@ class Button extends StatelessWidget {
               ),
             ),
             Container(
-              height: 43,
+              height: height! - 5,
               decoration: ShapeDecoration(
                 color: secondShadowColor,
                 shape: RoundedRectangleBorder(

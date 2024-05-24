@@ -95,6 +95,8 @@ flutter:
     - assets/images/
     - assets/images/jump_n_jump/
     - assets/images/jump_n_jump/foods/
+    - assets/images/story/
+    - assets/images/story/jump_n_jump/start/
     - assets/images/puzzle_images/
     - assets/images/puzzle_star/
     - assets/audio/
