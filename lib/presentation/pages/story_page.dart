@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
-
 import 'package:talacare/presentation/widgets/button.dart';
 
 class StoryPage extends StatefulWidget {
   final String storyType;
 
   const StoryPage({
-    Key? key,
+    super.key,
     required this.storyType,
-  }) : super(key: key);
+  });
 
   @override
+  // ignore: library_private_types_in_public_api
   _StoryPageState createState() => _StoryPageState();
 }
 
@@ -72,7 +72,7 @@ class _StoryPageState extends State<StoryPage> {
                           text: 'Lewati',
                           width: 120,
                         )
-                      : SizedBox(width: 120),
+                      : const SizedBox(width: 120),
                 ],
               ),
             ),

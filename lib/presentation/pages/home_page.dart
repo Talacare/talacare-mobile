@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
-import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/core/utils/analytics_engine_util.dart';
 import 'package:talacare/injection.dart';
-import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/pages/schedule_page.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
-import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/presentation/widgets/profile_modal.dart';
 
@@ -110,7 +107,7 @@ class HomePage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            StoryPage(storyType: 'placeholder'),
+                            const StoryPage(storyType: 'placeholder'),
                       ),
                     );
                   },
@@ -127,7 +124,7 @@ class HomePage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            StoryPage(storyType: 'placeholder'),
+                            const StoryPage(storyType: 'placeholder'),
                       ),
                     );
                   },
