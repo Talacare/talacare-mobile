@@ -11,6 +11,7 @@ import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:mockito/mockito.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/pages/schedule_page.dart';
+import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/providers/schedule_provider.dart';
@@ -97,7 +98,7 @@ void main() {
     await tester.tap(find.byKey(const Key('jump_n_jump_button')));
     await tester.pumpAndSettle();
 
-    expect(find.byType(ChooseCharacterPage), findsOneWidget);
+    expect(find.byType(StoryPage), findsOneWidget);
   });
 
   testWidgets(
@@ -121,7 +122,7 @@ void main() {
     await tester.tap(find.byKey(const Key('puzzle_button')));
     await tester.pumpAndSettle();
 
-    expect(find.byType(PuzzlePage), findsOneWidget);
+    expect(find.byType(StoryPage), findsOneWidget);
   });
 
   testWidgets('Verify tapping on user picture shows profile modal',

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
-import 'package:talacare/data/models/stage_state.dart';
-import 'package:talacare/presentation/pages/choose_character_page.dart';
-import 'package:talacare/presentation/pages/puzzle_page.dart';
+
 import 'package:talacare/presentation/widgets/button.dart';
 
 class StoryPage extends StatefulWidget {
@@ -30,7 +28,11 @@ class _StoryPageState extends State<StoryPage> {
     ];
   }
 
-  void nextGif() {}
+  void nextGif() {
+    if (currentGif < gifs.length - 1) {
+      setState(() => currentGif++);
+    } else {}
+  }
 
   @override
   Widget build(BuildContext context) {
