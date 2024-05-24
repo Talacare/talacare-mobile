@@ -40,11 +40,11 @@ void main() {
     await Firebase.initializeApp();
 
     image = [
-      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG"),
+      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG", "voices/jantung.mp3"),
       ImagePair(
-          "assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH"),
-      ImagePair("assets/images/puzzle_images/masker.png", "MASKER"),
-      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT"),
+          "assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH", "voices/kantongdarah.mp3"),
+      ImagePair("assets/images/puzzle_images/masker.png", "MASKER", "voices/masker.mp3"),
+      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT", "voices/perawat.mp3"),
     ];
 
     when(mockGameHistoryProvider.getHighestScoreHistory('PUZZLE'))
@@ -84,6 +84,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "voices/perawat.mp3",
                   stageState: StageState([1, 0, 0, 0], 1, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -119,6 +120,7 @@ void main() {
                 home: Scaffold(
                   body: NextInfo(
                     name: "PERAWAT",
+                    voice: "voices/perawat.mp3",
                     stageState: StageState([2, 3, 2, 0], 4, 0, image),
                     startTime: DateTime.now(),
                   ),
@@ -152,6 +154,7 @@ void main() {
           home: Scaffold(
             body: NextInfo(
               name: "PERAWAT",
+              voice: "voices/perawat.mp3",
               stageState: StageState([1, 0, 0, 0], 1, 0, image),
               startTime: DateTime.now(),
             ),
@@ -186,6 +189,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "voices/perawat.mp3",
                   stageState: StageState([2, 3, 2, 0], 4, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -228,6 +232,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "voices/perawat.mp3",
                   stageState: StageState([2, 3, 2, 0], 4, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -269,6 +274,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -308,6 +314,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 50, image),
                   startTime: DateTime.now(),
                 ),
@@ -344,6 +351,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 50, image),
                   startTime: DateTime.now(),
                 ),
@@ -382,6 +390,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   audioPlayer: mockPlayer,
                   startTime: DateTime.now(),
@@ -394,7 +403,7 @@ void main() {
     verify(mockPlayer.play(any)).called(1);
   });
 
-  testWidgets('calls flutterTts.speak after audioPlayer completes',
+  testWidgets('plays voice after audioPlayer completes playing success.wav',
       (tester) async {
     final mockPlayer = MockAudioPlayer();
 
@@ -419,6 +428,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   audioPlayer: mockPlayer,
                   startTime: DateTime.now(),
@@ -431,7 +441,7 @@ void main() {
     await tester.pump();
 
     verify(mockPlayer.stop()).called(1);
-    verify(mockPlayer.play(any)).called(1);
+    verify(mockPlayer.play(any)).called(2);
   });
 
   testWidgets('calls audioPlayer.stop() on dispose', (tester) async {
@@ -450,12 +460,14 @@ void main() {
         ],
         child: MaterialApp(
           home: Scaffold(
-              body: NextInfo(
-            name: "PERAWAT",
-            stageState: StageState([1, 0, 0, 0], 1, 0, image),
-            audioPlayer: mockPlayer,
-            startTime: DateTime.now(),
-          )),
+            body: NextInfo(
+              name: "PERAWAT",
+              voice: "voices/perawat.mp3",
+              stageState: StageState([1, 0, 0, 0], 1, 0, image),
+              audioPlayer: mockPlayer,
+              startTime: DateTime.now(),
+            ),
+          ),
         )));
 
     final NavigatorState navigator = tester.state(find.byType(Navigator));
