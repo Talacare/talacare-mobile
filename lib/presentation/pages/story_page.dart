@@ -80,7 +80,7 @@ class _StoryPageState extends State<StoryPage> {
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Image.asset(gifs[0], fit: BoxFit.contain),
+                  child: Image.asset(gifs[currentGif], fit: BoxFit.contain),
                 ),
               ),
             ),
