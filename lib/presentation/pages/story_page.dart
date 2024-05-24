@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/data/models/stage_state.dart';
+import 'package:talacare/presentation/pages/choose_character_page.dart';
+import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 
 class StoryPage extends StatefulWidget {
@@ -31,7 +34,23 @@ class _StoryPageState extends State<StoryPage> {
   void nextGif() {
     if (currentGif < gifs.length - 1) {
       setState(() => currentGif++);
-    } else {}
+    } else {
+      finishStory();
+    }
+  }
+
+  void finishStory() {
+    if (widget.storyType.contains('Ending')) {
+      Navigator.popUntil(context, ModalRoute.withName('/'));
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => widget.storyType.contains('JUMP_N_JUMP')
+                ? const ChooseCharacterPage()
+                : PuzzlePage(stageState: StageState([1, 0, 0, 0], 1, 0, []))),
+      );
+    }
   }
 
   @override
@@ -51,7 +70,8 @@ class _StoryPageState extends State<StoryPage> {
                       IconButton(
                         icon: Image.asset('assets/images/story/home.png'),
                         iconSize: 30,
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context)
+                            .popUntil(ModalRoute.withName('/')),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
@@ -68,8 +88,9 @@ class _StoryPageState extends State<StoryPage> {
                     ],
                   ),
                   currentGif < gifs.length - 1
-                      ? const Button(
+                      ? Button(
                           text: 'Lewati',
+                          onTap: finishStory,
                           width: 120,
                         )
                       : const SizedBox(width: 120),
