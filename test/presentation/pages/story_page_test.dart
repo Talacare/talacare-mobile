@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
-import 'package:mockito/annotations.dart';
-import 'package:talacare/domain/entities/game_history_entity.dart';
 import 'package:talacare/domain/repositories/game_history_repository.dart';
 import 'package:talacare/domain/usecases/game_history_usecase.dart';
 import 'package:talacare/injection.dart';
@@ -13,7 +10,6 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../domain/usecases/game_history_usecase_test.mocks.dart';
 import 'puzzle_page_test.mocks.dart';
-import 'story_page_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
@@ -135,7 +131,7 @@ void main() {
     testWidgets('home button should be tappable and navigate to root',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: StoryPage(storyType: 'test'),
+        home: const StoryPage(storyType: 'test'),
         navigatorObservers: [mockObserver],
       ));
 
@@ -149,7 +145,7 @@ void main() {
         'finishes story and navigates accordingly for ending story type',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: StoryPage(storyType: 'Ending'),
+        home: const StoryPage(storyType: 'Ending'),
         navigatorObservers: [mockObserver],
       ));
       await tester.tap(find.text('Lewati'));
@@ -162,7 +158,7 @@ void main() {
         'finishes story and navigates accordingly for ending story type',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: StoryPage(storyType: 'Ending'),
+        home: const StoryPage(storyType: 'Ending'),
         navigatorObservers: [mockObserver],
       ));
       await tester.tap(find.text('Lanjut'));
@@ -177,7 +173,7 @@ void main() {
         'finishes story and navigates to new page for non-ending story type',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: StoryPage(storyType: 'test'),
+        home: const StoryPage(storyType: 'test'),
         navigatorObservers: [mockObserver],
       ));
 
