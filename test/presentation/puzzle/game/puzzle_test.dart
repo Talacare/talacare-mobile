@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +31,6 @@ void main() {
         child: MaterialApp(
           home: puzzleWidget,
         ));
-
-    AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
   });
   group('PuzzleWidget Tests', () {
     testWidgets('Test PuzzleWidget is shown', (WidgetTester tester) async {

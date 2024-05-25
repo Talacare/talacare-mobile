@@ -77,7 +77,7 @@ void main() {
   });
 
   testWidgets(
-      'Verify the Jump n Jump GameCard is working and navigate to Choose Character Page',
+      'Verify the Jump n Jump GameCard is working and navigate to Jump N Jump Start Story',
       (tester) async {
     final mockObserver = MockNavigatorObserver();
 
