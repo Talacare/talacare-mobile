@@ -44,7 +44,8 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
 
       return userModel;
     } catch (e) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(FlutterErrorDetails(exception: e));
+      FirebaseCrashlytics.instance
+          .recordFlutterFatalError(FlutterErrorDetails(exception: e));
       throw Exception('Sign-in failed: $e');
     }
   }
@@ -101,5 +102,9 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
     } catch (e) {
       throw Exception('Logout failed: $e');
     }
+  }
+
+  Map<String, dynamic> decodeJwtToken(String token) {
+    return JwtDecoder.decode(token);
   }
 }
