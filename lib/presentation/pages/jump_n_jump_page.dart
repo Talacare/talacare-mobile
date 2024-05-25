@@ -16,10 +16,10 @@ class JumpNJumpPage extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _JumpNJumpPageState createState() => _JumpNJumpPageState();
+  JumpNJumpPageState createState() => JumpNJumpPageState();
 }
 
-class _JumpNJumpPageState extends State<JumpNJumpPage> {
+class JumpNJumpPageState extends State<JumpNJumpPage> {
   late final JumpNJump game;
   final audioManager = AudioManager();
 

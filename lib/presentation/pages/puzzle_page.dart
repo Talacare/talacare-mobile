@@ -41,6 +41,7 @@ class PuzzlePage extends StatelessWidget {
             ImagePair imagePair = stageState.images[stageState.stage - 1];
             String image = imagePair.image;
             String name = imagePair.name;
+            String voice = imagePair.voice;
 
             return FutureBuilder<GameHistoryEntity?>(
                 future: getIt<GameHistoryProvider>()
@@ -68,6 +69,7 @@ class PuzzlePage extends StatelessWidget {
                             ),
                             NextInfo(
                               name: name,
+                              voice: voice,
                               stageState: stageState,
                               startTime: DateTime.now(),
                             ),

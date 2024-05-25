@@ -109,5 +109,56 @@ void main() {
       final gameWidget = find.byType(GameWidget<JumpNJump>);
       expect(gameWidget, findsOneWidget);
     });
+
+    testWidgets('createGameWidget should create a GameWidget',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: JumpNJumpPage(character: Character.boy),
+        ),
+      );
+
+      final gameWidget = find.byType(GameWidget<JumpNJump>);
+      expect(gameWidget, findsOneWidget);
+    });
+
+    testWidgets('onLose should create a GameWidget',
+        (WidgetTester tester) async {
+      const key = Key('jump_n_jump_page_key');
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: JumpNJumpPage(key: key, character: Character.boy),
+        ),
+      );
+
+      final JumpNJumpPageState state =
+          tester.state<JumpNJumpPageState>(find.byType(JumpNJumpPage));
+      state.game.gameManager.startTime = DateTime.now();
+      state.game.onLose();
+
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('onBackToMenu should remove overlays',
+        (WidgetTester tester) async {
+      const key = Key('jump_n_jump_page_key');
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: JumpNJumpPage(key: key, character: Character.boy),
+        ),
+      );
+
+      final JumpNJumpPageState state =
+          tester.state<JumpNJumpPageState>(find.byType(JumpNJumpPage));
+      state.game.gameManager.startTime = DateTime.now();
+      state.game.onLose();
+      state.game.onBackToMenu(tester.element(find.byKey(key)));
+
+      await tester.pumpAndSettle();
+
+      expect(state.game.overlays.isActive('gameOverOverlay'), isTrue);
+    });
   });
 }

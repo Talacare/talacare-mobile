@@ -94,10 +94,12 @@ flutter:
     - assets/
     - assets/images/
     - assets/images/jump_n_jump/
+    - assets/images/jump_n_jump/foods/
     - assets/images/puzzle_images/
     - assets/images/puzzle_star/
     - assets/audio/
     - assets/audio/puzzle/
+    - assets/audio/puzzle/voices/
     - .env
     - assets/images/jump_n_jump/characters/
     - assets/audio/jump_n_jump/

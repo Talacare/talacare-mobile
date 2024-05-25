@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
-import 'package:talacare/core/utils/text_to_speech.dart';
+import 'package:talacare/core/utils/analytics_engine_util.dart';
 import 'package:talacare/data/models/game_history_model.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/injection.dart';
@@ -19,12 +19,14 @@ class NextInfo extends StatefulWidget {
   final StageState stageState;
   final AudioPlayer? audioPlayer;
   final String name;
+  final String voice;
   final DateTime startTime;
 
   const NextInfo({
     super.key,
     required this.stageState,
     required this.name,
+    required this.voice,
     this.audioPlayer,
     required this.startTime,
   });
@@ -69,8 +71,12 @@ class _NextInfoState extends State<NextInfo> {
         audioPlayer.play(AssetSource('game_over.wav'));
       }
 
+      bool playVoice = true;
       audioPlayer.onPlayerComplete.listen((_) {
-        speakText(text: widget.name);
+        if (playVoice) {
+          audioPlayer.play(AssetSource(widget.voice));
+          playVoice = false;
+        }
       });
     }
 
@@ -157,6 +163,7 @@ class _NextInfoState extends State<NextInfo> {
                           currentScore: widget.stageState.score,
                           highestScore: highScore,
                           onMainLagiPressed: () {
+                            AnalyticsEngineUtil.userPlaysPuzzleAgain();
                             Navigator.of(context)
                               ..pop()
                               ..pushReplacement(
@@ -168,9 +175,12 @@ class _NextInfoState extends State<NextInfo> {
                                 ),
                               );
                           },
-                          onMenuPressed: () => Navigator.of(context)
+                          onMenuPressed: () {
+                            AnalyticsEngineUtil.userStopPlaysPuzzle();
+                            Navigator.of(context)
                             ..pop()
-                            ..pop(),
+                            ..pop();
+                          },
                         );
                       },
                     );
