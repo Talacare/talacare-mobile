@@ -41,6 +41,12 @@ class _StoryPageState extends State<StoryPage> {
     playSound(sfxs[currentGif]);
   }
 
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
   void nextGif() {
     if (currentGif < gifs.length - 1) {
       setState(() => currentGif++);
@@ -52,6 +58,10 @@ class _StoryPageState extends State<StoryPage> {
 
   Future<void> playSound(String path) {
     return _audioPlayer.play(AssetSource(path));
+  }
+
+  void stopSound() {
+    _audioPlayer.stop();
   }
 
   void finishStory() {
@@ -66,6 +76,7 @@ class _StoryPageState extends State<StoryPage> {
                 : PuzzlePage(stageState: StageState([1, 0, 0, 0], 1, 0, []))),
       );
     }
+    stopSound();
   }
 
   @override
@@ -83,11 +94,13 @@ class _StoryPageState extends State<StoryPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: Image.asset('assets/images/story/home.png'),
-                        iconSize: 30,
-                        onPressed: () => Navigator.of(context)
-                            .popUntil(ModalRoute.withName('/')),
-                      ),
+                          icon: Image.asset('assets/images/story/home.png'),
+                          iconSize: 30,
+                          onPressed: () {
+                            Navigator.of(context)
+                                .popUntil(ModalRoute.withName('/'));
+                            stopSound();
+                          }),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Text(
