@@ -16,11 +16,11 @@ void main() {
 
   setUp(() async {
     image = [
-      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG"),
+      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG", "voices/jantung.mp3"),
       ImagePair(
-          "assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH"),
-      ImagePair("assets/images/puzzle_images/masker.png", "MASKER"),
-      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT"),
+          "assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH", "voices/kantongdarah.mp3"),
+      ImagePair("assets/images/puzzle_images/masker.png", "MASKER", "voices/masker.mp3"),
+      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT", "voices/perawat.mp3"),
     ];
 
     StageState state = StageState([1, 2, 3, 0], 4, 0, image);
@@ -38,9 +38,11 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            stageState: state,
-            highestScore: highestScore,
+          home: Scaffold(
+            body: PuzzleInfo(
+              stageState: state,
+              highestScore: highestScore,
+            ),
           ),
         ));
   });
@@ -57,7 +59,7 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(puzzleInfo);
 
-    expect(find.text('TERTINGGI: $highestScore'), findsOneWidget);
+    expect(find.text('🏆'), findsOneWidget);
     expect(find.text('SISA WAKTU'), findsOneWidget);
   });
 
@@ -80,8 +82,8 @@ void main() {
     await tester.pumpWidget(puzzleInfo);
 
     expect(find.byType(Column), findsNWidgets(3));
-    expect(find.byType(Row), findsNWidgets(3));
-    expect(find.byType(Container), findsNWidgets(3));
+    expect(find.byType(Row), findsNWidgets(4));
+    expect(find.byType(Container), findsNWidgets(7));
   });
 
   testWidgets('PuzzleInfo widget displays correct star image',
@@ -134,7 +136,7 @@ void main() {
     await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
-            create: (context) => TimerState(initialValue: true),
+            create: (context) => TimerState(initialValue: false),
           ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
@@ -144,11 +146,15 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            stageState: StageState([0, 0, 0, 0], 4, 0, image),
-            highestScore: highestScore,
+          home: Scaffold(
+            body: PuzzleInfo(
+              stageState: StageState([0, 0, 0, 0], 4, 0, image),
+              highestScore: highestScore,
+            ),
           ),
         )));
+      
+    await tester.pump(const Duration(seconds: 60));
 
     expect(
         find.byWidgetPredicate(
@@ -176,9 +182,11 @@ void main() {
           ),
         ],
         child: MaterialApp(
-          home: PuzzleInfo(
-            stageState: StageState([0, 0, 0, 0], 4, 0, image),
-            highestScore: highestScore,
+          home: Scaffold(
+            body: PuzzleInfo(
+              stageState: StageState([0, 0, 0, 0], 4, 0, image),
+              highestScore: highestScore,
+            ),
           ),
         )));
 

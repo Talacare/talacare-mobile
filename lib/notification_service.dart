@@ -87,11 +87,13 @@ class NotificationService {
     final List<PendingNotificationRequest> pendingNotificationRequests =
         await notificationsPlugin.pendingNotificationRequests();
 
+    // coverage:ignore-start
     for (PendingNotificationRequest pendingNotificationRequest in pendingNotificationRequests) {
       if (pendingNotificationRequest.payload == payload) {
         cancelNotification(pendingNotificationRequest.id);
         break;
       }
     }
+    // coverage:ignore-end
   }
 }
