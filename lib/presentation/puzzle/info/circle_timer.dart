@@ -85,6 +85,7 @@ class _CircleTimerState extends State<CircleTimer>
   Widget build(BuildContext context) {
     final isComplete = Provider.of<CompleteState>(context);
     final timePause = Provider.of<TimerState>(context);
+    final timeLeftState = Provider.of<TimeLeftState>(context, listen: false);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -96,9 +97,6 @@ class _CircleTimerState extends State<CircleTimer>
 
             if (isComplete.value) {
               _controller.stop();
-
-              final timeLeftState =
-                  Provider.of<TimeLeftState>(context, listen: false);
               timeLeftState.value = remainingTime;
             } else {
               if (timePause.value) {

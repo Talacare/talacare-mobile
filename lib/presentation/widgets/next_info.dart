@@ -38,6 +38,7 @@ class NextInfo extends StatefulWidget {
 
 class _NextInfoState extends State<NextInfo> {
   late AudioPlayer audioPlayer = widget.audioPlayer ?? AudioPlayer();
+  late int score;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class _NextInfoState extends State<NextInfo> {
     if (isComplete.value) {
       if (timeLeftState.value > 0) {
         currentState[widget.stageState.stage - 1] = 2;
-        widget.stageState.score += (50 + timeLeftState.value);
+        score = widget.stageState.score + 50 + timeLeftState.value;
       } else {
         currentState[widget.stageState.stage - 1] = 3;
       }
@@ -136,7 +137,7 @@ class _NextInfoState extends State<NextInfo> {
                           stageState: StageState(
                             currentState,
                             widget.stageState.stage + 1,
-                            widget.stageState.score,
+                            score,
                             widget.stageState.images,
                           ),
                         ),
@@ -147,7 +148,7 @@ class _NextInfoState extends State<NextInfo> {
                       gameType: 'PUZZLE',
                       startTime: widget.startTime,
                       endTime: DateTime.now(),
-                      score: widget.stageState.score,
+                      score: score,
                     );
                     await getIt<GameHistoryProvider>()
                         .createGameHistory(gameHistory);
@@ -162,7 +163,7 @@ class _NextInfoState extends State<NextInfo> {
                       builder: (BuildContext context) {
                         return GameModal(
                           key: const Key("game-over"),
-                          currentScore: widget.stageState.score,
+                          currentScore: score,
                           highestScore: highScore,
                           onMainLagiPressed: () {
                             AnalyticsEngineUtil.userPlaysPuzzleAgain();
