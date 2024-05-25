@@ -8,6 +8,7 @@ import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/player.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
+import 'package:talacare/presentation/widgets/score_and_pause.dart';
 
 class JumpNJumpPage extends StatefulWidget {
   final Character? character;
@@ -102,7 +103,7 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
                 _createHighScoreWidget(),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 2),
             HealthBar(
               currentValue: game.dash.health,
               maxValue: 100,
@@ -117,11 +118,10 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
     return ValueListenableBuilder<int>(
       valueListenable: game.gameManager.highScore,
       builder: (_, highScore, __) {
-        return Text(
-          'TERTINGGI: $highScore',
-          style: const TextStyle(
-              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+        return ScoreAndPause(
           key: const Key('highScoreDisplay'),
+          highScore: highScore,
+          onPauseTap: () {},
         );
       },
     );
@@ -136,15 +136,15 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
           children: [
             Image.asset(
               'assets/images/jump_n_jump/coin.png',
-              width: 24,
-              height: 24,
+              width: 35,
+              height: 35,
               key: const Key('coinIcon'),
             ),
             const SizedBox(width: 8),
             Text(
               '$score',
               style: const TextStyle(
-                  fontSize: 24,
+                  fontSize: 35,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
               key: const Key('scoreDisplay'),
