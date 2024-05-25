@@ -37,8 +37,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => provider.AuthProvider(useCase: getIt()));
   getIt
       .registerLazySingleton(() => provider.ScheduleProvider(useCase: getIt()));
-  getIt.registerLazySingleton(
-      () => provider.GameHistoryProvider(useCase: getIt()));
+  getIt.registerLazySingleton(() => provider.GameHistoryProvider(useCase: getIt()));
 
   // Use cases
   getIt.registerLazySingleton(() => AuthUseCase(getIt()));
@@ -47,6 +46,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => ExportDataUseCase(getIt()));
 
   // Repository
+<<<<<<< HEAD
   getIt.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(getIt(), getIt()));
   getIt.registerLazySingleton<ScheduleRepository>(
@@ -55,6 +55,11 @@ Future<void> init() async {
       () => GameHistoryRepositoryImpl(getIt()));
   getIt.registerLazySingleton<ExportDataRepository>(
       () => ExportDataRepositoryImpl(getIt()));
+=======
+  getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<ScheduleRepository>(() => ScheduleRepositoryImpl(getIt()));
+  getIt.registerLazySingleton<GameHistoryRepository>(() => GameHistoryRepositoryImpl(getIt()));
+>>>>>>> f411c438c4d3086dde96fa72dfc7aefdf21d898d
 
   // Data source
   getIt.registerLazySingleton<AuthRemoteDatasource>(() =>
@@ -70,8 +75,7 @@ Future<void> init() async {
   getIt.registerLazySingleton<ScheduleRemoteDatasource>(() =>
       ScheduleRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));
 
-  getIt.registerLazySingleton<GameHistoryRemoteDatasource>(() =>
-      GameHistoryRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));
+  getIt.registerLazySingleton<GameHistoryRemoteDatasource>(() => GameHistoryRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));
 
   getIt.registerLazySingleton<ExportDataRemoteDatasource>(() =>
       ExportDataRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));

@@ -14,6 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable'
+        flutter-version: 3.19.1
     - name: Create .env file
       run: |
         echo "ANDROID_API_KEY='${{ secrets.ANDROID_API_KEY }}'" > .env

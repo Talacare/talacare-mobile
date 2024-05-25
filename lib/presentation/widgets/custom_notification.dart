@@ -8,6 +8,7 @@ class CustomNotification {
 
     overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
+        key: const Key('custom_notification'),
         bottom: MediaQuery.of(context).size.height - 100,
         left: 10,
         right: 10,
