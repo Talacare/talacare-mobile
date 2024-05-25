@@ -33,8 +33,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => provider.AuthProvider(useCase: getIt()));
   getIt
       .registerLazySingleton(() => provider.ScheduleProvider(useCase: getIt()));
-  getIt.registerLazySingleton(
-      () => provider.GameHistoryProvider(useCase: getIt()));
+  getIt.registerLazySingleton(() => provider.GameHistoryProvider(useCase: getIt()));
 
   // Use cases
   getIt.registerLazySingleton(() => AuthUseCase(getIt()));
@@ -42,12 +41,9 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => GameHistoryUseCase(getIt()));
 
   // Repository
-  getIt.registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImpl(getIt(), getIt()));
-  getIt.registerLazySingleton<ScheduleRepository>(
-      () => ScheduleRepositoryImpl(getIt()));
-  getIt.registerLazySingleton<GameHistoryRepository>(
-      () => GameHistoryRepositoryImpl(getIt()));
+  getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<ScheduleRepository>(() => ScheduleRepositoryImpl(getIt()));
+  getIt.registerLazySingleton<GameHistoryRepository>(() => GameHistoryRepositoryImpl(getIt()));
 
   // Data source
   getIt.registerLazySingleton<AuthRemoteDatasource>(() => AuthRemoteDatasourceImpl(googleSignIn: getIt(), firebaseAuthInstance: getIt(), dio: getIt(), localDatasource: getIt()));
@@ -56,8 +52,7 @@ Future<void> init() async {
 
   getIt.registerLazySingleton<ScheduleRemoteDatasource>(() => ScheduleRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));
 
-  getIt.registerLazySingleton<GameHistoryRemoteDatasource>(() =>
-      GameHistoryRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));
+  getIt.registerLazySingleton<GameHistoryRemoteDatasource>(() => GameHistoryRemoteDatasourceImpl(dio: getIt(), localDatasource: getIt()));
 
   // External
   getIt.registerLazySingleton(() => GoogleSignIn());

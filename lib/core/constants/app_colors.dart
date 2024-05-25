@@ -19,5 +19,6 @@ class AppColors {
   static Color lavender = const Color(0xFFD3D8FF);
   static Color lightPurple = const Color(0xFFDD67ED);
   static Color softPink = const Color(0xFFFFB8B8);
+  static Color orange = const Color(0xFFE86124);
   // Add more colors here ...
 }
