@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/data/models/stage_state.dart';
+import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/puzzle/info/circle_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
@@ -24,15 +25,15 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
   Widget build(BuildContext context) {
     final isComplete = Provider.of<CompleteState>(context);
     final timeLeft = Provider.of<TimeLeftState>(context);
-    
+
     List<int> currentStar = widget.stageState.starList;
 
     if (isComplete.value) {
       setState(() {
         if (timeLeft.value > 0) {
-          currentStar[widget.stageState.stage - 1] = 2;   //  win
+          currentStar[widget.stageState.stage - 1] = 2; //  win
         } else {
-          currentStar[widget.stageState.stage - 1] = 3;   // lose
+          currentStar[widget.stageState.stage - 1] = 3; // lose
         }
       });
     }
@@ -77,12 +78,15 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
                   onMainLagiPressed: () {
                     timePause.value = false;
 
-                    Navigator.of(context)
-                      .pop();
+                    Navigator.of(context).pop();
                   },
-                  onMenuPressed: () => Navigator.of(context)
-                    ..pop()
-                    ..pop(),
+                  onMenuPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const StoryPage(storyType: 'PUZZLE Ending'),
+                    ),
+                  ),
                 );
               },
             );
@@ -127,7 +131,7 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
   Widget buildDownSide() {
     String puzzleImg =
         widget.stageState.images[widget.stageState.stage - 1].image;
-    
+
     return Container(
       padding: const EdgeInsets.only(top: 20),
       child: Row(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
+import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
@@ -9,9 +10,9 @@ import 'package:talacare/presentation/widgets/game_modal.dart';
 class CircleTimer extends StatefulWidget {
   final int currentScore;
   final int highestScore;
-  
+
   const CircleTimer(
-    {super.key, required this.currentScore, required this.highestScore});
+      {super.key, required this.currentScore, required this.highestScore});
 
   @override
   State<CircleTimer> createState() => _CircleTimerState();
@@ -33,14 +34,16 @@ class _CircleTimerState extends State<CircleTimer>
       ..reverse(from: 1.0)
       ..addListener(() {
         if (_controller.value == 0.0) {
-          final completeState = Provider.of<CompleteState>(context, listen: false);
+          final completeState =
+              Provider.of<CompleteState>(context, listen: false);
           completeState.value = true;
 
-          final timeLeftState = Provider.of<TimeLeftState>(context, listen: false);
+          final timeLeftState =
+              Provider.of<TimeLeftState>(context, listen: false);
           timeLeftState.value = 0;
         }
       });
-    
+
     // Pass all the callbacks for the transitions you want to listen to
     _listener = AppLifecycleListener(
       onInactive: stopTimer,
@@ -64,12 +67,14 @@ class _CircleTimerState extends State<CircleTimer>
           onMainLagiPressed: () {
             timePause.value = false;
 
-            Navigator.of(context)
-              .pop();
+            Navigator.of(context).pop();
           },
-          onMenuPressed: () => Navigator.of(context)
-            ..pop()
-            ..pop(),
+          onMenuPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const StoryPage(storyType: 'PUZZLE Ending'),
+            ),
+          ),
         );
       },
     );
@@ -92,7 +97,8 @@ class _CircleTimerState extends State<CircleTimer>
             if (isComplete.value) {
               _controller.stop();
 
-              final timeLeftState = Provider.of<TimeLeftState>(context, listen: false);
+              final timeLeftState =
+                  Provider.of<TimeLeftState>(context, listen: false);
               timeLeftState.value = remainingTime;
             } else {
               if (timePause.value) {

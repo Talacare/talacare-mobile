@@ -29,16 +29,48 @@ class _StoryPageState extends State<StoryPage> {
   void initState() {
     super.initState();
     _audioPlayer = AudioPlayer();
-
-    gifs = [
-      'assets/images/story/jump_n_jump/start/story0.gif',
-      'assets/images/story/jump_n_jump/start/story1.gif'
-    ];
-    sfxs = [
-      'audio/story/jump_n_jump/start/narration0.mp3',
-      'audio/story/jump_n_jump/start/narration1.mp3'
-    ];
+    _setGifsAndSfxs();
     playSound(sfxs[currentGif]);
+  }
+
+  void _setGifsAndSfxs() {
+    if (widget.storyType.contains('JUMP_N_JUMP')) {
+      gifs = widget.storyType.contains('Start')
+          ? [
+              'assets/images/story/jump_n_jump/start/story0.gif',
+            ]
+          : [
+              'assets/images/story/jump_n_jump/end/story0.gif',
+            ];
+      sfxs = widget.storyType.contains('Start')
+          ? [
+              'audio/story/jump_n_jump/start/narration0.mp3',
+            ]
+          : [
+              'audio/story/jump_n_jump/end/narration0.mp3',
+            ];
+    } else if (widget.storyType.contains('PUZZLE')) {
+      gifs = widget.storyType.contains('Start')
+          ? [
+              'assets/images/story/puzzle/start/story0.gif',
+              'assets/images/story/puzzle/start/story1.gif',
+              'assets/images/story/puzzle/start/story2.gif',
+            ]
+          : [
+              'assets/images/story/puzzle/end/story0.gif',
+              'assets/images/story/puzzle/end/story1.gif',
+            ];
+      sfxs = widget.storyType.contains('Start')
+          ? [
+              'audio/story/puzzle/start/narration0.mp3',
+              'audio/story/puzzle/start/narration1.mp3',
+              'audio/story/puzzle/start/narration2.mp3',
+            ]
+          : [
+              'audio/story/puzzle/end/narration0.mp3',
+              'audio/story/puzzle/end/narration1.mp3',
+            ];
+    }
   }
 
   @override
@@ -115,7 +147,8 @@ class _StoryPageState extends State<StoryPage> {
                       ),
                     ],
                   ),
-                  currentGif < gifs.length - 1
+                  currentGif < gifs.length - 1 &&
+                          widget.storyType.contains('Start')
                       ? Button(
                           text: 'Lewati',
                           onTap: finishStory,

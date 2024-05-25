@@ -11,6 +11,7 @@ import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
 import 'package:talacare/core/enums/character_enum.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/food_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/managers.dart';
+import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/widgets/game_modal.dart';
 import './world.dart';
@@ -163,12 +164,12 @@ class JumpNJump extends FlameGame
 
     overlays.addEntry(
       'gameOverOverlay',
-          (context, game) => GameModal(
+      (context, game) => GameModal(
         currentScore: gameManager.score.value,
         highestScore: gameManager.highScore.value,
         onMainLagiPressed: onRestartGame,
         onMenuPressed: () {
-          onBackToMenu(context);
+          onEndTheGame(context);
         },
       ),
     );
@@ -180,10 +181,13 @@ class JumpNJump extends FlameGame
     startGame();
   }
 
-  void onBackToMenu(BuildContext context) {
+  void onEndTheGame(BuildContext context) {
     overlays.remove('gameOverOverlay');
-    Navigator.of(context)
-      ..pop()
-      ..pop();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const StoryPage(storyType: 'JUMP_N_JUMP Ending'),
+      ),
+    );
   }
 }
