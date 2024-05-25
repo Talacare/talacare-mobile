@@ -6,6 +6,7 @@ import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:talacare/presentation/widgets/home_button.dart';
 
 import '../../domain/usecases/game_history_usecase_test.mocks.dart';
 import 'puzzle_page_test.mocks.dart';
@@ -49,17 +50,17 @@ void main() {
     testWidgets('Home button should be tappable on Puzzle Start Story Page',
         (WidgetTester tester) async {
       await tester.pumpWidget(createTestableWidget('PUZZLE Start'));
-      expect(find.byType(IconButton), findsOneWidget);
-      await tester.tap(find.byType(IconButton));
-      await tester.pump();
+      expect(find.byType(HomeButton), findsOneWidget);
+      await tester.tap(find.byType(HomeButton));
+      await tester.pumpAndSettle();
     });
 
     testWidgets('Home button should be tappable on Puzzle Ending Story Page',
         (WidgetTester tester) async {
       await tester.pumpWidget(createTestableWidget('PUZZLE Ending'));
-      expect(find.byType(IconButton), findsOneWidget);
-      await tester.tap(find.byType(IconButton));
-      await tester.pump();
+      expect(find.byType(HomeButton), findsOneWidget);
+      await tester.tap(find.byType(HomeButton));
+      await tester.pumpAndSettle();
     });
 
     testWidgets(
@@ -176,7 +177,8 @@ void main() {
         'home button should be tappable and navigate to root for Puzzle Start Story Page',
         (WidgetTester tester) async {
       await tester.pumpWidget(createTestableWidget('PUZZLE Start'));
-      await tester.tap(find.byType(IconButton));
+      expect(find.byType(HomeButton), findsOneWidget);
+      await tester.tap(find.byType(HomeButton));
       await tester.pumpAndSettle();
 
       verifyNever(() => mockObserver.didPush(any(), any()));
@@ -190,7 +192,8 @@ void main() {
         navigatorObservers: [mockObserver],
       ));
 
-      await tester.tap(find.byType(IconButton));
+      expect(find.byType(HomeButton), findsOneWidget);
+      await tester.tap(find.byType(HomeButton));
       await tester.pumpAndSettle();
 
       verify(() => mockObserver.didPush(any(), any())).called(1);

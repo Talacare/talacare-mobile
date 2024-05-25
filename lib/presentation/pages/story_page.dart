@@ -5,6 +5,7 @@ import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/presentation/pages/choose_character_page.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
 import 'package:talacare/presentation/widgets/button.dart';
+import 'package:talacare/presentation/widgets/home_button.dart';
 
 class StoryPage extends StatefulWidget {
   final String storyType;
@@ -125,14 +126,13 @@ class _StoryPageState extends State<StoryPage> {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      IconButton(
-                          icon: Image.asset('assets/images/story/home.png'),
-                          iconSize: 30,
-                          onPressed: () {
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName('/'));
-                            stopSound();
-                          }),
+                      HomeButton(
+                        onTap: () => () {
+                          Navigator.of(context)
+                              .popUntil(ModalRoute.withName('/'));
+                          stopSound();
+                        },
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Text(
