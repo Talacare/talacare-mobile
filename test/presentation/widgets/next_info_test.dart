@@ -19,7 +19,6 @@ import 'package:talacare/presentation/widgets/next_info.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
 import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
-
 import '../jump_n_jump/jump_n_jump_test.mocks.dart';
 import '../pages/login_page_test.mocks.dart';
 import 'next_info_test.mocks.dart';
@@ -29,23 +28,26 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 @GenerateMocks([AudioPlayer])
 void main() {
   late List<ImagePair> image;
- 
+
   final getIt = GetIt.instance;
   late MockGameHistoryProvider mockGameHistoryProvider;
 
   TestWidgetsFlutterBinding.ensureInitialized();
-  setupFirebaseCoreMocks();    
+  setupFirebaseCoreMocks();
 
   setUp(() async {
     mockGameHistoryProvider = MockGameHistoryProvider();
     await Firebase.initializeApp();
 
     image = [
-      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG", "voices/jantung.mp3"),
-      ImagePair(
-          "assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH", "voices/kantongdarah.mp3"),
-      ImagePair("assets/images/puzzle_images/masker.png", "MASKER", "voices/masker.mp3"),
-      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT", "voices/perawat.mp3"),
+      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG",
+          "voices/jantung.mp3"),
+      ImagePair("assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH",
+          "voices/kantongdarah.mp3"),
+      ImagePair("assets/images/puzzle_images/masker.png", "MASKER",
+          "voices/masker.mp3"),
+      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT",
+          "voices/perawat.mp3"),
     ];
 
     when(mockGameHistoryProvider.getHighestScoreHistory('PUZZLE'))

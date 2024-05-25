@@ -154,7 +154,6 @@ void main() {
           tester.state<JumpNJumpPageState>(find.byType(JumpNJumpPage));
       state.game.gameManager.startTime = DateTime.now();
       state.game.onLose();
-      state.game.onBackToMenu(tester.element(find.byKey(key)));
 
       await tester.pumpAndSettle();
 

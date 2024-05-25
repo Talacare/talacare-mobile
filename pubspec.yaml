@@ -95,6 +95,8 @@ flutter:
     - assets/images/
     - assets/images/jump_n_jump/
     - assets/images/jump_n_jump/foods/
+    - assets/images/story/
+    - assets/images/story/jump_n_jump/start/
     - assets/images/puzzle_images/
     - assets/images/puzzle_star/
     - assets/audio/
@@ -103,6 +105,7 @@ flutter:
     - .env
     - assets/images/jump_n_jump/characters/
     - assets/audio/jump_n_jump/
+    - assets/audio/story/jump_n_jump/start/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
