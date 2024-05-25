@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/data/models/stage_state.dart';
@@ -21,22 +22,36 @@ class StoryPage extends StatefulWidget {
 class _StoryPageState extends State<StoryPage> {
   int currentGif = 0;
   late List<String> gifs;
+  late List<String> sfxs;
+  late AudioPlayer _audioPlayer;
 
   @override
   void initState() {
     super.initState();
+    _audioPlayer = AudioPlayer();
+
     gifs = [
       'assets/images/story/jump_n_jump/start/story0.gif',
       'assets/images/story/jump_n_jump/start/story1.gif'
     ];
+    sfxs = [
+      'audio/story/jump_n_jump/start/narration0.mp3',
+      'audio/story/jump_n_jump/start/narration1.mp3'
+    ];
+    playSound(sfxs[currentGif]);
   }
 
   void nextGif() {
     if (currentGif < gifs.length - 1) {
       setState(() => currentGif++);
+      playSound(sfxs[currentGif]);
     } else {
       finishStory();
     }
+  }
+
+  Future<void> playSound(String path) {
+    return _audioPlayer.play(AssetSource(path));
   }
 
   void finishStory() {
