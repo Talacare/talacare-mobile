@@ -10,7 +10,6 @@ import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/injection.dart' as di;
 import 'package:talacare/presentation/widgets/custom_notification.dart';
 import 'package:talacare/presentation/widgets/delete_icon_button.dart';
-import 'package:talacare/presentation/widgets/modal_button.dart';
 import 'package:talacare/domain/repositories/notification_adapter.dart';
 import 'package:talacare/data/repositories/schedule_notification_adapter.dart';
 
