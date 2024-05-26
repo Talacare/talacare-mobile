@@ -8,6 +8,7 @@ import 'package:talacare/data/models/game_history_model.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
+import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/button.dart';
@@ -61,15 +62,15 @@ class _NextInfoState extends State<NextInfo> {
     }
 
     if (!isComplete.value & !timePause.value) {
-      audioPlayer.play(AssetSource('bgm.mp3'));
+      audioPlayer.play(AssetSource('audio/puzzle/bgm.mp3'));
     } else if (timePause.value) {
       audioPlayer.stop();
     } else {
       audioPlayer.stop();
       if (timeLeftState.value > 0) {
-        audioPlayer.play(AssetSource('success.wav'));
+        audioPlayer.play(AssetSource('audio/puzzle/success.wav'));
       } else if (timeLeftState.value == 0) {
-        audioPlayer.play(AssetSource('game_over.wav'));
+        audioPlayer.play(AssetSource('audio/puzzle/game_over.wav'));
       }
 
       bool playVoice = true;
@@ -102,19 +103,19 @@ class _NextInfoState extends State<NextInfo> {
                     height: 0,
                     shadows: [
                       Shadow(
-                        // bottomLeft
+                          // bottomLeft
                           offset: const Offset(-1.5, -1.5),
                           color: AppColors.darkPink),
                       Shadow(
-                        // bottomRight
+                          // bottomRight
                           offset: const Offset(3.5, -1.5),
                           color: AppColors.darkPink),
                       Shadow(
-                        // topRight
+                          // topRight
                           offset: const Offset(1.5, 1.5),
                           color: AppColors.darkPink),
                       Shadow(
-                        // topLeft
+                          // topLeft
                           offset: const Offset(-1.5, 1.5),
                           color: AppColors.darkPink),
                     ],
@@ -152,8 +153,9 @@ class _NextInfoState extends State<NextInfo> {
                     await getIt<GameHistoryProvider>()
                         .createGameHistory(gameHistory);
 
-                    final highestScoreHistory = await getIt<GameHistoryProvider>()
-                        .getHighestScoreHistory('PUZZLE');
+                    final highestScoreHistory =
+                        await getIt<GameHistoryProvider>()
+                            .getHighestScoreHistory('PUZZLE');
                     final highScore = highestScoreHistory?.score ?? 0;
                     showDialog(
                       // ignore: use_build_context_synchronously
@@ -171,16 +173,20 @@ class _NextInfoState extends State<NextInfo> {
                                 MaterialPageRoute(
                                   builder: (context) => PuzzlePage(
                                     stageState:
-                                    StageState([1, 0, 0, 0], 1, 0, []),
+                                        StageState([1, 0, 0, 0], 1, 0, []),
                                   ),
                                 ),
                               );
                           },
                           onMenuPressed: () {
                             AnalyticsEngineUtil.userStopPlaysPuzzle();
-                            Navigator.of(context)
-                            ..pop()
-                            ..pop();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const StoryPage(storyType: 'PUZZLE Ending'),
+                              ),
+                            );
                           },
                         );
                       },

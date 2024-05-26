@@ -84,7 +84,7 @@ class PuzzleWidgetState extends State<PuzzleWidget> {
 
   void swapPieces(int rowPos, int colPos, int rowPos2, int colPos2) {
     final audioPlayer = AudioPlayer();
-    audioPlayer.play(AssetSource('move_piece.mp3'));
+    audioPlayer.play(AssetSource('audio/puzzle/move_piece.mp3'));
     setState(() {
       if (!(rowPos == rowPos2 && colPos == colPos2)) {
         DraggablePuzzlePiece temp = pieces[rowPos][colPos];

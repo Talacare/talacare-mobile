@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            const StoryPage(storyType: 'JUMP_N_JUMP'),
+                            const StoryPage(storyType: 'JUMP_N_JUMP Start'),
                       ),
                     );
                   },
@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            const StoryPage(storyType: 'placeholder'),
+                            const StoryPage(storyType: 'PUZZLE Start'),
                       ),
                     );
                   },
