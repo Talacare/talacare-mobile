@@ -54,7 +54,7 @@ class BottomSheetUtil {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const Gap(20), // Spacing between text and button
+              const Gap(20),
               Center(
                 child: ModalButton(
                   text: textButton,
