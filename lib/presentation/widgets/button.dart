@@ -44,6 +44,17 @@ class Button extends StatelessWidget {
     }
 
     Widget buildText() {
+      List<Shadow> shadows = [];
+      if (colorScheme == ButtonColorScheme.green) {
+        shadows = [
+          const Shadow(
+            color: Colors.black,
+            offset: Offset(0.0, 0.8),
+            blurRadius: 7.0,
+          ),
+        ];
+      }
+
       return Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -58,20 +69,14 @@ class Button extends StatelessWidget {
             Flexible(
               child: Text(
                 text,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                   fontFamily: 'Digitalt',
                   fontWeight: FontWeight.w500,
                   height: 0,
                   letterSpacing: 0.96,
-                  shadows: [
-                    Shadow(
-                      color: Colors.red,
-                      offset: Offset(0.0, 0.0),
-                      blurRadius: 11.0,
-                    ),
-                  ],
+                  shadows: shadows,
                 ),
               ),
             )

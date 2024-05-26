@@ -662,7 +662,6 @@ class MockJumpNJump extends _i1.Mock implements _i14.JumpNJump {
       );
 
   @override
-  // ignore: invalid_use_of_internal_member
   _i10.OverlayManager get overlays => (super.noSuchMethod(
         Invocation.getter(#overlays),
         returnValue: _FakeOverlayManager_15(
@@ -850,9 +849,9 @@ class MockJumpNJump extends _i1.Mock implements _i14.JumpNJump {
       );
 
   @override
-  void onBackToMenu(_i12.BuildContext? context) => super.noSuchMethod(
+  void onEndTheGame(_i12.BuildContext? context) => super.noSuchMethod(
         Invocation.method(
-          #onBackToMenu,
+          #onEndTheGame,
           [context],
         ),
         returnValueForMissingStub: null,

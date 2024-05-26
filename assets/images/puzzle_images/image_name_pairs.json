@@ -2,111 +2,111 @@
     {
         "image": "assets/images/puzzle_images/jantung.png",
         "name": "JANTUNG",
-        "voice": "voices/jantung.mp3"
+        "voice": "audio/puzzle/voices/jantung.mp3"
     },
     {
         "image": "assets/images/puzzle_images/kantongdarah.png",
         "name": "KANTONG DARAH",
-        "voice": "voices/kantongdarah.mp3"
+        "voice": "audio/puzzle/voices/kantongdarah.mp3"
     },
     {
         "image": "assets/images/puzzle_images/kantongdarah2.png",
         "name": "KANTONG DARAH",
-        "voice": "voices/kantongdarah.mp3"
+        "voice": "audio/puzzle/voices/kantongdarah.mp3"
     },
     {
         "image": "assets/images/puzzle_images/kantongdarah3.jpg",
         "name": "KANTONG DARAH",
-        "voice": "voices/kantongdarah.mp3"
+        "voice": "audio/puzzle/voices/kantongdarah.mp3"
     },
     {
         "image": "assets/images/puzzle_images/masker.png",
         "name": "MASKER",
-        "voice": "voices/masker.mp3"
+        "voice": "audio/puzzle/voices/masker.mp3"
     },
     {
         "image": "assets/images/puzzle_images/masker2.png",
         "name": "MASKER",
-        "voice": "voices/masker.mp3"
+        "voice": "audio/puzzle/voices/masker.mp3"
     },
     {
         "image": "assets/images/puzzle_images/obat.png",
         "name": "OBAT",
-        "voice": "voices/obat.mp3"
+        "voice": "audio/puzzle/voices/obat.mp3"
     },
     {
         "image": "assets/images/puzzle_images/perawat.png",
         "name": "PERAWAT",
-        "voice": "voices/perawat.mp3"
+        "voice": "audio/puzzle/voices/perawat.mp3"
     },
     {
         "image": "assets/images/puzzle_images/perawat2.png",
         "name": "PERAWAT",
-        "voice": "voices/perawat.mp3"
+        "voice": "audio/puzzle/voices/perawat.mp3"
     },
     {
         "image": "assets/images/puzzle_images/ranjang.png",
         "name": "RANJANG",
-        "voice": "voices/ranjang.mp3"
+        "voice": "audio/puzzle/voices/ranjang.mp3"
     },
     {
         "image": "assets/images/puzzle_images/ranjang2.png",
         "name": "RANJANG",
-        "voice": "voices/ranjang.mp3"
+        "voice": "audio/puzzle/voices/ranjang.mp3"
     },
     {
         "image": "assets/images/puzzle_images/stetoskop.png",
         "name": "STETOSKOP",
-        "voice": "voices/stetoskop.mp3"
+        "voice": "audio/puzzle/voices/stetoskop.mp3"
     },
     {
         "image": "assets/images/puzzle_images/stetoskop2.png",
         "name": "STETOSKOP",
-        "voice": "voices/stetoskop.mp3"
+        "voice": "audio/puzzle/voices/stetoskop.mp3"
     },
     {
         "image": "assets/images/puzzle_images/suntik.png",
         "name": "SUNTIK",
-        "voice": "voices/suntik.mp3"
+        "voice": "audio/puzzle/voices/suntik.mp3"
     },
     {
         "image": "assets/images/puzzle_images/suntik2.png",
         "name": "SUNTIK",
-        "voice": "voices/suntik.mp3"
+        "voice": "audio/puzzle/voices/suntik.mp3"
     },
     {
         "image": "assets/images/puzzle_images/suntik3.png",
         "name": "SUNTIK",
-        "voice": "voices/suntik.mp3"
+        "voice": "audio/puzzle/voices/suntik.mp3"
     },
     {
         "image": "assets/images/puzzle_images/suntik4.png",
         "name": "SUNTIK",
-        "voice": "voices/suntik.mp3"
+        "voice": "audio/puzzle/voices/suntik.mp3"
     },
     {
         "image": "assets/images/puzzle_images/suntik5.png",
         "name": "SUNTIK",
-        "voice": "voices/suntik.mp3"
+        "voice": "audio/puzzle/voices/suntik.mp3"
     },
     {
         "image": "assets/images/puzzle_images/transfusidarah.png",
         "name": "TRANSFUSI DARAH",
-        "voice": "voices/transfusidarah.mp3"
+        "voice": "audio/puzzle/voices/transfusidarah.mp3"
     },
     {
         "image": "assets/images/puzzle_images/transfusidarah2.png",
         "name": "TRANSFUSI DARAH",
-        "voice": "voices/transfusidarah.mp3"
+        "voice": "audio/puzzle/voices/transfusidarah.mp3"
     },
     {
         "image": "assets/images/puzzle_images/transfusidarah3.png",
         "name": "TRANSFUSI DARAH",
-        "voice": "voices/transfusidarah.mp3"
+        "voice": "audio/puzzle/voices/transfusidarah.mp3"
     },
     {
         "image": "assets/images/puzzle_images/transfusidarah4.png",
         "name": "TRANSFUSI DARAH",
-        "voice": "voices/transfusidarah.mp3"
+        "voice": "audio/puzzle/voices/transfusidarah.mp3"
     }
 ]
