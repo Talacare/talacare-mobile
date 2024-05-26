@@ -17,7 +17,7 @@ void main() {
   late MockTimeTracker mockTimeTracker;
 
   setUp(() {
-    timeTracker = TimeTracker();
+    timeTracker = TimeTracker(onTimeUp: () { });
     mockTimeTracker = MockTimeTracker();
 
     SharedPreferences.setMockInitialValues({});

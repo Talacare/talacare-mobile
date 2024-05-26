@@ -6,6 +6,9 @@ class TimeTracker with WidgetsBindingObserver {
   Timer? _timer;
   int accumulatedTime = 0;
   static const int dailyLimit = 2 * 3600; // unit = second
+  VoidCallback onTimeUp;
+
+  TimeTracker({required this.onTimeUp});
 
   void start() {
     WidgetsBinding.instance.addObserver(this);
@@ -37,7 +40,7 @@ class TimeTracker with WidgetsBindingObserver {
         accumulatedTime++;
       } else {
         stopTimer();
-        // print("Daily limit of 2 hours reached");
+        onTimeUp();
       }
     });
   }
