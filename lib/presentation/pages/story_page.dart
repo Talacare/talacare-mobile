@@ -39,16 +39,26 @@ class _StoryPageState extends State<StoryPage> {
       gifs = widget.storyType.contains('Start')
           ? [
               'assets/images/story/jump_n_jump/start/story0.gif',
+              'assets/images/story/jump_n_jump/start/story1.gif',
+              'assets/images/story/jump_n_jump/start/story2.gif',
+              'assets/images/story/jump_n_jump/start/story3.gif',
+              'assets/images/story/jump_n_jump/start/story4.gif',
             ]
           : [
               'assets/images/story/jump_n_jump/end/story0.gif',
+              'assets/images/story/jump_n_jump/end/story1.gif',
             ];
       sfxs = widget.storyType.contains('Start')
           ? [
               'audio/story/jump_n_jump/start/narration0.mp3',
+              'audio/story/jump_n_jump/start/narration1.mp3',
+              'audio/story/jump_n_jump/start/narration2.mp3',
+              'audio/story/jump_n_jump/start/narration3.mp3',
+              'audio/story/jump_n_jump/start/narration4.mp3'
             ]
           : [
               'audio/story/jump_n_jump/end/narration0.mp3',
+              'audio/story/jump_n_jump/end/narration1.mp3'
             ];
     } else if (widget.storyType.contains('PUZZLE')) {
       gifs = widget.storyType.contains('Start')
