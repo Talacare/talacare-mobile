@@ -40,7 +40,7 @@ void main() {
     );
   }
 
-  group('StoryPage', () {
+  group('StoryPage Puzzle', () {
     late NavigatorObserver mockObserver;
 
     setUp(() {
@@ -228,6 +228,221 @@ void main() {
         'finishes story and navigates to new page for non-ending Puzzle Start Story Page',
         (WidgetTester tester) async {
       await tester.pumpWidget(createTestableWidget('PUZZLE Start'));
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      await tester.tap(find.text('Mainkan'));
+      await tester.pump();
+      verifyNever(() => mockObserver.didPush(any(), any()));
+    });
+  });
+
+  group('StoryPage Jump N Jump', () {
+    late NavigatorObserver mockObserver;
+
+    setUp(() {
+      mockObserver = MockNavigatorObserver();
+    });
+
+    testWidgets(
+        'Home button should be tappable on Jump n Jump Start Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Start'));
+      expect(find.byType(HomeButton), findsOneWidget);
+      await tester.tap(find.byType(HomeButton));
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets(
+        'Home button should be tappable on Jump n Jump Ending Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Ending'));
+      expect(find.byType(HomeButton), findsOneWidget);
+      await tester.tap(find.byType(HomeButton));
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets(
+        'displays the correct number of gifs on Jump n Jump Start Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Start'));
+      expect(find.byType(Image), findsAtLeast(1));
+    });
+
+    testWidgets(
+        'displays the correct number of gifs on Jump n Jump Ending Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Ending'));
+      expect(find.byType(Image), findsAtLeast(1));
+    });
+
+    testWidgets('displays the correct gif on Jump n Jump Start Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Start'));
+      expect(
+          find.byWidgetPredicate((widget) =>
+              widget is Image &&
+              widget.image ==
+                  const AssetImage(
+                      'assets/images/story/jump_n_jump/start/story0.gif')),
+          findsOneWidget);
+    });
+
+    testWidgets(
+        'displays the correct gif on Jump n Jump Start Ending Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Ending'));
+      expect(
+          find.byWidgetPredicate((widget) =>
+              widget is Image &&
+              widget.image ==
+                  const AssetImage(
+                      'assets/images/story/jump_n_jump/end/story0.gif')),
+          findsOneWidget);
+    });
+
+    testWidgets(
+        'displays the correct gif count for Jump n Jump Start Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Start'));
+      expect(find.text('1/5'), findsOneWidget);
+    });
+
+    testWidgets(
+        'displays the correct gif count for Jump n Jump Ending Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Ending'));
+      expect(find.text('1/2'), findsOneWidget);
+    });
+
+    testWidgets(
+        'correctly updates gif count on button press for Jump n Jump Start Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Start'));
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      expect(find.text('2/5'), findsOneWidget);
+    });
+
+    testWidgets(
+        'correctly updates gif count on button press for Jump n Jump Ending Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Ending'));
+
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+
+      expect(find.text('2/2'), findsOneWidget);
+    });
+
+    testWidgets(
+        'skip button disappears on last gif for Jump n Jump Start Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Start'));
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      expect(find.text('Lewati'), findsNothing);
+    });
+
+    testWidgets(
+        'skip button disappears on last gif for Jump n Jump Start Ending Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Ending'));
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      expect(find.text('Lewati'), findsNothing);
+    });
+
+    testWidgets(
+        'last gif displays "Mainkan" for non-ending Jump n Jump Start Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Start'));
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      expect(find.text('Mainkan'), findsOneWidget);
+    });
+
+    testWidgets(
+        'last gif displays "Selesai" for ending Jump n Jump Ending Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Ending'));
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      expect(find.text('Selesai'), findsOneWidget);
+    });
+
+    testWidgets(
+        'home button should be tappable and navigate to root for Jump n Jump Start Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Start'));
+      expect(find.byType(HomeButton), findsOneWidget);
+      await tester.tap(find.byType(HomeButton));
+      await tester.pumpAndSettle();
+
+      verifyNever(() => mockObserver.didPush(any(), any()));
+    });
+
+    testWidgets(
+        'home button should be tappable and navigate to root for Jump n Jump Ending Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: const StoryPage(storyType: 'JUMP_N_JUMP Ending'),
+        navigatorObservers: [mockObserver],
+      ));
+
+      expect(find.byType(HomeButton), findsOneWidget);
+      await tester.tap(find.byType(HomeButton));
+      await tester.pumpAndSettle();
+
+      verify(() => mockObserver.didPush(any(), any())).called(1);
+    });
+
+    testWidgets(
+        'finishes story without "Lewati" button for Jump n Jump Ending Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: const StoryPage(storyType: 'JUMP_N_JUMP Ending'),
+        navigatorObservers: [mockObserver],
+      ));
+      expect(find.text('Lewati'), findsNothing);
+    });
+
+    testWidgets(
+        'finishes story and navigates accordingly for ending Jump n Jump Start Ending Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: const StoryPage(storyType: 'JUMP_N_JUMP Ending'),
+        navigatorObservers: [mockObserver],
+      ));
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      await tester.tap(find.text('Selesai'));
+      await tester.pumpAndSettle();
+
+      verify(() => mockObserver.didPush(any(), any())).called(1);
+    });
+
+    testWidgets(
+        'finishes story and navigates to new page for non-ending Jump n Jump Start Story Page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createTestableWidget('JUMP_N_JUMP Start'));
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
+      await tester.tap(find.text('Lanjut'));
+      await tester.pump();
       await tester.tap(find.text('Lanjut'));
       await tester.pump();
       await tester.tap(find.text('Lanjut'));
