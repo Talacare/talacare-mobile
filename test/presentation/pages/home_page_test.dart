@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mockito/annotations.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:provider/provider.dart';
+import 'package:talacare/core/enums/user_role.dart';
+import 'package:talacare/domain/entities/user_entity.dart';
+import 'package:talacare/domain/usecases/export_data_usecase.dart';
 import 'package:talacare/notification_service.dart';
 import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:mockito/mockito.dart';
@@ -13,6 +17,7 @@ import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/providers/schedule_provider.dart';
+import 'home_page_test.mocks.dart';
 import 'login_page_test.mocks.dart';
 import 'package:talacare/presentation/widgets/profile_modal.dart';
 
@@ -21,17 +26,30 @@ import 'puzzle_page_test.mocks.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
+@GenerateNiceMocks(
+    [MockSpec<ExportDataUseCase>(onMissingStub: OnMissingStub.returnDefault)])
 void main() {
   late Widget homePage;
   final getIt = GetIt.instance;
+  late AuthProvider mockAuthProvider;
+  late ExportDataUseCase mockExportDataUseCase;
 
   TestWidgetsFlutterBinding.ensureInitialized();
   setupFirebaseCoreMocks();
 
   setUp(() async {
     await Firebase.initializeApp();
+    mockAuthProvider = MockAuthProvider();
+    mockExportDataUseCase = MockExportDataUseCase();
 
-    getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
+    when(mockAuthProvider.user).thenReturn(const UserEntity(
+        role: UserRole.ADMIN,
+        email: 'test@example.com',
+        name: '',
+        photoURL: ''));
+    getIt.registerLazySingleton<AuthProvider>(() => mockAuthProvider);
+
+    getIt.registerLazySingleton<ExportDataUseCase>(() => mockExportDataUseCase);
     getIt.registerLazySingleton(
         () => GameHistoryProvider(useCase: MockGameHistoryUseCase()));
     homePage = const MaterialApp(
@@ -42,6 +60,7 @@ void main() {
   tearDown(() {
     getIt.unregister<AuthProvider>();
     getIt.unregister<GameHistoryProvider>();
+    getIt.unregister<ExportDataUseCase>();
   });
 
   testWidgets('Verify the greeting text is showing', (tester) async {
@@ -77,7 +96,7 @@ void main() {
   });
 
   testWidgets(
-      'Verify the Jump n Jump GameCard is working and navigate to Choose Character Page',
+      'Verify the Jump n Jump GameCard is working and navigate to Jump N Jump Start Story',
       (tester) async {
     final mockObserver = MockNavigatorObserver();
 
@@ -166,5 +185,38 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(SchedulePage), findsOneWidget);
+  });
+
+  testWidgets('Verify the export button is showing for ADMIN user',
+      (tester) async {
+    await mockNetworkImagesFor(() => tester.pumpWidget(
+          ChangeNotifierProvider<AuthProvider>.value(
+            value: mockAuthProvider,
+            child: homePage,
+          ),
+        ));
+
+    final findExportButton = find.byKey(const Key('export_button'));
+    expect(findExportButton, findsOneWidget,
+        reason: 'The export button should be visible for ADMIN user');
+  });
+  testWidgets('Export game data', (tester) async {
+    await mockNetworkImagesFor(() => tester.pumpWidget(
+          ChangeNotifierProvider<AuthProvider>.value(
+            value: mockAuthProvider,
+            child: homePage,
+          ),
+        ));
+
+    await tester.ensureVisible(find.byKey(const Key('export_button')));
+
+    await tester.tap(find.byKey(const Key('export_button')));
+    await tester
+        .pumpAndSettle(const Duration(seconds: 5)); // Extend the duration
+
+    expect(find.text('Mengekspor...'), findsNothing);
+    expect(find.text('Ekspor Data'), findsOneWidget);
+
+    verify(mockExportDataUseCase.exportGameData()).called(1);
   });
 }

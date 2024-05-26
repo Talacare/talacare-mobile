@@ -31,7 +31,7 @@ void main() {
     getIt.unregister<AuthProvider>();
   });
 
-  group('LogoutConfirmationModal Widget Tests', () {
+  group('Positive - LogoutConfirmationModal Widget Tests', () {
     testWidgets('Yes button calls logout', (WidgetTester tester) async {
       await tester.pumpWidget(logoutConfirmationModal);
       final yesButtonFinder = find.text('Iya');
@@ -39,12 +39,14 @@ void main() {
       verify(getIt<AuthProvider>().logOut()).called(1);
     });
 
-    testWidgets('No button closes modal', (WidgetTester tester) async {
+    testWidgets('Negative - No button closes modal',
+        (WidgetTester tester) async {
       await tester.pumpWidget(logoutConfirmationModal);
       final noButtonFinder = find.text('Tidak');
       await tester.tap(noButtonFinder);
       await tester.pumpAndSettle();
       expect(find.byType(LogoutConfirmationModal), findsNothing);
+      verifyNever(getIt<AuthProvider>().logOut());
     });
   });
 }

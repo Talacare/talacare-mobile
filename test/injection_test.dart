@@ -6,12 +6,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:talacare/data/datasources/auth_remote_datasource.dart';
+import 'package:talacare/data/datasources/export_data_remote_datasource.dart';
 import 'package:talacare/data/datasources/schedule_remote_datasource.dart';
 import 'package:talacare/data/datasources/game_history_remote_datasource.dart';
 import 'package:talacare/domain/repositories/auth_repository.dart';
+import 'package:talacare/domain/repositories/export_data_repository.dart';
 import 'package:talacare/domain/repositories/schedule_repository.dart';
 import 'package:talacare/domain/repositories/game_history_repository.dart';
 import 'package:talacare/domain/usecases/auth_usecase.dart';
+import 'package:talacare/domain/usecases/export_data_usecase.dart';
 import 'package:talacare/domain/usecases/schedule_usecase.dart';
 import 'package:talacare/domain/usecases/game_history_usecase.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart' as ap;
@@ -46,6 +49,9 @@ void main() {
     expect(di.getIt.isRegistered<GameHistoryUseCase>(), isTrue);
     expect(di.getIt.isRegistered<GameHistoryRepository>(), isTrue);
     expect(di.getIt.isRegistered<GameHistoryRemoteDatasource>(), isTrue);
+    expect(di.getIt.isRegistered<ExportDataUseCase>(), isTrue);
+    expect(di.getIt.isRegistered<ExportDataRepository>(), isTrue);
+    expect(di.getIt.isRegistered<ExportDataRemoteDatasource>(), isTrue);
     expect(di.getIt.isRegistered<ghp.GameHistoryProvider>(), isTrue);
   });
 }

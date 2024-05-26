@@ -41,13 +41,13 @@ void main() {
 
     image = [
       ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG",
-          "voices/jantung.mp3"),
+          "audio/puzzle/voices/jantung.mp3"),
       ImagePair("assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH",
-          "voices/kantongdarah.mp3"),
+          "audio/puzzle/voices/kantongdarah.mp3"),
       ImagePair("assets/images/puzzle_images/masker.png", "MASKER",
-          "voices/masker.mp3"),
+          "audio/puzzle/voices/masker.mp3"),
       ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT",
-          "voices/perawat.mp3"),
+          "audio/puzzle/voices/perawat.mp3"),
     ];
 
     when(mockGameHistoryProvider.getHighestScoreHistory('PUZZLE'))
@@ -61,8 +61,6 @@ void main() {
     getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
 
     getIt.registerSingleton<GameHistoryProvider>(mockGameHistoryProvider);
-
-    AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
   });
 
   tearDown(() {
@@ -88,7 +86,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  voice: "voices/perawat.mp3",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([1, 0, 0, 0], 1, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -124,7 +122,7 @@ void main() {
                 home: Scaffold(
                   body: NextInfo(
                     name: "PERAWAT",
-                    voice: "voices/perawat.mp3",
+                    voice: "audio/puzzle/voices/perawat.mp3",
                     stageState: StageState([2, 3, 2, 0], 4, 0, image),
                     startTime: DateTime.now(),
                   ),
@@ -159,7 +157,7 @@ void main() {
           home: Scaffold(
             body: NextInfo(
               name: "PERAWAT",
-              voice: "voices/perawat.mp3",
+              voice: "audio/puzzle/voices/perawat.mp3",
               stageState: StageState([1, 0, 0, 0], 1, 0, image),
               startTime: DateTime.now(),
             ),
@@ -194,7 +192,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  voice: "voices/perawat.mp3",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 3, 2, 0], 4, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -237,7 +235,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  voice: "voices/perawat.mp3",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 3, 2, 0], 4, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -280,7 +278,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  voice: "voices/perawat.mp3",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -321,7 +319,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  voice: "voices/perawat.mp3",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -359,7 +357,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  voice: "voices/perawat.mp3",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 50, image),
                   startTime: DateTime.now(),
                 ),
@@ -397,7 +395,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  voice: "voices/perawat.mp3",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 2, 1, 0], 3, 50, image),
                   startTime: DateTime.now(),
                 ),
@@ -435,7 +433,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  voice: "voices/perawat.mp3",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   audioPlayer: mockPlayer,
                   startTime: DateTime.now(),
@@ -474,7 +472,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
-                  voice: "voices/perawat.mp3",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   audioPlayer: mockPlayer,
                   startTime: DateTime.now(),
@@ -509,7 +507,7 @@ void main() {
           home: Scaffold(
             body: NextInfo(
               name: "PERAWAT",
-              voice: "voices/perawat.mp3",
+              voice: "audio/puzzle/voices/perawat.mp3",
               stageState: StageState([1, 0, 0, 0], 1, 0, image),
               audioPlayer: mockPlayer,
               startTime: DateTime.now(),

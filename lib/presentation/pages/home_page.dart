@@ -2,17 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
+import 'package:talacare/core/enums/user_role.dart';
 import 'package:talacare/core/utils/analytics_engine_util.dart';
+import 'package:talacare/domain/usecases/export_data_usecase.dart';
 import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/pages/schedule_page.dart';
+import 'package:talacare/presentation/widgets/custom_notification.dart';
 import 'package:talacare/presentation/widgets/game_card.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/presentation/widgets/profile_modal.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({
+    super.key,
+  });
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _exportingGameData = false;
+
+  void _exportGameData() async {
+    setState(() {
+      _exportingGameData = true;
+    });
+    await getIt<ExportDataUseCase>().exportGameData();
+    setState(() {
+      _exportingGameData = false;
+    });
+
+    // ignore: use_build_context_synchronously
+    CustomNotification.show(
+        // ignore: use_build_context_synchronously
+        context,
+        message:
+            'Game Data Berhasil Dikirim ke ${getIt<AuthProvider>().user!.email}');
+  }
 
   Widget _buildHeader(BuildContext context) {
     return Row(
@@ -107,7 +137,7 @@ class HomePage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            const StoryPage(storyType: 'JUMP_N_JUMP'),
+                            const StoryPage(storyType: 'JUMP_N_JUMP Start'),
                       ),
                     );
                   },
@@ -124,7 +154,7 @@ class HomePage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            const StoryPage(storyType: 'placeholder'),
+                            const StoryPage(storyType: 'PUZZLE Start'),
                       ),
                     );
                   },
@@ -143,6 +173,17 @@ class HomePage extends StatelessWidget {
                     );
                   },
                 ),
+                const Gap(20),
+                if (getIt<AuthProvider>().user?.role == UserRole.ADMIN)
+                  Button(
+                    key: const Key('export_button'),
+                    text: _exportingGameData ? 'Mengekspor...' : 'Ekspor Data',
+                    colorScheme: ButtonColorScheme.purple,
+                    icon: _exportingGameData
+                        ? Icons.hourglass_empty
+                        : Icons.download,
+                    onTap: _exportingGameData ? null : _exportGameData,
+                  ),
               ],
             ),
           ),
