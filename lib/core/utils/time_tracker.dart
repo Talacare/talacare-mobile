@@ -5,8 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class TimeTracker with WidgetsBindingObserver {
   Timer? _timer;
   int accumulatedTime = 0;
-  static const int dailyLimit = 2 * 3600; // unit = second
+  static const int dailyLimit = 3600 * 2; // unit = second
   VoidCallback onTimeUp;
+  bool isAlreadyTwoHours = false;
 
   TimeTracker({required this.onTimeUp});
 
@@ -28,7 +29,8 @@ class TimeTracker with WidgetsBindingObserver {
       resetDailyTimeIfNeeded();
       loadAccumulatedTime();
       startTimer();
-    } else if (state == AppLifecycleState.paused) {
+    } else if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
       stopTimer();
       saveAccumulatedTime();
     }
@@ -39,6 +41,7 @@ class TimeTracker with WidgetsBindingObserver {
       if (accumulatedTime < dailyLimit) {
         accumulatedTime++;
       } else {
+        isAlreadyTwoHours = true;
         stopTimer();
         onTimeUp();
       }
@@ -63,6 +66,7 @@ class TimeTracker with WidgetsBindingObserver {
     if (lastDate == null || lastDate != todayDate) {
       await prefs.setString('lastDate', todayDate);
       accumulatedTime = 0;
+      isAlreadyTwoHours = false;
       saveAccumulatedTime();
     }
   }
