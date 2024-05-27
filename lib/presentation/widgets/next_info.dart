@@ -54,6 +54,7 @@ class _NextInfoState extends State<NextInfo> {
         score = widget.stageState.score + 50 + timeLeftState.value;
       } else {
         currentState[widget.stageState.stage - 1] = 3;
+        score = 0;
       }
 
       if (widget.stageState.stage < 4) {

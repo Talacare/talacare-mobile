@@ -140,9 +140,9 @@ class PuzzleWidgetState extends State<PuzzleWidget> {
     pieceHeight = widget.image.height! / widget.rows;
     pieceWidth = widget.image.width! / widget.cols;
 
-    final isComplate = Provider.of<CompleteState>(context);
+    final isComplete = Provider.of<CompleteState>(context);
 
-    if (isComplate.value) {
+    if (isComplete.value) {
       setState(() {
         isGameSolved = true;
       });

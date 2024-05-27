@@ -29,7 +29,6 @@ class ExportDataRemoteDatasourceImpl extends ExportDataRemoteDatasource {
         ),
       );
     } on DioException catch (e) {
-      print(e.response?.data);
       var errorMessage = e.response?.data['responseMessage'];
       throw errorMessage;
     }
