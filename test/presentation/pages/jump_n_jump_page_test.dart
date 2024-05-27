@@ -250,6 +250,31 @@ void main() {
       expect(find.byType(GameModal), findsNothing);
     });
 
+    testWidgets(
+        'onMenuPressed should pop the modal and navigate back to the main menu',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: JumpNJumpPage(key: key, character: Character.boy),
+        ),
+      );
+
+      final state = key.currentState!;
+      state.audioManager = mockAudioManager;
+      state.game.gameManager = mockGameManager;
+
+      state.handlePause();
+
+      await tester.pumpAndSettle();
+
+      expect(find.byType(GameModal), findsOneWidget);
+      expect(find.byKey(const Key('game-pause')), findsOneWidget);
+
+      await tester.tap(find.text('Akhiri'));
+
+      expect(find.byType(GameModal), findsOneWidget);
+    });
+
     testWidgets('onPauseTap should call handleMockPause',
         (WidgetTester tester) async {
       await tester.pumpWidget(

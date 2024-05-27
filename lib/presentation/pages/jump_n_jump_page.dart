@@ -54,10 +54,9 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
             handleResume();
           },
           onMenuPressed: () {
-            Navigator.of(context)
-              ..pop()
-              ..pop()
-              ..pop();
+            while (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            }
           },
         );
       },
