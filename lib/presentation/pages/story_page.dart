@@ -137,7 +137,7 @@ class _StoryPageState extends State<StoryPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       HomeButton(
-                        onTap: () => () {
+                        onTap: () {
                           Navigator.of(context)
                               .popUntil(ModalRoute.withName('/'));
                           stopSound();

@@ -10,7 +10,6 @@ class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 class MockTimeTracker extends Mock implements TimeTracker {}
 
-@GenerateMocks([TimeTracker])
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   late TimeTracker timeTracker;

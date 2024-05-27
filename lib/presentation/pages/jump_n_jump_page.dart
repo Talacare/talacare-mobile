@@ -56,6 +56,7 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
           onMenuPressed: () {
             Navigator.of(context)
               ..pop()
+              ..pop()
               ..pop();
           },
         );
