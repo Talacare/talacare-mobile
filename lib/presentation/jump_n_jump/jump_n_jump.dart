@@ -128,12 +128,16 @@ class JumpNJump extends FlameGame
     gameManager.state = GameState.playing;
     gameManager.startTime = DateTime.now();
     dash.megaJump();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (gameManager.isGameOver) {
-        timer.cancel();
-      } else {
-        dash.decreaseHealth(2);
-      }
+
+    Timer(const Duration(seconds: 1), () {
+      dash.decreaseHealth(2);
+      Timer.periodic(const Duration(milliseconds: 20), (timer) {
+        if (gameManager.isGameOver) {
+          timer.cancel();
+        } else if (gameManager.state != GameState.paused) {
+          dash.decreaseHealth(0.04);
+        }
+      });
     });
   }
 
@@ -146,7 +150,7 @@ class JumpNJump extends FlameGame
     dash.isGameOver = true;
 
     if (audioManager != null) {
-      audioManager!.playSoundEffect('jump_n_jump/game_over.wav', 1);
+      audioManager!.playSoundEffect('jump_n_jump/game_over.wav', 10);
       audioManager!.stopBackgroundMusic();
     }
     gameManager.state = GameState.gameOver;

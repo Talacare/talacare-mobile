@@ -114,7 +114,6 @@ flutter:
     - assets/audio/jump_n_jump/
     - assets/audio/story/jump_n_jump/start/
     - assets/audio/story/jump_n_jump/end/
-    - assets/audio/puzzle/
     - assets/audio/story/puzzle/start/
     - assets/audio/story/puzzle/end/
 
