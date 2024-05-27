@@ -316,7 +316,7 @@ void main() {
     testWidgets(
         'should not resume game and music when lifecycle state is resumed without previous pause',
         (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(
+      await tester.pumpWidget(const MaterialApp(
         home: JumpNJumpPage(character: Character.boy),
       ));
 
@@ -334,7 +334,7 @@ void main() {
 
     testWidgets('should handle detached state similarly to paused',
         (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(
+      await tester.pumpWidget(const MaterialApp(
         home: JumpNJumpPage(character: Character.boy),
       ));
 
