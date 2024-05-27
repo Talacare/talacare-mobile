@@ -5,12 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class TimeTracker with WidgetsBindingObserver {
   Timer? _timer;
   int accumulatedTime = 0;
-  static const int dailyLimit = 3600 * 2; // unit = second
+  static const int dailyLimit = 2 * 3600; // unit = second
   bool isAlreadyTwoHours = false;
 
   void start() {
     WidgetsBinding.instance.addObserver(this);
-    resetTimer();
+    loadAccumulatedTime();
     startTimer();
     resetDailyTimeIfNeeded();
   }
