@@ -20,7 +20,8 @@ class JumpNJumpPage extends StatefulWidget {
   JumpNJumpPageState createState() => JumpNJumpPageState();
 }
 
-class JumpNJumpPageState extends State<JumpNJumpPage> {
+class JumpNJumpPageState extends State<JumpNJumpPage>
+    with WidgetsBindingObserver {
   late final JumpNJump game;
   AudioManager audioManager = AudioManager();
 
@@ -29,6 +30,22 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
     super.initState();
     game = JumpNJump(character: widget.character!);
     _initializeHighestScore();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+        handlePause();
+        break;
+      case AppLifecycleState.resumed:
+        break;
+      default:
+        break;
+    }
   }
 
   Future<void> _initializeHighestScore() async {
@@ -86,6 +103,7 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
     audioManager.stopBackgroundMusic();
     game.dash.health.removeListener(game.onHealthChanged);
     game.gameManager.state = GameState.gameOver;
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 

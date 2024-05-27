@@ -42,20 +42,22 @@ void main() {
   late MockGameManager mockGameManager;
   late GlobalKey<JumpNJumpPageState> key;
 
-  setUp(() {
-    getIt = GetIt.instance;
-    mockGameHistoryProvider = MockGameHistoryProvider();
-    getIt.registerSingleton<GameHistoryProvider>(mockGameHistoryProvider);
-    mockAudioManager = MockAudioManager();
-    mockGameManager = MockGameManager();
-    key = GlobalKey();
-  });
-
-  tearDown(() {
-    getIt.reset();
-  });
-
   group('JumpNJumpPage Widget Tests', () {
+    setUp(() {
+      getIt = GetIt.instance;
+      mockGameHistoryProvider = MockGameHistoryProvider();
+      mockAudioManager = MockAudioManager();
+      mockGameManager = MockGameManager();
+      getIt.registerSingleton<GameHistoryProvider>(mockGameHistoryProvider);
+      getIt.registerSingleton<AudioManager>(mockAudioManager);
+      getIt.registerSingleton<GameManager>(mockGameManager);
+      key = GlobalKey();
+    });
+
+    tearDown(() {
+      getIt.reset();
+    });
+
     testWidgets('Coin icon and score display are correctly shown',
         (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(
@@ -294,6 +296,58 @@ void main() {
       await tester.pump();
 
       expect(find.byType(ScoreAndPause), findsOneWidget);
+    });
+    
+  });
+
+  group('lifecycle', () {
+    setUp(() {
+      getIt = GetIt.instance;
+      mockGameHistoryProvider = MockGameHistoryProvider();
+      mockAudioManager = MockAudioManager();
+      mockGameManager = MockGameManager();
+      getIt.registerSingleton<GameHistoryProvider>(mockGameHistoryProvider);
+      key = GlobalKey();
+    });
+
+    tearDown(() {
+      getIt.reset();
+    });
+    testWidgets(
+        'should not resume game and music when lifecycle state is resumed without previous pause',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: JumpNJumpPage(character: Character.boy),
+      ));
+
+      JumpNJumpPageState pageState = tester.state(find.byType(JumpNJumpPage));
+
+      pageState.audioManager = mockAudioManager;
+      pageState.game.gameManager = mockGameManager;
+
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pumpAndSettle();
+
+      verifyNever(mockAudioManager.resumeBackgroundMusic());
+      verifyNever(mockGameManager.resumeGame());
+    });
+
+    testWidgets('should handle detached state similarly to paused',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: JumpNJumpPage(character: Character.boy),
+      ));
+
+      JumpNJumpPageState pageState = tester.state(find.byType(JumpNJumpPage));
+
+      pageState.audioManager = mockAudioManager;
+      pageState.game.gameManager = mockGameManager;
+
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.detached);
+      await tester.pumpAndSettle();
+
+      verify(mockAudioManager.pauseBackgroundMusic()).called(1);
+      verify(mockGameManager.pauseGame()).called(1);
     });
   });
 }
