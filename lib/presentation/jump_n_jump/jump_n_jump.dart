@@ -184,7 +184,7 @@ class JumpNJump extends FlameGame
 
   void onEndTheGame(BuildContext context) {
     overlays.remove('gameOverOverlay');
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => const StoryPage(storyType: 'JUMP_N_JUMP Ending'),

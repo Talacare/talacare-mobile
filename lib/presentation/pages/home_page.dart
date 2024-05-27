@@ -160,6 +160,7 @@ class _HomePageState extends State<HomePage> {
                   key: const Key('jump_n_jump_card'),
                   buttonName: "jump_n_jump_button",
                   onTap: () {
+                    _timeTracker.resetDailyTimeIfNeeded();
                     if (_timeTracker.isAlreadyTwoHours) {
                       _showBottomSheet(context);
                     } else {
@@ -181,6 +182,7 @@ class _HomePageState extends State<HomePage> {
                   key: const Key('puzzle_card'),
                   buttonName: "puzzle_button",
                   onTap: () async {
+                    _timeTracker.resetDailyTimeIfNeeded();
                     if (_timeTracker.isAlreadyTwoHours) {
                       _showBottomSheet(context);
                     } else {

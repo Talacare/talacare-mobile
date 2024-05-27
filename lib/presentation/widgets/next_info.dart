@@ -181,6 +181,9 @@ class _NextInfoState extends State<NextInfo> {
                           },
                           onMenuPressed: () {
                             AnalyticsEngineUtil.userStopPlaysPuzzle();
+                            Navigator.of(context)
+                              ..pop()
+                              ..pop();
                             Navigator.push(
                               context,
                               MaterialPageRoute(

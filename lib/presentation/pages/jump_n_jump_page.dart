@@ -59,7 +59,6 @@ class JumpNJumpPageState extends State<JumpNJumpPage>
     audioManager.pauseBackgroundMusic();
     showDialog(
       context: context,
-      barrierDismissible: false,
       builder: (BuildContext context) {
         return GameModal(
           key: const Key("game-pause"),

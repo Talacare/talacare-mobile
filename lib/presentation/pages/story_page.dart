@@ -109,9 +109,9 @@ class _StoryPageState extends State<StoryPage> {
 
   void finishStory() {
     if (widget.storyType.contains('Ending')) {
-      Navigator.popUntil(context, ModalRoute.withName('/'));
+      Navigator.pop(context);
     } else {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => widget.storyType.contains('JUMP_N_JUMP')

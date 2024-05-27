@@ -80,13 +80,16 @@ class _PuzzleInfoState extends State<PuzzleInfo> {
 
                     Navigator.of(context).pop();
                   },
-                  onMenuPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          const StoryPage(storyType: 'PUZZLE Ending'),
-                    ),
-                  ),
+                  onMenuPressed: () {
+                    Navigator.of(context)..pop()..pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const StoryPage(storyType: 'PUZZLE Ending'),
+                      ),
+                    );
+                  },
                 );
               },
             );
