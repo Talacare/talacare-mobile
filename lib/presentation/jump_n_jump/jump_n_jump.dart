@@ -46,6 +46,7 @@ class JumpNJump extends FlameGame
 
     await add(world);
     await add(dash);
+    await add(gameManager);
 
     dash.health.addListener(onHealthChanged);
 

@@ -670,7 +670,6 @@ class MockJumpNJump extends _i1.Mock implements _i14.JumpNJump {
           this,
           Invocation.getter(#overlays),
         ),
-        // ignore: invalid_use_of_internal_member
       ) as _i10.OverlayManager);
 
   @override
