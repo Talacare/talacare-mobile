@@ -18,21 +18,21 @@ void main() {
   group('BloodBag Manager Tests', () {
     jumpNJumpGameTester.test('Test number of blood bag generated',
         (game) async {
-      expect(game.bloodBagManager.bloodBags.length, equals(2));
+      expect(game.bloodBagManager.items.length, equals(3));
     });
 
     jumpNJumpGameTester.test('Test Remove and Add Blood Bag', (game) async {
       game.dash.position.y = 0;
 
       final bloodBagBeforeUpdate =
-          game.bloodBagManager.bloodBags.first.position;
+          game.bloodBagManager.items.first.position;
       
       game.dash.jump();
       game.update(0.1);
       game.update(0.1);
       game.update(0.1);
 
-      final bloodBagAfterUpdate = game.bloodBagManager.bloodBags.first.position;
+      final bloodBagAfterUpdate = game.bloodBagManager.items.first.position;
 
       expect(bloodBagAfterUpdate, isNot(equals(bloodBagBeforeUpdate)));
     });

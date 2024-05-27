@@ -154,6 +154,18 @@ void main() {
       expect(find.byKey(const Key('game-pause')), findsOneWidget);
     });
 
+    testWidgets('createGameWidget should create a GameWidget',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: JumpNJumpPage(character: Character.boy),
+        ),
+      );
+
+      final gameWidget = find.byType(GameWidget<JumpNJump>);
+      expect(gameWidget, findsOneWidget);
+    });
+
     testWidgets('handleResume should execute without errors',
         (WidgetTester tester) async {
       await tester.pumpWidget(
@@ -172,6 +184,43 @@ void main() {
 
       verify(mockAudioManager.resumeBackgroundMusic()).called(1);
       verify(mockGameManager.resumeGame()).called(1);
+    });
+
+    testWidgets('onLose should create a GameWidget',
+        (WidgetTester tester) async {
+      const key = Key('jump_n_jump_page_key');
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: JumpNJumpPage(key: key, character: Character.boy),
+        ),
+      );
+
+      final JumpNJumpPageState state =
+          tester.state<JumpNJumpPageState>(find.byType(JumpNJumpPage));
+      state.game.gameManager.startTime = DateTime.now();
+      state.game.onLose();
+
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('onBackToMenu should remove overlays',
+        (WidgetTester tester) async {
+      const key = Key('jump_n_jump_page_key');
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: JumpNJumpPage(key: key, character: Character.boy),
+        ),
+      );
+      final JumpNJumpPageState state =
+          tester.state<JumpNJumpPageState>(find.byType(JumpNJumpPage));
+      state.game.gameManager.startTime = DateTime.now();
+      state.game.onLose();
+
+      await tester.pumpAndSettle();
+
+      expect(state.game.overlays.isActive('gameOverOverlay'), isTrue);
     });
 
     testWidgets('onMainLagiPressed should pop the modal and resume game',

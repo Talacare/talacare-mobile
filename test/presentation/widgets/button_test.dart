@@ -93,4 +93,44 @@ void main() {
         reason:
             'The button should be showing circular progress indicator on loading');
   });
+
+  testWidgets('Positive Test - Green Button Shadow',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Material(
+          child: Button(
+            text: 'Green Button',
+            colorScheme: ButtonColorScheme.green,
+          ),
+        ),
+      ),
+    );
+
+    final textWidget = find.text('Green Button');
+    expect(textWidget, findsOneWidget);
+
+    final textWidgetRenderObject = tester.widget<Text>(textWidget).style;
+    expect(textWidgetRenderObject?.shadows, isNotEmpty);
+  });
+
+  testWidgets('Negative Test - Non-Green Button No Shadow',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Material(
+          child: Button(
+            text: 'Non-Green Button',
+            colorScheme: ButtonColorScheme.purple,
+          ),
+        ),
+      ),
+    );
+
+    final textWidget = find.text('Non-Green Button');
+    expect(textWidget, findsOneWidget);
+
+    final textWidgetRenderObject = tester.widget<Text>(textWidget).style;
+    expect(textWidgetRenderObject?.shadows, isEmpty);
+  });
 }

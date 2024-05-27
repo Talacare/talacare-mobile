@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,16 +20,18 @@ class PuzzlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<TimerState>(
+          // Buat nentuin timer perlu distop atau enggak
           create: (context) => TimerState(initialValue: false),
         ),
         ChangeNotifierProvider<CompleteState>(
+          // Buat nentuin game selesai atau belum
           create: (context) => CompleteState(initialValue: false),
         ),
         ChangeNotifierProvider<TimeLeftState>(
+          // Sisa waktu yg ada 60 - 0
           create: (context) => TimeLeftState(initialValue: 60),
         ),
       ],
@@ -41,6 +42,7 @@ class PuzzlePage extends StatelessWidget {
             ImagePair imagePair = stageState.images[stageState.stage - 1];
             String image = imagePair.image;
             String name = imagePair.name;
+            String voice = imagePair.voice;
 
             return FutureBuilder<GameHistoryEntity?>(
                 future: getIt<GameHistoryProvider>()
@@ -68,6 +70,7 @@ class PuzzlePage extends StatelessWidget {
                             ),
                             NextInfo(
                               name: name,
+                              voice: voice,
                               stageState: stageState,
                               startTime: DateTime.now(),
                             ),

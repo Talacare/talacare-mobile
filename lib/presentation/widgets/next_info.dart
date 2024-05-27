@@ -3,28 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:talacare/core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
-import 'package:talacare/core/utils/text_to_speech.dart';
+import 'package:talacare/core/utils/analytics_engine_util.dart';
 import 'package:talacare/data/models/game_history_model.dart';
 import 'package:talacare/data/models/stage_state.dart';
 import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/pages/puzzle_page.dart';
+import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/button.dart';
 import 'package:talacare/presentation/widgets/game_modal.dart';
-import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
+import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class NextInfo extends StatefulWidget {
   final StageState stageState;
   final AudioPlayer? audioPlayer;
   final String name;
+  final String voice;
   final DateTime startTime;
 
   const NextInfo({
     super.key,
     required this.stageState,
     required this.name,
+    required this.voice,
     this.audioPlayer,
     required this.startTime,
   });
@@ -35,49 +38,52 @@ class NextInfo extends StatefulWidget {
 
 class _NextInfoState extends State<NextInfo> {
   late AudioPlayer audioPlayer = widget.audioPlayer ?? AudioPlayer();
+  late int score;
 
   @override
   Widget build(BuildContext context) {
-    final finishState = Provider.of<TimerState>(context);
-    final clearState = Provider.of<CompleteState>(context);
+    final isComplete = Provider.of<CompleteState>(context);
     final timeLeftState = Provider.of<TimeLeftState>(context);
+    final timePause = Provider.of<TimerState>(context);
 
     List<int> currentState = widget.stageState.starList;
 
-    if (finishState.value) {
-      currentState[widget.stageState.stage - 1] = 3;
+    if (isComplete.value) {
+      if (timeLeftState.value > 0) {
+        currentState[widget.stageState.stage - 1] = 2;
+        score = widget.stageState.score + 50 + timeLeftState.value;
+      } else {
+        currentState[widget.stageState.stage - 1] = 3;
+      }
 
       if (widget.stageState.stage < 4) {
         currentState[widget.stageState.stage] = 1;
       }
     }
 
-    if (clearState.value) {
-      currentState[widget.stageState.stage - 1] = 2;
-      widget.stageState.score += (50 + timeLeftState.value);
-      if (widget.stageState.stage < 4) {
-        currentState[widget.stageState.stage] = 1;
-      }
-    }
-
-    if (!finishState.value && !clearState.value) {
-      audioPlayer.play(AssetSource('bgm.mp3'));
+    if (!isComplete.value & !timePause.value) {
+      audioPlayer.play(AssetSource('audio/puzzle/bgm.mp3'));
+    } else if (timePause.value) {
+      audioPlayer.stop();
     } else {
       audioPlayer.stop();
-
-      if (clearState.value) {
-        audioPlayer.play(AssetSource('success.wav'));
-      } else if (finishState.value) {
-        audioPlayer.play(AssetSource('game_over.wav'));
+      if (timeLeftState.value > 0) {
+        audioPlayer.play(AssetSource('audio/puzzle/success.wav'));
+      } else if (timeLeftState.value == 0) {
+        audioPlayer.play(AssetSource('audio/puzzle/game_over.wav'));
       }
 
+      bool playVoice = true;
       audioPlayer.onPlayerComplete.listen((_) {
-        speakText(text: widget.name);
+        if (playVoice) {
+          audioPlayer.play(AssetSource(widget.voice));
+          playVoice = false;
+        }
       });
     }
 
     return Visibility(
-      visible: finishState.value | clearState.value,
+      visible: isComplete.value,
       child: Container(
         padding: const EdgeInsets.only(top: 20, bottom: 20),
         child: Center(
@@ -97,19 +103,19 @@ class _NextInfoState extends State<NextInfo> {
                     height: 0,
                     shadows: [
                       Shadow(
-                        // bottomLeft
+                          // bottomLeft
                           offset: const Offset(-1.5, -1.5),
                           color: AppColors.darkPink),
                       Shadow(
-                        // bottomRight
+                          // bottomRight
                           offset: const Offset(3.5, -1.5),
                           color: AppColors.darkPink),
                       Shadow(
-                        // topRight
+                          // topRight
                           offset: const Offset(1.5, 1.5),
                           color: AppColors.darkPink),
                       Shadow(
-                        // topLeft
+                          // topLeft
                           offset: const Offset(-1.5, 1.5),
                           color: AppColors.darkPink),
                     ],
@@ -131,7 +137,7 @@ class _NextInfoState extends State<NextInfo> {
                           stageState: StageState(
                             currentState,
                             widget.stageState.stage + 1,
-                            widget.stageState.score,
+                            score,
                             widget.stageState.images,
                           ),
                         ),
@@ -142,13 +148,14 @@ class _NextInfoState extends State<NextInfo> {
                       gameType: 'PUZZLE',
                       startTime: widget.startTime,
                       endTime: DateTime.now(),
-                      score: widget.stageState.score,
+                      score: score,
                     );
                     await getIt<GameHistoryProvider>()
                         .createGameHistory(gameHistory);
 
-                    final highestScoreHistory = await getIt<GameHistoryProvider>()
-                        .getHighestScoreHistory('PUZZLE');
+                    final highestScoreHistory =
+                        await getIt<GameHistoryProvider>()
+                            .getHighestScoreHistory('PUZZLE');
                     final highScore = highestScoreHistory?.score ?? 0;
                     showDialog(
                       // ignore: use_build_context_synchronously
@@ -156,23 +163,31 @@ class _NextInfoState extends State<NextInfo> {
                       builder: (BuildContext context) {
                         return GameModal(
                           key: const Key("game-over"),
-                          currentScore: widget.stageState.score,
+                          currentScore: score,
                           highestScore: highScore,
                           onMainLagiPressed: () {
+                            AnalyticsEngineUtil.userPlaysPuzzleAgain();
                             Navigator.of(context)
                               ..pop()
                               ..pushReplacement(
                                 MaterialPageRoute(
                                   builder: (context) => PuzzlePage(
                                     stageState:
-                                    StageState([1, 0, 0, 0], 1, 0, []),
+                                        StageState([1, 0, 0, 0], 1, 0, []),
                                   ),
                                 ),
                               );
                           },
-                          onMenuPressed: () => Navigator.of(context)
-                            ..pop()
-                            ..pop(),
+                          onMenuPressed: () {
+                            AnalyticsEngineUtil.userStopPlaysPuzzle();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const StoryPage(storyType: 'PUZZLE Ending'),
+                              ),
+                            );
+                          },
                         );
                       },
                     );
