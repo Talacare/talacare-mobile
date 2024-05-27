@@ -14,7 +14,6 @@ class BottomSheetUtil {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      isDismissible: false,
       builder: (context) {
         return Container(
           width: double.infinity,
@@ -48,7 +47,7 @@ class BottomSheetUtil {
                   description,
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 16,
+                    fontSize: 18,
                     letterSpacing: 0.96,
                   ),
                   textAlign: TextAlign.center,

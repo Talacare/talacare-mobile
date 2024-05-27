@@ -14,10 +14,8 @@ import 'package:talacare/presentation/pages/home_page.dart';
 import 'package:talacare/presentation/pages/login_page.dart';
 import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/notification_service.dart';
-import 'core/utils/bottom_sheet_util.dart';
 import 'firebase_options.dart';
 import 'injection.dart' as di;
-import 'package:talacare/core/utils/time_tracker.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,40 +45,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
-  late TimeTracker _timeTracker;
-
-  @override
-  void initState() {
-    super.initState();
-    _timeTracker = TimeTracker(onTimeUp: _showBottomSheet);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _timeTracker.start();
-    });
-  }
-
-  @override
-  void dispose() {
-    _timeTracker.stop();
-    super.dispose();
-  }
-
-  void _showBottomSheet() {
-    if (_navigatorKey.currentState != null) {
-      BottomSheetUtil.showBottomSheet(
-        context: _navigatorKey.currentState!.context,
-        title: 'Kamu sudah bermain selama 2 jam',
-        description: 'Silakan tutup aplikasi dan bermain lagi besok, ya!',
-        textButton: 'Tutup',
-        onTap: () => SystemNavigator.pop(),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: _navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'TalaCare',
       theme: ThemeData(

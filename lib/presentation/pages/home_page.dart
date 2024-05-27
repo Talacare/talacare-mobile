@@ -4,6 +4,8 @@ import 'package:talacare/core/constants/app_colors.dart';
 import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/core/enums/user_role.dart';
 import 'package:talacare/core/utils/analytics_engine_util.dart';
+import 'package:talacare/core/utils/bottom_sheet_util.dart';
+import 'package:talacare/core/utils/time_tracker.dart';
 import 'package:talacare/domain/usecases/export_data_usecase.dart';
 import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/pages/story_page.dart';
@@ -26,6 +28,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _exportingGameData = false;
+  late TimeTracker _timeTracker;
 
   void _exportGameData() async {
     setState(() {
@@ -42,6 +45,16 @@ class _HomePageState extends State<HomePage> {
         context,
         message:
             'Game Data Berhasil Dikirim ke ${getIt<AuthProvider>().user!.email}');
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    BottomSheetUtil.showBottomSheet(
+      context: context,
+      title: 'Kamu sudah bermain selama 2 jam',
+      description: 'Silakan bermain lagi besok, ya!',
+      textButton: 'Tutup',
+      onTap: () => Navigator.pop(context),
+    );
   }
 
   Widget _buildHeader(BuildContext context) {
@@ -116,6 +129,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    _timeTracker = TimeTracker();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _timeTracker.start();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timeTracker.stop();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -132,14 +160,18 @@ class _HomePageState extends State<HomePage> {
                   key: const Key('jump_n_jump_card'),
                   buttonName: "jump_n_jump_button",
                   onTap: () {
-                    AnalyticsEngineUtil.userPlaysJumpNJump();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const StoryPage(storyType: 'JUMP_N_JUMP Start'),
-                      ),
-                    );
+                    if (_timeTracker.isAlreadyTwoHours) {
+                      _showBottomSheet(context);
+                    } else {
+                      AnalyticsEngineUtil.userPlaysJumpNJump();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const StoryPage(storyType: 'JUMP_N_JUMP Start'),
+                        ),
+                      );
+                    }
                   },
                 ),
                 const Gap(30),
@@ -149,14 +181,18 @@ class _HomePageState extends State<HomePage> {
                   key: const Key('puzzle_card'),
                   buttonName: "puzzle_button",
                   onTap: () async {
-                    AnalyticsEngineUtil.userPlaysPuzzle();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const StoryPage(storyType: 'PUZZLE Start'),
-                      ),
-                    );
+                    if (_timeTracker.isAlreadyTwoHours) {
+                      _showBottomSheet(context);
+                    } else {
+                      AnalyticsEngineUtil.userPlaysPuzzle();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const StoryPage(storyType: 'PUZZLE Start'),
+                        ),
+                      );
+                    }
                   },
                 ),
                 const Gap(40),
