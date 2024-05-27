@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:talacare/core/constants/app_colors.dart';
+import 'package:talacare/core/utils/bottom_sheet_util.dart';
 import 'package:talacare/presentation/providers/schedule_provider.dart';
 import 'package:talacare/presentation/widgets/add_schedule_modal.dart';
 import 'package:talacare/presentation/widgets/button.dart';
@@ -9,7 +10,6 @@ import 'package:talacare/core/enums/button_color_scheme_enum.dart';
 import 'package:talacare/injection.dart' as di;
 import 'package:talacare/presentation/widgets/custom_notification.dart';
 import 'package:talacare/presentation/widgets/delete_icon_button.dart';
-import 'package:talacare/presentation/widgets/modal_button.dart';
 import 'package:talacare/domain/repositories/notification_adapter.dart';
 import 'package:talacare/data/repositories/schedule_notification_adapter.dart';
 
@@ -27,7 +27,6 @@ class SchedulePageState extends State<SchedulePage> {
   Future<void> refreshSchedules() async {
     await di.getIt<ScheduleProvider>().getSchedulesByUserId();
   }
-
 
   void showNotification(String message, bool isSuccess, String payload) {
     if (isSuccess) {
@@ -69,68 +68,6 @@ class SchedulePageState extends State<SchedulePage> {
     );
   }
 
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (context) {
-          return Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                    child: Image.asset(
-                  'assets/images/gagal_mengambil_data.png',
-                  width: 75,
-                  height: 75,
-                )),
-                const Gap(15),
-                Center(
-                  child: Text(
-                    'Gagal mengambil data',
-                    style: TextStyle(
-                      color: AppColors.mildBlue,
-                      fontSize: 28,
-                      fontFamily: 'Digitalt',
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0.96,
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    'Silakan kembali!',
-                    style: TextStyle(
-                      color: AppColors.mildBlue,
-                      fontSize: 28,
-                      fontFamily: 'Digitalt',
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0.96,
-                    ),
-                  ),
-                ),
-                const Gap(20), // Spacing between text and button
-                Center(
-                  child: ModalButton(
-                      text: 'Kembali',
-                      color: Colors.white,
-                      borderColor: AppColors.coralPink,
-                      textColor: AppColors.coralPink,
-                      onTap: () => {
-                            Navigator.of(context)
-                              ..pop()
-                              ..pop()
-                          }),
-                ),
-              ],
-            ),
-          );
-        });
-  }
-
   Widget _buildListOfSchedules(
       BuildContext context, ScheduleProvider scheduleProvider) {
     if (scheduleProvider.isLoading) {
@@ -143,7 +80,17 @@ class SchedulePageState extends State<SchedulePage> {
       );
     } else if (scheduleProvider.isError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showBottomSheet(context);
+        BottomSheetUtil.showBottomSheet(
+          context: context,
+          title: 'Gagal mengambil data',
+          description: 'Silakan kembali!',
+          textButton: 'Kembali',
+          onTap: () => {
+            Navigator.of(context)
+              ..pop()
+              ..pop()
+          },
+        );
       });
       return Center(
         child: Container(),

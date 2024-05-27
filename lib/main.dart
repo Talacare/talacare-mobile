@@ -16,7 +16,6 @@ import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/notification_service.dart';
 import 'firebase_options.dart';
 import 'injection.dart' as di;
-import 'package:talacare/core/utils/time_tracker.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,21 +46,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late TimeTracker _timeTracker;
-
-  @override
-  void initState() {
-    super.initState();
-    _timeTracker = TimeTracker();
-    _timeTracker.start();
-  }
-
-  @override
-  void dispose() {
-    _timeTracker.stop();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
