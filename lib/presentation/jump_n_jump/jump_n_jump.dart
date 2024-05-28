@@ -129,15 +129,12 @@ class JumpNJump extends FlameGame
     gameManager.startTime = DateTime.now();
     dash.megaJump();
 
-    Timer(const Duration(seconds: 1), () {
-      dash.decreaseHealth(2);
-      Timer.periodic(const Duration(milliseconds: 20), (timer) {
-        if (gameManager.isGameOver) {
-          timer.cancel();
-        } else if (gameManager.state != GameState.paused) {
-          dash.decreaseHealth(0.04);
-        }
-      });
+    Timer.periodic(const Duration(milliseconds: 20), (timer) {
+      if (gameManager.isGameOver) {
+        timer.cancel();
+      } else if (gameManager.state != GameState.paused) {
+        dash.decreaseHealth(0.05);
+      }
     });
   }
 
