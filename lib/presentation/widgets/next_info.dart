@@ -67,20 +67,16 @@ class _NextInfoState extends State<NextInfo> {
     } else if (timePause.value) {
       audioPlayer.stop();
     } else {
-      audioPlayer.stop();
       if (timeLeftState.value > 0) {
         audioPlayer.play(AssetSource('audio/puzzle/success.wav'));
       } else if (timeLeftState.value == 0) {
         audioPlayer.play(AssetSource('audio/puzzle/game_over.wav'));
       }
 
-      bool playVoice = true;
-       audioPlayer.onPlayerComplete.listen((_) {
-         if (playVoice) {
-           audioPlayer.play(AssetSource(widget.voice));
-           playVoice = false;
-         }
-       });
+      audioPlayer.onPlayerComplete.listen((_) {
+        AudioPlayer voiceAudioPlayer = AudioPlayer();
+        voiceAudioPlayer.play(AssetSource(widget.voice));
+      });
     }
 
     return Visibility(
