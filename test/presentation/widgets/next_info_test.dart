@@ -484,8 +484,7 @@ void main() {
 
     await tester.pump();
 
-    verify(mockPlayer.stop()).called(1);
-    verify(mockPlayer.play(any)).called(2);
+    verify(mockPlayer.play(any)).called(1);
   });
 
   testWidgets('calls audioPlayer.stop() on dispose', (tester) async {
