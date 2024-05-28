@@ -9,14 +9,19 @@ class Button extends StatelessWidget {
   final void Function()? onTap;
   final bool isLoading;
   final IconData? icon;
+  final double? width;
+  final double? height;
 
-  const Button(
-      {super.key,
-      required this.text,
-      this.onTap,
-      this.colorScheme = ButtonColorScheme.green,
-      this.icon,
-      this.isLoading = false});
+  const Button({
+    super.key,
+    required this.text,
+    this.onTap,
+    this.colorScheme = ButtonColorScheme.green,
+    this.icon,
+    this.isLoading = false,
+    this.width = 282,
+    this.height = 48,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +44,17 @@ class Button extends StatelessWidget {
     }
 
     Widget buildText() {
+      List<Shadow> shadows = [];
+      if (colorScheme == ButtonColorScheme.green) {
+        shadows = [
+          const Shadow(
+            color: Colors.black,
+            offset: Offset(0.0, 0.8),
+            blurRadius: 7.0,
+          ),
+        ];
+      }
+
       return Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -53,20 +69,14 @@ class Button extends StatelessWidget {
             Flexible(
               child: Text(
                 text,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                   fontFamily: 'Digitalt',
                   fontWeight: FontWeight.w500,
                   height: 0,
                   letterSpacing: 0.96,
-                  shadows: [
-                    Shadow(
-                      color: Colors.red,
-                      offset: Offset(0.0, 0.0),
-                      blurRadius: 11.0,
-                    ),
-                  ],
+                  shadows: shadows,
                 ),
               ),
             )
@@ -78,8 +88,8 @@ class Button extends StatelessWidget {
     return InkWell(
       onTap: isLoading ? null : onTap,
       child: SizedBox(
-        width: 282,
-        height: 48,
+        width: width,
+        height: height,
         child: Stack(
           children: [
             Container(
@@ -104,7 +114,7 @@ class Button extends StatelessWidget {
               ),
             ),
             Container(
-              height: 43,
+              height: height! - 5,
               decoration: ShapeDecoration(
                 color: secondShadowColor,
                 shape: RoundedRectangleBorder(

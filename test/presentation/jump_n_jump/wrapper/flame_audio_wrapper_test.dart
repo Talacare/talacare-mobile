@@ -25,8 +25,7 @@ void main() {
     await tester.pump();
   });
 
-  testWidgets('stopBgm stops background music',
-      (WidgetTester tester) async {
+  testWidgets('stopBgm stops background music', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
       home: ElevatedButton(
           child: const Text('test'),
@@ -38,13 +37,38 @@ void main() {
     await tester.pump();
   });
 
-  testWidgets('playSfx plays sound effects',
-      (WidgetTester tester) async {
+  testWidgets('playSfx plays sound effects', (WidgetTester tester) async {
     const fileName = 'jump_n_jump/game_over.wav';
     await tester.pumpWidget(MaterialApp(
       home: ElevatedButton(
           child: const Text('test'),
           onPressed: () => flameAudioWrapper.playSfx(fileName, 1.0)),
+    ));
+
+    await tester.tap(find.text('test'));
+
+    await tester.pump();
+  });
+
+  testWidgets('pauseBgm pause the background music',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: ElevatedButton(
+          child: const Text('test'),
+          onPressed: () => flameAudioWrapper.pauseBgm()),
+    ));
+
+    await tester.tap(find.text('test'));
+
+    await tester.pump();
+  });
+
+  testWidgets('resumeBgm resume the background music',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: ElevatedButton(
+          child: const Text('test'),
+          onPressed: () => flameAudioWrapper.resumeBgm()),
     ));
 
     await tester.tap(find.text('test'));

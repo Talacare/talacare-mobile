@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flame/components.dart' as flame_components;
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,11 @@ import 'package:talacare/injection.dart';
 import 'package:talacare/presentation/jump_n_jump/interface/audio_manager_interface.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/audio_manager.dart';
 import 'package:talacare/core/enums/character_enum.dart';
+import 'package:talacare/presentation/jump_n_jump/managers/food_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/managers/managers.dart';
+import 'package:talacare/presentation/pages/story_page.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
-import 'package:talacare/presentation/widgets/game_over_modal.dart';
+import 'package:talacare/presentation/widgets/game_modal.dart';
 import './world.dart';
 import 'sprites/sprites.dart';
 
@@ -27,13 +30,10 @@ class JumpNJump extends FlameGame
 
   GameManager gameManager = GameManager();
   final WorldGame world = WorldGame();
-  PlatformManager platformManager = PlatformManager(
-    maxVerticalDistanceToNextPlatform: 350,
-  );
+  PlatformManager platformManager = PlatformManager();
 
-  BloodBagManager bloodBagManager = BloodBagManager(
-    maxVerticalDistanceToNextBloodBag: 500,
-  );
+  BloodBagManager bloodBagManager = BloodBagManager();
+  FoodManager foodManager = FoodManager();
   Player dash = Player();
   int screenBufferSpace = 100;
 
@@ -46,6 +46,7 @@ class JumpNJump extends FlameGame
 
     await add(world);
     await add(dash);
+    await add(gameManager);
 
     dash.health.addListener(onHealthChanged);
 
@@ -68,23 +69,12 @@ class JumpNJump extends FlameGame
     }
 
     if (gameManager.isPlaying) {
-      final Rect worldBounds = Rect.fromLTRB(
+      camera.worldBounds = Rect.fromLTRB(
         0,
         camera.position.y - screenBufferSpace,
         camera.gameSize.x,
         camera.position.y + world.size.y,
       );
-
-      if (dash.isMovingDown) {
-        camera.worldBounds = worldBounds;
-      }
-
-      var isInTopHalfOfScreen = dash.position.y <= (world.size.y / 2);
-      if (!dash.isMovingDown && isInTopHalfOfScreen) {
-        camera.followComponent(dash);
-
-        camera.worldBounds = worldBounds;
-      }
 
       if (dash.position.y >
           camera.position.y + world.size.y + dash.size.y + screenBufferSpace) {
@@ -97,6 +87,7 @@ class JumpNJump extends FlameGame
   void initializeGame() {
     if (children.contains(platformManager)) platformManager.removeFromParent();
     if (children.contains(bloodBagManager)) bloodBagManager.removeFromParent();
+    if (children.contains(foodManager)) foodManager.removeFromParent();
     dash.health.value = 100;
     dash.velocity = Vector2.zero();
     dash.isGameOver = false;
@@ -104,27 +95,25 @@ class JumpNJump extends FlameGame
 
     camera.worldBounds = Rect.fromLTRB(
       0,
-      -world.size.y,
+      0.0 - screenBufferSpace,
       camera.gameSize.x,
-      world.size.y + screenBufferSpace,
+      world.size.y,
     );
-    camera.followComponent(dash);
+    const relativeOffset = flame_components.Anchor(0.5, 0.4);
+    camera.followComponent(dash, relativeOffset: relativeOffset);
 
     dash.position = Vector2(
       (world.size.x - dash.size.x) / 2,
       (world.size.y - dash.size.y) / 2,
     );
 
-    platformManager = PlatformManager(
-      maxVerticalDistanceToNextPlatform: 350,
-    );
+    platformManager = PlatformManager();
+    bloodBagManager = BloodBagManager();
+    foodManager = FoodManager();
 
-    bloodBagManager = BloodBagManager(
-      maxVerticalDistanceToNextBloodBag: 500,
-    );
-
-    add(bloodBagManager);
     add(platformManager);
+    add(bloodBagManager);
+    add(foodManager);
   }
 
   @override
@@ -139,12 +128,16 @@ class JumpNJump extends FlameGame
     gameManager.state = GameState.playing;
     gameManager.startTime = DateTime.now();
     dash.megaJump();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (gameManager.isGameOver) {
-        timer.cancel();
-      } else {
-        dash.decreaseHealth(2);
-      }
+
+    Timer(const Duration(seconds: 1), () {
+      dash.decreaseHealth(2);
+      Timer.periodic(const Duration(milliseconds: 20), (timer) {
+        if (gameManager.isGameOver) {
+          timer.cancel();
+        } else if (gameManager.state != GameState.paused) {
+          dash.decreaseHealth(0.04);
+        }
+      });
     });
   }
 
@@ -157,7 +150,7 @@ class JumpNJump extends FlameGame
     dash.isGameOver = true;
 
     if (audioManager != null) {
-      audioManager!.playSoundEffect('jump_n_jump/game_over.wav', 1);
+      audioManager!.playSoundEffect('jump_n_jump/game_over.wav', 10);
       audioManager!.stopBackgroundMusic();
     }
     gameManager.state = GameState.gameOver;
@@ -176,12 +169,12 @@ class JumpNJump extends FlameGame
 
     overlays.addEntry(
       'gameOverOverlay',
-      (context, game) => GameOverModal(
+      (context, game) => GameModal(
         currentScore: gameManager.score.value,
-        highestScore: highestScoreHistory?.score ?? 0,
+        highestScore: gameManager.highScore.value,
         onMainLagiPressed: onRestartGame,
         onMenuPressed: () {
-          onBackToMenu(context);
+          onEndTheGame(context);
         },
       ),
     );
@@ -193,8 +186,13 @@ class JumpNJump extends FlameGame
     startGame();
   }
 
-  void onBackToMenu(BuildContext context) {
+  void onEndTheGame(BuildContext context) {
     overlays.remove('gameOverOverlay');
-    Navigator.pop(context);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const StoryPage(storyType: 'JUMP_N_JUMP Ending'),
+      ),
+    );
   }
 }

@@ -4,7 +4,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/puzzle/game/draggable_puzzle_piece.dart';
 import 'package:talacare/presentation/puzzle/game/puzzle_piece_pos.dart';
-import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 class PuzzleWidget extends StatefulWidget {
   final Image image;
@@ -85,7 +84,7 @@ class PuzzleWidgetState extends State<PuzzleWidget> {
 
   void swapPieces(int rowPos, int colPos, int rowPos2, int colPos2) {
     final audioPlayer = AudioPlayer();
-    audioPlayer.play(AssetSource('move_piece.mp3'));
+    audioPlayer.play(AssetSource('audio/puzzle/move_piece.mp3'));
     setState(() {
       if (!(rowPos == rowPos2 && colPos == colPos2)) {
         DraggablePuzzlePiece temp = pieces[rowPos][colPos];
@@ -141,9 +140,9 @@ class PuzzleWidgetState extends State<PuzzleWidget> {
     pieceHeight = widget.image.height! / widget.rows;
     pieceWidth = widget.image.width! / widget.cols;
 
-    final timeEnds = Provider.of<TimerState>(context);
+    final isComplete = Provider.of<CompleteState>(context);
 
-    if (timeEnds.value) {
+    if (isComplete.value) {
       setState(() {
         isGameSolved = true;
       });

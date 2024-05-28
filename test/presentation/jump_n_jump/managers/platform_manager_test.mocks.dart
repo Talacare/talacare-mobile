@@ -69,4 +69,22 @@ class MockAudioManagerForPlatformTest extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  void pauseBackgroundMusic() => super.noSuchMethod(
+        Invocation.method(
+          #pauseBackgroundMusic,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void resumeBackgroundMusic() => super.noSuchMethod(
+        Invocation.method(
+          #resumeBackgroundMusic,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }

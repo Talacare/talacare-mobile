@@ -12,4 +12,12 @@ class FlameAudioWrapper {
   void playSfx(String fileName, double volume) {
     FlameAudio.play(fileName);
   }
+
+  void pauseBgm() {
+    FlameAudio.bgm.pause();
+  }
+
+  void resumeBgm() {
+    FlameAudio.bgm.resume();
+  }
 }

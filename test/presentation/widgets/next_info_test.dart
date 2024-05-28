@@ -16,8 +16,8 @@ import 'package:talacare/presentation/providers/auth_provider.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
 import 'package:talacare/presentation/puzzle/state/complete_state.dart';
 import 'package:talacare/presentation/widgets/next_info.dart';
-import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 import 'package:talacare/presentation/puzzle/state/time_left_state.dart';
+import 'package:talacare/presentation/puzzle/state/timer_state.dart';
 
 import '../jump_n_jump/jump_n_jump_test.mocks.dart';
 import '../pages/login_page_test.mocks.dart';
@@ -28,23 +28,26 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 @GenerateMocks([AudioPlayer])
 void main() {
   late List<ImagePair> image;
- 
+
   final getIt = GetIt.instance;
   late MockGameHistoryProvider mockGameHistoryProvider;
 
   TestWidgetsFlutterBinding.ensureInitialized();
-  setupFirebaseCoreMocks();    
+  setupFirebaseCoreMocks();
 
   setUp(() async {
     mockGameHistoryProvider = MockGameHistoryProvider();
     await Firebase.initializeApp();
 
     image = [
-      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG"),
-      ImagePair(
-          "assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH"),
-      ImagePair("assets/images/puzzle_images/masker.png", "MASKER"),
-      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT"),
+      ImagePair("assets/images/puzzle_images/jantung.png", "JANTUNG",
+          "audio/puzzle/voices/jantung.mp3"),
+      ImagePair("assets/images/puzzle_images/kantongdarah.png", "KANTONG DARAH",
+          "audio/puzzle/voices/kantongdarah.mp3"),
+      ImagePair("assets/images/puzzle_images/masker.png", "MASKER",
+          "audio/puzzle/voices/masker.mp3"),
+      ImagePair("assets/images/puzzle_images/perawat.png", "PERAWAT",
+          "audio/puzzle/voices/perawat.mp3"),
     ];
 
     when(mockGameHistoryProvider.getHighestScoreHistory('PUZZLE'))
@@ -58,8 +61,6 @@ void main() {
     getIt.registerLazySingleton(() => AuthProvider(useCase: MockAuthUseCase()));
 
     getIt.registerSingleton<GameHistoryProvider>(mockGameHistoryProvider);
-
-    AudioCache.instance = AudioCache(prefix: 'assets/audio/puzzle/');
   });
 
   tearDown(() {
@@ -72,9 +73,10 @@ void main() {
         MultiProvider(
             providers: [
               ChangeNotifierProvider<TimerState>(
-                  create: (context) => TimerState(initialValue: true)),
+                create: (context) => TimerState(initialValue: true),
+              ),
               ChangeNotifierProvider<CompleteState>(
-                create: (context) => CompleteState(initialValue: false),
+                create: (context) => CompleteState(initialValue: true),
               ),
               ChangeNotifierProvider<TimeLeftState>(
                 create: (context) => TimeLeftState(initialValue: 60),
@@ -84,6 +86,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([1, 0, 0, 0], 1, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -119,6 +122,7 @@ void main() {
                 home: Scaffold(
                   body: NextInfo(
                     name: "PERAWAT",
+                    voice: "audio/puzzle/voices/perawat.mp3",
                     stageState: StageState([2, 3, 2, 0], 4, 0, image),
                     startTime: DateTime.now(),
                   ),
@@ -135,12 +139,13 @@ void main() {
     });
   });
 
-  testWidgets('Verify All Components are not showing when timerState is false',
+  testWidgets('Verify All Components are not showing when not complete',
       (tester) async {
     await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
-              create: (context) => TimerState(initialValue: false)),
+            create: (context) => TimerState(initialValue: true),
+          ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
           ),
@@ -152,6 +157,7 @@ void main() {
           home: Scaffold(
             body: NextInfo(
               name: "PERAWAT",
+              voice: "audio/puzzle/voices/perawat.mp3",
               stageState: StageState([1, 0, 0, 0], 1, 0, image),
               startTime: DateTime.now(),
             ),
@@ -176,7 +182,7 @@ void main() {
                 create: (context) => TimerState(initialValue: true),
               ),
               ChangeNotifierProvider<CompleteState>(
-                create: (context) => CompleteState(initialValue: false),
+                create: (context) => CompleteState(initialValue: true),
               ),
               ChangeNotifierProvider<TimeLeftState>(
                 create: (context) => TimeLeftState(initialValue: 60),
@@ -186,6 +192,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 3, 2, 0], 4, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -218,7 +225,7 @@ void main() {
                 create: (context) => TimerState(initialValue: true),
               ),
               ChangeNotifierProvider<CompleteState>(
-                create: (context) => CompleteState(initialValue: false),
+                create: (context) => CompleteState(initialValue: true),
               ),
               ChangeNotifierProvider<TimeLeftState>(
                 create: (context) => TimeLeftState(initialValue: 60),
@@ -228,6 +235,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 3, 2, 0], 4, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -257,9 +265,10 @@ void main() {
         home: MultiProvider(
             providers: [
               ChangeNotifierProvider<TimerState>(
-                  create: (context) => TimerState(initialValue: true)),
+                create: (context) => TimerState(initialValue: true),
+              ),
               ChangeNotifierProvider<CompleteState>(
-                create: (context) => CompleteState(initialValue: false),
+                create: (context) => CompleteState(initialValue: true),
               ),
               ChangeNotifierProvider<TimeLeftState>(
                 create: (context) => TimeLeftState(initialValue: 60),
@@ -269,6 +278,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   startTime: DateTime.now(),
                 ),
@@ -282,9 +292,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('game-over')), findsOneWidget);
-    expect(find.text('Menu'), findsOneWidget);
+    expect(find.text('Selesai'), findsOneWidget);
 
-    await tester.tap(find.text('Menu'));
+    await tester.tap(find.text('Selesai'));
     await mockNetworkImagesFor(() => tester.pumpAndSettle());
 
     expect(find.byKey(const Key('game-over')), findsNothing);
@@ -296,43 +306,8 @@ void main() {
         home: MultiProvider(
             providers: [
               ChangeNotifierProvider<TimerState>(
-                  create: (context) => TimerState(initialValue: true)),
-              ChangeNotifierProvider<CompleteState>(
-                create: (context) => CompleteState(initialValue: false),
+                create: (context) => TimerState(initialValue: true),
               ),
-              ChangeNotifierProvider<TimeLeftState>(
-                create: (context) => TimeLeftState(initialValue: 60),
-              ),
-            ],
-            child: MaterialApp(
-              home: Scaffold(
-                body: NextInfo(
-                  name: "PERAWAT",
-                  stageState: StageState([2, 2, 2, 0], 4, 50, image),
-                  startTime: DateTime.now(),
-                ),
-              ),
-            )),
-      ),
-    );
-
-    expect(find.byKey(const Key('nextButton')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('nextButton')));
-    await tester.pumpAndSettle();
-
-    expect(find.byKey(const Key('game-over')), findsOneWidget);
-    expect(find.text('Menu'), findsOneWidget);
-
-    expect(find.text('50'), findsOneWidget);
-  });
-
-  testWidgets('Verify Score is added with time left', (tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: MultiProvider(
-            providers: [
-              ChangeNotifierProvider<TimerState>(
-                  create: (context) => TimerState(initialValue: false)),
               ChangeNotifierProvider<CompleteState>(
                 create: (context) => CompleteState(initialValue: true),
               ),
@@ -344,6 +319,45 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "audio/puzzle/voices/perawat.mp3",
+                  stageState: StageState([2, 2, 2, 0], 4, 0, image),
+                  startTime: DateTime.now(),
+                ),
+              ),
+            )),
+      ),
+    );
+
+    expect(find.byKey(const Key('nextButton')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('nextButton')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('game-over')), findsOneWidget);
+    expect(find.text('Selesai'), findsOneWidget);
+
+    expect(find.text('110'), findsOneWidget);
+  });
+
+  testWidgets('Verify Score is added with time left', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MultiProvider(
+            providers: [
+              ChangeNotifierProvider<TimerState>(
+                create: (context) => TimerState(initialValue: true),
+              ),
+              ChangeNotifierProvider<CompleteState>(
+                create: (context) => CompleteState(initialValue: true),
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
+            ],
+            child: MaterialApp(
+              home: Scaffold(
+                body: NextInfo(
+                  name: "PERAWAT",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 50, image),
                   startTime: DateTime.now(),
                 ),
@@ -357,9 +371,45 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('game-over')), findsOneWidget);
-    expect(find.text('Menu'), findsOneWidget);
+    expect(find.text('Selesai'), findsOneWidget);
 
     expect(find.text('160'), findsOneWidget);
+  });
+
+  testWidgets('Verify Lanjut Button is showing when complete', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MultiProvider(
+            providers: [
+              ChangeNotifierProvider<TimerState>(
+                create: (context) => TimerState(initialValue: true),
+              ),
+              ChangeNotifierProvider<CompleteState>(
+                create: (context) => CompleteState(initialValue: true),
+              ),
+              ChangeNotifierProvider<TimeLeftState>(
+                create: (context) => TimeLeftState(initialValue: 60),
+              ),
+            ],
+            child: MaterialApp(
+              home: Scaffold(
+                body: NextInfo(
+                  name: "PERAWAT",
+                  voice: "audio/puzzle/voices/perawat.mp3",
+                  stageState: StageState([2, 2, 1, 0], 3, 50, image),
+                  startTime: DateTime.now(),
+                ),
+              ),
+            )),
+      ),
+    );
+
+    expect(find.text('PERAWAT'), findsOneWidget);
+    expect(find.text('Lanjut'), findsOneWidget);
+    expect(find.byKey(const Key('nextButton')), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('nextButton')));
+    await tester.pumpAndSettle();
   });
 
   testWidgets('plays bgm.mp3 when PuzzlePage starts', (tester) async {
@@ -370,7 +420,8 @@ void main() {
         home: MultiProvider(
             providers: [
               ChangeNotifierProvider<TimerState>(
-                  create: (context) => TimerState(initialValue: false)),
+                create: (context) => TimerState(initialValue: false),
+              ),
               ChangeNotifierProvider<CompleteState>(
                 create: (context) => CompleteState(initialValue: false),
               ),
@@ -382,6 +433,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   audioPlayer: mockPlayer,
                   startTime: DateTime.now(),
@@ -394,7 +446,7 @@ void main() {
     verify(mockPlayer.play(any)).called(1);
   });
 
-  testWidgets('calls flutterTts.speak after audioPlayer completes',
+  testWidgets('plays voice after audioPlayer completes playing success.wav',
       (tester) async {
     final mockPlayer = MockAudioPlayer();
 
@@ -407,9 +459,10 @@ void main() {
         home: MultiProvider(
             providers: [
               ChangeNotifierProvider<TimerState>(
-                  create: (context) => TimerState(initialValue: true)),
+                create: (context) => TimerState(initialValue: false),
+              ),
               ChangeNotifierProvider<CompleteState>(
-                create: (context) => CompleteState(initialValue: false),
+                create: (context) => CompleteState(initialValue: true),
               ),
               ChangeNotifierProvider<TimeLeftState>(
                 create: (context) => TimeLeftState(initialValue: 60),
@@ -419,6 +472,7 @@ void main() {
               home: Scaffold(
                 body: NextInfo(
                   name: "PERAWAT",
+                  voice: "audio/puzzle/voices/perawat.mp3",
                   stageState: StageState([2, 2, 2, 0], 4, 0, image),
                   audioPlayer: mockPlayer,
                   startTime: DateTime.now(),
@@ -431,7 +485,7 @@ void main() {
     await tester.pump();
 
     verify(mockPlayer.stop()).called(1);
-    verify(mockPlayer.play(any)).called(1);
+    verify(mockPlayer.play(any)).called(2);
   });
 
   testWidgets('calls audioPlayer.stop() on dispose', (tester) async {
@@ -440,7 +494,8 @@ void main() {
     await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<TimerState>(
-              create: (context) => TimerState(initialValue: false)),
+            create: (context) => TimerState(initialValue: false),
+          ),
           ChangeNotifierProvider<CompleteState>(
             create: (context) => CompleteState(initialValue: false),
           ),
@@ -450,12 +505,14 @@ void main() {
         ],
         child: MaterialApp(
           home: Scaffold(
-              body: NextInfo(
-            name: "PERAWAT",
-            stageState: StageState([1, 0, 0, 0], 1, 0, image),
-            audioPlayer: mockPlayer,
-            startTime: DateTime.now(),
-          )),
+            body: NextInfo(
+              name: "PERAWAT",
+              voice: "audio/puzzle/voices/perawat.mp3",
+              stageState: StageState([1, 0, 0, 0], 1, 0, image),
+              audioPlayer: mockPlayer,
+              startTime: DateTime.now(),
+            ),
+          ),
         )));
 
     final NavigatorState navigator = tester.state(find.byType(Navigator));

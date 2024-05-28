@@ -8,6 +8,8 @@ import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/player.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
+import 'package:talacare/presentation/widgets/game_modal.dart';
+import 'package:talacare/presentation/widgets/score_and_pause.dart';
 
 class JumpNJumpPage extends StatefulWidget {
   final Character? character;
@@ -15,24 +17,71 @@ class JumpNJumpPage extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _JumpNJumpPageState createState() => _JumpNJumpPageState();
+  JumpNJumpPageState createState() => JumpNJumpPageState();
 }
 
-class _JumpNJumpPageState extends State<JumpNJumpPage> {
+class JumpNJumpPageState extends State<JumpNJumpPage>
+    with WidgetsBindingObserver {
   late final JumpNJump game;
-  final audioManager = AudioManager();
+  AudioManager audioManager = AudioManager();
 
   @override
   void initState() {
     super.initState();
     game = JumpNJump(character: widget.character!);
     _initializeHighestScore();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+        handlePause();
+        break;
+      case AppLifecycleState.resumed:
+        break;
+      default:
+        break;
+    }
   }
 
   Future<void> _initializeHighestScore() async {
     final highestScoreEntity = await getIt<GameHistoryProvider>()
         .getHighestScoreHistory('JUMP_N_JUMP');
     game.gameManager.highScore.value = highestScoreEntity?.score ?? 0;
+  }
+
+  void handlePause() {
+    game.gameManager.pauseGame();
+    audioManager.pauseBackgroundMusic();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return GameModal(
+          key: const Key("game-pause"),
+          isPause: true,
+          currentScore: game.gameManager.score.value,
+          highestScore: game.gameManager.highScore.value,
+          onMainLagiPressed: () {
+            Navigator.of(context).pop();
+            handleResume();
+          },
+          onMenuPressed: () {
+            while (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            }
+          },
+        );
+      },
+    );
+  }
+
+  void handleResume() {
+    game.gameManager.resumeGame();
+    audioManager.resumeBackgroundMusic();
   }
 
   @override
@@ -53,6 +102,7 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
     audioManager.stopBackgroundMusic();
     game.dash.health.removeListener(game.onHealthChanged);
     game.gameManager.state = GameState.gameOver;
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -102,7 +152,7 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
                 _createHighScoreWidget(),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 2),
             HealthBar(
               currentValue: game.dash.health,
               maxValue: 100,
@@ -117,11 +167,10 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
     return ValueListenableBuilder<int>(
       valueListenable: game.gameManager.highScore,
       builder: (_, highScore, __) {
-        return Text(
-          'TERTINGGI: $highScore',
-          style: const TextStyle(
-              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+        return ScoreAndPause(
           key: const Key('highScoreDisplay'),
+          highScore: highScore,
+          onPauseTap: handlePause,
         );
       },
     );
@@ -136,15 +185,15 @@ class _JumpNJumpPageState extends State<JumpNJumpPage> {
           children: [
             Image.asset(
               'assets/images/jump_n_jump/coin.png',
-              width: 24,
-              height: 24,
+              width: 35,
+              height: 35,
               key: const Key('coinIcon'),
             ),
             const SizedBox(width: 8),
             Text(
               '$score',
               style: const TextStyle(
-                  fontSize: 24,
+                  fontSize: 35,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
               key: const Key('scoreDisplay'),

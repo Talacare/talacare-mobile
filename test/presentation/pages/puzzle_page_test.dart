@@ -44,7 +44,7 @@ void main() {
 
     puzzlePage = MaterialApp(
         home: PuzzlePage(
-      stageState: StageState([1, 0, 0, 0], 1, 0, []),
+          stageState: StageState([1, 0, 0, 0], 1, 0, []),
     ));
   });
 
@@ -69,7 +69,7 @@ void main() {
         await tester.pumpWidget(puzzlePage);
         await tester.pumpAndSettle();
 
-        final findSkor = find.text('TERTINGGI: 75');
+        final findSkor = find.text('🏆');
         expect(findSkor, findsOneWidget, reason: 'Score should be visible');
       });
     });
@@ -93,6 +93,45 @@ void main() {
         final findLanjut = find.byKey(const Key('nextButton'));
         expect(findLanjut, findsOneWidget,
             reason: 'Next button should be visible');
+      });
+    });
+
+    testWidgets('Check if pause button is showing', (tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(puzzlePage);
+        await tester.pumpAndSettle();
+
+        final findLanjut = find.byKey(const Key('pause_button'));
+        expect(findLanjut, findsOneWidget,
+            reason: 'Pause button should be visible');
+      });
+    });
+
+    testWidgets('Check lanjutkan pause button is working', (tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(puzzlePage);
+        await tester.pumpAndSettle(const Duration(seconds: 30));
+
+        await tester.tap(find.byKey(const Key('pause_button')));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Lanjutkan'));
+        await tester.pumpAndSettle(const Duration(seconds: 30));
+
+        expect(find.text('0'), findsOneWidget);
+      });
+    });
+
+    testWidgets('Check akhiri pause button is working', (tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(puzzlePage);
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.byKey(const Key('pause_button')));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Akhiri'));
+        await tester.pumpAndSettle();
       });
     });
   });
