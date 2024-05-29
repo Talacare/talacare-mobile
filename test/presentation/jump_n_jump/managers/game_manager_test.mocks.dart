@@ -194,8 +194,7 @@ class _FakeAssetsCache_14 extends _i1.SmartFake implements _i9.AssetsCache {
 
 class _FakeOverlayManager_15 extends _i1.SmartFake
     // ignore: invalid_use_of_internal_member
-    implements
-        _i10.OverlayManager {
+    implements _i10.OverlayManager {
   _FakeOverlayManager_15(
     Object parent,
     Invocation parentInvocation,
@@ -668,7 +667,7 @@ class MockJumpNJump extends _i1.Mock implements _i14.JumpNJump {
           this,
           Invocation.getter(#overlays),
         ),
-        // ignore: invalid_use_of_internal_member
+      // ignore: invalid_use_of_internal_member
       ) as _i10.OverlayManager);
 
   @override

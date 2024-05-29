@@ -40,5 +40,15 @@ void main() {
       audioManager.playSoundEffect(fileName, 1.0);
       verify(mockFlameAudioWrapper.playSfx(fileName, 1.0)).called(1);
     });
+
+    test('playSoundEffect triggers pauseBgm', () {
+      audioManager.pauseBackgroundMusic();
+      verify(mockFlameAudioWrapper.pauseBgm()).called(1);
+    });
+
+    test('playSoundEffect triggers resumeBgm', () {
+      audioManager.resumeBackgroundMusic();
+      verify(mockFlameAudioWrapper.resumeBgm()).called(1);
+    });
   });
 }

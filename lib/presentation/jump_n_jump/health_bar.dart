@@ -24,7 +24,7 @@ class _HealthBarState extends State<HealthBar>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 0),
       vsync: this,
     );
 

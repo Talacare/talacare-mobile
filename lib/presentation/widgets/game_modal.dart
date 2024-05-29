@@ -74,48 +74,57 @@ class GameModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Dialog(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(30.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.lavender,
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildTitle(),
-                const SizedBox(height: 10),
-                _buildScoreContainer('Skor Terkini', currentScore),
-                _buildScoreContainer('Skor Tertinggi', highestScore),
-                const SizedBox(height: 15),
-                ModalButton(
-                  text: isPause ? "Lanjutkan" : 'Main Lagi',
-                  color: AppColors.coralPink,
-                  borderColor: AppColors.softPink,
-                  textColor: Colors.white,
-                  onTap: onMainLagiPressed,
-                ),
-                const SizedBox(height: 5),
-                ModalButton(
-                  text: isPause ? 'Akhiri' : 'Selesai',
-                  color: Colors.white,
-                  borderColor: AppColors.coralPink,
-                  textColor: AppColors.coralPink,
-                  onTap: onMenuPressed,
-                ),
-              ],
+    // ignore: deprecated_member_use
+    return WillPopScope(
+      onWillPop: () {
+        if(isPause){
+          onMainLagiPressed();
+        }
+        return Future.value(true);
+      },
+      child: Center(
+        child: Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(30.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.lavender,
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildTitle(),
+                  const SizedBox(height: 10),
+                  _buildScoreContainer('Skor Terkini', currentScore),
+                  _buildScoreContainer('Skor Tertinggi', highestScore),
+                  const SizedBox(height: 15),
+                  ModalButton(
+                    text: isPause ? "Lanjutkan" : 'Main Lagi',
+                    color: AppColors.coralPink,
+                    borderColor: AppColors.softPink,
+                    textColor: Colors.white,
+                    onTap: onMainLagiPressed,
+                  ),
+                  const SizedBox(height: 5),
+                  ModalButton(
+                    text: isPause ? 'Akhiri' : 'Selesai',
+                    color: Colors.white,
+                    borderColor: AppColors.coralPink,
+                    textColor: AppColors.coralPink,
+                    onTap: onMenuPressed,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

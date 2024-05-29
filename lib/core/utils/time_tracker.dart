@@ -6,10 +6,11 @@ class TimeTracker with WidgetsBindingObserver {
   Timer? _timer;
   int accumulatedTime = 0;
   static const int dailyLimit = 2 * 3600; // unit = second
+  bool isAlreadyTwoHours = false;
 
   void start() {
     WidgetsBinding.instance.addObserver(this);
-    resetTimer();
+    loadAccumulatedTime();
     startTimer();
     resetDailyTimeIfNeeded();
   }
@@ -25,7 +26,8 @@ class TimeTracker with WidgetsBindingObserver {
       resetDailyTimeIfNeeded();
       loadAccumulatedTime();
       startTimer();
-    } else if (state == AppLifecycleState.paused) {
+    } else if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
       stopTimer();
       saveAccumulatedTime();
     }
@@ -36,8 +38,8 @@ class TimeTracker with WidgetsBindingObserver {
       if (accumulatedTime < dailyLimit) {
         accumulatedTime++;
       } else {
+        isAlreadyTwoHours = true;
         stopTimer();
-        // print("Daily limit of 2 hours reached");
       }
     });
   }
@@ -60,6 +62,7 @@ class TimeTracker with WidgetsBindingObserver {
     if (lastDate == null || lastDate != todayDate) {
       await prefs.setString('lastDate', todayDate);
       accumulatedTime = 0;
+      isAlreadyTwoHours = false;
       saveAccumulatedTime();
     }
   }

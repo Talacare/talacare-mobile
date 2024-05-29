@@ -46,6 +46,7 @@ class JumpNJump extends FlameGame
 
     await add(world);
     await add(dash);
+    await add(gameManager);
 
     dash.health.addListener(onHealthChanged);
 
@@ -127,11 +128,12 @@ class JumpNJump extends FlameGame
     gameManager.state = GameState.playing;
     gameManager.startTime = DateTime.now();
     dash.megaJump();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+
+    Timer.periodic(const Duration(milliseconds: 20), (timer) {
       if (gameManager.isGameOver) {
         timer.cancel();
-      } else {
-        dash.decreaseHealth(2);
+      } else if (gameManager.state != GameState.paused) {
+        dash.decreaseHealth(0.05);
       }
     });
   }
@@ -145,7 +147,7 @@ class JumpNJump extends FlameGame
     dash.isGameOver = true;
 
     if (audioManager != null) {
-      audioManager!.playSoundEffect('jump_n_jump/game_over.wav', 1);
+      audioManager!.playSoundEffect('jump_n_jump/game_over.wav', 10);
       audioManager!.stopBackgroundMusic();
     }
     gameManager.state = GameState.gameOver;
@@ -183,7 +185,7 @@ class JumpNJump extends FlameGame
 
   void onEndTheGame(BuildContext context) {
     overlays.remove('gameOverOverlay');
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => const StoryPage(storyType: 'JUMP_N_JUMP Ending'),

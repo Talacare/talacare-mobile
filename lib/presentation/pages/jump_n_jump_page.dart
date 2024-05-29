@@ -8,6 +8,7 @@ import 'package:talacare/presentation/jump_n_jump/managers/game_manager.dart';
 import 'package:talacare/presentation/jump_n_jump/jump_n_jump.dart';
 import 'package:talacare/presentation/jump_n_jump/sprites/player.dart';
 import 'package:talacare/presentation/providers/game_history_provider.dart';
+import 'package:talacare/presentation/widgets/game_modal.dart';
 import 'package:talacare/presentation/widgets/score_and_pause.dart';
 
 class JumpNJumpPage extends StatefulWidget {
@@ -19,21 +20,68 @@ class JumpNJumpPage extends StatefulWidget {
   JumpNJumpPageState createState() => JumpNJumpPageState();
 }
 
-class JumpNJumpPageState extends State<JumpNJumpPage> {
+class JumpNJumpPageState extends State<JumpNJumpPage>
+    with WidgetsBindingObserver {
   late final JumpNJump game;
-  final audioManager = AudioManager();
+  AudioManager audioManager = AudioManager();
 
   @override
   void initState() {
     super.initState();
     game = JumpNJump(character: widget.character!);
     _initializeHighestScore();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+        handlePause();
+        break;
+      case AppLifecycleState.resumed:
+        break;
+      default:
+        break;
+    }
   }
 
   Future<void> _initializeHighestScore() async {
     final highestScoreEntity = await getIt<GameHistoryProvider>()
         .getHighestScoreHistory('JUMP_N_JUMP');
     game.gameManager.highScore.value = highestScoreEntity?.score ?? 0;
+  }
+
+  void handlePause() {
+    game.gameManager.pauseGame();
+    audioManager.pauseBackgroundMusic();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return GameModal(
+          key: const Key("game-pause"),
+          isPause: true,
+          currentScore: game.gameManager.score.value,
+          highestScore: game.gameManager.highScore.value,
+          onMainLagiPressed: () {
+            Navigator.of(context).pop();
+            handleResume();
+          },
+          onMenuPressed: () {
+            while (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            }
+          },
+        );
+      },
+    );
+  }
+
+  void handleResume() {
+    game.gameManager.resumeGame();
+    audioManager.resumeBackgroundMusic();
   }
 
   @override
@@ -54,6 +102,7 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
     audioManager.stopBackgroundMusic();
     game.dash.health.removeListener(game.onHealthChanged);
     game.gameManager.state = GameState.gameOver;
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -121,7 +170,7 @@ class JumpNJumpPageState extends State<JumpNJumpPage> {
         return ScoreAndPause(
           key: const Key('highScoreDisplay'),
           highScore: highScore,
-          onPauseTap: () {},
+          onPauseTap: handlePause,
         );
       },
     );
